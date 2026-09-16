@@ -1,0 +1,103 @@
+// The 12 Specific Shop Categories requested by Symmetry Interiors
+export const shopCategories = [
+  {
+    id: 'luxury-sofas',
+    name: 'Luxury Sofas',
+    slug: 'luxury-sofas',
+    description: 'Curved architectural silhouettes, Italian bouclé, and modular lounging.',
+    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80',
+    itemCount: '6 Models',
+  },
+  {
+    id: 'lounge-chairs',
+    name: 'Lounge Chairs',
+    slug: 'lounge-chairs',
+    description: 'Sculpted timber frames, saddle leather slings, and ergonomic repose.',
+    image: '/drive_products/LC0001-1.jpeg',
+    itemCount: '5 Designs',
+  },
+  {
+    id: 'dining-furniture',
+    name: 'Dining Furniture',
+    slug: 'dining-furniture',
+    description: 'Monolithic marble dining centerpieces and handcrafted oak credenzas.',
+    image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=800&q=80',
+    itemCount: '6 Collections',
+  },
+  {
+    id: 'bedroom-furniture',
+    name: 'Bedroom Furniture',
+    slug: 'bedroom-furniture',
+    description: 'Floating low-profile platform beds and integrated nightstands.',
+    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
+    itemCount: '4 Suites',
+  },
+  {
+    id: 'coffee-tables',
+    name: 'Coffee Tables',
+    slug: 'coffee-tables',
+    description: 'Monolithic Roman travertine, smoked oak, and cast bronze pedestals.',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+    itemCount: '5 Pieces',
+  },
+  {
+    id: 'side-tables',
+    name: 'Side Tables',
+    slug: 'side-tables',
+    description: 'Sculptural stone plinths, fluted wood pedestals, and brass side accents.',
+    image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800&q=80',
+    itemCount: '4 Models',
+  },
+  {
+    id: 'office-furniture',
+    name: 'Office Furniture',
+    slug: 'office-furniture',
+    description: 'Authoritative executive desks, leather blotters, and bespoke storage.',
+    image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80',
+    itemCount: '3 Suites',
+  },
+  {
+    id: 'outdoor-furniture',
+    name: 'Outdoor Furniture',
+    slug: 'outdoor-furniture',
+    description: 'FSC plantation teak loungers, marine-grade weaves, and all-weather dining.',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    itemCount: '4 Suites',
+  },
+  {
+    id: 'lighting',
+    name: 'Lighting',
+    slug: 'lighting',
+    description: 'Hand-blown Murano pendants, circadian luminaires, and sculptural sconces.',
+    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80',
+    itemCount: '6 Luminaires',
+  },
+  {
+    id: 'rugs',
+    name: 'Rugs',
+    slug: 'rugs',
+    description: 'Hand-knotted Tibetan wool, bamboo silk, and tactile Varanasi weaves.',
+    image: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=800&q=80',
+    itemCount: '4 Textures',
+  },
+  {
+    id: 'decorative-accessories',
+    name: 'Decorative Accessories',
+    slug: 'decorative-accessories',
+    description: 'Honed travertine trays, hand-carved vessels, and tactile tabletop accents.',
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
+    itemCount: '8 Accents',
+  },
+  {
+    id: 'sculptures-artifacts',
+    name: 'Sculptures & Artifacts',
+    slug: 'sculptures-artifacts',
+    description: 'Limited cast bronze figures, Balinese volcanic basalt art, and monolithic totems.',
+    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+    itemCount: '5 Objects',
+  },
+];
+
+// Featured collections for homepage and sliders
+export const featuredCollections = shopCategories;
+export const categories = shopCategories;

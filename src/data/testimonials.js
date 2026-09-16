@@ -1,0 +1,32 @@
+export const testimonials = [
+  {
+    id: 'test-1',
+    quote: 'Symmetry Interiors transformed our 9,500 sq.ft. Jubilee Hills penthouse into an architectural masterpiece. The precision in bookmatching travertine and the seamless integration of Milanese furniture exceeded every international standard.',
+    author: 'Rajiv & Radhika K.',
+    role: 'Homeowners',
+    project: 'The Glass Horizon Penthouse',
+    location: 'Jubilee Hills, Hyderabad',
+    rating: 5,
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    id: 'test-2',
+    quote: 'As an architect, collaborating with an execution firm that understands micro-tolerances, shadow lines, and material integrity is rare. Symmetry delivers what others merely render in 3D.',
+    author: 'Ar. Ananya Sen',
+    role: 'Principal Architect, Studio Form',
+    project: 'Obsidian Capital Executive Suites',
+    location: 'HITEC City, Hyderabad',
+    rating: 5,
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
+  },
+  {
+    id: 'test-3',
+    quote: 'Their global furniture sourcing saved us months of logistics headaches. Procuring directly from Milan workshops and handling Indian customs flawlessly was a masterclass in luxury project management.',
+    author: 'Siddharth Reddy',
+    role: 'Managing Director, Horizon Properties',
+    project: 'Villa Serenità Estate',
+    location: 'Gandipet, Hyderabad',
+    rating: 5,
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+  },
+];
