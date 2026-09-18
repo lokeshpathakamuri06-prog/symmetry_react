@@ -164,11 +164,11 @@ export const Contact = () => {
 
           {/* Banner Content */}
           <div className="relative z-10 max-w-3xl px-6 py-8 space-y-3 sm:space-y-4">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif text-white font-normal leading-tight tracking-tight drop-shadow-md">
-              Let&apos;s Create Something <span className="italic font-light text-[#BCA575]">Exceptional</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl text-white font-bold leading-tight tracking-tight drop-shadow-md">
+              Let&apos;s Create Something <span className="text-[#BCA575] font-bold">Exceptional</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-white/90 font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm">
+            <p className="text-xs sm:text-sm text-white/90 font-normal max-w-xl mx-auto leading-relaxed drop-shadow-sm">
               Schedule a private design consultation at our Jubilee Hills Pavilion or connect directly with our lead architectural directors.
             </p>
           </div>
@@ -199,7 +199,7 @@ export const Contact = () => {
                     <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                       Inquiry Logged &bull; Reference #{inquiryId}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-1">
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
                       Brief Successfully Transmitted
                     </h3>
                   </div>
@@ -234,7 +234,7 @@ export const Contact = () => {
                     <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                       Architectural Discovery
                     </span>
-                    <h2 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                    <h2 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                       Schedule a Consultation
                     </h2>
                     <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-1 font-light">
@@ -409,7 +409,7 @@ export const Contact = () => {
                 <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                   Design Pavilion &amp; Studio
                 </span>
-                <h3 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                   Symmetry Interiors
                 </h3>
                 <p className="text-xs text-stone-500 dark:text-stone-400">
@@ -552,7 +552,7 @@ export const Contact = () => {
               <span className="text-[10px] uppercase tracking-luxury text-[#36656B] font-semibold block">
                 Manufacturing Atelier
               </span>
-              <h4 className="text-sm font-serif font-medium text-[#131E20] dark:text-[#F5F1E8]">
+              <h4 className="text-sm font-semibold text-[#131E20] dark:text-[#F5F1E8]">
                 25,000 Sq.Ft. Precision Millwork Facility
               </h4>
               <p className="leading-relaxed">
@@ -575,7 +575,7 @@ export const Contact = () => {
                   Interactive Google Map &bull; Live Navigation
                 </span>
               </div>
-              <h3 className="text-lg font-serif text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+              <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                 Symmetry Pavilion &bull; Road No. 36, Jubilee Hills, Hyderabad
               </h3>
             </div>
@@ -659,7 +659,7 @@ export const Contact = () => {
               Architectural Inception
             </span>
 
-            <h2 className="text-3xl sm:text-5xl font-serif font-normal leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
               Start Your Design Journey
             </h2>
 

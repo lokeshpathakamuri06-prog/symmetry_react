@@ -42,7 +42,7 @@ export const ProjectDetail = () => {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-8 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-[#36656B]/15 text-[#36656B] dark:text-[#BCA575] border border-[#36656B]/30">
+              <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-[#36656B]/15 text-[#36656B] dark:text-[#BCA575]">
                 {project.typology}
               </span>
               <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE]">
@@ -50,16 +50,16 @@ export const ProjectDetail = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight">
               {project.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-normal leading-relaxed max-w-2xl">
               {project.summary}
             </p>
           </div>
 
-          <div className="lg:col-span-4 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+          <div className="lg:col-span-4 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark space-y-3 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
             <div className="flex justify-between pb-2 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
               <span className="uppercase tracking-wider">Client Typology</span>
               <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">{project.client}</span>
@@ -98,7 +98,7 @@ export const ProjectDetail = () => {
                 <span className="text-[11px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                   {st.label}
                 </span>
-                <span className="font-serif text-xl sm:text-2xl text-[#131E20] dark:text-[#F5F1E8] font-normal">
+                <span className="font-bold text-xl sm:text-2xl text-[#131E20] dark:text-[#F5F1E8]">
                   {st.value}
                 </span>
               </div>
@@ -114,7 +114,7 @@ export const ProjectDetail = () => {
             <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
               The Narrative
             </span>
-            <h2 className="text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+            <h2 className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
               Spatial Concept &amp; Engineering Solutions
             </h2>
             <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
@@ -143,7 +143,7 @@ export const ProjectDetail = () => {
 
           <div className="lg:col-span-8 space-y-8">
             <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-serif text-[#36656B] dark:text-[#BCA575]">
+              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
                 01 &bull; Architectural Concept
               </h3>
               <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
@@ -152,7 +152,7 @@ export const ProjectDetail = () => {
             </div>
 
             <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-serif text-[#36656B] dark:text-[#BCA575]">
+              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
                 02 &bull; Structural Challenge
               </h3>
               <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
@@ -161,7 +161,7 @@ export const ProjectDetail = () => {
             </div>
 
             <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-serif text-[#36656B] dark:text-[#BCA575]">
+              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
                 03 &bull; Execution &amp; Resolution
               </h3>
               <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
@@ -178,7 +178,7 @@ export const ProjectDetail = () => {
           <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
             Visual Documentation
           </span>
-          <h2 className="text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-1">
+          <h2 className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
             Spaces &amp; Tactile Details
           </h2>
         </div>
@@ -200,7 +200,7 @@ export const ProjectDetail = () => {
               <span className="text-[10px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] block">
                 Previous Case
               </span>
-              <span className="text-sm sm:text-base font-serif text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
+              <span className="text-sm sm:text-base font-semibold text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
                 {prevProject.title}
               </span>
             </div>
@@ -214,7 +214,7 @@ export const ProjectDetail = () => {
               <span className="text-[10px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] block">
                 Next Case
               </span>
-              <span className="text-sm sm:text-base font-serif text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
+              <span className="text-sm sm:text-base font-semibold text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
                 {nextProject.title}
               </span>
             </div>
@@ -231,7 +231,7 @@ export const ProjectDetail = () => {
           <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
             Further Explorations
           </span>
-          <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
             Related Architectural Commissions
           </h2>
         </div>

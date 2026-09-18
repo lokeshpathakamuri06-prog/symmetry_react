@@ -12,7 +12,7 @@ export const NotFound = () => {
       />
 
       <div className="max-w-xl space-y-6">
-        <span className="font-serif text-7xl sm:text-9xl text-[#36656B] dark:text-[#BCA575] font-light block">
+        <span className="font-bold text-7xl sm:text-9xl text-[#36656B] dark:text-[#BCA575] block">
           404
         </span>
 
@@ -20,7 +20,7 @@ export const NotFound = () => {
           Spatial Absence
         </span>
 
-        <h1 className="text-3xl sm:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
           The Room You Are Looking For Does Not Exist.
         </h1>
 

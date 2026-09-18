@@ -67,7 +67,7 @@ export const OrderSuccess = () => {
           <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
             Commission Reference
           </span>
-          <h1 className="text-3xl sm:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
             Order Successfully Confirmed
           </h1>
           <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] max-w-lg mx-auto mt-2 font-light">
@@ -90,7 +90,7 @@ export const OrderSuccess = () => {
 
         {/* Timeline / Production Status */}
         <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6">
-          <h3 className="text-lg font-serif text-[#131E20] dark:text-[#F5F1E8]">
+          <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
             Execution &amp; Delivery Progress
           </h3>
 
@@ -123,7 +123,7 @@ export const OrderSuccess = () => {
 
         {/* Itemized Breakdown */}
         <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6">
-          <h3 className="text-lg font-serif text-[#131E20] dark:text-[#F5F1E8] pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
+          <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
             Itemized Commission Schedule
           </h3>
 
@@ -145,8 +145,8 @@ export const OrderSuccess = () => {
                     </p>
                   </div>
                 </div>
-                <span className="font-serif font-medium text-[#131E20] dark:text-[#F5F1E8] text-sm">
-                  &#8379;{(item.price * item.quantity).toLocaleString('en-IN')}
+                <span className="font-medium text-[#131E20] dark:text-[#F5F1E8] text-sm">
+                  ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                 </span>
               </div>
             ))}
@@ -156,13 +156,13 @@ export const OrderSuccess = () => {
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                &#8379;{order.subtotal?.toLocaleString('en-IN')}
+                ₹{order.subtotal?.toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between">
               <span>18% GST</span>
               <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                &#8379;{order.tax?.toLocaleString('en-IN')}
+                ₹{order.tax?.toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between">
@@ -175,8 +175,8 @@ export const OrderSuccess = () => {
               <span className="text-sm font-semibold uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8]">
                 Total Amount
               </span>
-              <span className="text-2xl font-serif font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                &#8379;{order.totalAmount?.toLocaleString('en-IN')}
+              <span className="text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                ₹{order.totalAmount?.toLocaleString('en-IN')}
               </span>
             </div>
           </div>

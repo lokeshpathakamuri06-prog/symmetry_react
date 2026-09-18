@@ -104,8 +104,8 @@ export const JournalDetail = () => {
             </span>
           </div>
 
-          {/* Large Serif Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-[1.12] tracking-tight">
+          {/* Large Title */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-[1.12]">
             {blog.title}
           </h1>
 

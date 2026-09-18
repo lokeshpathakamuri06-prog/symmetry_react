@@ -101,12 +101,12 @@ export const QuickViewModal = ({ product, onClose }) => {
                   {product.name}
                 </h3>
                 <div className="flex items-baseline gap-3">
-                  <span className="text-xl sm:text-2xl font-serif font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                    &#8379;{product.price.toLocaleString('en-IN')}
+                  <span className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                    ₹{product.price.toLocaleString('en-IN')}
                   </span>
                   {product.originalPrice && (
                     <span className="text-xs text-[#4F6467] line-through">
-                      &#8379;{product.originalPrice.toLocaleString('en-IN')}
+                      ₹{product.originalPrice.toLocaleString('en-IN')}
                     </span>
                   )}
                 </div>

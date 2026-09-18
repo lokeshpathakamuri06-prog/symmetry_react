@@ -166,10 +166,10 @@ export const Shop = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-normal leading-[1.08] tracking-tight drop-shadow-md"
+            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-[1.08] tracking-tight drop-shadow-md"
           >
             Curated Furniture <br />
-            <span className="italic font-light text-[#BCA575]">
+            <span className="text-[#BCA575] font-bold">
               &amp; Architectural Objects.
             </span>
           </motion.h1>
@@ -178,7 +178,7 @@ export const Shop = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
+            className="text-sm sm:text-base lg:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
           >
             Every piece is built to order from monolithic Italian travertine, kiln-dried European hardwoods, and tactile vegetable-tanned leathers in our dedicated fabrication atelier.
           </motion.p>
@@ -204,7 +204,7 @@ export const Shop = () => {
               key={idx}
               className="p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-xl border border-[#D1DCDE] dark:border-[#1E3447] shadow-lg text-center group hover:border-[#36656B]/60 transition-colors"
             >
-              <p className="font-serif text-2xl sm:text-3xl text-[#36656B] dark:text-[#BCA575] font-normal group-hover:scale-105 transition-transform duration-300">
+              <p className="font-bold text-2xl sm:text-3xl text-[#36656B] dark:text-[#BCA575] group-hover:scale-105 transition-transform duration-300">
                 {m.value}
               </p>
               <p className="text-xs uppercase tracking-luxury font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-1">
@@ -235,7 +235,7 @@ export const Shop = () => {
                 setCurrentPage(1);
               }}
               placeholder="Search by piece name, materials (travertine, bouclé, walnut)..."
-              className="w-full pl-10 pr-10 py-3 rounded-full bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-xs sm:text-sm text-[#131E20] dark:text-[#F5F1E8] placeholder:text-[#6B8083] dark:placeholder:text-[#8E9CA8] focus:outline-none focus:border-[#36656B] shadow-sm transition-colors"
+              className="w-full pl-10 pr-10 py-3 rounded-full bg-white dark:bg-[#0D1C29] text-xs sm:text-sm text-[#131E20] dark:text-[#F5F1E8] placeholder:text-[#6B8083] dark:placeholder:text-[#8E9CA8] focus:outline-none shadow-apple dark:shadow-apple-dark transition-colors"
             />
             {searchQuery && (
               <button
@@ -251,7 +251,7 @@ export const Shop = () => {
           {/* Mobile Filter Button (Triggers Drawer on small screens) */}
           <button
             onClick={() => setDrawerOpen(true)}
-            className="lg:hidden px-5 py-3 rounded-full bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+            className="lg:hidden px-5 py-3 rounded-full bg-white dark:bg-[#0D1C29] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center gap-2 shadow-apple dark:shadow-apple-dark cursor-pointer"
           >
             <SlidersHorizontal className="w-4 h-4 text-[#36656B]" />
             <span>Filters &amp; Sort</span>
@@ -268,8 +268,8 @@ export const Shop = () => {
               onClick={() => handleCategorySelect('all')}
               className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer ${
                 selectedCategory === 'all'
-                  ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md ring-1 ring-[#36656B]'
-                  : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B]'
+                  ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md'
+                  : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] shadow-xs hover:bg-[#E5ECEC]/50'
               }`}
             >
               <span>All Pieces ({products.length})</span>
@@ -285,14 +285,12 @@ export const Shop = () => {
                   onClick={() => handleCategorySelect(cat.slug)}
                   className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                     isActive
-                      ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md ring-1 ring-[#36656B]'
-                      : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B]'
+                      ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md font-semibold'
+                      : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] shadow-xs hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838]'
                   }`}
                 >
                   <span>{cat.name}</span>
-                  <span className={`text-[10px] font-mono ${isActive ? 'opacity-80' : 'opacity-60'}`}>
-                    ({count})
-                  </span>
+                  <span className="font-mono text-[10px] opacity-70">({count})</span>
                 </button>
               );
             })}
@@ -306,9 +304,9 @@ export const Shop = () => {
       <section ref={gridTopRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* DESKTOP FILTER SIDEBAR */}
-          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm">
-            <div className="flex items-center justify-between pb-4 border-b border-[#D1DCDE]/70 dark:border-[#1E3447]">
-              <h3 className="font-serif text-xl text-[#131E20] dark:text-[#F5F1E8] font-normal flex items-center gap-2">
+          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-3xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark">
+            <div className="flex items-center justify-between pb-4">
+              <h3 className="font-bold tracking-tight text-xl text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-[#36656B] dark:text-[#BCA575]" />
                 <span>Refine Catalog</span>
               </h3>
@@ -402,7 +400,7 @@ export const Shop = () => {
                   Max Price
                 </h4>
                 <span className="text-xs font-mono font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                  &#8379;{priceRange.toLocaleString('en-IN')}
+                  ₹{priceRange.toLocaleString('en-IN')}
                 </span>
               </div>
               <input
@@ -418,8 +416,8 @@ export const Shop = () => {
                 className="w-full accent-[#36656B] cursor-pointer"
               />
               <div className="flex justify-between text-[10px] font-mono text-[#6B8083] dark:text-[#8E9CA8] mt-1.5">
-                <span>&#8379;50,000</span>
-                <span>&#8379;5,00,000</span>
+                <span>₹50,000</span>
+                <span>₹5,00,000</span>
               </div>
             </div>
           </aside>
@@ -477,7 +475,7 @@ export const Shop = () => {
             {filteredProducts.length === 0 && (
               <div className="py-24 text-center rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] p-8">
                 <Search className="w-10 h-10 text-[#36656B] dark:text-[#BCA575] mx-auto mb-3 opacity-60" />
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#131E20] dark:text-[#F5F1E8]">
+                <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-[#131E20] dark:text-[#F5F1E8]">
                   No Pieces Match Your Search
                 </h3>
                 <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] mt-2 mb-6 max-w-md mx-auto font-light leading-relaxed">

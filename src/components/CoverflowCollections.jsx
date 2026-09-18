@@ -91,7 +91,7 @@ export const CoverflowCollections = () => {
           <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2.5">
             Our Featured Collection
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal tracking-tight leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
             Designs That Inspire Living
           </h2>
           <p className="mt-3 text-base sm:text-lg md:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-xl mx-auto">
@@ -186,7 +186,7 @@ export const CoverflowCollections = () => {
                     <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#A7C3C6] font-semibold block mb-2">
                       {item.categoryNumber}
                     </span>
-                    <h3 className="text-3xl sm:text-4xl font-serif font-normal leading-tight">
+                    <h3 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
                       {item.title}
                     </h3>
                     <p className="text-sm sm:text-base text-white/90 mt-1.5 font-light leading-relaxed">

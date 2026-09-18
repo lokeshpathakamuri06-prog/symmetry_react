@@ -208,11 +208,11 @@ export const Header = () => {
           </nav>
 
           {/* Right Action Icons & Sign In CTA */}
-          <div className="flex items-center space-x-2.5 sm:space-x-4">
+          <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
             {/* Search Trigger */}
             <button
               onClick={openSearch}
-              className="p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors cursor-pointer"
+              className="p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors cursor-pointer shrink-0"
               aria-label="Search"
               title="Search (Ctrl + K)"
             >
@@ -222,7 +222,7 @@ export const Header = () => {
             {/* Wishlist / Saved Items Trigger */}
             <Link
               to="/shop"
-              className="p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors"
+              className="p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors shrink-0"
               aria-label="Wishlist"
               title="Wishlist"
             >
@@ -232,7 +232,7 @@ export const Header = () => {
             {/* Shopping Cart Trigger */}
             <Link
               to="/cart"
-              className="relative p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors"
+              className="relative p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors shrink-0"
               aria-label={`Cart with ${cartCount} items`}
               title="Cart"
             >
@@ -245,21 +245,23 @@ export const Header = () => {
             </Link>
 
             {/* Theme Toggle */}
-            <ThemeToggle />
+            <div className="shrink-0">
+              <ThemeToggle />
+            </div>
 
             {/* Sign In Button */}
             <Link
               to="/contact"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-[#131E20] dark:bg-[#BCA575] text-white dark:text-[#07121C] text-[11px] font-semibold uppercase tracking-luxury hover:bg-[#36656B] dark:hover:bg-[#d4be8d] transition-colors shadow-sm whitespace-nowrap"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm bg-[#131E20] dark:bg-[#BCA575] text-white dark:text-[#07121C] text-[11px] font-semibold uppercase tracking-luxury hover:bg-[#36656B] dark:hover:bg-[#d4be8d] transition-colors shadow-sm whitespace-nowrap shrink-0"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>SIGN IN</span>
             </Link>
 
-            {/* Mobile Menu Trigger */}
+            {/* Mobile / Tablet Menu Trigger */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] cursor-pointer"
+              className="lg:hidden p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] cursor-pointer shrink-0"
               aria-label="Open mobile menu"
             >
               <Menu className="w-6 h-6" />

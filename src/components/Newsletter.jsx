@@ -17,12 +17,12 @@ export const Newsletter = ({ className = '' }) => {
   };
 
   return (
-    <div className={`p-8 sm:p-10 rounded-2xl bg-[#E5ECEC]/50 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] ${className}`}>
+    <div className={`p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark ${className}`}>
       <div className="max-w-xl">
         <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2">
           The Symmetry Journal
         </span>
-        <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mb-3">
+        <h3 className="text-2xl sm:text-3xl font-medium text-[#131E20] dark:text-[#F5F1E8] mb-3">
           Curated Design Dispatches
         </h3>
         <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed mb-6 font-normal">
@@ -46,7 +46,7 @@ export const Newsletter = ({ className = '' }) => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your private email..."
               required
-              className="flex-1 px-4 py-3.5 rounded-full bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-base text-[#131E20] dark:text-[#F5F1E8] placeholder-[#4F6467]/60 focus:outline-none focus:border-[#36656B] dark:focus:border-[#BCA575] transition-colors"
+              className="flex-1 px-4 py-3.5 rounded-full bg-[#F4F7F6] dark:bg-[#07121C] text-base text-[#131E20] dark:text-[#F5F1E8] placeholder-[#4F6467]/60 focus:outline-none transition-colors"
             />
             <button
               type="submit"

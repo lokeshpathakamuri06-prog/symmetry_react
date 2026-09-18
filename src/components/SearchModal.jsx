@@ -66,7 +66,7 @@ export const SearchModal = () => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4">
+        <div className="fixed inset-0 z-[1200] flex items-start justify-center pt-16 sm:pt-24 px-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -80,10 +80,10 @@ export const SearchModal = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-2xl bg-[#FFFFFF] dark:bg-[#0D1C29] rounded-2xl shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden z-10"
+            className="relative w-full max-w-2xl bg-[#FFFFFF] dark:bg-[#0D1C29] rounded-2xl shadow-apple dark:shadow-apple-dark overflow-hidden z-10"
           >
             {/* Search Input Bar */}
-            <div className="flex items-center px-5 py-4 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
+            <div className="flex items-center px-5 py-4">
               <Search className="w-5 h-5 text-[#36656B] dark:text-[#BCA575] mr-3 shrink-0" />
               <input
                 ref={inputRef}
@@ -96,7 +96,7 @@ export const SearchModal = () => {
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="p-1 mr-2 text-xs uppercase tracking-wider text-[#4F6467] hover:text-[#131E20] dark:hover:text-white"
+                  className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] hover:text-[#131E20] dark:hover:text-white mr-2"
                 >
                   Clear
                 </button>
@@ -123,7 +123,7 @@ export const SearchModal = () => {
                         <button
                           key={tag}
                           onClick={() => setQuery(tag)}
-                          className="text-xs px-3 py-1.5 rounded-full bg-[#F4F7F6] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] transition-colors"
+                          className="text-xs px-3 py-1.5 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white transition-colors"
                         >
                           {tag}
                         </button>
@@ -167,7 +167,7 @@ export const SearchModal = () => {
                                 {p.name}
                               </h4>
                               <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-                                {p.collection} &bull; &#8379;{p.price.toLocaleString('en-IN')}
+                                {p.collection} &bull; ₹{p.price.toLocaleString('en-IN')}
                               </p>
                             </div>
                             <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-[#36656B] group-hover:translate-x-1 transition-all" />

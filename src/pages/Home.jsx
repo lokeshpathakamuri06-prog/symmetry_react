@@ -25,6 +25,7 @@ import CategoryCircleMarquee from '../components/CategoryCircleMarquee';
 import FinalCta from '../components/FinalCta';
 import DynamicScrollShowcase from '../components/DynamicScrollShowcase';
 import ScribbleUnderline from '../components/ScribbleUnderline';
+import AppleCardWrapper from '../components/AppleCardWrapper';
 
 // Data imports
 import { products } from '../data/products';
@@ -87,11 +88,11 @@ export const Home = () => {
               />
             </div>
             {/* Floating Architectural Badge */}
-            <div className="absolute -bottom-6 -right-6 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl hidden sm:block max-w-[240px]">
+            <div className="absolute -bottom-6 -right-6 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark hidden sm:block max-w-[240px]">
               <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1.5">
                 Heritage &bull; Excellence
               </span>
-              <p className="font-serif text-xl text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight">
+              <p className="text-xl text-[#131E20] dark:text-[#F5F1E8] font-medium leading-tight">
                 25,000 sq.ft. Dedicated Atelier
               </p>
             </div>
@@ -109,7 +110,7 @@ export const Home = () => {
               25+ Years Sourcing Expertise
             </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-[1.12] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
               Built on Legacy.{' '}
               <ScribbleUnderline color="#36656B">Designed for Modern Living.</ScribbleUnderline>
             </h2>
@@ -126,8 +127,8 @@ export const Home = () => {
               <Button to="/about" variant="primary" size="lg" showArrow>
                 Discover Our Story
               </Button>
-              <div className="hidden sm:block border-l border-[#D1DCDE] dark:border-[#1E3447] pl-6 text-sm text-[#4F6467] dark:text-[#AEB7BE]">
-                <strong className="text-[#131E20] dark:text-[#F5F1E8] block text-base font-serif">
+              <div className="hidden sm:block pl-6 text-sm text-[#4F6467] dark:text-[#AEB7BE]">
+                <strong className="text-[#131E20] dark:text-[#F5F1E8] block text-base font-medium">
                   25+ Years Legacy
                 </strong>
                 <span>Pan-India &bull; Global Sourcing</span>
@@ -205,7 +206,7 @@ export const Home = () => {
           />
 
           {/* Typology Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2 border border-[#D1DCDE] dark:border-[#1E3447] p-1.5 rounded-full bg-white dark:bg-[#0D1C29]">
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-full bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark">
             {['All', 'Residential', 'Commercial', 'Hospitality'].map((type) => (
               <button
                 key={type}
@@ -290,7 +291,7 @@ export const Home = () => {
 
                 {/* Title */}
                 <Link to={`/projects/${proj.id}`} className="hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors">
-                  <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] leading-snug">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-snug">
                     {proj.title}
                   </h3>
                 </Link>
@@ -419,43 +420,45 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.07 }}
-                className="group relative p-8 sm:p-9 rounded-[32px] bg-white dark:bg-[#0D1C29] border border-[#D1DCDE]/70 dark:border-[#1E3447] shadow-[0_4px_24px_rgba(19,30,32,0.03)] hover:shadow-[0_24px_48px_-15px_rgba(54,101,107,0.15)] dark:hover:shadow-[0_24px_48px_-15px_rgba(0,0,0,0.7)] hover:border-[#36656B]/40 dark:hover:border-[#BCA575]/40 transition-all duration-500 ease-out flex flex-col justify-between hover:-translate-y-1.5"
+                transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
               >
-                <div>
-                  {/* Top Header Row: Apple-like Squircle Icon & Kicker Badge */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#E5ECEC] to-[#F4F7F6] dark:from-[#132838] dark:to-[#07121C] border border-[#D1DCDE]/80 dark:border-[#1E3447] flex items-center justify-center text-[#36656B] dark:text-[#BCA575] shadow-sm group-hover:scale-110 group-hover:border-[#36656B]/40 transition-all duration-300">
-                      <Icon className="w-6 h-6" />
+                <AppleCardWrapper className="group relative p-8 sm:p-9 rounded-[32px] bg-white dark:bg-[#0D1C29] flex flex-col justify-between h-full">
+                  <div>
+                    {/* Top Header Row: Apple-like Squircle Icon & Kicker Badge */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#F4F7F6] dark:bg-[#132838] flex items-center justify-center text-[#36656B] dark:text-[#BCA575] shadow-sm group-hover:scale-110 transition-all duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-mono font-medium bg-[#F4F7F6] dark:bg-[#07121C] text-[#36656B] dark:text-[#BCA575]">
+                        0{idx + 1} &bull; {item.kicker}
+                      </span>
                     </div>
 
-                    <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-mono font-medium bg-[#F4F7F6] dark:bg-[#07121C] border border-[#D1DCDE]/70 dark:border-[#1E3447] text-[#36656B] dark:text-[#BCA575]">
-                      0{idx + 1} &bull; {item.kicker}
-                    </span>
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                      {item.title}
+                    </h3>
+
+                    {/* Narrative Body */}
+                    <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light mt-3.5">
+                      {item.desc}
+                    </p>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
-                    {item.title}
-                  </h3>
+                  {/* Bottom Apple-style Stat */}
+                  <div className="pt-6 mt-6 flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                      {item.highlight}
+                    </span>
 
-                  {/* Narrative Body */}
-                  <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light mt-3.5">
-                    {item.desc}
-                  </p>
-                </div>
-
-                {/* Bottom Apple-style Divider & Highlight Stat */}
-                <div className="pt-6 mt-6 border-t border-[#D1DCDE]/50 dark:border-[#1E3447]/70 flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
-                    {item.highlight}
-                  </span>
-
-                  <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-light">
-                    {item.benchmark}
-                  </span>
-                </div>
+                    <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-light">
+                      {item.benchmark}
+                    </span>
+                  </div>
+                </AppleCardWrapper>
               </motion.div>
             );
           })}

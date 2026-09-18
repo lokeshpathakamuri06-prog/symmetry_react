@@ -177,7 +177,7 @@ export const Checkout = () => {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Atelier Acquisition Step 02</span>
           </span>
-          <h1 className="text-3xl sm:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight mt-1">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-1">
             Delivery Address &amp; Payment
           </h1>
           <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] mt-2 font-light">
@@ -194,7 +194,7 @@ export const Checkout = () => {
             {/* 1. Customer Information */}
             <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-5 shadow-sm">
               <div className="flex items-center justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-serif text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
+                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">1</span>
                   <span>Customer Information</span>
                 </h2>
@@ -282,7 +282,7 @@ export const Checkout = () => {
             {/* 2. Shipping Address */}
             <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-5 shadow-sm">
               <div className="flex items-center justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-serif text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
+                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">2</span>
                   <span>Shipping &amp; Site Address</span>
                 </h2>
@@ -439,7 +439,7 @@ export const Checkout = () => {
             {/* 3. Payment Method UI */}
             <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-serif text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
+                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">3</span>
                   <span>Payment Authorization</span>
                 </h2>
@@ -678,7 +678,7 @@ export const Checkout = () => {
               <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                 Review &amp; Authorize
               </span>
-              <h3 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-medium mt-0.5">
+              <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                 Order Summary
               </h3>
             </div>
@@ -693,7 +693,7 @@ export const Checkout = () => {
                     className="w-12 h-12 rounded-lg object-cover bg-stone-100 shrink-0 border border-stone-200 dark:border-stone-800"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-serif font-medium text-[#131E20] dark:text-[#F5F1E8] truncate">
+                    <div className="font-bold text-[#131E20] dark:text-[#F5F1E8] truncate">
                       {item.name}
                     </div>
                     <div className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE]">
@@ -745,7 +745,7 @@ export const Checkout = () => {
                     (Inclusive of all taxes &amp; logistics)
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
                   ₹{totalAmount.toLocaleString('en-IN')}
                 </span>
               </div>

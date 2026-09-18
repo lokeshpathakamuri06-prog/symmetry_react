@@ -164,7 +164,7 @@ export const FloatingActionStack = () => {
       ========================================================================= */}
       <AnimatePresence>
         {whatsappModalOpen && (
-          <div className="fixed inset-0 z-[110] flex items-end sm:items-center justify-end p-4 sm:p-8 pointer-events-none">
+          <div className="fixed inset-0 z-[1300] flex items-end sm:items-center justify-end p-4 sm:p-8 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -222,7 +222,7 @@ export const FloatingActionStack = () => {
       ========================================================================= */}
       <AnimatePresence>
         {catalogModalOpen && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[1300] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}

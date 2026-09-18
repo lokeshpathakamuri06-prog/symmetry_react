@@ -73,7 +73,7 @@ export const Cart = () => {
               <Sparkles className="w-3.5 h-3.5" />
               <span>Architectural Curation</span>
             </span>
-            <h1 className="text-3xl sm:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight mt-1">
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-1">
               Your Curated Bag
             </h1>
           </div>
@@ -128,7 +128,7 @@ export const Cart = () => {
               Atelier Bag Unoccupied
             </span>
 
-            <h2 className="text-3xl sm:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-2 mb-4 font-normal">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-2 mb-4">
               Your Architectural Curation is Empty
             </h2>
 
@@ -202,7 +202,7 @@ export const Cart = () => {
                           
                           <Link
                             to={`/shop/${item.id}`}
-                            className="text-base sm:text-lg font-serif text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] transition-colors leading-snug block font-medium"
+                            className="text-base sm:text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] transition-colors leading-snug block"
                           >
                             {item.name}
                           </Link>
@@ -225,7 +225,7 @@ export const Cart = () => {
 
                           {/* Mobile Unit Price */}
                           <div className="sm:hidden pt-2">
-                            <span className="text-sm font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                            <span className="text-sm font-bold text-[#131E20] dark:text-[#F5F1E8]">
                               ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                             </span>
                             {item.quantity > 1 && (
@@ -266,7 +266,7 @@ export const Cart = () => {
 
                         {/* Desktop Line Total */}
                         <div className="hidden sm:block text-right min-w-[120px]">
-                          <div className="text-base sm:text-lg font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                          <div className="text-base sm:text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
                             ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                           </div>
                           {item.quantity > 1 && (
@@ -315,7 +315,7 @@ export const Cart = () => {
                 <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
                   Atelier Valuation
                 </span>
-                <h3 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-medium mt-0.5">
+                <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                   Order Summary
                 </h3>
               </div>
@@ -365,7 +365,7 @@ export const Cart = () => {
                       (Incl. white-glove setup & transit insurance)
                     </span>
                   </div>
-                  <span className="text-2xl sm:text-3xl font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
                     ₹{finalTotal.toLocaleString('en-IN')}
                   </span>
                 </div>

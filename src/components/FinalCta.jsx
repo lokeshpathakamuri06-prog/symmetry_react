@@ -23,7 +23,7 @@ export const FinalCta = ({ className = '' }) => {
           </div>
 
           {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
             Your Space. Our Expertise.
           </h2>
 

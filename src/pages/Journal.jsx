@@ -126,16 +126,16 @@ export const Journal = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white font-normal leading-[1.05] tracking-tight uppercase drop-shadow-md"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-bold leading-[1.05] tracking-tight uppercase drop-shadow-md"
           >
-            THE SYMMETRY <span className="italic font-light text-[#BCA575]">JOURNAL</span>
+            THE SYMMETRY <span className="text-[#BCA575] font-bold">JOURNAL</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm sm:text-base md:text-lg text-white/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
+            className="text-sm sm:text-base md:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
           >
             Critical reflections, architectural monographs, and practical buying guides curated by our studio directors, master artisans, and global procurement specialists.
           </motion.p>
@@ -163,7 +163,7 @@ export const Journal = () => {
               key={i}
               className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl text-center flex flex-col justify-center transition-all duration-300 hover:border-[#36656B]/50 hover:shadow-2xl"
             >
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-normal leading-tight">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] leading-tight">
                 {stat.value}
               </span>
               <span className="text-xs uppercase tracking-luxury font-medium text-[#131E20] dark:text-[#F5F1E8] mt-1.5">
@@ -234,7 +234,7 @@ export const Journal = () => {
                   </div>
 
                   <Link to={`/journal/${featuredBlog.id}`} className="block hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors">
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-snug">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-snug">
                       {featuredBlog.title}
                     </h2>
                   </Link>
@@ -365,7 +365,7 @@ export const Journal = () => {
                 className="py-20 px-6 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-center max-w-xl mx-auto my-8 shadow-sm"
               >
                 <BookOpen className="w-10 h-10 text-[#36656B] mx-auto mb-3 stroke-[1.2]" />
-                <h3 className="text-xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+                <h3 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
                   No Essays Found
                 </h3>
                 <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-2 mb-6 font-light">

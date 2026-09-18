@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AppleCardWrapper from './AppleCardWrapper';
 
 export const BlogCard = ({ blog, index = 0 }) => {
   if (!blog) return null;
@@ -12,10 +13,10 @@ export const BlogCard = ({ blog, index = 0 }) => {
       initial={{ opacity: 0, y: 35, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-60px' }}
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-3xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#36656B]/60 dark:hover:border-[#BCA575]/60 hover:shadow-[0_20px_50px_rgba(54,101,107,0.12)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] transition-all duration-500"
+      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
     >
+      <AppleCardWrapper className="group relative flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
       {/* Clickable Image Frame with Zoom, Reflection Sweep, and Overlays */}
       <Link
         to={`/journal/${blog.id}`}
@@ -37,7 +38,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
 
         {/* Category Pill Tag */}
         <div className="absolute top-4 left-4 z-20">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F7F6] backdrop-blur-md border border-white/15 shadow-sm group-hover:border-[#BCA575]/50 transition-colors">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F7F6] backdrop-blur-md shadow-sm transition-colors">
             <BookOpen className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {blog.category}
           </span>
@@ -45,14 +46,14 @@ export const BlogCard = ({ blog, index = 0 }) => {
 
         {/* Read Time Tag */}
         <div className="absolute top-4 right-4 z-20">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md border border-black/10 dark:border-white/10 shadow-sm">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md shadow-sm">
             <Clock className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {blog.readTime}
           </span>
         </div>
 
         {/* Corner Floating Action Icon */}
-        <div className="absolute bottom-4 right-4 z-20 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl border border-white/20">
+        <div className="absolute bottom-4 right-4 z-20 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl">
           <ArrowUpRight className="w-5 h-5 text-[#36656B] dark:text-[#BCA575] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
       </Link>
@@ -72,7 +73,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
             to={`/journal/${blog.id}`}
             className="block group/link"
           >
-            <h3 className="text-xl sm:text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-snug group-hover/link:text-[#36656B] dark:group-hover/link:text-[#BCA575] transition-colors duration-300">
+            <h3 className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover/link:text-[#36656B] dark:group-hover/link:text-[#BCA575] transition-colors duration-300">
               {blog.title}
             </h3>
           </Link>
@@ -84,7 +85,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
         </div>
 
         {/* Footer Link */}
-        <div className="pt-4 border-t border-[#E5ECEC] dark:border-[#1E3447]/60 flex items-center justify-between">
+        <div className="pt-4 flex items-center justify-between">
           <Link
             to={`/journal/${blog.id}`}
             className="inline-flex items-center gap-1.5 text-xs uppercase tracking-luxury font-medium text-[#36656B] dark:text-[#BCA575] group-hover:translate-x-1 transition-transform"
@@ -97,6 +98,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
           </span>
         </div>
       </div>
+      </AppleCardWrapper>
     </motion.article>
   );
 };

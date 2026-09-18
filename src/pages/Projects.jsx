@@ -128,16 +128,16 @@ export const Projects = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-normal leading-[1.08] tracking-tight drop-shadow-md"
+            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-[1.08] tracking-tight drop-shadow-md"
           >
-            Spaces We’ve <span className="italic font-light text-[#BCA575]">Brought to Life</span>
+            Spaces We’ve <span className="text-[#BCA575] font-bold">Brought to Life</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
+            className="text-sm sm:text-base lg:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
           >
             Explore our residential, hospitality, commercial, healthcare, and bespoke interior projects delivered with singular turnkey accountability.
           </motion.p>
@@ -165,7 +165,7 @@ export const Projects = () => {
               transition={{ duration: 0.3 }}
               className="p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-xl border border-[#D1DCDE] dark:border-[#1E3447] shadow-lg text-center group hover:border-[#36656B]/60 dark:hover:border-[#BCA575]/60 hover:shadow-xl transition-all duration-300"
             >
-              <p className="font-serif text-2xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-normal group-hover:scale-105 transition-transform duration-300">
+              <p className="font-bold text-2xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] group-hover:scale-105 transition-transform duration-300">
                 {st.value}
               </p>
               <p className="text-xs font-sans uppercase tracking-luxury font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-1">
@@ -232,7 +232,7 @@ export const Projects = () => {
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
                   {featuredProject.title}
                 </h2>
 
@@ -303,7 +303,7 @@ export const Projects = () => {
             <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
               Curated Commissions
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
               Browse by Typology
             </h2>
           </div>
@@ -368,7 +368,7 @@ export const Projects = () => {
             className="py-24 text-center rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm"
           >
             <Layers className="w-10 h-10 text-[#36656B] dark:text-[#BCA575] mx-auto mb-3 opacity-60 animate-pulse" />
-            <h3 className="font-serif text-2xl text-[#131E20] dark:text-[#F5F1E8]">
+            <h3 className="font-bold tracking-tight text-2xl text-[#131E20] dark:text-[#F5F1E8]">
               No Projects in This Category
             </h3>
             <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-2 max-w-sm mx-auto font-light">

@@ -104,7 +104,7 @@ export const CoverflowSourcing = () => {
           <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2.5">
             Global Procurement Network
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal tracking-tight leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
             Sourced Directly from Master Ateliers
           </h2>
           <p className="mt-3 text-base sm:text-lg md:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-xl mx-auto">
@@ -190,7 +190,7 @@ export const CoverflowSourcing = () => {
 
                   {/* Card Overlay Content: ONLY Country Name */}
                   <div className="absolute bottom-8 inset-x-0 text-center pointer-events-none px-6">
-                    <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-normal tracking-wide drop-shadow-md">
+                    <h3 className="font-bold tracking-tight text-3xl sm:text-4xl lg:text-5xl text-white drop-shadow-md">
                       {item.country}
                     </h3>
                   </div>

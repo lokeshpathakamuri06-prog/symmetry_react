@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,10 +17,22 @@ export const FilterDrawer = ({
   onSelectStockFilter,
   onReset,
 }) => {
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+        <div className="fixed inset-0 z-[1200] flex justify-end">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -36,12 +48,12 @@ export const FilterDrawer = ({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-md bg-[#FFFFFF] dark:bg-[#0D1C29] text-[#131E20] dark:text-[#F5F1E8] h-full flex flex-col justify-between p-6 sm:p-8 shadow-2xl z-10 border-l border-[#D1DCDE] dark:border-[#1E3447]"
+            className="relative w-full max-w-md bg-[#FFFFFF] dark:bg-[#0D1C29] text-[#131E20] dark:text-[#F5F1E8] h-full flex flex-col justify-between p-6 sm:p-8 shadow-apple-dark dark:shadow-apple-dark z-10"
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-5 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
+            <div className="flex items-center justify-between pb-5">
               <div>
-                <h3 className="text-xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+                <h3 className="text-xl font-medium text-[#131E20] dark:text-[#F5F1E8]">
                   Refine Collection
                 </h3>
                 <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
@@ -50,7 +62,7 @@ export const FilterDrawer = ({
               </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-[#4F6467] hover:text-[#131E20] dark:hover:text-white cursor-pointer"
+                className="p-2 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#4F6467] hover:text-[#131E20] dark:hover:text-white cursor-pointer"
                 aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
@@ -129,8 +141,8 @@ export const FilterDrawer = ({
                     <h4 className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
                       Max Price
                     </h4>
-                    <span className="text-xs font-serif font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                      &#8379;{Number(currentPrice || maxPrice).toLocaleString('en-IN')}
+                    <span className="text-xs font-mono font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                      ₹{Number(currentPrice || maxPrice).toLocaleString('en-IN')}
                     </span>
                   </div>
                   <input
@@ -143,8 +155,8 @@ export const FilterDrawer = ({
                     className="w-full accent-[#36656B] cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-[#4F6467] dark:text-[#AEB7BE] mt-2 font-mono">
-                    <span>&#8379;50,000</span>
-                    <span>&#8379;{maxPrice.toLocaleString('en-IN')}</span>
+                    <span>₹50,000</span>
+                    <span>₹{maxPrice.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               )}

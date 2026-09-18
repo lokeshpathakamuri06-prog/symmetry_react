@@ -71,10 +71,10 @@ export const Sourcing = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-8xl font-serif text-white font-normal leading-[1.05] tracking-tight drop-shadow-md"
+            className="text-4xl sm:text-6xl lg:text-8xl text-white font-bold leading-[1.05] tracking-tight drop-shadow-md"
           >
             Craftsmanship <br />
-            <span className="italic font-light text-[#BCA575]">
+            <span className="text-[#BCA575] font-bold">
               Without Borders
             </span>
           </motion.h1>
@@ -83,7 +83,7 @@ export const Sourcing = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-3xl mx-auto drop-shadow-sm"
+            className="text-sm sm:text-base lg:text-lg text-white/90 font-normal leading-relaxed max-w-3xl mx-auto drop-shadow-sm"
           >
             Twenty-five years of direct extraction rights at Italian stone quarries and generational contracts with master craft guilds across China, Malaysia, Vietnam, and Bali.
           </motion.p>
@@ -106,7 +106,7 @@ export const Sourcing = () => {
               transition={{ duration: 0.3 }}
               className="p-4 sm:p-6 rounded-2xl bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-xl border border-[#D1DCDE] dark:border-[#1E3447] shadow-lg text-center group hover:border-[#36656B]/60 dark:hover:border-[#BCA575]/60 hover:shadow-xl transition-all duration-300"
             >
-              <p className="font-serif text-2xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-normal group-hover:scale-105 transition-transform duration-300">
+              <p className="font-bold text-2xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] group-hover:scale-105 transition-transform duration-300">
                 {st.value}
               </p>
               <p className="text-xs font-sans uppercase tracking-luxury font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-1">
@@ -129,7 +129,7 @@ export const Sourcing = () => {
             <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
               International Procurement Network
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
               Direct Origin Hubs
             </h2>
           </div>
@@ -272,7 +272,7 @@ export const Sourcing = () => {
                   <div className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1' : ''}`}>
                     {/* Header */}
                     <div>
-                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight">
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight">
                         {country.name}
                       </h3>
                       <p className="text-xs sm:text-sm font-sans uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mt-1.5">
@@ -381,7 +381,7 @@ export const Sourcing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight"
             >
               The End-to-End Procurement Journey
             </motion.h2>
@@ -430,7 +430,7 @@ export const Sourcing = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none z-10" />
 
                   {/* Faint Giant Watermark Numeral */}
-                  <span className="absolute -top-3 -right-2 font-serif text-7xl font-extralight text-[#36656B]/10 dark:text-[#BCA575]/10 group-hover:text-[#36656B]/20 group-hover:scale-110 transition-all duration-500 select-none pointer-events-none">
+                  <span className="absolute -top-3 -right-2 font-bold text-7xl text-[#36656B]/10 dark:text-[#BCA575]/10 group-hover:text-[#36656B]/20 group-hover:scale-110 transition-all duration-500 select-none pointer-events-none">
                     {step.step}
                   </span>
 
@@ -447,7 +447,7 @@ export const Sourcing = () => {
 
                     {/* Step Title & Tagline */}
                     <div>
-                      <h3 className="font-serif text-2xl text-[#131E20] dark:text-[#F5F1E8] font-normal leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
+                      <h3 className="font-bold tracking-tight text-2xl text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
                         {step.name}
                       </h3>
                       <p className="text-[11px] font-sans uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mt-1">

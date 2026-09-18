@@ -222,7 +222,7 @@ export const ProductDetail = () => {
                 )}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight mt-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-2">
                 {product.name}
               </h1>
 
@@ -249,7 +249,7 @@ export const ProductDetail = () => {
             {/* Pricing Section */}
             <div className="p-5 rounded-2xl bg-[#E5ECEC]/50 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447]">
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
                   ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 {product.originalPrice && (
@@ -457,7 +457,7 @@ export const ProductDetail = () => {
               <Ruler className="w-4 h-4" />
               <span>Architectural Specifications</span>
             </div>
-            <h2 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] mb-6">
+            <h2 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mb-6">
               Dimensions &amp; Materials
             </h2>
 

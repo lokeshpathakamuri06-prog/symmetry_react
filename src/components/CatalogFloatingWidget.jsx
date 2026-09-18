@@ -82,7 +82,7 @@ export const CatalogFloatingWidget = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-4xl bg-white dark:bg-[#0D1C29] rounded-3xl shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden z-10 my-8"
+              className="relative w-full max-w-4xl bg-white dark:bg-[#0D1C29] rounded-3xl shadow-apple-dark dark:shadow-apple-dark overflow-hidden z-10 my-8"
             >
               {/* Modal Close Button */}
               <button
@@ -93,10 +93,10 @@ export const CatalogFloatingWidget = () => {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
-                {/* Left Side: Catalog Visual Cover Box */}
-                <div className="md:col-span-5 relative group">
-                  <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#F4F7F6] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl relative">
+              <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                {/* Left Side: Catalog Cover Image Card */}
+                <div className="md:col-span-5">
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl group bg-[#132838]">
                     <img
                       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=85"
                       alt="Symmetry Interiors Official Catalog"
@@ -105,7 +105,7 @@ export const CatalogFloatingWidget = () => {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-[#07121C] via-[#07121C]/40 to-transparent flex flex-col justify-between p-6">
                       <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/20">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white">
                           Official PDF
                         </span>
                         <Sparkles className="w-4 h-4 text-[#BCA575]" />
@@ -115,7 +115,7 @@ export const CatalogFloatingWidget = () => {
                         <p className="text-[10px] uppercase font-mono tracking-luxury text-[#BCA575]">
                           Symmetry Interiors &amp; Building Solutions
                         </p>
-                        <h4 className="font-serif text-2xl font-normal leading-tight">
+                        <h4 className="text-2xl font-medium leading-tight">
                           Where Vision Meets Craftsmanship
                         </h4>
                         <p className="text-xs text-white/80 font-light">

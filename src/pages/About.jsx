@@ -73,9 +73,9 @@ export const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-normal leading-tight tracking-tight drop-shadow-md"
+            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight tracking-tight drop-shadow-md"
           >
-            Built on Legacy. <span className="italic font-light text-[#BCA575]">Designed for Modern Living.</span>
+            Built on Legacy. <span className="text-[#BCA575] font-bold">Designed for Modern Living.</span>
           </motion.h1>
         </div>
       </section>
@@ -94,7 +94,7 @@ export const About = () => {
               key={i}
               className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl hover:-translate-y-1 transition-transform duration-300"
             >
-              <p className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#36656B] dark:text-[#BCA575]">
+              <p className="font-bold text-3xl sm:text-4xl lg:text-5xl text-[#36656B] dark:text-[#BCA575]">
                 {stat.value}
               </p>
               <p className="text-xs sm:text-sm font-sans font-medium text-[#131E20] dark:text-[#F5F1E8] mt-1.5">
@@ -133,7 +133,7 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-[1.15] tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-[1.15] tracking-tight"
             >
               Resolving the Divide Between Visionary Blueprint &amp; Physical Reality.
             </motion.h2>
@@ -164,7 +164,7 @@ export const About = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="p-6 sm:p-8 rounded-2xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border-l-4 border-[#36656B] dark:border-[#BCA575] border-y border-r border-[#D1DCDE] dark:border-[#1E3447]"
             >
-              <p className="font-serif italic text-lg sm:text-xl text-[#131E20] dark:text-[#F5F1E8] leading-snug">
+              <p className="font-semibold italic text-lg sm:text-xl text-[#131E20] dark:text-[#F5F1E8] leading-snug">
                 “A space achieves character not through superficial decoration, but when the stone, the grain of the oak, and the light operate in quiet, honest equilibrium.”
               </p>
               <div className="mt-4 flex items-center justify-between">
@@ -215,7 +215,7 @@ export const About = () => {
               </div>
 
               <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-center">
-                <p className="font-serif text-3xl text-[#36656B] dark:text-[#BCA575]">100%</p>
+                <p className="font-bold text-3xl text-[#36656B] dark:text-[#BCA575]">100%</p>
                 <p className="text-[11px] uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-medium mt-1">
                   In-House Execution
                 </p>
@@ -254,7 +254,7 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight"
             >
               Twenty-Five Years of Architectural Milestones
             </motion.h2>
@@ -307,7 +307,7 @@ export const About = () => {
                           </span>
                         </div>
 
-                        <h3 className="font-serif text-2xl sm:text-3xl text-[#131E20] dark:text-[#F5F1E8] font-normal mb-1">
+                        <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-[#131E20] dark:text-[#F5F1E8] mb-1">
                           {item.title}
                         </h3>
                         <p className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mb-3">
@@ -328,7 +328,7 @@ export const About = () => {
 
                     {/* Center Year Marker Node */}
                     <div className="hidden lg:flex lg:col-span-2 lg:order-2 lg:col-start-6 items-center justify-center relative">
-                      <div className="w-16 h-16 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F5F1E8] dark:text-[#07121C] flex flex-col items-center justify-center font-serif text-base font-semibold shadow-lg ring-8 ring-[#E5ECEC] dark:ring-[#0D1C29] z-10">
+                      <div className="w-16 h-16 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F5F1E8] dark:text-[#07121C] flex flex-col items-center justify-center font-bold text-base shadow-lg ring-8 ring-[#E5ECEC] dark:ring-[#0D1C29] z-10">
                         <span>{item.year}</span>
                       </div>
                     </div>
@@ -385,7 +385,7 @@ export const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight max-w-2xl"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight max-w-2xl"
               >
                 25+ Years of Global Sourcing Mastery
               </motion.h2>
@@ -480,7 +480,7 @@ export const About = () => {
                     <IconComp className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-serif text-lg text-[#131E20] dark:text-[#F5F1E8] font-medium">
+                    <h3 className="font-bold text-lg text-[#131E20] dark:text-[#F5F1E8]">
                       {item.title}
                     </h3>
                     <p className="text-xs sm:text-[13px] text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed mt-1">
@@ -515,7 +515,7 @@ export const About = () => {
                 </span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
                 {missionData.title}
               </h2>
 

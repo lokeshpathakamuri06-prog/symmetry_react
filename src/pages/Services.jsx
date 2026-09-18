@@ -52,7 +52,7 @@ const ResidentialSection = ({ service }) => {
           {/* Narrative Column */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -62,7 +62,7 @@ const ResidentialSection = ({ service }) => {
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-[1.12] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
                 {service.title}
               </h2>
               <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-2">
@@ -81,7 +81,7 @@ const ResidentialSection = ({ service }) => {
                   key={i}
                   className="p-3 sm:p-4 rounded-xl bg-[#E5ECEC]/40 dark:bg-[#07121C] border border-[#D1DCDE]/60 dark:border-[#1E3447]/60 text-center"
                 >
-                  <span className="block font-serif text-base sm:text-lg font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="block font-semibold text-base sm:text-lg text-[#131E20] dark:text-[#F5F1E8]">
                     {stat.value}
                   </span>
                   <span className="block text-[10px] sm:text-[11px] uppercase tracking-wider text-[#6B8083] dark:text-[#8E9CA8] mt-0.5">
@@ -183,7 +183,7 @@ const CommercialSection = ({ service }) => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-white/10">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <span className="font-serif text-3xl sm:text-4xl text-[#BCA575] font-light">
+                <span className="font-bold text-3xl sm:text-4xl text-[#BCA575]">
                   {service.number}
                 </span>
                 <span className="w-8 h-px bg-[#BCA575]" />
@@ -191,7 +191,7 @@ const CommercialSection = ({ service }) => {
                   Practice 02 &bull; {service.subtitle}
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
                 {service.title}
               </h2>
             </div>
@@ -237,7 +237,7 @@ const CommercialSection = ({ service }) => {
                     <span className="text-xs uppercase tracking-luxury text-[#AEB7BE]">
                       {stat.label}
                     </span>
-                    <span className="font-serif text-base text-[#BCA575] font-medium">
+                    <span className="font-bold text-base text-[#BCA575]">
                       {stat.value}
                     </span>
                   </div>
@@ -284,7 +284,7 @@ const HospitalitySection = ({ service }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -292,7 +292,7 @@ const HospitalitySection = ({ service }) => {
                 Practice 03 &bull; {service.subtitle}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight">
               {service.title}
             </h2>
             <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-1">
@@ -364,7 +364,7 @@ const TurnkeySection = ({ service }) => {
           {/* Left Column: Blueprint Narrative */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -374,7 +374,7 @@ const TurnkeySection = ({ service }) => {
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight">
                 {service.title}
               </h2>
               <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-2">
@@ -500,7 +500,7 @@ const CustomizedFurnitureSection = ({ service }) => {
           {/* Right: Narrative & Scope */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -510,7 +510,7 @@ const CustomizedFurnitureSection = ({ service }) => {
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight">
                 {service.title}
               </h2>
               <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-2">
@@ -560,7 +560,7 @@ const FurnitureSourcingSection = ({ service }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#D1DCDE] dark:border-[#1E3447]">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -568,7 +568,7 @@ const FurnitureSourcingSection = ({ service }) => {
                 Practice 06 &bull; {service.subtitle}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight">
               {service.title}
             </h2>
             <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-1">
@@ -595,7 +595,7 @@ const FurnitureSourcingSection = ({ service }) => {
               className="p-5 rounded-2xl bg-[#E5ECEC]/40 dark:bg-[#07121C] border border-[#D1DCDE]/60 dark:border-[#1E3447]/60 space-y-2"
             >
               <span className="text-2xl">{hub.flag}</span>
-              <h4 className="font-serif text-base text-[#131E20] dark:text-[#F5F1E8] font-medium">{hub.city}</h4>
+              <h4 className="font-bold text-base text-[#131E20] dark:text-[#F5F1E8]">{hub.city}</h4>
               <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">{hub.desc}</p>
             </div>
           ))}
@@ -641,7 +641,7 @@ const LightingDecorSection = ({ service }) => {
           {/* Left: Atmospheric Lighting Narrative */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-3">
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                 {service.number}
               </span>
               <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
@@ -651,7 +651,7 @@ const LightingDecorSection = ({ service }) => {
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight">
                 {service.title}
               </h2>
               <p className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-medium mt-2">
@@ -667,7 +667,7 @@ const LightingDecorSection = ({ service }) => {
             <div className="grid grid-cols-3 gap-3">
               {service.stats?.map((stat, i) => (
                 <div key={i} className="p-3.5 rounded-xl bg-white dark:bg-[#07121C] border border-[#D1DCDE]/60 text-center">
-                  <span className="block font-serif text-base text-[#36656B] dark:text-[#BCA575] font-medium">{stat.value}</span>
+                  <span className="block font-bold text-base text-[#36656B] dark:text-[#BCA575]">{stat.value}</span>
                   <span className="block text-[10px] uppercase text-[#6B8083] dark:text-[#8E9CA8] mt-0.5">{stat.label}</span>
                 </div>
               ))}
@@ -713,7 +713,7 @@ const LightingDecorSection = ({ service }) => {
             <div className="p-4 rounded-2xl bg-white dark:bg-[#07121C] border border-[#D1DCDE]/60 flex items-center justify-between">
               <div>
                 <span className="text-xs uppercase font-mono text-[#36656B] dark:text-[#BCA575]">Acoustic Balance</span>
-                <p className="text-sm font-serif text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                <p className="text-sm font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
                   Micro-perforated acoustic felt &amp; library silence dampening
                 </p>
               </div>
@@ -772,15 +772,15 @@ export const Services = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-serif text-white font-normal leading-tight tracking-tight drop-shadow-md"
+            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight tracking-tight drop-shadow-md"
           >
-            Comprehensive Interior <span className="italic font-light text-[#BCA575]">Solutions</span>
+            Comprehensive Interior <span className="text-[#BCA575] font-bold">Solutions</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-4 text-base sm:text-xl text-white/90 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-sm"
+            className="mt-4 text-base sm:text-xl text-white/90 font-normal max-w-2xl mx-auto leading-relaxed drop-shadow-sm"
           >
             From concept design to final turnkey execution across residential, commercial, hospitality, healthcare, and institutional spaces.
           </motion.p>
@@ -806,7 +806,7 @@ export const Services = () => {
               key={i}
               className="p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl text-center flex flex-col justify-center"
             >
-              <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-normal leading-tight">
+              <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] leading-tight">
                 {stat.value}
               </span>
               <span className="text-xs uppercase tracking-luxury font-medium text-[#131E20] dark:text-[#F5F1E8] mt-1.5">
@@ -829,7 +829,7 @@ export const Services = () => {
             <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
               Complete Architectural Spectrum
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
               Our Seven Dedicated Practices
             </h2>
           </div>
@@ -903,7 +903,7 @@ export const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-tight tracking-tight"
             >
               The Turnkey Architectural Journey
             </motion.h2>
@@ -933,7 +933,7 @@ export const Services = () => {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
-                      <span className="font-serif text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] font-light">
+                      <span className="font-bold text-3xl sm:text-4xl text-[#36656B] dark:text-[#BCA575]">
                         {phase.step}
                       </span>
                       <div className="w-12 h-12 rounded-2xl bg-[#36656B]/10 dark:bg-[#BCA575]/15 text-[#36656B] dark:text-[#BCA575] flex items-center justify-center">
@@ -941,7 +941,7 @@ export const Services = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal mb-1">
+                    <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mb-1">
                       {phase.name}
                     </h3>
 

@@ -42,18 +42,22 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Playfair Display', 'serif'],
-        display: ['"Playfair Display"', '"Cormorant Garamond"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        serif: ['"Inter"', 'sans-serif'],
+        display: ['"Inter"', 'sans-serif'],
+        sans: ['"Inter"', 'sans-serif'],
       },
       letterSpacing: {
-        'luxury': '0.2em',
+        'luxury': '0.15em',
         'subtle': '0.05em',
       },
       boxShadow: {
-        'luxury': '0 20px 40px -15px rgba(19, 30, 32, 0.05)',
-        'luxury-hover': '0 30px 60px -15px rgba(19, 30, 32, 0.12)',
-        'luxury-dark': '0 20px 40px -15px rgba(0, 0, 0, 0.5)',
+        'apple': '0 8px 30px rgba(0, 0, 0, 0.04)',
+        'apple-hover': '0 20px 40px rgba(0, 0, 0, 0.08)',
+        'apple-dark': '0 8px 30px rgba(0, 0, 0, 0.35)',
+        'apple-dark-hover': '0 20px 45px rgba(0, 0, 0, 0.55)',
+        'luxury': '0 12px 32px rgba(0, 0, 0, 0.04)',
+        'luxury-hover': '0 24px 48px rgba(0, 0, 0, 0.08)',
+        'luxury-dark': '0 12px 32px rgba(0, 0, 0, 0.35)',
       },
       borderRadius: {
         'luxury': '16px',

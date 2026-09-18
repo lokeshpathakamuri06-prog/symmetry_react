@@ -3,12 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Eye, Star, ArrowRight, ShoppingBag, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
+import AppleCardWrapper from './AppleCardWrapper';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80';
 
 /**
  * ProductCard Component
- * Enhanced with Yoo Interior signature architectural reveal tuned for mobile, tablet, and desktop:
+ * Enhanced with Apple Mac signature 3D tilt, spotlight glare tracking & architectural reveal:
  *  - Responsive viewport triggering (margin: 50px pre-trigger) so images always load on mobile/tablet
  *  - Fallback error handler so broken images automatically replace with luxury interior placeholders
  *  - Line-mask motion text for category, serif title, and price metadata
@@ -111,9 +112,10 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '50px 0px' }}
-      transition={{ duration: 0.5, delay: staggerDelay, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative flex flex-col h-full bg-[#FCFAF6] dark:bg-[#0D1C29] rounded-2xl sm:rounded-3xl border border-[#ECE5D8] dark:border-[#1E3447] overflow-hidden shadow-xs hover:shadow-[0_16px_36px_-10px_rgba(19,30,32,0.12)] dark:hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 transition-all duration-400"
+      transition={{ duration: 0.5, delay: staggerDelay, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
     >
+      <AppleCardWrapper className="group relative flex flex-col h-full bg-[#FCFAF6] dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
       {/* =========================================================================
           YOO INTERIOR SIGNATURE SHUTTER REVEAL IMAGE CONTAINER
       ========================================================================= */}
@@ -156,7 +158,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
         <button
           onClick={toggleWishlist}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#07121C]/85 backdrop-blur-md border border-[#D1DCDE]/70 dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-sm z-10 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#07121C]/85 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-sm z-10 cursor-pointer"
         >
           <Heart
             className={`w-4 h-4 transition-all duration-300 ${
@@ -207,10 +209,10 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
           </span>
         </div>
 
-        {/* Elegant Serif Product Name */}
+        {/* Product Name */}
         <div className="mb-2">
           <Link to={`/shop/${product.id}`} className="block">
-            <h3 className="font-serif text-base sm:text-lg md:text-xl font-normal text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors leading-snug line-clamp-1">
+            <h3 className="text-base sm:text-lg md:text-xl font-medium text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors leading-snug line-clamp-1">
               {product.name}
             </h3>
           </Link>
@@ -230,8 +232,8 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
           {/* Stock Status Badge */}
           <span className={`ml-auto inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-medium ${
             product.inStock !== false && product.stockStatus !== 'Made to Order'
-              ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/20'
-              : 'text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20'
+              ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/10'
+              : 'text-amber-700 dark:text-amber-300 bg-amber-500/10'
           }`}>
             <span className={`w-1.5 h-1.5 rounded-full ${
               product.inStock !== false && product.stockStatus !== 'Made to Order'
@@ -243,20 +245,20 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
         </div>
 
         {/* Price & Discount Section */}
-        <div className="mt-auto pt-3 border-t border-[#ECE5D8]/80 dark:border-[#1E3447]/60">
+        <div className="mt-auto pt-3">
           <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2 mb-3">
-            <span className="text-base sm:text-lg md:text-2xl font-serif font-semibold text-[#131E20] dark:text-[#F5F1E8]">
-              &#8379;{product.price.toLocaleString('en-IN')}
+            <span className="text-base sm:text-lg md:text-2xl font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+              ₹{product.price.toLocaleString('en-IN')}
             </span>
 
             {product.originalPrice && (
               <span className="text-xs sm:text-sm text-[#6B8083] dark:text-[#7D8A95] line-through font-light">
-                &#8379;{product.originalPrice.toLocaleString('en-IN')}
+                ₹{product.originalPrice.toLocaleString('en-IN')}
               </span>
             )}
 
             {discountPercent && discountPercent > 0 && (
-              <span className="text-[10px] sm:text-xs font-semibold text-[#C06C52] bg-[#C06C52]/10 border border-[#C06C52]/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+              <span className="text-[10px] sm:text-xs font-semibold text-[#C06C52] bg-[#C06C52]/10 px-2 py-0.5 rounded-full whitespace-nowrap">
                 {discountPercent}% OFF
               </span>
             )}
@@ -267,7 +269,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
             <button
               onClick={handleQuickViewClick}
               aria-label="Quick View specifications"
-              className="py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] hover:text-[#36656B] dark:hover:border-[#BCA575] dark:hover:text-[#BCA575] text-[11px] sm:text-xs md:text-sm font-medium tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+              className="py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl bg-[#E5ECEC]/50 dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] text-[11px] sm:text-xs md:text-sm font-medium tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-[#4A5D4E] dark:text-[#7E9683]" />
               <span className="hidden sm:inline">Quick</span> View
@@ -284,6 +286,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
           </div>
         </div>
       </div>
+      </AppleCardWrapper>
     </motion.div>
   );
 };

@@ -95,10 +95,10 @@ export const Hero = () => {
           transition={{ duration: 0.9, delay: 0.2 }}
           className="max-w-4xl mx-auto px-4"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif text-white leading-[1.08] tracking-tight font-normal mb-4 sm:mb-6 drop-shadow-md">
-            Where Vision Meets <span className="italic font-light text-[#BCA575]">Timeless Design</span>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl text-white leading-[1.08] tracking-tight font-bold mb-4 sm:mb-6 drop-shadow-md">
+            Where Vision Meets <span className="text-[#BCA575] font-bold">Timeless Design</span>
           </h1>
-          <p className="text-base sm:text-xl text-white/90 font-light leading-relaxed max-w-2xl mx-auto mb-8 drop-shadow-sm">
+          <p className="text-base sm:text-xl text-white/90 font-normal leading-relaxed max-w-2xl mx-auto mb-8 drop-shadow-sm">
             Global sourcing, bespoke interiors, and end-to-end execution for spaces that inspire and endure.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -115,7 +115,7 @@ export const Hero = () => {
                 const el = document.getElementById('about-section');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-8 py-3.5 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/30 hover:border-white transition-all duration-300 text-xs uppercase tracking-luxury font-semibold cursor-pointer"
+              className="px-8 py-3.5 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 transition-all duration-300 text-xs uppercase tracking-luxury font-semibold cursor-pointer shadow-md"
             >
               Start Your Project
             </button>

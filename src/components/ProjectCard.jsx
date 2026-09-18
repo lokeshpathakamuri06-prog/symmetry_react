@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, MapPin, Calendar, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AppleCardWrapper from './AppleCardWrapper';
 
 export const ProjectCard = ({ project, index = 0, className = '' }) => {
   if (!project) return null;
@@ -15,10 +16,10 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
       initial={{ opacity: 0, y: 35, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-60px' }}
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-2xl sm:rounded-3xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#36656B]/50 dark:hover:border-[#BCA575]/50 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(54,101,107,0.1)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${className}`}
+      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className={`h-full ${className}`}
     >
+      <AppleCardWrapper className="group relative flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
       {/* Clickable Image Container with Zoom, Reflection Sweep, and Overlays */}
       <Link
         to={`/projects/${project.id}`}
@@ -40,7 +41,7 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
 
         {/* Category Pill Tag */}
         <div className="absolute top-4 left-4 z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F7F6] backdrop-blur-md border border-white/15 shadow-sm group-hover:border-[#BCA575]/50 transition-colors">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F4F6] backdrop-blur-md shadow-sm transition-colors">
             <Layers className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {category}
           </span>
@@ -48,14 +49,14 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
 
         {/* Year Pill Tag */}
         <div className="absolute top-4 right-4 z-10">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md border border-black/10 dark:border-white/10 shadow-sm">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md shadow-sm">
             <Calendar className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {project.completionYear}
           </span>
         </div>
 
         {/* Hover Arrow Action Icon */}
-        <div className="absolute bottom-4 right-4 z-20 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl border border-white/20">
+        <div className="absolute bottom-4 right-4 z-20 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-xl">
           <ArrowUpRight className="w-5 h-5 text-[#36656B] dark:text-[#BCA575] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
 
@@ -77,18 +78,18 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
               <span className="truncate">{project.location}</span>
             </div>
             {project.areaSqFt && (
-              <span className="text-[11px] font-mono text-[#6B8083] dark:text-[#8E9CA8] shrink-0 bg-[#E5ECEC]/50 dark:bg-[#132838] px-2 py-0.5 rounded-full border border-[#D1DCDE]/50 dark:border-[#1E3447]/50">
+              <span className="text-[11px] font-mono text-[#6B8083] dark:text-[#8E9CA8] shrink-0 bg-[#E5ECEC]/50 dark:bg-[#132838] px-2 py-0.5 rounded-full">
                 {project.areaSqFt}
               </span>
             )}
           </div>
 
-          {/* Project Name (Large Serif Heading) */}
+          {/* Project Name */}
           <Link
             to={`/projects/${project.id}`}
             className="block group/link"
           >
-            <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover/link:text-[#36656B] dark:group-hover/link:text-[#BCA575] transition-colors duration-300">
+            <h3 className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover/link:text-[#36656B] dark:group-hover/link:text-[#BCA575] transition-colors duration-300">
               {project.title}
             </h3>
           </Link>
@@ -96,11 +97,11 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
 
         {/* Materials Chips or Scope Footer */}
         {project.materialsPalette && project.materialsPalette.length > 0 && (
-          <div className="pt-4 mt-4 border-t border-[#E5ECEC] dark:border-[#1E3447]/60 flex flex-wrap gap-1.5">
+          <div className="pt-4 mt-4 flex flex-wrap gap-1.5">
             {project.materialsPalette.slice(0, 3).map((mat, mIdx) => (
               <span
                 key={mIdx}
-                className="px-2 py-0.5 rounded-md text-[10px] font-sans bg-[#F4F7F6] dark:bg-[#07121C] text-[#4F6467] dark:text-[#AEB7BE] border border-[#D1DCDE]/50 dark:border-[#1E3447]/50 hover:bg-[#36656B]/15 hover:text-[#36656B] dark:hover:text-[#BCA575] hover:scale-105 transition-all cursor-default"
+                className="px-2 py-0.5 rounded-md text-[10px] font-sans bg-[#F4F7F6] dark:bg-[#07121C] text-[#4F6467] dark:text-[#AEB7BE] hover:bg-[#36656B]/15 hover:text-[#36656B] dark:hover:text-[#BCA575] hover:scale-105 transition-all cursor-default"
               >
                 {mat}
               </span>
@@ -113,6 +114,7 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
           </div>
         )}
       </div>
+      </AppleCardWrapper>
     </motion.div>
   );
 };
