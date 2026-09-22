@@ -138,7 +138,7 @@ export const Shop = () => {
         {/* Full-bleed background hero image with luxury vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-shop.jpeg"
             alt="Symmetry Interiors Curated Furniture &amp; Architectural Objects"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

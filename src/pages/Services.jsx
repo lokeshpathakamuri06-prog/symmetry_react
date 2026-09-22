@@ -744,7 +744,7 @@ export const Services = () => {
         {/* Full-bleed background media with architectural image & luxury vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-services.jpeg"
             alt="Symmetry Interiors Architectural Services & Execution"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

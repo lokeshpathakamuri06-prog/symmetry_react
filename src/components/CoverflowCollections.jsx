@@ -138,7 +138,7 @@ export const CoverflowCollections = () => {
               const yRotate = offset > 0 ? -22 : offset < 0 ? 22 : 0; // 3D perspective angle
               const scale = 1 - Math.abs(offset) * 0.12; // perspective scale
               const zIndex = 30 - Math.abs(offset) * 5; // stacking order
-              const opacity = 1 - Math.abs(offset) * 0.22; // subtle fade for adjacent cards
+              const opacity = isCenter ? 1 : 0.98; // High opacity so frosted glass effect shines
 
               return (
                 <motion.div
@@ -159,10 +159,10 @@ export const CoverflowCollections = () => {
                     zIndex: zIndex,
                     transformStyle: 'preserve-3d',
                   }}
-                  className={`absolute w-[290px] sm:w-[350px] md:w-[400px] h-[440px] sm:h-[500px] md:h-[560px] rounded-[32px] overflow-hidden cursor-pointer select-none transition-shadow ${
+                  className={`absolute w-[290px] sm:w-[350px] md:w-[400px] h-[440px] sm:h-[500px] md:h-[560px] rounded-[32px] overflow-hidden cursor-pointer select-none transition-all duration-500 ${
                     isCenter
-                      ? 'shadow-[0_25px_60px_-15px_rgba(19,30,32,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] ring-1 ring-black/5'
-                      : 'shadow-xl'
+                      ? 'shadow-[0_25px_60px_-15px_rgba(19,30,32,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] ring-1 ring-black/5 border border-white/20'
+                      : 'shadow-[0_25px_50px_rgba(0,0,0,0.45),0_10px_25px_rgba(0,0,0,0.3)] border border-white/25'
                   }`}
                 >
                   {/* Card Image */}
@@ -172,17 +172,23 @@ export const CoverflowCollections = () => {
                     className="w-full h-full object-cover pointer-events-none"
                   />
 
-                  {/* Gradient Overlay for Text Legibility */}
-                  <div
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      isCenter
-                        ? 'bg-gradient-to-t from-black/80 via-black/25 to-black/30'
-                        : 'bg-gradient-to-t from-black/85 via-black/45 to-black/30'
-                    }`}
-                  />
+                  {/* Frosted Glass Side Card Overlay (Active when !isCenter) */}
+                  {!isCenter ? (
+                    <div
+                      className="absolute inset-0 z-10 pointer-events-none transition-all duration-500 rounded-[32px] border border-white/20 shadow-inner supports-[not(backdrop-filter:blur(1px))]:bg-[rgba(20,20,22,0.88)]"
+                      style={{
+                        backdropFilter: 'blur(14px)',
+                        WebkitBackdropFilter: 'blur(14px)',
+                        backgroundColor: 'rgba(20, 20, 22, 0.55)',
+                      }}
+                    />
+                  ) : (
+                    /* Active Center Card Gradient Overlay */
+                    <div className="absolute inset-0 z-10 transition-opacity duration-500 bg-gradient-to-t from-black/80 via-black/25 to-black/30 pointer-events-none" />
+                  )}
 
                   {/* Card Content Top: Category Number, Title, Subtitle */}
-                  <div className="absolute top-7 inset-x-7 text-white pointer-events-none">
+                  <div className="absolute top-7 inset-x-7 text-white pointer-events-none z-20">
                     <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#A7C3C6] font-semibold block mb-2">
                       {item.categoryNumber}
                     </span>
@@ -195,7 +201,7 @@ export const CoverflowCollections = () => {
                   </div>
 
                   {/* Card Bottom: Centered "VIEW PRODUCT →" Pill Button */}
-                  <div className="absolute bottom-7 inset-x-0 flex items-center justify-center px-6">
+                  <div className="absolute bottom-7 inset-x-0 flex items-center justify-center px-6 z-20">
                     <Link
                       to={item.link}
                       onClick={(e) => {

@@ -88,22 +88,11 @@ export const Projects = () => {
       <section className="relative h-[100svh] min-h-[680px] sm:min-h-[760px] w-full bg-black overflow-hidden flex flex-col justify-between select-none">
         {/* Full-Bleed Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <video
-            ref={videoRef}
-            key={PROJECT_VIDEOS[videoIndex].src}
-            autoPlay
-            muted
-            loop={false}
-            playsInline
-            onLoadedData={() => setVideoLoaded(true)}
-            onEnded={handleVideoEnded}
-            poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85"
-            className={`w-full h-full object-cover object-center scale-[1.03] transition-opacity duration-1000 ${
-              videoLoaded ? 'opacity-100' : 'opacity-70'
-            }`}
-          >
-            <source src={PROJECT_VIDEOS[videoIndex].src} type="video/mp4" />
-          </video>
+          <img
+            src="/images/hero/hero-projects.jpeg"
+            alt="Symmetry Interiors Architectural Projects"
+            className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
+          />
         </div>
 
         {/* Top Header Spacing with Breadcrumbs */}

@@ -1,35 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Curated architectural videos from Yoo Interior reference
-const HERO_VIDEOS = [
+// 3 Specific HAJ images requested: HAJ0025.jpeg, HAJ0026-1.jpeg, HAJ0035-1.jpeg
+const HERO_IMAGES = [
   {
     id: 1,
-    title: 'Minimalist Monolith & Daylight Choreography',
-    src: 'https://media.yoointerior.com/yoo_web_1.mp4',
+    title: 'HAJ0025 Architecture',
+    src: '/images/hero/hero-haj-slide-1.jpeg',
   },
   {
     id: 2,
-    title: 'Textured Bouclé & Smoked Oak Living',
-    src: 'https://media.yoointerior.com/yooweb_2.mp4',
+    title: 'HAJ0026 Interior',
+    src: '/images/hero/hero-haj-slide-2.jpeg',
   },
   {
     id: 3,
-    title: 'Architectural Stone & Roman Travertine Portals',
-    src: 'https://media.yoointerior.com/yoo_web_3.mp4',
-  },
-  {
-    id: 4,
-    title: 'Private Sky Penthouse Spatial Flow',
-    src: 'https://media.yoointerior.com/yooweb_4.mp4',
+    title: 'HAJ0035 Living Pavilion',
+    src: '/images/hero/hero-haj-slide-3.jpeg',
   },
 ];
 
 export const Hero = () => {
-  const [videoIndex, setVideoIndex] = useState(0);
-  const [activePillar, setActivePillar] = useState('EXPERTISE');
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const videoRef = useRef(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Smooth scroll handler
   const scrollToSection = (id) => {
@@ -39,54 +31,39 @@ export const Hero = () => {
     }
   };
 
-  // Handle video end or seamless switch
-  const handleVideoEnded = () => {
-    setVideoIndex((prev) => (prev + 1) % HERO_VIDEOS.length);
-  };
-
-  // When video index changes, reload and play
+  // Auto-advance hero background images every 5 seconds
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.load();
-      videoRef.current.play().catch(() => {
-        // Autoplay may wait for user interaction in strict environments
-      });
-    }
-  }, [videoIndex]);
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-black overflow-hidden flex flex-col justify-between select-none">
+    <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-[#07121C] overflow-hidden flex flex-col justify-between select-none">
       {/* =========================================================================
-          1. FULL-BLEED CINEMATIC BACKGROUND VIDEO LAYER
+          1. FULL-BLEED HERO BACKGROUND IMAGE SLIDESHOW LAYER (12 HAJ Images)
           ========================================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Fallback architectural poster during initial load */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=85')`,
-            opacity: videoLoaded ? 0 : 1,
-          }}
-        />
+        <AnimatePresence mode="popLayout">
+          <motion.img
+            key={HERO_IMAGES[currentImageIndex].src}
+            src={HERO_IMAGES[currentImageIndex].src}
+            alt={HERO_IMAGES[currentImageIndex].title}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full h-full object-cover object-center absolute inset-0"
+          />
+        </AnimatePresence>
 
-        <video
-          ref={videoRef}
-          key={HERO_VIDEOS[videoIndex].src}
-          autoPlay
-          muted
-          playsInline
-          onLoadedData={() => setVideoLoaded(true)}
-          onEnded={handleVideoEnded}
-          className={`w-full h-full object-cover object-center scale-[1.02] transition-opacity duration-700 ease-out ${
-            videoLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <source src={HERO_VIDEOS[videoIndex].src} type="video/mp4" />
-        </video>
-
+        {/* Ambient Dark Luxury Gradient Vignette Overlay for High Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07121C]/90 via-[#07121C]/45 to-[#07121C]/60" />
       </div>
 
-      {/* Hero Main Copy Layer (Clean, without dark overlay masks or floating overlay clutter) */}
+      {/* Hero Main Copy Layer */}
       <div className="relative z-10 pt-24 sm:pt-28 px-6 sm:px-12 flex flex-col justify-center items-center h-full max-w-[1632px] mx-auto w-full text-center">
         {/* Center Hero Copy Block */}
         <motion.div
@@ -121,6 +98,22 @@ export const Hero = () => {
             </button>
           </div>
         </motion.div>
+
+        {/* Slide Indicator Dots */}
+        <div className="absolute bottom-8 flex items-center justify-center gap-2">
+          {HERO_IMAGES.map((img, idx) => (
+            <button
+              key={img.id}
+              onClick={() => setCurrentImageIndex(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                currentImageIndex === idx
+                  ? 'w-8 bg-[#BCA575]'
+                  : 'w-2 bg-white/40 hover:bg-white/70'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

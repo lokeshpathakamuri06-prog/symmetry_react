@@ -8,6 +8,7 @@ export const SectionHeading = ({
   align = 'left',
   light = false,
   className = '',
+  titleClassName = '',
 }) => {
   const alignClasses = {
     left: 'text-left items-start',
@@ -45,7 +46,7 @@ export const SectionHeading = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] ${
+          className={titleClassName || `text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] ${
             light ? 'text-[#F5F1E8]' : 'text-[#131E20] dark:text-[#F5F1E8]'
           }`}
         >

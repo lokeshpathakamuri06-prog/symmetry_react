@@ -43,7 +43,7 @@ export const Sourcing = () => {
         {/* Full-bleed background media with architectural image & overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-sourcing.jpeg"
             alt="Symmetry Interiors Global Sourcing &amp; Quarry Extraction"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

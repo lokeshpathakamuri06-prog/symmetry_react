@@ -79,9 +79,9 @@ export const Home = () => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-6 relative"
           >
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury">
+            <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury">
               <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+                src="/images/home/home-about.jpeg"
                 alt="Architectural space planning and interior design"
                 loading="lazy"
                 className="w-full h-full object-cover"
@@ -111,8 +111,7 @@ export const Home = () => {
             </span>
 
             <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
-              Built on Legacy.{' '}
-              <ScribbleUnderline color="#36656B">Designed for Modern Living.</ScribbleUnderline>
+              Built on Legacy. Designed for Modern Living.
             </h2>
 
             <p className="text-lg sm:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
@@ -198,20 +197,21 @@ export const Home = () => {
           Categories: Residential, Commercial, Hospitality
       ========================================================================= */}
       <section id="projects-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-4 lg:gap-6">
           <SectionHeading
             eyebrow="Featured Projects"
             title="Spaces We’ve Brought to Life"
+            titleClassName="text-3xl sm:text-4xl lg:text-[2.1rem] xl:text-[2.65rem] 2xl:text-5xl font-bold tracking-tight leading-[1.15] text-[#131E20] dark:text-[#F5F1E8] whitespace-normal lg:whitespace-nowrap"
             subtitle="Explore our residential, hospitality, commercial, healthcare, and bespoke interior projects."
           />
 
           {/* Typology Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-full bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark">
+          <div className="flex items-center justify-between gap-1 sm:gap-2 p-1.5 rounded-full bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark shrink-0 flex-nowrap w-full sm:w-auto overflow-x-auto no-scrollbar">
             {['All', 'Residential', 'Commercial', 'Hospitality'].map((type) => (
               <button
                 key={type}
                 onClick={() => setProjectFilter(type)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm uppercase tracking-luxury font-medium transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm uppercase tracking-luxury font-medium transition-all whitespace-nowrap text-center flex-1 sm:flex-initial ${
                   projectFilter === type
                     ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] font-semibold'
                     : 'text-[#4F6467] dark:text-[#AEB7BE] hover:text-[#131E20] dark:hover:text-white'

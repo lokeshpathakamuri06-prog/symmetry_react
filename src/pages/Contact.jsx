@@ -157,7 +157,7 @@ export const Contact = () => {
         <div className="relative rounded-3xl overflow-hidden h-[260px] sm:h-[340px] flex items-center justify-center text-center shadow-xl border border-[#D1DCDE] dark:border-[#1E3447] group">
           {/* Background Image */}
           <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-contact.jpeg"
             alt="Symmetry Consultation Atelier"
             className="absolute inset-0 w-full h-full object-cover object-center scale-100 transition-transform duration-1000 ease-out group-hover:scale-105"
           />

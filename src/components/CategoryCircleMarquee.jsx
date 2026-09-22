@@ -5,8 +5,6 @@ import { shopCategories } from '../data/categories';
 
 export const CategoryCircleMarquee = () => {
   const scrollRef = useRef(null);
-  // Double items array for seamless 50% loop with 33% fewer DOM nodes
-  const loopedCategories = [...shopCategories, ...shopCategories];
 
   const handleScrollLeft = () => {
     if (scrollRef.current) {
@@ -23,14 +21,14 @@ export const CategoryCircleMarquee = () => {
   return (
     <div className="relative w-full overflow-hidden py-4 group/marquee">
       {/* Soft edge gradient masks for luxury fade-in / fade-out */}
-      <div className="absolute left-0 inset-y-0 w-16 sm:w-32 bg-gradient-to-r from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 inset-y-0 w-16 sm:w-32 bg-gradient-to-l from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-r from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-l from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
 
       {/* Manual Scroll Buttons for quick exploration */}
       <button
         onClick={handleScrollLeft}
         aria-label="Scroll left"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -38,17 +36,17 @@ export const CategoryCircleMarquee = () => {
       <button
         onClick={handleScrollRight}
         aria-label="Scroll right"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Smooth Marquee Track */}
-      <div ref={scrollRef} className="overflow-x-auto no-scrollbar">
-        <div className="animate-marquee-circle gap-8 sm:gap-12 cursor-pointer py-2">
-          {loopedCategories.map((cat, idx) => (
+      {/* Static Category Cards Track with Smooth Scroll */}
+      <div ref={scrollRef} className="overflow-x-auto no-scrollbar scroll-smooth">
+        <div className="flex gap-8 sm:gap-12 cursor-pointer py-2 px-4 sm:px-12 w-max">
+          {shopCategories.map((cat) => (
             <Link
-              key={`${cat.id}-${idx}`}
+              key={cat.id}
               to={`/shop?category=${cat.slug}`}
               className="group/item flex flex-col items-center text-center shrink-0 w-44 sm:w-52 transition-transform duration-300 hover:-translate-y-1.5"
             >

@@ -45,7 +45,7 @@ export const About = () => {
         {/* Full-bleed background media with architectural image & overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-about.jpeg"
             alt="Symmetry Interiors Architectural Atelier & Pavilion"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

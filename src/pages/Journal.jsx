@@ -98,7 +98,7 @@ export const Journal = () => {
         {/* Full-bleed background media with architectural library image & luxury film vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=2400&q=85"
+            src="/images/hero/hero-journal.jpeg"
             alt="Symmetry Architectural Journal & Monographs"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />
