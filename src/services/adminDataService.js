@@ -62,53 +62,65 @@ export const initialCollections = [
 // Initial Default Site Sections (CMS Content)
 export const defaultSiteContent = {
   home: {
-    heroTitle: 'Architectural Harmony & Bespoke Interiors',
-    heroSubtitle: 'Redefining luxury living through monolithic stone, precision joinery, and direct global material allocations.',
-    heroCtaText: 'Explore Catalog',
+    heroTitle: 'Where Vision Meets Timeless Design',
+    heroSubtitle: 'Global sourcing, bespoke interiors, and end-to-end execution for spaces that inspire and endure.',
+    heroCtaText: 'Explore Our Work',
+    heroCtaSecondary: 'Start Your Project',
     categoriesHeading: 'Curated Categories',
     categoriesSub: 'Handcrafted furniture, stone architectural elements, and bespoke lighting.',
-    featuredHeading: 'Signature Creations',
-    featuredSub: 'Masterpieces designed for private residences, penthouses, and executive estates.',
-    brandStoryHeading: '25+ Years of Provenance & Material Mastery',
-    brandStorySub: 'We operate our own 25,000 sq.ft. high-precision fabrication unit with direct quarry access in Verona, Milan, and Bali.',
-    brandStoryText: 'Founded in 1999, Symmetry bridges the gap between visionary architecture and flawless turnkey execution.',
+    featuredHeading: 'Spaces We’ve Brought to Life',
+    featuredSub: 'Explore our residential, hospitality, commercial, healthcare, and bespoke interior projects.',
+    brandStoryHeading: 'Built on Legacy. Designed for Modern Living.',
+    brandStorySub: 'Symmetry Interiors combines international sourcing, thoughtful planning, quality materials, and skilled craftsmanship to create distinctive interiors.',
+    brandStoryText: 'Symmetry Interiors & Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution. From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.',
+    brandMessageTitle: 'Your Space. Our Expertise.',
+    brandMessageSub: 'From globally sourced furniture to complete interior execution, we create spaces designed around your vision.',
+    brandMessageBar: '25+ Years of Expertise | Global Sourcing | Bespoke Interiors | End-to-End Execution',
     newsletterHeading: 'Join the Private Circle',
     newsletterSub: 'Receive exclusive invitations to private collection debuts and architectural material catalogues.'
   },
   about: {
-    heroTitle: 'Our Provenance & Spatial Philosophy',
-    heroSubtitle: 'Quarter-century of structural honesty, zero-defect execution, and direct global quarry partnerships.',
-    philosophyTitle: 'The Principles of Permanent Elegance',
-    philosophyDesc: 'We believe architecture is not merely about decorating empty rooms; it is the choreography of light, volume, acoustic serenity, and tactile stone.',
-    ctaHeading: 'Ready to Transform Your Architectural Vision?',
-    ctaSub: 'Schedule a private consultation with our principal architects and material directors.'
+    heroTitle: 'Built on Legacy. Designed for Modern Living.',
+    heroSubtitle: 'Symmetry Interiors combines international sourcing, thoughtful planning, quality materials, and skilled craftsmanship to create distinctive interiors.',
+    companyOverview: 'Symmetry Interiors & Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution. From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.',
+    mission: 'To create functional, beautifully furnished spaces that combine quality, craftsmanship, and timeless design while delivering a seamless experience for every client.',
+    vision: 'To be a trusted name in interior design and furniture solutions by combining global design, innovative thinking, and exceptional craftsmanship.',
+    ctaHeading: 'Let’s Create Your Space',
+    ctaSub: 'Schedule a private consultation with our principal design directors.'
   },
   services: {
-    heroTitle: 'End-to-End Architectural & Turnkey Execution',
-    heroSubtitle: 'From conceptual spatial master planning to 0.5mm precision millwork installation.',
+    heroTitle: 'End-to-End Architectural & Interior Solutions',
+    heroSubtitle: 'Interior Design & Planning, Turnkey Solutions, Global Sourcing, Bespoke Furniture, Execution & Styling.',
     faqHeading: 'Frequently Asked Questions',
     faqSub: 'Everything you need to know about our turnkey execution, sourcing, and warranties.'
   },
   sourcing: {
     heroTitle: 'Global Material & Furniture Sourcing',
-    heroSubtitle: 'Bypassing brokers to bring direct quarry travertine, Italian hides, and Milanese ateliers to your doorstep.',
-    networkTitle: '14 International Sourcing Hubs',
-    networkDesc: 'Direct allocations across Carrara, Verona, Bali, Foshan, and High Point.'
+    heroSubtitle: '25+ Years of Sourcing Expertise. Direct access to leading international design destinations.',
+    networkTitle: 'Leading Global Sourcing Hubs',
+    networkDesc: 'Direct allocations across Italy, China, Malaysia, Vietnam, and Bali.'
   },
   contact: {
-    heroTitle: 'Connect With Our Design Atelier',
-    heroSubtitle: 'Visit our Hyderabad Experience Center or request a private estate consultation.',
-    address: 'Symmetry Design Tower, Suite 400, Road No. 36, Jubilee Hills, Hyderabad - 500033',
-    phone: '+91 (040) 4859 9000',
+    heroTitle: 'Let’s Create Your Space',
+    heroSubtitle: 'Connect with our design atelier or visit our main office in Ameerpet, Hyderabad.',
+    companyName: 'Symmetry Interiors & Building Solutions Private Limited',
+    officeAddress: 'Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016',
+    registeredOffice: 'Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.',
+    cin: 'CIN: U51909TG2017PTC115299',
+    phone: '+91 98765 43210 / +91 (040) 2355 8899',
     email: 'concierge@symmetryinteriors.com',
-    hours: 'Monday - Saturday: 10:00 AM - 7:30 PM (By Appointment Only)'
+    hours: 'Monday - Saturday: 10:00 AM - 7:30 PM'
   },
   footer: {
-    brandName: 'SYMMETRY',
-    tagline: 'Architectural Interiors & Global Material Sourcing',
-    announcement: '✨ Complimentary Private Consultation for 5,000+ Sq.Ft. Estates — Book Now',
-    copyright: '© 2026 Symmetry Interiors Ltd. All rights reserved.',
-    instagram: 'https://instagram.com',
+    brandName: 'Symmetry Interiors',
+    legalName: 'Symmetry Interiors & Building Solutions Private Limited',
+    tagline: 'Your Space. Our Expertise.',
+    subTagline: '25+ Years of Expertise | Global Sourcing | Bespoke Interiors | End-to-End Execution',
+    officeAddress: 'Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016',
+    registeredOffice: 'Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.',
+    cin: 'CIN: U51909TG2017PTC115299',
+    copyright: '© 2026 Symmetry Interiors & Building Solutions Private Limited. All rights reserved.',
+    instagram: 'https://www.instagram.com/symmetryinteriors.ltd/?hl=en',
     pinterest: 'https://pinterest.com',
     linkedin: 'https://linkedin.com',
     facebook: 'https://facebook.com'
@@ -243,7 +255,17 @@ class AdminDataService {
     if (!localStorage.getItem('symmetry_orders')) setStorageItem('symmetry_orders', initialOrders);
     if (!localStorage.getItem('symmetry_inquiries')) setStorageItem('symmetry_inquiries', initialInquiries);
     if (!localStorage.getItem('symmetry_media')) setStorageItem('symmetry_media', initialMedia);
-    if (!localStorage.getItem('symmetry_site_content')) setStorageItem('symmetry_site_content', defaultSiteContent);
+    
+    // Always sync updated defaultSiteContent into symmetry_site_content
+    const existingContent = getStorageItem('symmetry_site_content', {});
+    setStorageItem('symmetry_site_content', {
+      ...defaultSiteContent,
+      ...existingContent,
+      home: { ...defaultSiteContent.home, ...(existingContent.home || {}) },
+      about: { ...defaultSiteContent.about, ...(existingContent.about || {}) },
+      contact: { ...defaultSiteContent.contact, ...(existingContent.contact || {}) },
+      footer: { ...defaultSiteContent.footer, ...(existingContent.footer || {}) }
+    });
   }
 
   // -------------------------------------------------------------

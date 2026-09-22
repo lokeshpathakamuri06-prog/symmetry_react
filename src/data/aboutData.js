@@ -8,12 +8,26 @@ import {
   Gem
 } from 'lucide-react';
 
+// Official Company Details
+export const companyDetails = {
+  name: 'Symmetry Interiors & Building Solutions Private Limited',
+  overview: 'Symmetry Interiors & Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution. From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.',
+  officeAddress: 'Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016',
+  registeredOffice: 'Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.',
+  cin: 'CIN: U51909TG2017PTC115299',
+  heroTagline: 'Where Vision Meets Timeless Design',
+  heroSub: 'Global sourcing, bespoke interiors, and end-to-end execution for spaces that inspire and endure.',
+  brandMessageTitle: 'Your Space. Our Expertise.',
+  brandMessageSub: 'From globally sourced furniture to complete interior execution, we create spaces designed around your vision.',
+  brandMessagePillars: '25+ Years of Expertise | Global Sourcing | Bespoke Interiors | End-to-End Execution'
+};
+
 // Hero Stats
 export const heroStats = [
-  { value: '25+', label: 'Years of Provenance', sub: 'Est. 1999' },
-  { value: '450+', label: 'Private Residences & Estates', sub: 'Pan-Asian Portfolio' },
-  { value: '25k', label: 'Sq.Ft. Fabrication Unit', sub: 'High-Precision CNC' },
-  { value: '14', label: 'Global Sourcing Hubs', sub: 'Direct Quarry & Atelier' },
+  { value: '25+', label: 'Years of Expertise', sub: 'Proven Industry Legacy' },
+  { value: 'Global', label: 'Sourcing Destinations', sub: 'Italy, Asia & Beyond' },
+  { value: 'End-to-End', label: 'Turnkey Solutions', sub: 'Concept to Installation' },
+  { value: 'Bespoke', label: 'Design & Craftsmanship', sub: 'Tailored to Each Client' },
 ];
 
 // 3. Legacy & Experience Visual Timeline

@@ -46,25 +46,38 @@ export const Footer = () => {
                 className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
               />
               <span className="text-[11px] font-bold tracking-[0.24em] text-[#4B666E] dark:text-[#F5F1E8] uppercase mt-1 leading-none font-sans transition-colors">
-                SYMMETRY
+                SYMMETRY INTERIORS
               </span>
             </Link>
 
-            <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed max-w-sm font-normal">
-              Symmetry Interiors &amp; Building Solutions Pvt. Ltd. delivers bespoke turnkey interior architecture, high-precision millwork, and direct European furniture sourcing for discerning private clients.
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
+                Symmetry Interiors &amp; Building Solutions Private Limited
+              </h3>
+              <p className="text-sm font-semibold text-[#36656B] dark:text-[#BCA575]">
+                Your Space. Our Expertise.
+              </p>
+              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
+                25+ Years of Expertise | Global Sourcing | Bespoke Interiors | End-to-End Execution
+              </p>
+            </div>
+
+            <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed max-w-sm font-normal">
+              From globally sourced furniture to complete interior execution, we create spaces designed around your vision for homes, offices, hotels, hospitals, clubs, and commercial spaces.
             </p>
 
             <div className="pt-2 text-sm text-[#4F6467] dark:text-[#AEB7BE] space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#36656B] shrink-0 mt-0.5" />
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <div>
-                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Registered Office:</span>
-                    <span>Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India</span>
+                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Office Address:</span>
+                    <span className="text-xs leading-relaxed block">Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016</span>
                   </div>
                   <div className="pt-1">
-                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Design Pavilion &amp; Studio:</span>
-                    <span>Level 4, Symmetry Pavilion, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</span>
+                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Registered Office:</span>
+                    <span className="text-xs leading-relaxed block">Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India</span>
+                    <span className="text-[11px] font-mono text-[#36656B] dark:text-[#BCA575] font-semibold block mt-0.5">CIN: U51909TG2017PTC115299</span>
                   </div>
                 </div>
               </div>

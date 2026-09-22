@@ -135,7 +135,7 @@ export const About = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-[1.15] tracking-tight"
             >
-              Resolving the Divide Between Visionary Blueprint &amp; Physical Reality.
+              Built on Legacy. Designed for Modern Living.
             </motion.h2>
 
             <motion.div
@@ -145,40 +145,41 @@ export const About = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-4 text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed"
             >
-              <p>
-                In the late 1990s, the Indian luxury interior landscape suffered from a pervasive dilemma: visionary architects would draw poetic, millimeter-precise concepts, only to watch them unravel at the hands of disjointed regional subcontractors and unvetted materials.
+              <p className="font-normal text-[#131E20] dark:text-[#F5F1E8]">
+                Symmetry Interiors &amp; Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution.
               </p>
               <p>
-                Symmetry Interiors was established to cure this structural fragmentation. We rejected the traditional broker model in favor of an uncompromising vertical ecosystem: securing direct quarry concessions in Italy, building our own 25,000 sq.ft. computerized fabrication campus, and fielding our own civil site directors.
+                From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.
               </p>
               <p>
-                Today, our commissions span high-net-worth family compounds, boutique private art galleries, and enterprise penthouses—each delivered with the quiet confidence of timeless materiality.
+                Symmetry Interiors combines international sourcing, thoughtful planning, quality materials, and skilled craftsmanship to create distinctive interiors across residential, hospitality, commercial, healthcare, and institutional projects.
               </p>
             </motion.div>
 
-            {/* Founder Quote Card */}
+            {/* Brand Message & Company Details Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="p-6 sm:p-8 rounded-2xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border-l-4 border-[#36656B] dark:border-[#BCA575] border-y border-r border-[#D1DCDE] dark:border-[#1E3447]"
+              className="p-6 sm:p-8 rounded-2xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border-l-4 border-[#36656B] dark:border-[#BCA575] border-y border-r border-[#D1DCDE] dark:border-[#1E3447] space-y-3"
             >
-              <p className="font-semibold italic text-lg sm:text-xl text-[#131E20] dark:text-[#F5F1E8] leading-snug">
-                “A space achieves character not through superficial decoration, but when the stone, the grain of the oak, and the light operate in quiet, honest equilibrium.”
+              <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
+                Brand Message
+              </span>
+              <p className="font-bold text-xl sm:text-2xl text-[#131E20] dark:text-[#F5F1E8]">
+                Your Space. Our Expertise.
               </p>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-luxury font-medium text-[#36656B] dark:text-[#BCA575]">
-                    Vikramaditya Rao
-                  </p>
-                  <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
-                    Founder &amp; Principal Architect
-                  </p>
-                </div>
-                <Button to="/projects" variant="ghost" size="sm" showArrow>
-                  Explore Works
-                </Button>
+              <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE]">
+                From globally sourced furniture to complete interior execution, we create spaces designed around your vision.
+              </p>
+              <div className="pt-2 border-t border-[#D1DCDE]/70 dark:border-[#1E3447] text-xs space-y-1">
+                <p className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  Registered Office: <span className="font-normal text-[#4F6467] dark:text-[#AEB7BE]">Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.</span>
+                </p>
+                <p className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  CIN: <span className="font-mono text-[#36656B] dark:text-[#BCA575]">U51909TG2017PTC115299</span>
+                </p>
               </div>
             </motion.div>
           </div>

@@ -407,17 +407,30 @@ export const Contact = () => {
             <div className="p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm space-y-6">
               <div>
                 <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                  Design Pavilion &amp; Studio
+                  Company Headquarters &amp; Studio
                 </span>
                 <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
-                  Symmetry Interiors
+                  Symmetry Interiors &amp; Building Solutions Private Limited
                 </h3>
-                <p className="text-xs text-stone-500 dark:text-stone-400">
-                  Building Solutions Pvt. Ltd. &bull; Est. 1999
+                <p className="text-xs font-mono text-[#36656B] dark:text-[#BCA575] font-semibold mt-1">
+                  CIN: U51909TG2017PTC115299
                 </p>
               </div>
 
               <div className="space-y-4 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                {/* Main Office Address */}
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
+                      Main Office Address:
+                    </strong>
+                    <span className="leading-relaxed font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                      Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016
+                    </span>
+                  </div>
+                </div>
+
                 {/* Registered Office Address */}
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
@@ -426,21 +439,7 @@ export const Contact = () => {
                       Registered Office:
                     </strong>
                     <span className="leading-relaxed">
-                      Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India
-                    </span>
-                  </div>
-                </div>
-
-                {/* Studio & Showroom Address */}
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
-                      Design Pavilion &amp; Studio Address:
-                    </strong>
-                    <span className="leading-relaxed">
-                      Level 4, Symmetry Pavilion, Road No. 36, Jubilee Hills,<br />
-                      Hyderabad, Telangana 500033, India
+                      Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.
                     </span>
                   </div>
                 </div>
@@ -576,7 +575,7 @@ export const Contact = () => {
                 </span>
               </div>
               <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
-                Symmetry Pavilion &bull; Road No. 36, Jubilee Hills, Hyderabad
+                Symmetry Office &bull; Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad
               </h3>
             </div>
 
@@ -608,7 +607,7 @@ export const Contact = () => {
               </div>
 
               <a
-                href="https://maps.google.com/?q=Road+No+36,+Jubilee+Hills,+Hyderabad,+Telangana+500033"
+                href="https://maps.google.com/?q=Surekha+Chambers,+Dharam+Karan+Road,+Ameerpet,+Hyderabad,+Telangana+500016"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3.5 py-1.5 rounded-xl bg-[#36656B] hover:bg-[#254B50] text-white font-medium flex items-center gap-1.5 transition text-xs shadow-sm"
@@ -623,8 +622,8 @@ export const Contact = () => {
           <div className="relative w-full h-[380px] sm:h-[480px] bg-stone-100 dark:bg-stone-900 overflow-hidden">
             <iframe
               key={mapType}
-              title="Symmetry Pavilion Google Map"
-              src={`https://maps.google.com/maps?q=Road+No+36,+Jubilee+Hills,+Hyderabad,+Telangana+500033&t=${mapType === 'satellite' ? 'k' : 'm'}&z=16&ie=UTF8&iwloc=&output=embed`}
+              title="Symmetry Office Google Map"
+              src={`https://maps.google.com/maps?q=Surekha+Chambers,+Dharam+Karan+Road,+Ameerpet,+Hyderabad,+Telangana+500016&t=${mapType === 'satellite' ? 'k' : 'm'}&z=16&ie=UTF8&iwloc=&output=embed`}
               className="w-full h-full border-0"
               allowFullScreen=""
               loading="lazy"
