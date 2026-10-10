@@ -10,12 +10,13 @@ export const setCsrfToken = (token) => {
 };
 
 export class ApiError extends Error {
-  constructor(status, { code, message, retryAfterSeconds } = {}) {
+  constructor(status, { code, message, retryAfterSeconds, field } = {}) {
     super(message || `Request failed (${status})`);
     this.name = 'ApiError';
     this.status = status;
     this.code = code || `http_${status}`;
     this.retryAfter = retryAfterSeconds ?? null;
+    this.field = field || null; // which input the server rejected, if any
   }
 }
 

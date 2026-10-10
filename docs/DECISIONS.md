@@ -4,6 +4,12 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | **Save, then Publish**: saves go to the DB; the site changes on Publish | Batch and review changes before they go live | Live on every save |
+| 2026-10-10 | **Delete = Archive**, Restore returns an item as a draft | Protects against accidental deletes; restored items never go live by surprise | Permanent delete |
+| 2026-10-10 | Admin API reads and writes the same record shapes as the public snapshot | One mapping, tested both ways (exact match + lossless re-save) | Separate admin data model |
+| 2026-10-10 | One generic `ResourceManager` + field schemas for all content screens | Consistent UX; each screen is a short config | Hand-written screen per resource |
+| 2026-10-10 | Optimistic concurrency via `updatedAt` (409 on conflict) | Two admins can't silently overwrite each other | Last write wins |
+| 2026-10-10 | Images are URL-based until Part E (a URL creates or reuses a media asset) | Works now; Cloudinary upload slots into the same library | Wait for Cloudinary |
 | 2026-10-10 | Public content: `Cache-Control: no-cache` + ETag (304) | A publish must be visible on the next page load; a 304 costs ~30 ms and no body | `max-age=60, stale-while-revalidate=300` (up to 6 min stale) |
 | 2026-10-10 | Snapshot records keep the original frontend shapes | Pages switched data source with no field changes; verified by an exact-match test | Redesign the page data model now |
 | 2026-10-10 | If the API is down: skeleton, then a Retry state; no bundled fallback | Never show stale sample products or prices as if real | Fall back to bundled sample data |

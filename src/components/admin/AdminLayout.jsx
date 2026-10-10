@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import {
-  Menu,
-  Database,
-  DatabaseZap,
-  RefreshCw
-} from 'lucide-react';
+import { Menu } from 'lucide-react';
 import AdminSidebar from './AdminSidebar';
+import PublishBar from './PublishBar';
 import ThemeToggle from '../ThemeToggle';
 import { useAdminAuth } from '../../context/AdminAuthContext';
-import { useSiteContent } from '../../context/SiteContentContext';
 
 export const AdminLayout = ({ children, title = 'Dashboard', subtitle }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { adminUser, isSupabaseConfigured } = useAdminAuth();
-  const { refreshSiteContent, loading } = useSiteContent();
+  const { adminUser } = useAdminAuth();
 
   return (
     <div className="min-h-screen bg-adm-bg text-adm-fg flex">
@@ -41,37 +35,8 @@ export const AdminLayout = ({ children, title = 'Dashboard', subtitle }) => {
 
           {/* Top Bar Actions & Badges */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Supabase Status Indicator */}
-            <div
-              className={`hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium ${
-                isSupabaseConfigured
-                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
-                  : 'bg-amber-500/10 text-amber-700 dark:text-amber-400'
-              }`}
-              title={isSupabaseConfigured ? 'Connected to live Supabase PostgreSQL DB' : 'Running in Offline Demo Mode (localStorage)'}
-            >
-              {isSupabaseConfigured ? (
-                <>
-                  <DatabaseZap className="w-3.5 h-3.5" />
-                  <span>Live Database</span>
-                </>
-              ) : (
-                <>
-                  <Database className="w-3.5 h-3.5" />
-                  <span>Demo Mode</span>
-                </>
-              )}
-            </div>
-
-            {/* Refresh Button */}
-            <button
-              onClick={refreshSiteContent}
-              disabled={loading}
-              title="Reload all site data"
-              className="p-2 rounded-full border border-adm-border text-adm-fg/70 hover:text-adm-accent hover:border-adm-accent transition-colors"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-adm-accent' : ''}`} />
-            </button>
+            {/* Unpublished changes + Publish */}
+            <PublishBar />
 
             {/* Light / Dark toggle shared with the website */}
             <ThemeToggle />

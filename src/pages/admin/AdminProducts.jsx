@@ -1,341 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import { Package, Plus, Edit2, Trash2, Search, Filter, Check, X, Tag, DollarSign, ToggleLeft, ToggleRight } from 'lucide-react';
-import AdminLayout from '../../components/admin/AdminLayout';
-import adminDataService from '../../services/adminDataService';
-import { useSiteContent } from '../../context/SiteContentContext';
+import React from 'react';
+import ResourceManager from '../../components/admin/ResourceManager';
+import { categoryOptions, collectionOptions, inr } from './contentOptions';
 
-export const AdminProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [loading, setLoading] = useState(true);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
-
-  const { refreshSiteContent } = useSiteContent();
-
-  const emptyProduct = {
-    id: '',
-    name: '',
-    category: 'Furniture',
-    price: 50000,
-    sale_price: '',
-    badge: 'New Arrival',
-    description: '',
-    details: ['100% Solid Natural Stone', 'Bespoke Craftsmanship'],
-    image: '',
-    in_stock: true
-  };
-
-  const loadData = async () => {
-    setLoading(true);
-    const [prods, cats] = await Promise.all([
-      adminDataService.getProducts(),
-      adminDataService.getCategories()
-    ]);
-    setProducts(prods || []);
-    setCategories(cats || []);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const handleToggleStock = async (id) => {
-    const updated = await adminDataService.toggleProductStock(id);
-    setProducts(updated);
-    await refreshSiteContent();
-  };
-
-  const handleOpenAdd = () => {
-    setEditingProduct({ ...emptyProduct });
-    setIsModalOpen(true);
-  };
-
-  const handleOpenEdit = (product) => {
-    setEditingProduct({ ...product });
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      const updated = await adminDataService.deleteProduct(id);
-      setProducts(updated);
-      await refreshSiteContent();
-    }
-  };
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!editingProduct.name || !editingProduct.price) return;
-
-    await adminDataService.saveProduct(editingProduct);
-    await loadData();
-    await refreshSiteContent();
-    setIsModalOpen(false);
-    setEditingProduct(null);
-  };
-
-  const filteredProducts = products.filter(p => {
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          p.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || p.category.toLowerCase() === selectedCategory.toLowerCase();
-    return matchesSearch && matchesCategory;
-  });
-
-  const formatPrice = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(amount);
-  };
-
-  return (
-    <AdminLayout title="Product Catalog Manager" subtitle="Manage store inventory, prices, badges, and stock availability">
-      <div className="space-y-6">
-        {/* Search & Filter Header */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-adm-surface p-4 rounded-2xl border border-adm-border">
-          <div className="flex items-center gap-3 w-full sm:w-auto flex-1 max-w-md">
-            <div className="relative w-full">
-              <Search className="w-4 h-4 text-adm-fg/40 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-xs text-adm-fg placeholder-adm-muted/70 focus:outline-none focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-              />
-            </div>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-xs text-adm-fg focus:outline-none focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-            >
-              <option value="all">All Categories</option>
-              {categories.map(c => (
-                <option key={c.id} value={c.name}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-
-          <button
-            onClick={handleOpenAdd}
-            className="w-full sm:w-auto px-5 py-2.5 bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent rounded-xl text-xs font-medium flex items-center justify-center gap-2 transition-all whitespace-nowrap"
-          >
-            <Plus className="w-4 h-4" /> Add Product
-          </button>
-        </div>
-
-        {/* Products Table */}
-        <div className="adm-card overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-adm-border bg-adm-surface2 text-adm-fg/40 uppercase tracking-wider">
-                  <th className="p-4 font-medium">Product</th>
-                  <th className="p-4 font-medium">Category</th>
-                  <th className="p-4 font-medium">Price</th>
-                  <th className="p-4 font-medium">Badge</th>
-                  <th className="p-4 font-medium">Stock Status</th>
-                  <th className="p-4 font-medium text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-adm-border">
-                {filteredProducts.map((product) => (
-                  <tr key={product.id} className="hover:bg-adm-fg/5 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-12 h-12 rounded-xl object-cover border border-adm-border"
-                        />
-                        <div>
-                          <p className="font-semibold text-adm-fg">{product.name}</p>
-                          <p className="text-[10px] text-adm-fg/40 font-mono">ID: {product.id}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <span className="px-2.5 py-1 rounded-full bg-adm-fg/5 border border-adm-fg/10 text-adm-fg/80 text-[11px]">
-                        {product.category}
-                      </span>
-                    </td>
-                    <td className="p-4 font-medium">
-                      <p className="text-adm-fg">{formatPrice(product.price)}</p>
-                      {product.sale_price && (
-                        <p className="text-[10px] text-emerald-600 dark:text-emerald-400">Sale: {formatPrice(product.sale_price)}</p>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      {product.badge ? (
-                        <span className="px-2 py-0.5 rounded bg-adm-accent/20 border border-adm-accent/30 text-adm-accent text-[10px] font-semibold uppercase">
-                          {product.badge}
-                        </span>
-                      ) : (
-                        <span className="text-adm-fg/30 text-[10px]">-</span>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      <button
-                        onClick={() => handleToggleStock(product.id)}
-                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium transition-colors ${
-                          product.in_stock
-                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
-                            : 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
-                        }`}
-                      >
-                        {product.in_stock ? <ToggleRight className="w-4 h-4" /> : <ToggleLeft className="w-4 h-4" />}
-                        {product.in_stock ? 'In Stock' : 'Out of Stock'}
-                      </button>
-                    </td>
-                    <td className="p-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleOpenEdit(product)}
-                          className="p-2 rounded-lg bg-adm-fg/5 hover:bg-adm-accent text-adm-fg transition-colors"
-                        >
-                          <Edit2 className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="p-2 rounded-lg bg-adm-fg/5 hover:bg-red-500 text-red-600 dark:text-red-400 hover:text-adm-fg transition-colors"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                {filteredProducts.length === 0 && (
-                  <tr>
-                    <td colSpan="6" className="p-8 text-center text-adm-fg/40">
-                      No products found matching filters.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Add / Edit Modal */}
-        {isModalOpen && editingProduct && (
-          <div className="fixed inset-0 z-50 bg-black/25 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="adm-card w-full max-w-lg p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-adm-border">
-                <h3 className="text-sm font-semibold text-adm-fg">
-                  {editingProduct.id ? 'Edit Product' : 'Add New Product'}
-                </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-adm-fg/40 hover:text-adm-fg">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <form onSubmit={handleSave} className="space-y-4 text-xs">
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Product Title</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingProduct.name}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Category</label>
-                    <input
-                      type="text"
-                      required
-                      value={editingProduct.category}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Badge Tag</label>
-                    <input
-                      type="text"
-                      value={editingProduct.badge}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, badge: e.target.value })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Price (₹)</label>
-                    <input
-                      type="number"
-                      required
-                      value={editingProduct.price}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, price: Number(e.target.value) })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Sale Price (Optional)</label>
-                    <input
-                      type="number"
-                      value={editingProduct.sale_price || ''}
-                      onChange={(e) => setEditingProduct({ ...editingProduct, sale_price: e.target.value ? Number(e.target.value) : '' })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Image URL</label>
-                  <input
-                    type="url"
-                    required
-                    value={editingProduct.image}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Description</label>
-                  <textarea
-                    rows={3}
-                    value={editingProduct.description}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-
-                <div className="pt-4 flex items-center justify-end gap-3 border-t border-adm-border">
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 bg-adm-fg/5 hover:bg-adm-fg/10 rounded-xl text-adm-fg"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 bg-adm-accent hover:bg-adm-accent-hover rounded-xl text-adm-on-accent font-medium"
-                  >
-                    Save Product
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+const config = {
+  resource: 'products',
+  title: 'Products',
+  subtitle: 'Catalogue items shown in the shop',
+  singular: 'Product',
+  plural: 'Products',
+  sortable: true,
+  optionSources: { category: categoryOptions, collection: collectionOptions },
+  newRecord: () => ({ status: 'draft', inStock: true, featured: false, images: [], colors: [], materials: [], finishes: [], fabrics: [], details: [], careInstructions: [], reviewCount: 0 }),
+  row: {
+    thumb: (p) => p.images?.[0],
+    primary: (p) => p.name,
+    secondary: (p) => `${p.id} · ${p.categoryName || 'No category'}${p.collection ? ` · ${p.collection}` : ''}`,
+    meta: (p) => (
+      <div>
+        <p className="font-semibold">{inr(p.price)}</p>
+        <p className={`text-[11px] ${p.inStock ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>{p.stockStatus || (p.inStock ? 'In stock' : 'Made to order')}</p>
       </div>
-    </AdminLayout>
-  );
+    ),
+  },
+  sections: [
+    { title: 'Basics', fields: [
+      { key: 'status', label: 'Visibility', type: 'status' },
+      { key: 'name', label: 'Name', type: 'text', required: true },
+      { key: 'category', label: 'Category', type: 'select', required: true, span: 'half' },
+      { key: 'collection', label: 'Collection', type: 'select', span: 'half' },
+      { key: 'description', label: 'Description', type: 'textarea', rows: 4 },
+    ] },
+    { title: 'Images', fields: [
+      { key: 'images', label: 'Product photos', type: 'images', required: true, help: 'first photo is the main one' },
+    ] },
+    { title: 'Price & stock', fields: [
+      { key: 'price', label: 'Price (₹)', type: 'money', required: true, span: 'half' },
+      { key: 'originalPrice', label: 'Original price (₹)', type: 'money', span: 'half', help: 'shown struck through' },
+      { key: 'badge', label: 'Badge', type: 'text', span: 'half', placeholder: 'Bestseller' },
+      { key: 'leadTime', label: 'Lead time', type: 'text', span: 'half', placeholder: '3 to 4 Weeks' },
+      { key: 'stockStatus', label: 'Stock label', type: 'text', span: 'half', placeholder: 'In Stock' },
+      { key: 'inStock', label: 'In stock', type: 'checkbox', span: 'half', checkboxLabel: 'In stock (otherwise made to order)' },
+      { key: 'featured', label: 'Featured', type: 'checkbox', span: 'half', checkboxLabel: 'Feature on the shop' },
+      { key: 'rating', label: 'Rating', type: 'number', span: 'half', min: 0, max: 5, step: 0.1 },
+      { key: 'reviewCount', label: 'Review count', type: 'number', span: 'half', step: 1 },
+    ] },
+    { title: 'Specification', fields: [
+      { key: 'dimensions', label: 'Dimensions', type: 'text', placeholder: '280cm W x 110cm D x 74cm H' },
+      { key: 'materials', label: 'Materials', type: 'list', span: 'half' },
+      { key: 'finishes', label: 'Finishes', type: 'list', span: 'half' },
+      { key: 'defaultFinish', label: 'Default finish', type: 'text', span: 'half' },
+      { key: 'defaultFabric', label: 'Default fabric', type: 'text', span: 'half' },
+      { key: 'fabrics', label: 'Fabrics', type: 'list' },
+      { key: 'colors', label: 'Colours', type: 'colors' },
+      { key: 'details', label: 'Details', type: 'list', rows: 5 },
+      { key: 'careInstructions', label: 'Care instructions', type: 'list', rows: 4 },
+    ] },
+    { title: 'Search engines', fields: [
+      { key: 'seoTitle', label: 'SEO title', type: 'text', help: 'optional' },
+      { key: 'seoDescription', label: 'SEO description', type: 'textarea', rows: 2, help: 'optional' },
+    ] },
+  ],
 };
 
+export const AdminProducts = () => <ResourceManager config={config} />;
 export default AdminProducts;

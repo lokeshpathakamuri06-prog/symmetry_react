@@ -36,11 +36,12 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 
 ## Step 4: Connect the frontend to the backend
 - [ ] Replace `src/services/adminDataService.js` (localStorage/Supabase) with API calls.
-- [ ] Admin CRUD endpoints for products, categories, collections, projects, blogs, banners, testimonials, team, page text, jobs; inbox endpoints for inquiries, applications, orders.
+- [x] Admin CRUD endpoints for products, categories, collections, projects, blogs, banners, testimonials, team, jobs (D1).
+- [ ] Page text endpoints; inbox endpoints for inquiries, applications, orders (D2).
 - [x] Public pages read `/api/public/content` instead of `src/data` (Part C). Contact details follow in Part D.
 - [ ] Contact, careers, checkout and newsletter forms POST to the API (known issue 4).
 - [x] Real admin login; remove the demo login (known issue 3).
-- [ ] Publish button: rebuild the public content cache.
+- [x] Publish button: rebuild the public content cache (D1).
 - [ ] Remove Supabase code and `supabase_schema.sql`.
 
 **Done when:** an edit in admin, followed by Publish, shows on the public site from any device, and a form submitted on a phone appears in admin.

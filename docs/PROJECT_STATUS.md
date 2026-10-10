@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-10 (Part C: public site reads the database)_
+_Last updated: 2026-10-10 (Part D1: admin content editing + Publish)_
 
 ## Summary
 | Area | State |
@@ -13,7 +13,7 @@ _Last updated: 2026-10-10 (Part C: public site reads the database)_
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
 | FastAPI backend | 🟡 Live: `/api/health` and admin auth (`/api/auth/*`); content endpoints next |
 | Cloudinary image pipeline | ⏳ After FastAPI |
-| Frontend connected to backend | 🟡 Public pages read the API (Part C); admin content screens still use `localStorage` until Part D |
+| Frontend connected to backend | 🟡 Public pages read the API (C); all 9 content screens, dashboard and media library use the API (D1); inbox, forms and page text follow in D2 |
 | HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
 
 ## Work log
@@ -151,11 +151,38 @@ _Last updated: 2026-10-10 (Part C: public site reads the database)_
   - Blogs keep their seeded order (`position`) rather than newest-first, so the Journal page looks the same.
 - **Bug fixed along the way:** "Buy Now" on every product page crashed the page (`total` undefined in `RazorpayModalPlaceholder`, present since the initial commit). Now defined as subtotal + GST and browser-verified.
 
+### 2026-10-10: Part D1, admin content saves to the database, with Publish
+- **Backend:**
+  - `app/content/records.py`: one codec per resource, in the same record shapes as the public snapshot.
+  - `app/api/admin_content.py`: CRUD for products, categories, collections, projects, journal, banners, testimonials, team and jobs.
+    - List with status filter and search.
+    - Get, create (auto SKU `sym-0NN`, unique slugs), update with an `updatedAt` conflict check (409), archive, restore (back to draft), reorder.
+  - Validation errors name the field (422).
+  - A category with products can't be archived (409).
+  - `GET /api/admin/publish/status`, `GET /api/admin/dashboard`, and the media library (list with usage counts, add by URL, alt text/tags, delete only when unused).
+  - The URL→image and slug helpers moved to `app/content/media.py`, shared with the seed.
+- **Tests:** 55 pass. The key one re-saves **every** seeded record unchanged and confirms it comes back identical with nothing to publish.
+- **Frontend:**
+  - `ResourceManager`: one list and editor for every content type, with a field kit (images with reorder and library picker, lists, colours, stats, paragraphs, related images).
+  - The 9 content screens are now short configs.
+  - The header `PublishBar` ("Unpublished changes" / "Website up to date" + Publish) replaces the Demo Mode badge.
+  - New Dashboard and Media Library on the API.
+- **Verified in the browser** with a temporary QA admin:
+  - A price edit stays off the site until Publish, then shows on the product page.
+  - Archive hides a product after Publish; Restore brings it back as a draft.
+  - A new project with images goes live.
+  - Two tabs editing at once get a conflict message.
+  - The category archive guard, native and server field validation, and all 20 product thumbnails load with correct stock labels.
+  - The test data was removed afterwards, and the live content hash is identical to before the test.
+- **Bugs caught by the tests and fixed:**
+  - Re-saving a testimonial overwrote its wording with the project title.
+  - Creating a product failed because the database received the half-filled row too early (autoflush).
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
-| 1 | Admin edits don't reach the public site. **Public side done (Part C):** pages read the DB. Remaining: admin screens still save to localStorage | Part D: admin CRUD + Publish button |
-| 2 | Admin Products page shows broken thumbnails and "Out of Stock" (field mismatch: `images`/`inStock` vs `image`/`in_stock`) | Step 4 |
+| 1 | Admin edits don't reach the public site. **Content done (C + D1):** content screens save to the DB and Publish updates the site. Remaining: page text and contact details | Part D2 |
+| 2 | ~~Admin Products page shows broken thumbnails and "Out of Stock"~~ | ✅ Fixed 2026-10-10 (Part D1) |
 | 3 | ~~Demo admin login in the browser~~ | ✅ Fixed 2026-10-10: server-side login (Part B) |
 | 4 | Forms (contact, careers, checkout, newsletter) save only to the visitor's browser | Step 4 |
 | 5 | ~~Site is plain HTTP on a public IP~~ | ✅ Fixed 2026-10-10: HTTPS via Caddy |

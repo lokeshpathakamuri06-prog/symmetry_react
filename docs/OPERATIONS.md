@@ -100,6 +100,13 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 | Clean up old sessions and login attempts | `.venv/bin/python -m app.cli prune` |
 | Unblock a rate-limited email now | `sudo -u postgres psql -d symmetry -c "delete from login_attempts where email='…'"` |
 
+## Editing content (admin)
+- **Edit** in the admin screens (Products, Categories, Collections, Projects, Journal, Banners, Testimonials, Team, Job Openings), then **Save**. The website is not changed yet.
+- The header shows **Unpublished changes**. Click **Publish** to update the website; visitors see it on their next page load.
+- **Archive** hides an item (after Publish). Find it under **Archived** and **Restore** it; it comes back as a **Draft**, so set it to Published and Publish again.
+- **Images:** paste an image URL, or pick from the **Media Library**. Uploading files directly arrives with Cloudinary (Part E).
+- If two people edit the same item, the second save shows "changed by someone else". Close the editor and reopen it to get the latest version.
+
 ## Publishing content
 - The public site shows the **latest published snapshot** of the database, not live rows.
 - After changing content directly in the DB, run:

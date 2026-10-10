@@ -1,171 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Users, Plus, Edit2, Trash2, X, Save } from 'lucide-react';
-import AdminLayout from '../../components/admin/AdminLayout';
-import adminDataService from '../../services/adminDataService';
-import { useSiteContent } from '../../context/SiteContentContext';
+import React from 'react';
+import ResourceManager from '../../components/admin/ResourceManager';
 
-export const AdminTeam = () => {
-  const [team, setTeam] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingMember, setEditingMember] = useState(null);
+const DEPARTMENTS = ['Architecture & Design', 'Sourcing & Materials', 'Fabrication & Engineering'];
 
-  const { refreshSiteContent } = useSiteContent();
-
-  const emptyMember = {
-    id: '',
-    name: '',
-    role: 'Principal Architect',
-    department: 'Architecture & Design',
-    experience: '15 Years Experience',
-    bio: '',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
-    linkedin: 'https://linkedin.com'
-  };
-
-  const loadTeam = async () => {
-    const data = await adminDataService.getTeam();
-    setTeam(data || []);
-  };
-
-  useEffect(() => {
-    loadTeam();
-  }, []);
-
-  const handleOpenAdd = () => {
-    setEditingMember({ ...emptyMember });
-    setIsModalOpen(true);
-  };
-
-  const handleOpenEdit = (m) => {
-    setEditingMember({ ...m });
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm('Delete team member profile?')) {
-      const updated = await adminDataService.deleteTeamMember(id);
-      setTeam(updated);
-      await refreshSiteContent();
-    }
-  };
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!editingMember.name) return;
-    await adminDataService.saveTeamMember(editingMember);
-    await loadTeam();
-    await refreshSiteContent();
-    setIsModalOpen(false);
-  };
-
-  return (
-    <AdminLayout title="Team Profiles Manager" subtitle="Manage executive directors, principal architects, and master craftsmen">
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-adm-fg/50">{team.length} team members</p>
-          <button
-            onClick={handleOpenAdd}
-            className="px-4 py-2.5 bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent rounded-xl text-xs font-medium flex items-center gap-2 transition-all"
-          >
-            <Plus className="w-4 h-4" /> Add Team Member
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {team.map((m) => (
-            <div key={m.id} className="adm-card p-5 space-y-4 group">
-              <div className="flex items-center gap-4">
-                <img src={m.image} alt={m.name} className="w-16 h-16 rounded-2xl object-cover border border-adm-border" />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-adm-fg text-sm truncate">{m.name}</h4>
-                    <div className="flex items-center gap-1">
-                      <button onClick={() => handleOpenEdit(m)} className="p-1 text-adm-fg/40 hover:text-adm-fg"><Edit2 className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => handleDelete(m.id)} className="p-1 text-adm-fg/40 hover:text-red-600 dark:hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
-                    </div>
-                  </div>
-                  <p className="text-xs text-adm-accent font-medium truncate">{m.role}</p>
-                  <p className="text-[10px] text-adm-fg/40">{m.department}</p>
-                </div>
-              </div>
-
-              <p className="text-xs text-adm-fg/60 line-clamp-3">{m.bio}</p>
-            </div>
-          ))}
-        </div>
-
-        {isModalOpen && editingMember && (
-          <div className="fixed inset-0 z-50 bg-black/25 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="adm-card w-full max-w-md p-6 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-adm-border">
-                <h3 className="text-sm font-semibold text-adm-fg">
-                  {editingMember.id ? 'Edit Team Member' : 'Add Team Member'}
-                </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-adm-fg/40 hover:text-adm-fg"><X className="w-5 h-5" /></button>
-              </div>
-
-              <form onSubmit={handleSave} className="space-y-3 text-xs">
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={editingMember.name}
-                    onChange={(e) => setEditingMember({ ...editingMember, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Role Title</label>
-                    <input
-                      type="text"
-                      required
-                      value={editingMember.role}
-                      onChange={(e) => setEditingMember({ ...editingMember, role: e.target.value })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-adm-fg/70 mb-1">Department</label>
-                    <input
-                      type="text"
-                      value={editingMember.department}
-                      onChange={(e) => setEditingMember({ ...editingMember, department: e.target.value })}
-                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Photo URL</label>
-                  <input
-                    type="url"
-                    required
-                    value={editingMember.image}
-                    onChange={(e) => setEditingMember({ ...editingMember, image: e.target.value })}
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-adm-fg/70 mb-1">Bio</label>
-                  <textarea
-                    rows={3}
-                    value={editingMember.bio}
-                    onChange={(e) => setEditingMember({ ...editingMember, bio: e.target.value })}
-                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
-                  />
-                </div>
-                <div className="pt-3 flex items-center justify-end gap-3 border-t border-adm-border">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-adm-fg/5 rounded-xl text-adm-fg">Cancel</button>
-                  <button type="submit" className="px-5 py-2 bg-adm-accent rounded-xl text-adm-on-accent font-medium">Save Profile</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-      </div>
-    </AdminLayout>
-  );
+const config = {
+  resource: 'team',
+  title: 'Team Profiles',
+  subtitle: 'People shown on the About page',
+  singular: 'Team member',
+  plural: 'Team members',
+  sortable: true,
+  newRecord: () => ({ status: 'draft', specialties: [] }),
+  row: { thumb: (m) => m.image, primary: (m) => m.name, secondary: (m) => `${m.role}${m.department ? ` · ${m.department}` : ''}` },
+  sections: [
+    { title: 'Profile', fields: [
+      { key: 'status', label: 'Visibility', type: 'status' },
+      { key: 'name', label: 'Name', type: 'text', required: true, span: 'half' },
+      { key: 'role', label: 'Role', type: 'text', required: true, span: 'half' },
+      { key: 'department', label: 'Department', type: 'select', span: 'half', options: DEPARTMENTS.map((d) => ({ value: d, label: d })) },
+      { key: 'experience', label: 'Experience', type: 'text', span: 'half', placeholder: '15+ Years Experience' },
+      { key: 'credentials', label: 'Credentials', type: 'text' },
+      { key: 'bio', label: 'Bio', type: 'textarea', rows: 4 },
+      { key: 'specialties', label: 'Specialties', type: 'list', rows: 3 },
+      { key: 'linkedin', label: 'LinkedIn URL', type: 'text' },
+      { key: 'image', label: 'Photo', type: 'image' },
+    ] },
+  ],
 };
 
+export const AdminTeam = () => <ResourceManager config={config} />;
 export default AdminTeam;
