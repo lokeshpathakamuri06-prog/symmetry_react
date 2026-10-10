@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteText } from '../context/PublicContentContext';
 
 // 3 Specific HAJ images requested: HAJ0025.jpeg, HAJ0026-1.jpeg, HAJ0035-1.jpeg
 const HERO_IMAGES = [
@@ -21,6 +22,7 @@ const HERO_IMAGES = [
 ];
 
 export const Hero = () => {
+  const text = useSiteText('home');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Smooth scroll handler
@@ -73,10 +75,10 @@ export const Hero = () => {
           className="max-w-4xl mx-auto px-4"
         >
           <h1 className="text-4xl sm:text-6xl md:text-7xl text-white leading-[1.08] tracking-tight font-bold mb-4 sm:mb-6 drop-shadow-md">
-            Where Vision Meets <span className="text-[#BCA575] font-bold">Timeless Design</span>
+            {text.heroTitle} <span className="text-[#BCA575] font-bold">{text.heroTitleHighlight}</span>
           </h1>
           <p className="text-base sm:text-xl text-white/90 font-normal leading-relaxed max-w-2xl mx-auto mb-8 drop-shadow-sm">
-            Global sourcing, bespoke interiors, and end-to-end execution for spaces that inspire and endure.
+            {text.heroSubtitle}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
@@ -84,7 +86,7 @@ export const Hero = () => {
               onClick={() => scrollToSection('projects-section')}
               className="px-8 py-3.5 rounded-full bg-white text-[#131E20] hover:bg-[#36656B] hover:text-white transition-all duration-300 text-xs uppercase tracking-luxury font-semibold shadow-lg cursor-pointer"
             >
-              Explore Our Work
+              {text.heroPrimaryCta}
             </button>
             <button
               type="button"
@@ -94,7 +96,7 @@ export const Hero = () => {
               }}
               className="px-8 py-3.5 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 transition-all duration-300 text-xs uppercase tracking-luxury font-semibold cursor-pointer shadow-md"
             >
-              Start Your Project
+              {text.heroSecondaryCta}
             </button>
           </div>
         </motion.div>

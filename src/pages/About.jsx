@@ -20,8 +20,10 @@ import {
   whyChoosePillars 
 } from '../data/aboutData';
 import { useTeam } from '../context/PublicContentContext';
+import { useSiteText } from '../context/PublicContentContext';
 
 export const About = () => {
+  const text = useSiteText('about');
   const { items: teamMembers } = useTeam();
   // Department filter for team section
   const [selectedDept, setSelectedDept] = useState('All');
@@ -76,7 +78,7 @@ export const About = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight tracking-tight drop-shadow-md"
           >
-            Built on Legacy. <span className="text-[#BCA575] font-bold">Designed for Modern Living.</span>
+            {text.heroTitle} <span className="text-[#BCA575] font-bold">{text.heroTitleHighlight}</span>
           </motion.h1>
         </div>
       </section>
@@ -136,7 +138,7 @@ export const About = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] leading-[1.15] tracking-tight"
             >
-              Built on Legacy. Designed for Modern Living.
+              {text.storyTitle}
             </motion.h2>
 
             <motion.div
@@ -147,14 +149,16 @@ export const About = () => {
               className="space-y-4 text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed"
             >
               <p className="font-normal text-[#131E20] dark:text-[#F5F1E8]">
-                Symmetry Interiors &amp; Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution.
+                {text.storyParagraph1}
               </p>
               <p>
-                From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.
+                {text.storyParagraph2}
               </p>
-              <p>
-                Symmetry Interiors combines international sourcing, thoughtful planning, quality materials, and skilled craftsmanship to create distinctive interiors across residential, hospitality, commercial, healthcare, and institutional projects.
-              </p>
+              {text.storyParagraph3 && (
+                <p>
+                  {text.storyParagraph3}
+                </p>
+              )}
             </motion.div>
 
             {/* Brand Message & Company Details Card */}

@@ -67,7 +67,7 @@ export const CategoryCircleMarquee = () => {
 
                 {/* Pill Badge with Item Count */}
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-[10px] sm:text-xs uppercase tracking-luxury font-medium text-[#36656B] dark:text-[#BCA575] shadow-xs whitespace-nowrap">
-                  {cat.itemCount}
+                  {cat.productCount} {cat.productCount === 1 ? 'Piece' : 'Pieces'}
                 </div>
               </div>
 

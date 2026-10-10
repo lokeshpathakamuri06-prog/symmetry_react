@@ -28,6 +28,7 @@ import ScribbleUnderline from '../components/ScribbleUnderline';
 import AppleCardWrapper from '../components/AppleCardWrapper';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import { useSiteText } from '../context/PublicContentContext';
 
 // Data imports
 
@@ -39,6 +40,7 @@ export const Home = () => {
 };
 
 const HomeView = ({ products, projects, blogs }) => {
+  const text = useSiteText('home');
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
@@ -113,19 +115,19 @@ const HomeView = ({ products, projects, blogs }) => {
             className="lg:col-span-6 space-y-6"
           >
             <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-              25+ Years Sourcing Expertise
+              {text.storyKicker}
             </span>
 
             <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
-              Built on Legacy. Designed for Modern Living.
+              {text.storyTitle}
             </h2>
 
             <p className="text-lg sm:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
-              Symmetry Interiors &amp; Building Solutions Private Limited is an interior design and furniture solutions company with over 25 years of sourcing expertise. We create elegant, functional, and timeless spaces through global sourcing, thoughtful design, premium materials, and professional execution.
+              {text.storyParagraph1}
             </p>
 
             <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
-              From homes and offices to hotels, hospitals, clubs, and commercial spaces, we provide complete interior solutions from concept to completion.
+              {text.storyParagraph2}
             </p>
 
             <div className="pt-4 flex items-center gap-6">
@@ -134,9 +136,9 @@ const HomeView = ({ products, projects, blogs }) => {
               </Button>
               <div className="hidden sm:block pl-6 text-sm text-[#4F6467] dark:text-[#AEB7BE]">
                 <strong className="text-[#131E20] dark:text-[#F5F1E8] block text-base font-medium">
-                  25+ Years Legacy
+                  {text.storyBadgeTitle}
                 </strong>
-                <span>Pan-India &bull; Global Sourcing</span>
+                <span>{text.storyBadgeText}</span>
               </div>
             </div>
           </motion.div>
@@ -159,8 +161,8 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <SectionHeading
             eyebrow="Furniture &amp; Objects"
-            title="Shop by Category"
-            subtitle="Browse individual bespoke archetypes engineered for luxury residential fitouts."
+            title={text.categoriesTitle}
+            subtitle={text.categoriesSubtitle}
             align="center"
           />
         </div>
@@ -177,8 +179,8 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
           <SectionHeading
             eyebrow="Collector Pieces"
-            title="Featured Products"
-            subtitle="Sculptural masterworks available with custom dimensions, Italian leathers, and tailored finishes."
+            title={text.productsTitle}
+            subtitle={text.productsSubtitle}
           />
           <Button to="/shop" variant="secondary" size="md" showArrow className="self-start sm:self-auto">
             Explore All 24+ Pieces
@@ -206,9 +208,9 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-4 lg:gap-6">
           <SectionHeading
             eyebrow="Featured Projects"
-            title="Spaces We’ve Brought to Life"
+            title={text.projectsTitle}
             titleClassName="text-3xl sm:text-4xl lg:text-[2.1rem] xl:text-[2.65rem] 2xl:text-5xl font-bold tracking-tight leading-[1.15] text-[#131E20] dark:text-[#F5F1E8] whitespace-normal lg:whitespace-nowrap"
-            subtitle="Explore our residential, hospitality, commercial, healthcare, and bespoke interior projects."
+            subtitle={text.projectsSubtitle}
           />
 
           {/* Typology Filter Tabs */}
@@ -361,8 +363,8 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <SectionHeading
             eyebrow="The Symmetry Distinction"
-            title="Why Choose Symmetry"
-            subtitle="Six foundational benchmarks that set our architectural delivery, proprietary joinery, and direct global procurement apart."
+            title={text.whyTitle}
+            subtitle={text.whySubtitle}
             align="center"
           />
         </div>
@@ -479,8 +481,8 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <SectionHeading
             eyebrow="Client Endorsements"
-            title="Voices of Discerning Owners"
-            subtitle="Reflections from penthouse homeowners, estate founders, and collaborating architects."
+            title={text.testimonialsTitle}
+            subtitle={text.testimonialsSubtitle}
             align="center"
           />
         </div>
@@ -495,8 +497,8 @@ const HomeView = ({ products, projects, blogs }) => {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
           <SectionHeading
             eyebrow="Editorial Monographs"
-            title="The Symmetry Journal"
-            subtitle="Essays exploring quiet luxury, monolithic stone selections, acoustic engineering, biophilic microclimates, and bespoke joinery."
+            title={text.journalTitle}
+            subtitle={text.journalSubtitle}
           />
           <Button to="/journal" variant="secondary" size="md" showArrow className="self-start sm:self-auto">
             View All Essays

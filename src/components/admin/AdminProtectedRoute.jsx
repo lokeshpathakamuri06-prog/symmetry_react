@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 
 export const AdminProtectedRoute = ({ children }) => {
-  const { isAdminAuthenticated, loading } = useAdminAuth();
+  const { isAdminAuthenticated, loading, checkSession } = useAdminAuth();
   const location = useLocation();
+
+  useEffect(() => {
+    checkSession();
+  }, [checkSession]);
 
   if (loading) {
     return (

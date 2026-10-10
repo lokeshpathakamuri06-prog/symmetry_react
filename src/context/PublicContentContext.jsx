@@ -73,4 +73,11 @@ export const useTestimonials = () => useCollection('testimonials');
 export const useTeam = () => useCollection('team');
 export const useJobs = () => useCollection('jobs');
 
+// Page text edited in admin Page Content: useSiteText('home'), useSiteText('company'), ...
+const EMPTY_SECTION = Object.freeze({});
+export const useSiteText = (page) => {
+  const { content } = usePublicContent();
+  return content?.siteSections?.[page] ?? EMPTY_SECTION;
+};
+
 export default PublicContentContext;

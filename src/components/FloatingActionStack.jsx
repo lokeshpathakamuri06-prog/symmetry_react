@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2, MessageSquare, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteText } from '../context/PublicContentContext';
+import { whatsappHref } from '../lib/contact';
 
 const InstagramIcon = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -30,6 +32,7 @@ const WhatsAppIcon = ({ className = 'w-5 h-5' }) => (
 );
 
 export const FloatingActionStack = () => {
+  const company = useSiteText('company');
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
   const [whatsappModalOpen, setWhatsappModalOpen] = useState(false);
   const [whatsappMessage, setWhatsappMessage] = useState('');
@@ -37,13 +40,12 @@ export const FloatingActionStack = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
 
   const pdfUrl = '/Symmetry-Interiors-Catalog.pdf';
-  const whatsappPhone = '919963499635'; // Symmetry Interiors Sales / Concierge
 
   const handleSendWhatsapp = (e) => {
     e.preventDefault();
     const text = whatsappMessage.trim() || 'Hello, I would like to schedule a private design consultation with Symmetry Interiors.';
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/${whatsappPhone}?text=${encoded}`, '_blank');
+    const href = whatsappHref(company.whatsappNumber, text);
+    if (href) window.open(href, '_blank');
     setWhatsappModalOpen(false);
     setWhatsappMessage('');
   };
@@ -71,7 +73,7 @@ export const FloatingActionStack = () => {
           </AnimatePresence>
 
           <motion.a
-            href="https://www.instagram.com/symmetryinteriors.ltd/?hl=en"
+            href={company.instagram}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.12 }}

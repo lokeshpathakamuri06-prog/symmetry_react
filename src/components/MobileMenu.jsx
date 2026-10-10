@@ -7,8 +7,11 @@ import logoDarkImg from '../assets/logo-dark.png';
 import ThemeToggle from './ThemeToggle';
 import Button from './Button';
 import { services } from '../data/services';
+import { useSiteText } from '../context/PublicContentContext';
+import { mailHref, telHref } from '../lib/contact';
 
 export const MobileMenu = ({ isOpen, onClose }) => {
+  const company = useSiteText('company');
   const location = useLocation();
   const [servicesOpen, setServicesOpen] = useState(false);
 
@@ -238,22 +241,22 @@ export const MobileMenu = ({ isOpen, onClose }) => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-[#36656B] dark:text-[#BCA575] shrink-0" />
-                  <span>Road No. 36, Jubilee Hills, Hyderabad</span>
+                  <span>{company.officeAddress}</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <a
-                    href="tel:+919963499635"
+                    href={telHref(company.phonePrimary)}
                     className="flex items-center gap-1.5 hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#36656B] dark:text-[#BCA575]" />
-                    +91 99634 99635
+                    {company.phonePrimary}
                   </a>
                   <a
-                    href="mailto:concierge@symmetryinteriors.com"
+                    href={mailHref(company.email)}
                     className="flex items-center gap-1.5 hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5 text-[#36656B] dark:text-[#BCA575]" />
-                    concierge@symmetryinteriors.com
+                    {company.email}
                   </a>
                 </div>
               </div>

@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { SearchProvider } from './context/SearchContext';
-import { SiteContentProvider } from './context/SiteContentContext';
 import { PublicContentProvider } from './context/PublicContentContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
@@ -93,7 +92,6 @@ export const App = () => {
     <ThemeProvider>
       <CartProvider>
         <SearchProvider>
-          <SiteContentProvider>
             <PublicContentProvider>
             <AdminAuthProvider>
               <BrowserRouter>
@@ -146,7 +144,6 @@ export const App = () => {
               </BrowserRouter>
             </AdminAuthProvider>
             </PublicContentProvider>
-          </SiteContentProvider>
         </SearchProvider>
       </CartProvider>
     </ThemeProvider>

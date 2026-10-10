@@ -107,6 +107,20 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 - **Images:** paste an image URL, or pick from the **Media Library**. Uploading files directly arrives with Cloudinary (Part E).
 - If two people edit the same item, the second save shows "changed by someone else". Close the editor and reopen it to get the latest version.
 
+## Inbox (admin)
+- **Contact Enquiries:** messages from the Contact page. Set the status (unread / read / replied / archived) and add notes. **View newsletter subscribers** has an **Export CSV** button.
+- **Applications:** candidates from Careers (new / shortlisted / interview / hired / rejected).
+- **Customer Orders:** order requests from Checkout, with the price taken from the catalogue at the time of ordering. There is no online payment yet, so follow up with the customer.
+- The sidebar badges count unread enquiries, new applications and pending orders.
+- **Delete** in the inbox is permanent, for when someone asks for their details to be removed.
+
+## Page text and contact details
+- **Admin → Page Content:** Company & Contact (phones, WhatsApp, emails, addresses, hours, socials), Home, About, Contact page, Footer.
+- Save each tab, then **Publish**. The phone, email and WhatsApp change everywhere: header menu, footer, Contact page and WhatsApp buttons.
+
+## ⚠️ Never re-run the seed on live data
+`python -m app.cli seed` overwrites products, projects, page text and the rest with the original sample content. It is only for a fresh or test database. **Do not run it once the client has started editing.**
+
 ## Publishing content
 - The public site shows the **latest published snapshot** of the database, not live rows.
 - After changing content directly in the DB, run:

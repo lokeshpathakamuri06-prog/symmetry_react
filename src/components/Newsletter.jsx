@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Honeypot from './Honeypot';
+import { subscribeNewsletter, formErrorMessage } from '../services/publicApi';
 
 export const Newsletter = ({ className = '' }) => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+  const [website, setWebsite] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email && email.includes('@')) {
+    if (!email || !email.includes('@')) return;
+    setSending(true);
+    setError('');
+    try {
+      await subscribeNewsletter(email.trim(), website);
       setSubmitted(true);
-      setTimeout(() => {
-        setEmail('');
-      }, 3000);
+      setEmail('');
+    } catch (err) {
+      setError(formErrorMessage(err));
+    } finally {
+      setSending(false);
     }
   };
 
@@ -39,7 +50,8 @@ export const Newsletter = ({ className = '' }) => {
             <span>Thank you for subscribing. Welcome to the Symmetry circle.</span>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3">
+            <Honeypot value={website} onChange={setWebsite} />
             <input
               type="email"
               value={email}
@@ -50,13 +62,15 @@ export const Newsletter = ({ className = '' }) => {
             />
             <button
               type="submit"
-              className="px-6 py-3.5 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-colors text-sm uppercase tracking-luxury font-medium flex items-center justify-center gap-2 group shrink-0"
+              disabled={sending}
+              className="disabled:opacity-60 px-6 py-3.5 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-colors text-sm uppercase tracking-luxury font-medium flex items-center justify-center gap-2 group shrink-0"
             >
               <span>Subscribe</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </form>
         )}
+        {error && <p role="alert" className="mt-3 text-sm text-red-500">{error}</p>}
         <p className="text-xs text-[#4F6467]/70 dark:text-[#AEB7BE]/70 mt-3">
           We honor discretion. Unsubscribe at any time.
         </p>

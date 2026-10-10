@@ -9,13 +9,12 @@ const config = {
   plural: 'Categories',
   sortable: true,
   newRecord: () => ({ status: 'draft' }),
-  row: { thumb: (c) => c.image, primary: (c) => c.name, secondary: (c) => `${c.slug}${c.itemCount ? ` · ${c.itemCount}` : ''}` },
+  row: { thumb: (c) => c.image, primary: (c) => c.name, secondary: (c) => `${c.slug} · ${c.productCount ?? 0} live product(s)` },
   sections: [
     { title: 'Category', fields: [
       { key: 'status', label: 'Visibility', type: 'status' },
       { key: 'name', label: 'Name', type: 'text', required: true },
       { key: 'description', label: 'Description', type: 'textarea', rows: 2 },
-      { key: 'itemCount', label: 'Count label', type: 'text', placeholder: '6 Models', help: 'shown on category cards' },
       { key: 'image', label: 'Cover image', type: 'image' },
     ] },
   ],

@@ -32,6 +32,14 @@ Unsplash URLs are used in:
 | Real testimonials | 3 samples | With client permission |
 | Alt text / captions | All images | Can be added in the Media Library |
 
+## Replacing images today (until Cloudinary, Part E)
+1. Put the image somewhere public: a URL starting with `https://`, or a file under `public/` such as `/drive_products/LC0045.jpeg`.
+2. In the admin editor (product, project and so on) paste the URL under **Images**, or click **Library** to reuse one already in the Media Library.
+3. Reorder with the arrows. The first product photo is the main one.
+4. Save, then **Publish**.
+
+The Media Library shows where each image is used and only lets you delete unused ones. Direct uploads arrive with Cloudinary.
+
 ## Rules for images going forward
 - Upload originals only through the admin Media Library, which goes to Cloudinary. Don't put new photos in `public/`.
 - Never use full URLs in content; reference the media asset.

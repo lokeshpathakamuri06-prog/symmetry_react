@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useSiteText } from '../context/PublicContentContext';
 
 const InstagramIcon = ({ className = 'w-4 h-4' }) => (
   <svg
@@ -19,6 +20,7 @@ const InstagramIcon = ({ className = 'w-4 h-4' }) => (
 );
 
 export const InstagramMosaic = () => {
+  const { instagram } = useSiteText('company');
   const posts = [
     {
       image: '/drive_products/LC0001-1.jpeg',
@@ -58,7 +60,7 @@ export const InstagramMosaic = () => {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <a
-            href="https://www.instagram.com/symmetryinteriors.ltd/?hl=en"
+            href={instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-2 hover:opacity-80 transition-opacity group"
@@ -73,7 +75,7 @@ export const InstagramMosaic = () => {
         </div>
 
         <a
-          href="https://www.instagram.com/symmetryinteriors.ltd/?hl=en"
+          href={instagram}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury font-medium text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors px-4 py-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] dark:hover:border-[#BCA575]"
@@ -88,7 +90,7 @@ export const InstagramMosaic = () => {
         {posts.map((post, idx) => (
           <motion.a
             key={idx}
-            href="https://www.instagram.com/symmetryinteriors.ltd/?hl=en"
+            href={instagram}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 15 }}

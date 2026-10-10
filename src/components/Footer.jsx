@@ -4,6 +4,14 @@ import { MapPin, Phone, Mail, ArrowUpRight, FileText } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import logoDarkImg from '../assets/logo-dark.png';
 import Newsletter from './Newsletter';
+import { useSiteText } from '../context/PublicContentContext';
+import { mailHref, telHref } from '../lib/contact';
+
+// "@symmetryinteriors.ltd" from an Instagram profile URL
+const instagramHandle = (url) => {
+  const handle = (url || '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '').split(/[/?]/)[0];
+  return handle ? `@${handle}` : '';
+};
 
 const InstagramIcon = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -22,6 +30,8 @@ const InstagramIcon = ({ className = 'w-5 h-5' }) => (
 );
 
 export const Footer = () => {
+  const company = useSiteText('company');
+  const footer = useSiteText('footer');
   return (
     <footer className="bg-[#E5ECEC]/40 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] pt-8 sm:pt-10 pb-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,18 +62,18 @@ export const Footer = () => {
 
             <div className="space-y-2">
               <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
-                Symmetry Interiors &amp; Building Solutions Private Limited
+                {company.companyName}
               </h3>
               <p className="text-sm font-semibold text-[#36656B] dark:text-[#BCA575]">
-                Your Space. Our Expertise.
+                {footer.tagline}
               </p>
               <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
-                25+ Years of Expertise | Global Sourcing | Bespoke Interiors | End-to-End Execution
+                {footer.subTagline}
               </p>
             </div>
 
             <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed max-w-sm font-normal">
-              From globally sourced furniture to complete interior execution, we create spaces designed around your vision for homes, offices, hotels, hospitals, clubs, and commercial spaces.
+              {footer.description}
             </p>
 
             <div className="pt-2 text-sm text-[#4F6467] dark:text-[#AEB7BE] space-y-3">
@@ -72,36 +82,36 @@ export const Footer = () => {
                 <div className="space-y-1.5">
                   <div>
                     <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Office Address:</span>
-                    <span className="text-xs leading-relaxed block">Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016</span>
+                    <span className="text-xs leading-relaxed block">{company.officeAddress}</span>
                   </div>
                   <div className="pt-1">
                     <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Registered Office:</span>
-                    <span className="text-xs leading-relaxed block">Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India</span>
-                    <span className="text-[11px] font-mono text-[#36656B] dark:text-[#BCA575] font-semibold block mt-0.5">CIN: U51909TG2017PTC115299</span>
+                    <span className="text-xs leading-relaxed block">{company.registeredOffice}</span>
+                    {company.cin && <span className="text-[11px] font-mono text-[#36656B] dark:text-[#BCA575] font-semibold block mt-0.5">CIN: {company.cin}</span>}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#36656B] shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-[#36656B] transition-colors">
-                  +91 98765 43210 / +91 40 2355 8899
+                <a href={telHref(company.phonePrimary)} className="hover:text-[#36656B] transition-colors">
+                  {[company.phonePrimary, company.phoneSecondary].filter(Boolean).join(' / ')}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#36656B] shrink-0" />
-                <a href="mailto:concierge@symmetryinteriors.com" className="hover:text-[#36656B] transition-colors">
-                  concierge@symmetryinteriors.com
+                <a href={mailHref(company.email)} className="hover:text-[#36656B] transition-colors">
+                  {company.email}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <InstagramIcon className="w-5 h-5 text-[#36656B] shrink-0" />
                 <a
-                  href="https://www.instagram.com/symmetryinteriors.ltd/?hl=en"
+                  href={company.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#36656B] transition-colors inline-flex items-center gap-1.5"
                 >
-                  <span>@symmetryinteriors.ltd</span>
+                  <span>{instagramHandle(company.instagram)}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                 </a>
               </div>
@@ -229,7 +239,7 @@ export const Footer = () => {
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#4F6467] dark:text-[#AEB7BE] font-normal">
           <p>
-            &copy; {new Date().getFullYear()} Symmetry Interiors &amp; Building Solutions Pvt. Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} {company.shortName} All rights reserved.
           </p>
           <div className="flex items-center space-x-6">
             <span className="hover:text-[#36656B] cursor-pointer">Discretion &amp; Privacy</span>

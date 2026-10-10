@@ -31,7 +31,7 @@ export const CategoryCard = ({ category }) => {
           {/* Top Pill Badge */}
           <div className="absolute top-5 left-5 z-20">
             <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-luxury text-[#F4F7F6] bg-black/40 backdrop-blur-md font-semibold shadow-sm">
-              {category.itemCount ? `${category.itemCount} Designs` : 'Curated Collection'}
+              {category.productCount ? `${category.productCount} ${category.productCount === 1 ? 'Piece' : 'Pieces'}` : 'Curated Collection'}
             </span>
           </div>
 

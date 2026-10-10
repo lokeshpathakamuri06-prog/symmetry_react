@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | Orders are re-priced on the server; card and UPI details are never accepted | Prices can't be tampered with in the browser; no payment data to protect yet | Trust cart prices |
+| 2026-10-10 | Page text rebuilt to exactly the texts the pages show, plus a shared `company` section for contact details | Every field in the editor visibly changes the site; one place to change a phone number | Keep the old ~52-field editor |
+| 2026-10-10 | Forms: honeypot + 5 per 10 min per IP; a bot gets a fake success | Stops casual spam without a CAPTCHA; bots get no signal | CAPTCHA |
+| 2026-10-10 | The admin session is checked only on admin pages | Public visitors make no auth requests | Check on every page load |
+| 2026-10-10 | Inbox deletes are permanent (content uses Archive) | Privacy requests need real deletion | Archive inbox items too |
 | 2026-10-10 | **Save, then Publish**: saves go to the DB; the site changes on Publish | Batch and review changes before they go live | Live on every save |
 | 2026-10-10 | **Delete = Archive**, Restore returns an item as a draft | Protects against accidental deletes; restored items never go live by surprise | Permanent delete |
 | 2026-10-10 | Admin API reads and writes the same record shapes as the public snapshot | One mapping, tested both ways (exact match + lossless re-save) | Separate admin data model |

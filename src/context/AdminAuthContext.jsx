@@ -1,11 +1,7 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { isSupabaseConfigured } from '../lib/supabase';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import api, { AUTH_EXPIRED_EVENT, setCsrfToken } from '../lib/api';
 
 const AdminAuthContext = createContext();
-
-// Flags from the old browser-only demo login; removed so they can never grant access
-const LEGACY_KEYS = ['symmetry_admin_authed', 'symmetry_admin_user'];
 
 const formatRetry = (seconds) => {
   const minutes = Math.ceil((seconds || 60) / 60);
@@ -21,30 +17,25 @@ export const AdminAuthProvider = ({ children }) => {
     setAdminUser(null);
   }, []);
 
-  useEffect(() => {
-    try {
-      LEGACY_KEYS.forEach((key) => localStorage.removeItem(key));
-    } catch {
-      // storage may be unavailable (private mode); nothing to clean
+  // Restore an existing session from the httpOnly cookie, only when an admin page asks for it,
+  // so public visitors never make an auth request
+  const sessionCheck = useRef(null);
+  const checkSession = useCallback(() => {
+    if (!sessionCheck.current) {
+      sessionCheck.current = api('/auth/me')
+        .then(({ user, csrfToken }) => {
+          setCsrfToken(csrfToken);
+          setAdminUser(user);
+        })
+        .catch(() => clearSession())
+        .finally(() => setLoading(false));
     }
+    return sessionCheck.current;
+  }, [clearSession]);
 
-    // Restore an existing session from the httpOnly cookie
-    const controller = new AbortController();
-    api('/auth/me', { signal: controller.signal })
-      .then(({ user, csrfToken }) => {
-        setCsrfToken(csrfToken);
-        setAdminUser(user);
-      })
-      .catch(() => clearSession())
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
-      });
-
+  useEffect(() => {
     window.addEventListener(AUTH_EXPIRED_EVENT, clearSession);
-    return () => {
-      controller.abort();
-      window.removeEventListener(AUTH_EXPIRED_EVENT, clearSession);
-    };
+    return () => window.removeEventListener(AUTH_EXPIRED_EVENT, clearSession);
   }, [clearSession]);
 
   const loginAdmin = async (email, password) => {
@@ -82,10 +73,9 @@ export const AdminAuthProvider = ({ children }) => {
         isAdminAuthenticated: Boolean(adminUser),
         adminUser,
         loading,
+        checkSession,
         loginAdmin,
-        logoutAdmin,
-        // Still false; the Supabase badges are removed with the rest of the Supabase code in Part D
-        isSupabaseConfigured
+        logoutAdmin
       }}
     >
       {children}

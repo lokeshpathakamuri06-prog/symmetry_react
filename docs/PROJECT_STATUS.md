@@ -1,19 +1,19 @@
 # Project Status
 
-_Last updated: 2026-10-10 (Part D1: admin content editing + Publish)_
+_Last updated: 2026-10-10 (Part D2: forms, inbox, page text, cleanup)_
 
 ## Summary
 | Area | State |
 |---|---|
-| Public website | ✅ Running; **content comes from PostgreSQL** via `/api/public/content` (contact details still hard-coded until Part D) |
+| Public website | ✅ All content and page text from PostgreSQL; forms save to the database |
 | Admin portal UI | ✅ Built; Apple-style light/dark theme; **real server-side login** (content still in browser storage until Parts C/D) |
-| Careers (site + admin) | ✅ Built (stores in browser only until the API exists) |
+| Careers (site + admin) | ✅ Jobs and applications in the database |
 | Hosting | ✅ Caddy (frontend repo) + FastAPI (backend repo), Docker host networking |
 | System design | ✅ Written ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md)) |
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
 | FastAPI backend | 🟡 Live: `/api/health` and admin auth (`/api/auth/*`); content endpoints next |
 | Cloudinary image pipeline | ⏳ After FastAPI |
-| Frontend connected to backend | 🟡 Public pages read the API (C); all 9 content screens, dashboard and media library use the API (D1); inbox, forms and page text follow in D2 |
+| Frontend connected to backend | ✅ Everything uses the API. Browser storage now holds only cart, wishlist, theme and the last order confirmation |
 | HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
 
 ## Work log
@@ -178,18 +178,49 @@ _Last updated: 2026-10-10 (Part D1: admin content editing + Publish)_
   - Re-saving a testimonial overwrote its wording with the project title.
   - Creating a product failed because the database received the half-filled row too early (autoflush).
 
+### 2026-10-10: Part D2, forms, inbox, page text, cleanup
+- **Migration 0003:** `ip` on orders and newsletter subscribers, for rate limiting.
+- **Public forms** (`app/api/public_forms.py`): enquiries, job applications, order requests, newsletter.
+  - Each has an Origin check, a honeypot, a limit of 5 submissions per 10 min per IP, and field-level errors.
+  - **Orders are re-priced on the server** from published products, with GST at 18% and shipping free above ₹1.5L (otherwise ₹3,500). Card and UPI details are never accepted.
+  - All 422 errors now name the field.
+- **Admin inbox** (`app/api/admin_inbox.py`): lists with status filters and search, status and notes, permanent delete, badge counts, newsletter list with CSV export.
+- **Page text** (`app/content/sections.py`): 5 sections, 50 fields: `home`, `about`, `contact`, `company` (shared contact details) and `footer`. Values were copied word for word from the pages; editing is validated per field.
+- **Frontend wiring:**
+  - Contact, Careers, Newsletter and Checkout post to the API.
+  - New Enquiries, Applications (with Newsletter list) and Orders screens; sidebar badges come from the API.
+  - The Page Content editor was rebuilt around the real fields.
+  - The Home hero, story and section headings, About, Contact, Footer, mobile menu, WhatsApp buttons and Instagram links all read page text. **No hard-coded phone or email numbers remain.**
+- **Cleanup:**
+  - Deleted the old data service, `SiteContentContext`, the Supabase client and dependency, `supabase_schema.sql`, the fake preview canvas and 6 sample-data files.
+  - Old content keys are removed from browser storage on load.
+  - Settings is now a System page.
+  - Category cards show **real product counts**.
+  - Main JS bundle: **1,146 KB → 989 KB** raw (299 → 264 KB compressed).
+- **Bugs found and fixed:**
+  - After a successful order the browser went to /shop instead of the confirmation page (the empty-cart redirect won).
+  - Every public page made a pointless `/api/auth/me` request (a 401 plus a console error); the session is now only checked on admin pages.
+  - The mobile menu showed the old Jubilee Hills address.
+- **Verified:**
+  - 78 backend tests pass.
+  - Page text is identical to the Part C baseline apart from the category counts.
+  - In the browser: the Contact, Careers, Newsletter and Checkout forms (including a tampered ₹1 cart price, ignored) all reach the admin inbox with matching references and badges.
+  - Changing the phone, WhatsApp number and hero title in Page Content, then Publishing, updates the Footer, Contact page, all 3 WhatsApp links, the mobile menu and the Home hero.
+  - Test data was removed afterwards and the content hash is restored.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
-| 1 | Admin edits don't reach the public site. **Content done (C + D1):** content screens save to the DB and Publish updates the site. Remaining: page text and contact details | Part D2 |
+| 1 | ~~Admin edits don't reach the public site~~ | ✅ Fixed 2026-10-10 (Parts C, D1, D2) |
 | 2 | ~~Admin Products page shows broken thumbnails and "Out of Stock"~~ | ✅ Fixed 2026-10-10 (Part D1) |
 | 3 | ~~Demo admin login in the browser~~ | ✅ Fixed 2026-10-10: server-side login (Part B) |
-| 4 | Forms (contact, careers, checkout, newsletter) save only to the visitor's browser | Step 4 |
+| 4 | ~~Forms save only to the visitor's browser~~ | ✅ Fixed 2026-10-10 (Part D2) |
 | 5 | ~~Site is plain HTTP on a public IP~~ | ✅ Fixed 2026-10-10: HTTPS via Caddy |
 | 6 | 61 placeholder Unsplash images and sample prices | Client uploads via Cloudinary (see [ASSETS.md](ASSETS.md)) |
-| 7 | `supabase_schema.sql` has open write policies | Superseded; delete when Supabase code is removed |
+| 7 | ~~`supabase_schema.sql` has open write policies~~ | ✅ Deleted with all Supabase code (Part D2) |
 | 8 | ~~Changes not committed; backend not in git~~ | ✅ Fixed 2026-10-10: committed locally; not pushed yet |
-| 9 | Category `item_count_label` texts ("6 Models", "5 Designs") are marketing copy, not real counts (most categories have 1–2 sample products) | Show real counts from the API in Step 4, or the client edits the labels |
+| 9 | ~~Category count labels were fixed marketing text~~ | ✅ Fixed 2026-10-10: real product counts (Part D2) |
 | 10 | Page titles repeat the brand (e.g. "… \| Symmetry Interiors \| Symmetry Interiors & Building Solutions"): pages pass the brand and `SeoMeta` appends it again | Step 6 SEO pass |
+| 13 | **Phone numbers need confirming:** the site used +91 98765 43210 (a common placeholder) in most places and +91 99634 99635 in the mobile menu and floating WhatsApp. Now: phone = 98765…, WhatsApp = 99634… | Client sets the real numbers in Admin → Page Content → Company & Contact |
 | 12 | `FlippingCollections` (unused component) calls an undefined `setUserInteracted`; it would crash if used | Delete the component or fix it when it's needed |
 | 11 | Main JS bundle is 299 KB compressed (target < 200 KB): the admin portal and all pages ship in one file | Step 6: code splitting per route |

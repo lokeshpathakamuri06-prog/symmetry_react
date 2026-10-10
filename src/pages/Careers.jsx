@@ -13,7 +13,8 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
-import adminDataService from '../services/adminDataService';
+import Honeypot from '../components/Honeypot';
+import { submitApplication, formErrorMessage } from '../services/publicApi';
 import { careerPerks } from '../data/careers';
 import { useJobs } from '../context/PublicContentContext';
 import ContentState from '../components/ContentState';
@@ -48,6 +49,8 @@ export const Careers = () => {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [website, setWebsite] = useState('');
   const formRef = useRef(null);
 
   const departments = useMemo(
@@ -85,20 +88,30 @@ export const Careers = () => {
     if (!validate()) return;
 
     setSubmitting(true);
-    const job = jobs.find((j) => j.id === formData.jobId);
-    await adminDataService.submitApplication({
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      phone: formData.phone.trim(),
-      job_id: job?.id || null,
-      job_title: job?.title || 'General Application',
-      experience_years: formData.experienceYears.trim(),
-      portfolio_url: formData.portfolioUrl.trim(),
-      resume_url: formData.resumeUrl.trim(),
-      message: formData.message.trim(),
-    });
-    setSubmitting(false);
-    setSubmitted(true);
+    setFormError('');
+    try {
+      await submitApplication({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        jobId: formData.jobId,
+        experienceYears: formData.experienceYears.trim(),
+        portfolioUrl: formData.portfolioUrl.trim(),
+        resumeUrl: formData.resumeUrl.trim(),
+        message: formData.message.trim(),
+        website,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      if (err.status === 422 && err.field) {
+        setErrors({ [err.field]: err.message });
+        if (err.field === 'jobId') setFormError(err.message);
+      } else {
+        setFormError(formErrorMessage(err));
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -363,6 +376,9 @@ export const Careers = () => {
                     <textarea name="message" rows={4} value={formData.message} onChange={handleChange} className={fieldClass(false)} placeholder="Tell us a little about yourself and the work you're proud of." />
                   </div>
                 </div>
+
+                <Honeypot value={website} onChange={setWebsite} />
+                {formError && <p role="alert" className="text-xs text-red-500">{formError}</p>}
 
                 <button
                   type="submit"

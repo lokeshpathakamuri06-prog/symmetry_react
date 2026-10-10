@@ -98,8 +98,8 @@ export const FilterDrawer = ({
                       }`}
                     >
                       <span>{cat.name}</span>
-                      {cat.itemCount && (
-                        <span className="text-[10px] opacity-70">({cat.itemCount})</span>
+                      {cat.productCount > 0 && (
+                        <span className="text-[10px] opacity-70">({cat.productCount})</span>
                       )}
                     </button>
                   ))}

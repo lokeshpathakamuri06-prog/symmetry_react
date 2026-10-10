@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -18,6 +18,8 @@ import {
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import { useCart } from '../context/CartContext';
+import Honeypot from '../components/Honeypot';
+import { submitOrder, formErrorMessage } from '../services/publicApi';
 
 export const Checkout = () => {
   const { cartItems, subtotal, tax, shipping, totalAmount, recordOrder } = useCart();
@@ -46,9 +48,13 @@ export const Checkout = () => {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [website, setWebsite] = useState('');
+  // Placing an order empties the cart; don't let the empty-cart redirect beat the success page
+  const orderPlaced = useRef(false);
 
   // If cart is empty, redirect safely
-  if (!cartItems || cartItems.length === 0) {
+  if ((!cartItems || cartItems.length === 0) && !orderPlaced.current) {
     return <Navigate to="/shop" replace />;
   }
 
@@ -109,7 +115,7 @@ export const Checkout = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -118,41 +124,59 @@ export const Checkout = () => {
     }
 
     setLoading(true);
-
-    setTimeout(() => {
-      const orderId = `SYM-${Date.now().toString().slice(-6)}`;
-      const orderRecord = {
-        orderId,
-        date: new Date().toLocaleDateString('en-IN', {
+    setFormError('');
+    const customer = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      country: formData.country,
+      pincode: formData.pincode,
+      accessNotes: formData.accessNotes,
+    };
+    try {
+      // The server prices the order from the catalogue; card/UPI details are never sent
+      const order = await submitOrder({
+        customer,
+        items: cartItems.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+          selectedFinish: item.selectedFinish,
+          selectedFabric: item.selectedFabric,
+        })),
+        paymentMethod: formData.paymentMethod,
+        website,
+      });
+      orderPlaced.current = true;
+      recordOrder({
+        orderId: order.orderNumber,
+        date: new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
         }),
-        items: [...cartItems],
-        subtotal,
-        tax,
-        shipping,
-        totalAmount,
-        customer: {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          country: formData.country,
-          pincode: formData.pincode,
-          accessNotes: formData.accessNotes
-        },
-        paymentMethod: formData.paymentMethod.toUpperCase(),
-        gateway: 'Razorpay (Simulated Sandbox)',
-        status: 'Order Confirmed - Production Queued',
-      };
-
-      recordOrder(orderRecord);
-      setLoading(false);
+        items: order.items || [...cartItems],
+        subtotal: order.subtotal,
+        tax: order.tax,
+        shipping: order.shipping,
+        totalAmount: order.totalAmount,
+        customer: order.customer || customer,
+        paymentMethod: order.paymentMethod || formData.paymentMethod.toUpperCase(),
+        status: 'Order request received',
+      });
       navigate('/order-success');
-    }, 1400);
+    } catch (err) {
+      if (err.status === 422 && err.field && err.field in formData) {
+        setErrors({ [err.field]: err.message });
+        window.scrollTo({ top: 200, behavior: 'smooth' });
+      } else {
+        setFormError(formErrorMessage(err));
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -753,6 +777,8 @@ export const Checkout = () => {
 
             {/* CTA BUTTON: "Complete Purchase" */}
             <div className="space-y-3 pt-2">
+              <Honeypot value={website} onChange={setWebsite} />
+              {formError && <p role="alert" className="text-xs text-red-500">{formError}</p>}
               <button
                 type="submit"
                 disabled={loading}

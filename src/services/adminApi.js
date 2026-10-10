@@ -42,3 +42,29 @@ export const media = {
   update: (id, changes) => api(`/admin/media/${enc(id)}`, { method: 'PATCH', body: changes }).then(changed),
   remove: (id) => api(`/admin/media/${enc(id)}`, { method: 'DELETE' }),
 };
+
+// Inbox: inquiries, applications, orders (+ newsletter)
+export const INBOX_CHANGED_EVENT = 'symmetry:inbox-changed';
+const inboxChanged = (result) => {
+  window.dispatchEvent(new Event(INBOX_CHANGED_EVENT));
+  return result;
+};
+
+export const inbox = (kind) => ({
+  list: ({ status, q } = {}) => {
+    const params = new URLSearchParams();
+    if (status && status !== 'all') params.set('status', status);
+    if (q) params.set('q', q);
+    return api(`/admin/${kind}?${params}`);
+  },
+  update: (id, changes) => api(`/admin/${kind}/${enc(id)}`, { method: 'PATCH', body: changes }).then(inboxChanged),
+  remove: (id) => api(`/admin/${kind}/${enc(id)}`, { method: 'DELETE' }).then(inboxChanged),
+});
+
+export const inboxCounts = () => api('/admin/inbox/counts');
+
+export const newsletter = {
+  list: () => api('/admin/newsletter'),
+  unsubscribe: (id) => api(`/admin/newsletter/${enc(id)}/unsubscribe`, { method: 'POST' }),
+  csvUrl: '/api/admin/newsletter?format=csv',
+};

@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import adminDataService from '../../services/adminDataService';
+import { INBOX_CHANGED_EVENT, inboxCounts } from '../../services/adminApi';
 import logoImg from '../../assets/logo.png';
 import logoDarkImg from '../../assets/logo-dark.png';
 
@@ -32,12 +32,13 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
   const { isDark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const [newApplications, setNewApplications] = useState(0);
+  const [counts, setCounts] = useState({});
 
   useEffect(() => {
-    adminDataService.getApplications().then((apps) => {
-      setNewApplications((apps || []).filter((a) => a.status === 'new').length);
-    });
+    const refresh = () => inboxCounts().then(setCounts).catch(() => {});
+    refresh();
+    window.addEventListener(INBOX_CHANGED_EVENT, refresh);
+    return () => window.removeEventListener(INBOX_CHANGED_EVENT, refresh);
   }, [location.pathname]);
 
   const handleLogout = async () => {
@@ -59,7 +60,7 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
         { label: 'Products', path: '/admin/products', icon: Package },
         { label: 'Categories', path: '/admin/categories', icon: Grid },
         { label: 'Collections', path: '/admin/collections', icon: Layers },
-        { label: 'Customer Orders', path: '/admin/orders', icon: ShoppingBag }
+        { label: 'Customer Orders', path: '/admin/orders', icon: ShoppingBag, count: counts.pendingOrders }
       ]
     },
     {
@@ -76,13 +77,13 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
       title: 'Careers',
       items: [
         { label: 'Job Openings', path: '/admin/careers', icon: Briefcase },
-        { label: 'Applications', path: '/admin/applications', icon: UserCheck, count: newApplications }
+        { label: 'Applications', path: '/admin/applications', icon: UserCheck, count: counts.newApplications }
       ]
     },
     {
       title: 'CRM & Assets',
       items: [
-        { label: 'Contact Enquiries', path: '/admin/inquiries', icon: MessageSquare },
+        { label: 'Contact Enquiries', path: '/admin/inquiries', icon: MessageSquare, count: counts.unreadInquiries },
         { label: 'Media Library', path: '/admin/media', icon: ImageIcon }
       ]
     },

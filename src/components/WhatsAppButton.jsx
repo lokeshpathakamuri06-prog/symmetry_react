@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteText } from '../context/PublicContentContext';
+import { whatsappHref } from '../lib/contact';
 
 export const WhatsAppButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
 
-  const defaultPhone = '+919876543210'; // Symmetry Interiors concierge line
+  const company = useSiteText('company');
   const handleSend = (e) => {
     e.preventDefault();
     const text = message.trim() || 'Hello, I would like to schedule a private design consultation with Symmetry Interiors.';
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/${defaultPhone.replace(/[^0-9]/g, '')}?text=${encoded}`, '_blank');
+    const href = whatsappHref(company.whatsappNumber, text);
+    if (href) window.open(href, '_blank');
     setIsOpen(false);
     setMessage('');
   };

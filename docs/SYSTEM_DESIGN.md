@@ -267,10 +267,10 @@ Base path `/api`. JSON throughout. Admin routes need a valid session cookie.
 | GET | `/public/content` | **Built.** All published site content in one response: sections, banners, categories, collections, products, projects, blogs, testimonials, team, jobs | `Cache-Control: no-cache` + `ETag` (revalidates every load and gets a 304 when unchanged) |
 | GET | `/public/products/{slug}` | Single product (deep links) | Same |
 | GET | `/public/projects/{slug}` | Single project | Same |
-| POST | `/public/inquiries` | Contact form | Rate-limited |
-| POST | `/public/applications` | Careers form | Rate-limited |
-| POST | `/public/orders` | Checkout | Rate-limited |
-| POST | `/public/newsletter` | Newsletter sign-up | Rate-limited |
+| POST | `/public/inquiries` | **Built.** Contact form; returns `reference` (INQ-XXXXXX) | 5 / 10 min / IP, honeypot |
+| POST | `/public/applications` | **Built.** Careers form (`jobId` or `general`) | 5 / 10 min / IP, honeypot |
+| POST | `/public/orders` | **Built.** Checkout; the server re-prices items, adds GST and shipping, returns `orderNumber` and totals | 5 / 10 min / IP, honeypot |
+| POST | `/public/newsletter` | **Built.** Newsletter sign-up (always `{ok: true}`) | 5 / 10 min / IP, honeypot |
 
 ### Auth
 

@@ -15,6 +15,10 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
+import { useSiteText } from '../context/PublicContentContext';
+import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/contact';
+import Honeypot from '../components/Honeypot';
+import { submitInquiry, formErrorMessage } from '../services/publicApi';
 
 // Social links helper icons
 const InstagramIcon = () => (
@@ -55,6 +59,8 @@ const BUDGET_RANGES = [
 ];
 
 export const Contact = () => {
+  const company = useSiteText('company');
+  const contactText = useSiteText('contact');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,6 +73,8 @@ export const Contact = () => {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [website, setWebsite] = useState('');
   const [inquiryId, setInquiryId] = useState('');
   const [mapType, setMapType] = useState('roadmap'); // 'roadmap' | 'satellite'
 
@@ -117,19 +125,39 @@ export const Contact = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  // Server field names -> this form's field names
+  const SERVER_FIELDS = { service: 'projectType', budget: 'budgetRange' };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
 
     if (!validate()) {
       return;
     }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setInquiryId(`INQ-${Math.floor(100000 + Math.random() * 900000)}`);
+    try {
+      const { reference } = await submitInquiry({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        service: formData.projectType,
+        budget: formData.budgetRange,
+        message: formData.message.trim(),
+        website,
+      });
+      setInquiryId(reference);
       setSubmitted(true);
-    }, 1200);
+    } catch (err) {
+      if (err.status === 422 && err.field) {
+        setErrors({ [SERVER_FIELDS[err.field] || err.field]: err.message });
+      } else {
+        setFormError(formErrorMessage(err));
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const resetForm = () => {
@@ -165,11 +193,11 @@ export const Contact = () => {
           {/* Banner Content */}
           <div className="relative z-10 max-w-3xl px-6 py-8 space-y-3 sm:space-y-4">
             <h1 className="text-3xl sm:text-5xl lg:text-6xl text-white font-bold leading-tight tracking-tight drop-shadow-md">
-              Let&apos;s Create Something <span className="text-[#BCA575] font-bold">Exceptional</span>
+              {contactText.heroTitle} <span className="text-[#BCA575] font-bold">{contactText.heroTitleHighlight}</span>
             </h1>
 
             <p className="text-xs sm:text-sm text-white/90 font-normal max-w-xl mx-auto leading-relaxed drop-shadow-sm">
-              Schedule a private design consultation at our Jubilee Hills Pavilion or connect directly with our lead architectural directors.
+              {contactText.heroSubtitle}
             </p>
           </div>
         </div>
@@ -217,7 +245,7 @@ export const Contact = () => {
                       Submit Another Project
                     </button>
                     <a
-                      href="https://wa.me/919876543210?text=Hello%2C%20I%20just%20submitted%20a%20design%20inquiry%20on%20your%20website."
+                      href={whatsappHref(company.whatsappNumber, 'Hello, I just submitted a design inquiry on your website.')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-6 py-3 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] text-xs uppercase tracking-luxury font-medium hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition flex items-center gap-2"
@@ -382,6 +410,13 @@ export const Contact = () => {
                     </div>
                   </div>
 
+                  <Honeypot value={website} onChange={setWebsite} />
+                  {formError && (
+                    <p role="alert" className="text-xs text-red-500 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {formError}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
                     disabled={loading}
@@ -410,10 +445,10 @@ export const Contact = () => {
                   Company Headquarters &amp; Studio
                 </span>
                 <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
-                  Symmetry Interiors &amp; Building Solutions Private Limited
+                  {company.companyName}
                 </h3>
                 <p className="text-xs font-mono text-[#36656B] dark:text-[#BCA575] font-semibold mt-1">
-                  CIN: U51909TG2017PTC115299
+                  {company.cin && `CIN: ${company.cin}`}
                 </p>
               </div>
 
@@ -426,7 +461,7 @@ export const Contact = () => {
                       Main Office Address:
                     </strong>
                     <span className="leading-relaxed font-medium text-[#131E20] dark:text-[#F5F1E8]">
-                      Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad, Telangana – 500016
+                      {company.officeAddress}
                     </span>
                   </div>
                 </div>
@@ -439,7 +474,7 @@ export const Contact = () => {
                       Registered Office:
                     </strong>
                     <span className="leading-relaxed">
-                      Plot No. 65, Seva Mandal Shantiniketan Colony, M. Hills, Secunderabad, Hyderabad, Telangana – 500026, India.
+                      {company.registeredOffice}
                     </span>
                   </div>
                 </div>
@@ -452,15 +487,17 @@ export const Contact = () => {
                       Direct Concierge Lines:
                     </strong>
                     <p className="font-mono">
-                      <a href="tel:+919876543210" className="hover:text-[#36656B] transition">
-                        +91 98765 43210
+                      <a href={telHref(company.phonePrimary)} className="hover:text-[#36656B] transition">
+                        {company.phonePrimary}
                       </a> (VIP Appointments)
                     </p>
-                    <p className="font-mono">
-                      <a href="tel:+914023558899" className="hover:text-[#36656B] transition">
-                        +91 (040) 2355 8899
-                      </a> (Studio Reception)
-                    </p>
+                    {company.phoneSecondary && (
+                      <p className="font-mono">
+                        <a href={telHref(company.phoneSecondary)} className="hover:text-[#36656B] transition">
+                          {company.phoneSecondary}
+                        </a> (Studio Reception)
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -472,22 +509,24 @@ export const Contact = () => {
                       Electronic Mail:
                     </strong>
                     <p>
-                      <a href="mailto:concierge@symmetryinteriors.com" className="hover:text-[#36656B] transition">
-                        concierge@symmetryinteriors.com
+                      <a href={mailHref(company.email)} className="hover:text-[#36656B] transition">
+                        {company.email}
                       </a>
                     </p>
-                    <p>
-                      <a href="mailto:projects@symmetryinteriors.com" className="hover:text-[#36656B] transition">
-                        projects@symmetryinteriors.com
-                      </a>
-                    </p>
+                    {company.emailProjects && (
+                      <p>
+                        <a href={mailHref(company.emailProjects)} className="hover:text-[#36656B] transition">
+                          {company.emailProjects}
+                        </a>
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* WhatsApp Quick Action Button */}
                 <div className="pt-2">
                   <a
-                    href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20schedule%20a%20private%20design%20consultation%20with%20Symmetry%20Interiors."
+                    href={whatsappHref(company.whatsappNumber, 'Hello, I would like to schedule a private design consultation with Symmetry Interiors.')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-3 px-5 rounded-2xl bg-emerald-600/10 dark:bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500 text-emerald-800 dark:text-emerald-300 transition flex items-center justify-between group"
@@ -497,7 +536,7 @@ export const Contact = () => {
                       <span className="font-medium text-xs">Direct WhatsApp Advisory</span>
                     </div>
                     <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">
-                      +91 98765 43210 &rarr;
+                      {company.whatsappNumber} &rarr;
                     </span>
                   </a>
                 </div>
@@ -509,7 +548,7 @@ export const Contact = () => {
                     <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
                       Pavilion Visiting Hours:
                     </strong>
-                    <p>Monday &ndash; Saturday: 10:00 AM &ndash; 7:30 PM</p>
+                    <p>{company.hours}</p>
                     <p>Sunday: By Prior VIP Appointment</p>
                   </div>
                 </div>
@@ -522,11 +561,11 @@ export const Contact = () => {
                 </span>
                 <div className="flex items-center space-x-2.5">
                   {[
-                    { label: 'Instagram', icon: InstagramIcon, href: 'https://www.instagram.com/symmetryinteriors.ltd/?hl=en' },
-                    { label: 'LinkedIn', icon: LinkedinIcon, href: 'https://linkedin.com/company/symmetry-interiors' },
-                    { label: 'Pinterest', icon: PinterestIcon, href: 'https://pinterest.com/symmetryinteriors' },
-                    { label: 'WhatsApp', icon: MessageCircle, href: 'https://wa.me/919876543210' }
-                  ].map((s) => {
+                    { label: 'Instagram', icon: InstagramIcon, href: company.instagram },
+                    { label: 'LinkedIn', icon: LinkedinIcon, href: company.linkedin },
+                    { label: 'Pinterest', icon: PinterestIcon, href: company.pinterest },
+                    { label: 'WhatsApp', icon: MessageCircle, href: whatsappHref(company.whatsappNumber) }
+                  ].filter((s) => s.href).map((s) => {
                     const Icon = s.icon;
                     return (
                       <a
@@ -575,7 +614,7 @@ export const Contact = () => {
                 </span>
               </div>
               <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
-                Symmetry Office &bull; Ground Floor, Surekha Chambers, Dharam Karan Road, Ameerpet, Hyderabad
+                Symmetry Office &bull; {company.officeAddress}
               </h3>
             </div>
 
@@ -607,7 +646,7 @@ export const Contact = () => {
               </div>
 
               <a
-                href="https://maps.google.com/?q=Surekha+Chambers,+Dharam+Karan+Road,+Ameerpet,+Hyderabad,+Telangana+500016"
+                href={mapsHref(company.mapQuery)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3.5 py-1.5 rounded-xl bg-[#36656B] hover:bg-[#254B50] text-white font-medium flex items-center gap-1.5 transition text-xs shadow-sm"
@@ -623,7 +662,7 @@ export const Contact = () => {
             <iframe
               key={mapType}
               title="Symmetry Office Google Map"
-              src={`https://maps.google.com/maps?q=Surekha+Chambers,+Dharam+Karan+Road,+Ameerpet,+Hyderabad,+Telangana+500016&t=${mapType === 'satellite' ? 'k' : 'm'}&z=16&ie=UTF8&iwloc=&output=embed`}
+              src={mapsEmbedSrc(company.mapQuery, mapType === 'satellite')}
               className="w-full h-full border-0"
               allowFullScreen=""
               loading="lazy"
@@ -678,7 +717,7 @@ export const Contact = () => {
                 Book Pavilion Consultation
               </a>
               <a
-                href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20start%20my%20design%20journey%20with%20Symmetry%20Interiors."
+                href={whatsappHref(company.whatsappNumber, 'Hello, I would like to start my design journey with Symmetry Interiors.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-8 py-4 rounded-full border border-stone-700 hover:border-[#36656B] text-white transition text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2"
