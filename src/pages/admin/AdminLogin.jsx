@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Lock, Mail, ArrowRight, ShieldCheck, KeyRound } from 'lucide-react';
+import { Lock, Mail, ArrowRight } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import ThemeToggle from '../../components/ThemeToggle';
@@ -8,8 +8,8 @@ import logoImg from '../../assets/logo.png';
 import logoDarkImg from '../../assets/logo-dark.png';
 
 export const AdminLogin = () => {
-  const [email, setEmail] = useState('admin@symmetry.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -30,18 +30,13 @@ export const AdminLogin = () => {
       if (res.success) {
         navigate(from, { replace: true });
       } else {
-        setError(res.error || 'Authentication failed. Please check credentials.');
+        setError(res.error || 'Sign-in failed. Please try again.');
       }
-    } catch (err) {
-      setError('An unexpected login error occurred.');
+    } catch {
+      setError('Sign-in failed. Please try again.');
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const fillDemoCredentials = () => {
-    setEmail('admin@symmetry.com');
-    setPassword('admin123');
   };
 
   return (
@@ -81,10 +76,12 @@ export const AdminLogin = () => {
               <Mail className="w-4 h-4 text-adm-fg/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
+                autoComplete="username"
+                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="admin@symmetry.com"
+                placeholder="you@symmetryinteriors.com"
                 className="w-full pl-10 pr-4 py-3 rounded-xl text-sm adm-input"
               />
             </div>
@@ -98,6 +95,7 @@ export const AdminLogin = () => {
               <Lock className="w-4 h-4 text-adm-fg/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -112,27 +110,11 @@ export const AdminLogin = () => {
             disabled={submitting}
             className="w-full py-3 px-6 rounded-xl bg-adm-accent text-adm-on-accent font-semibold text-sm hover:bg-adm-accent-hover active:scale-[0.99] transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {submitting ? 'Authenticating...' : 'Sign In'}
+            {submitting ? 'Signing in…' : 'Sign In'}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        {/* Quick Demo Helper Box */}
-        <div className="mt-8 pt-6 border-t border-adm-border text-center">
-          <p className="text-[11px] text-adm-fg/50 mb-3 flex items-center justify-center gap-1.5">
-            <KeyRound className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Default Demo Admin Account:
-          </p>
-          <div className="p-3 bg-adm-fg/5 rounded-xl border border-adm-fg/10 text-[11px] font-mono text-adm-fg/80 flex items-center justify-between">
-            <span>admin@symmetry.com / admin123</span>
-            <button
-              onClick={fillDemoCredentials}
-              type="button"
-              className="px-2.5 py-1 rounded-full bg-adm-accent/10 text-adm-accent hover:bg-adm-accent hover:text-adm-on-accent transition-colors text-[11px] font-sans font-medium"
-            >
-              Fill Credentials
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

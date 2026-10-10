@@ -1,17 +1,17 @@
 # Project Status
 
-_Last updated: 2026-10-10 (groundwork: HTTPS + FastAPI)_
+_Last updated: 2026-10-10 (Part B: real admin login)_
 
 ## Summary
 | Area | State |
 |---|---|
 | Public website | ✅ Built and running (demo data) |
-| Admin portal UI | ✅ Built; Apple-style light/dark theme |
+| Admin portal UI | ✅ Built; Apple-style light/dark theme; **real server-side login** (content still in browser storage until Parts C/D) |
 | Careers (site + admin) | ✅ Built (stores in browser only until the API exists) |
 | Hosting | ✅ Caddy (frontend repo) + FastAPI (backend repo), Docker host networking |
 | System design | ✅ Written ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md)) |
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
-| FastAPI backend | 🟡 Skeleton live: `/api/health`; auth and content endpoints next |
+| FastAPI backend | 🟡 Live: `/api/health` and admin auth (`/api/auth/*`); content endpoints next |
 | Cloudinary image pipeline | ⏳ After FastAPI |
 | Frontend connected to backend | ⏳ Not yet; site still uses `src/data` + `localStorage` |
 | HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
@@ -110,12 +110,32 @@ _Last updated: 2026-10-10 (groundwork: HTTPS + FastAPI)_
   - The certificate survives container rebuilds and restarts.
   - A headless browser over HTTPS (home, careers apply, admin login, same-origin `/api` fetch) shows no mixed-content or console errors.
 
+### 2026-10-10: Part B, real admin login
+- **Backend** (`app/auth/`, `app/api/auth.py`):
+  - `POST /api/auth/login`, `GET /api/auth/me`, `POST /api/auth/logout`.
+  - Server-side sessions: `__Host-` cookie with `HttpOnly`/`Secure`/`SameSite=Strict`; only a token hash is stored. Signed out after 2 h idle, always after 12 h.
+  - Origin check and CSRF token header on state-changing requests.
+  - DB-backed rate limit: 5 failures per email or 20 per IP in 15 min gives 429.
+  - Generic errors, with constant-time checks for unknown emails.
+  - `Cache-Control: no-store` on auth responses.
+- **CLI:** `reset-password`, `revoke-sessions` and `prune`.
+- **Tests:** 14 pytest cases against a separate `symmetry_test` database (`db/create_test_db.sql`), all passing.
+- **Frontend:**
+  - New `src/lib/api.js` (same-origin fetch, CSRF header, `ApiError`, a global auth-expired event).
+  - `AdminAuthContext` rewritten to use the API. **The demo login is removed**, along with the "email contains admin" shortcut, Supabase auth and the localStorage flags.
+  - The login page has empty fields, password-manager hints and a rate-limit message, and no demo box.
+  - The header shows the real name and role.
+- **Verified:**
+  - curl over HTTPS: cookie flags, CSRF 403/204, evil origin 403, 429 with `Retry-After`, the real client IP recorded via Caddy.
+  - 18/18 headless-browser checks: demo and fake logins rejected; the localStorage flag no longer grants access; deep link → login → back; reload keeps the session; a server-side revoke signs you out; Sign Out and the Back button behave; the cookie isn't readable by JavaScript; the public site is unaffected.
+  - The temporary QA admin and the test login attempts were deleted afterwards.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
 | 1 | Admin edits don't reach the public site (public pages import `src/data` directly) | Step 4: connect frontend to API |
 | 2 | Admin Products page shows broken thumbnails and "Out of Stock" (field mismatch: `images`/`inStock` vs `image`/`in_stock`) | Step 4 |
-| 3 | Demo admin login in the browser: `admin@symmetry.com` / `admin123` and *any* email containing "admin" work | Step 2: real login via API |
+| 3 | ~~Demo admin login in the browser~~ | ✅ Fixed 2026-10-10: server-side login (Part B) |
 | 4 | Forms (contact, careers, checkout, newsletter) save only to the visitor's browser | Step 4 |
 | 5 | ~~Site is plain HTTP on a public IP~~ | ✅ Fixed 2026-10-10: HTTPS via Caddy |
 | 6 | 61 placeholder Unsplash images and sample prices | Client uploads via Cloudinary (see [ASSETS.md](ASSETS.md)) |

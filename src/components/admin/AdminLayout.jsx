@@ -82,8 +82,8 @@ export const AdminLayout = ({ children, title = 'Dashboard', subtitle }) => {
                 {adminUser?.email?.charAt(0).toUpperCase() || 'A'}
               </div>
               <div className="hidden md:block text-left text-xs leading-tight">
-                <p className="font-medium text-adm-fg">{adminUser?.user_metadata?.full_name || adminUser?.email?.split('@')[0] || 'Admin'}</p>
-                <p className="text-[11px] text-adm-muted">{adminUser?.role || 'Administrator'}</p>
+                <p className="font-medium text-adm-fg">{adminUser?.fullName || adminUser?.email?.split('@')[0] || 'Admin'}</p>
+                <p className="text-[11px] text-adm-muted capitalize">{adminUser?.role || 'Administrator'}</p>
               </div>
             </div>
           </div>

@@ -1,107 +1,90 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { isSupabaseConfigured } from '../lib/supabase';
+import api, { AUTH_EXPIRED_EVENT, setCsrfToken } from '../lib/api';
 
 const AdminAuthContext = createContext();
 
+// Flags from the old browser-only demo login; removed so they can never grant access
+const LEGACY_KEYS = ['symmetry_admin_authed', 'symmetry_admin_user'];
+
+const formatRetry = (seconds) => {
+  const minutes = Math.ceil((seconds || 60) / 60);
+  return minutes <= 1 ? 'a minute' : `${minutes} minutes`;
+};
+
 export const AdminAuthProvider = ({ children }) => {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
-    return localStorage.getItem('symmetry_admin_authed') === 'true';
-  });
-  const [adminUser, setAdminUser] = useState(() => {
-    const saved = localStorage.getItem('symmetry_admin_user');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [adminUser, setAdminUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkSupabaseAuth = async () => {
-      if (isSupabaseConfigured && supabase) {
-        try {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
-            setIsAdminAuthenticated(true);
-            setAdminUser(session.user);
-            localStorage.setItem('symmetry_admin_authed', 'true');
-            localStorage.setItem('symmetry_admin_user', JSON.stringify(session.user));
-          }
-        } catch (e) {
-          console.warn('Supabase auth check fallback to local storage:', e);
-        }
-      }
-      setLoading(false);
-    };
-
-    checkSupabaseAuth();
+  const clearSession = useCallback(() => {
+    setCsrfToken(null);
+    setAdminUser(null);
   }, []);
 
+  useEffect(() => {
+    try {
+      LEGACY_KEYS.forEach((key) => localStorage.removeItem(key));
+    } catch {
+      // storage may be unavailable (private mode); nothing to clean
+    }
+
+    // Restore an existing session from the httpOnly cookie
+    const controller = new AbortController();
+    api('/auth/me', { signal: controller.signal })
+      .then(({ user, csrfToken }) => {
+        setCsrfToken(csrfToken);
+        setAdminUser(user);
+      })
+      .catch(() => clearSession())
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false);
+      });
+
+    window.addEventListener(AUTH_EXPIRED_EVENT, clearSession);
+    return () => {
+      controller.abort();
+      window.removeEventListener(AUTH_EXPIRED_EVENT, clearSession);
+    };
+  }, [clearSession]);
+
   const loginAdmin = async (email, password) => {
-    // 1. Try Supabase Auth first if configured
-    if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (!error && data?.user) {
-        setIsAdminAuthenticated(true);
-        setAdminUser(data.user);
-        localStorage.setItem('symmetry_admin_authed', 'true');
-        localStorage.setItem('symmetry_admin_user', JSON.stringify(data.user));
-        return { success: true, user: data.user };
+    try {
+      const { user, csrfToken } = await api('/auth/login', { method: 'POST', body: { email, password } });
+      setCsrfToken(csrfToken);
+      setAdminUser(user);
+      return { success: true, user };
+    } catch (err) {
+      if (err.status === 429) {
+        return {
+          success: false,
+          retryAfter: err.retryAfter,
+          error: `Too many sign-in attempts. Try again in ${formatRetry(err.retryAfter)}.`,
+        };
       }
+      if (err.status === 401) return { success: false, error: 'Invalid email or password.' };
+      return { success: false, error: err.message || 'Sign-in failed. Please try again.' };
     }
-
-    // 2. Demo Credential Fallback (Accept admin@symmetry.com / admin123 OR any password if testing)
-    if (email.toLowerCase() === 'admin@symmetry.com' && password === 'admin123') {
-      const demoUser = {
-        id: 'admin-demo-id',
-        email: 'admin@symmetry.com',
-        role: 'Super Administrator',
-        user_metadata: { full_name: 'Symmetry Admin' }
-      };
-      setIsAdminAuthenticated(true);
-      setAdminUser(demoUser);
-      localStorage.setItem('symmetry_admin_authed', 'true');
-      localStorage.setItem('symmetry_admin_user', JSON.stringify(demoUser));
-      return { success: true, user: demoUser };
-    }
-
-    // Allow flexible login for local dev if email contains 'admin'
-    if (email.toLowerCase().includes('admin') && password.length >= 4) {
-      const devUser = {
-        id: `admin-${Date.now()}`,
-        email,
-        role: 'Administrator',
-        user_metadata: { full_name: email.split('@')[0] }
-      };
-      setIsAdminAuthenticated(true);
-      setAdminUser(devUser);
-      localStorage.setItem('symmetry_admin_authed', 'true');
-      localStorage.setItem('symmetry_admin_user', JSON.stringify(devUser));
-      return { success: true, user: devUser };
-    }
-
-    return { success: false, error: 'Invalid credentials. Use admin@symmetry.com / admin123' };
   };
 
   const logoutAdmin = async () => {
-    if (isSupabaseConfigured && supabase) {
-      try {
-        await supabase.auth.signOut();
-      } catch (e) {
-        console.warn('Supabase signOut error:', e);
-      }
+    try {
+      await api('/auth/logout', { method: 'POST' });
+    } catch {
+      // Even if the server call fails, the user is signed out locally
+    } finally {
+      clearSession();
     }
-    setIsAdminAuthenticated(false);
-    setAdminUser(null);
-    localStorage.removeItem('symmetry_admin_authed');
-    localStorage.removeItem('symmetry_admin_user');
   };
 
   return (
     <AdminAuthContext.Provider
       value={{
-        isAdminAuthenticated,
+        isAdminAuthenticated: Boolean(adminUser),
         adminUser,
         loading,
         loginAdmin,
         logoutAdmin,
+        // Still false; the Supabase badges are removed with the rest of the Supabase code in Part D
         isSupabaseConfigured
       }}
     >

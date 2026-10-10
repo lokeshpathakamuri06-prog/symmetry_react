@@ -316,15 +316,15 @@ The result is one small request per visit instead of nine, and no database queri
 |---|---|
 | Transport | HTTPS only (Caddy + Let's Encrypt); HSTS header |
 | Passwords | argon2id hashing; minimum length 10 |
-| Sessions | Server-side session or signed JWT in an `httpOnly`, `Secure`, `SameSite=Strict` cookie; 12 h expiry |
-| Login abuse | Rate limit (e.g. 5 attempts / 15 min per IP + email); generic error messages |
-| CSRF | `SameSite=Strict` cookie + same-origin API; CSRF token on state-changing admin routes |
+| Sessions | **Built.** Server-side sessions (`admin_sessions`). Cookie `__Host-symmetry_session` (`HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`, no `Domain`). Only the SHA-256 of the token is stored. Signed out after 2 h idle, and always after 12 h. Revocable from the CLI. |
+| Login abuse | **Built.** DB-backed (`login_attempts`): 5 failures per email or 20 per IP in 15 min gives 429 with `Retry-After`. Same error for a wrong password and an unknown email, and the same timing (dummy hash check). |
+| CSRF | **Built.** `SameSite=Strict` + same-origin API, plus an `Origin`/`Referer` allow-list on every state-changing request, plus a per-session `X-CSRF-Token` header (constant-time compare). The token is returned by `/login` and `/me` and kept in memory only. |
 | Roles | `owner` (everything, including users) and `editor` (content and media only) |
 | Secrets | `CLOUDINARY_API_SECRET`, `DATABASE_URL`, `SESSION_SECRET` only in server environment variables / `.env` (not committed) |
-| Database | Postgres on the internal Docker network only; no public port |
+| Database | Host PostgreSQL on `127.0.0.1` only; the API container uses host networking; no public DB or API port |
 | Uploads | Signed preset, fixed folders, format and size limits, server-side verification |
 | Public forms | Rate limiting, input validation (Pydantic), honeypot field against spam |
-| Removed | The current browser-only demo login and the "any email containing admin" shortcut |
+| Removed | **Done.** The browser-only demo login, the "any email containing admin" shortcut and the `symmetry_admin_authed` localStorage flag (deleted on load) |
 
 ---
 

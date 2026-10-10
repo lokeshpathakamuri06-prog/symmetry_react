@@ -18,7 +18,7 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 
 ## Step 2: FastAPI foundation (in `symmetry_backend`)
 - [x] FastAPI app (`app/main.py`), settings, DB session using the existing models.
-- [ ] Auth: `POST /api/auth/login` (argon2 verify against `admin_users`), `logout`, `me`. httpOnly session cookie, login rate limit.
+- [x] Auth: `POST /api/auth/login` (argon2 verify against `admin_users`), `logout`, `me`. httpOnly session cookie, login rate limit, CSRF.
 - [ ] Public read: `GET /api/public/content` (one cached JSON with ETag).
 - [x] Docker: `api` service in `symmetry_backend/docker-compose.yml`, host networking (no Postgres changes needed).
 - [x] Health check `GET /api/health`.
@@ -39,7 +39,7 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 - [ ] Admin CRUD endpoints for products, categories, collections, projects, blogs, banners, testimonials, team, page text, jobs; inbox endpoints for inquiries, applications, orders.
 - [ ] Public pages read `/api/public/content` instead of `src/data`, which fixes known issues 1 and 2.
 - [ ] Contact, careers, checkout and newsletter forms POST to the API (known issue 4).
-- [ ] Real admin login; remove the demo login (known issue 3).
+- [x] Real admin login; remove the demo login (known issue 3).
 - [ ] Publish button: rebuild the public content cache.
 - [ ] Remove Supabase code and `supabase_schema.sql`.
 

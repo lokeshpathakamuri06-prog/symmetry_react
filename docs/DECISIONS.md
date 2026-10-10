@@ -4,6 +4,10 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | Admin sessions: **2 h idle, 12 h max** | Balance for a shared office computer | 7-day sliding; 8 h fixed |
+| 2026-10-10 | `__Host-` session cookie + Origin allow-list + per-session CSRF header | Defence in depth on top of SameSite=Strict; the token is never in localStorage | JWT in localStorage; cookie only |
+| 2026-10-10 | Tests run against a separate `symmetry_test` database | Tests can wipe tables freely; they never touch real data | Mocks; transactions on the real DB |
+| 2026-10-10 | `adminDataService` kept for content until Parts C/D; auth moved first | Smallest safe step: fixes who can log in without touching data flows | Move everything at once |
 | 2026-10-10 | Frontend work goes on branch `develop`; `main` only via PR | Keep `main` deployable; review before merging | Commit straight to `main` |
 | 2026-10-10 | API JSON is **camelCase** (`CamelModel`), the DB is snake_case | Pages already read camelCase (`images`, `inStock`…), so wiring needs minimal page changes | Change every page to snake_case |
 | 2026-10-10 | **Caddy** replaces nginx; it lives in the frontend repo and serves the build + proxies `/api` | Automatic HTTPS and renewal, one config file | nginx + certbot |

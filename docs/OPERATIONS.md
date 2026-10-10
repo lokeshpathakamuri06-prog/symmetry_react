@@ -85,8 +85,26 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 ## Accounts
 | Account | Purpose |
 |---|---|
-| `admin@symmetryinteriors.com` (owner) | Real admin in the DB; works once the API login is built (Part B) |
-| `admin@symmetry.com` / `admin123` | **Demo** login in the current frontend; removed in Part B |
+| `admin@symmetryinteriors.com` (owner) | The only admin. Signs in at `/admin/login` |
+| `admin@symmetry.com` / `admin123` | **Removed.** The demo login no longer works |
+
+## Admin login and sessions
+- An admin is signed out after **2 hours of inactivity**, and always **12 hours** after signing in.
+- **5 wrong passwords** for one email, or **20** from one IP, within 15 minutes block sign-in for that email or IP until the oldest failure is 15 minutes old.
+
+| Task (run in `/root/dev/symmetry_backend`) | Command |
+|---|---|
+| Forgot password: new one, printed once, signs out all devices | `.venv/bin/python -m app.cli reset-password --email admin@symmetryinteriors.com` |
+| Sign an admin out everywhere (lost laptop) | `.venv/bin/python -m app.cli revoke-sessions --email …` |
+| Add an editor | `.venv/bin/python -m app.cli create-admin --email … --role editor --full-name "…"` |
+| Clean up old sessions and login attempts | `.venv/bin/python -m app.cli prune` |
+| Unblock a rate-limited email now | `sudo -u postgres psql -d symmetry -c "delete from login_attempts where email='…'"` |
+
+## Tests
+```bash
+cd /root/dev/symmetry_backend && .venv/bin/pytest -q
+```
+The tests run against the separate `symmetry_test` database, never `symmetry`. It was created once with `sudo -u postgres psql -f db/create_test_db.sql`.
 
 ## Health checks
 ```bash
