@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { shopCategories } from '../data/categories';
+import { useCategories } from '../context/PublicContentContext';
 
 export const CategoryCircleMarquee = () => {
+  const { items: shopCategories } = useCategories();
   const scrollRef = useRef(null);
 
   const handleScrollLeft = () => {

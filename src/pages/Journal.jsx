@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Search, X, ChevronLeft, ChevronRight, Sparkles, BookOpen, Clock, MapPin } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import BlogCard from '../components/BlogCard';
-import { blogs } from '../data/blogs';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
 const CATEGORIES = [
   'All',
@@ -17,7 +18,14 @@ const CATEGORIES = [
 
 const ITEMS_PER_PAGE = 6;
 
+// Loads published content, then renders the page exactly as before
 export const Journal = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="grid" />;
+  return <JournalView blogs={content.blogs} />;
+};
+
+const JournalView = ({ blogs }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

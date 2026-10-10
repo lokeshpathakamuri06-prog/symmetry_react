@@ -26,13 +26,19 @@ import FinalCta from '../components/FinalCta';
 import DynamicScrollShowcase from '../components/DynamicScrollShowcase';
 import ScribbleUnderline from '../components/ScribbleUnderline';
 import AppleCardWrapper from '../components/AppleCardWrapper';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
 // Data imports
-import { products } from '../data/products';
-import { projects } from '../data/projects';
-import { blogs } from '../data/blogs';
 
+// Loads published content, then renders the page exactly as before
 export const Home = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="grid" />;
+  return <HomeView products={content.products} projects={content.projects} blogs={content.blogs} />;
+};
+
+const HomeView = ({ products, projects, blogs }) => {
   // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 

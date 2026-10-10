@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Briefcase,
@@ -15,6 +15,8 @@ import {
 import SeoMeta from '../components/SeoMeta';
 import adminDataService from '../services/adminDataService';
 import { careerPerks } from '../data/careers';
+import { useJobs } from '../context/PublicContentContext';
+import ContentState from '../components/ContentState';
 
 const perkIcons = [Award, Globe2, Hammer, TrendingUp];
 
@@ -39,7 +41,7 @@ const fieldClass = (hasError) =>
 const labelClass = 'block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium';
 
 export const Careers = () => {
-  const [jobs, setJobs] = useState([]);
+  const { items: jobs, status: jobsStatus, retry: retryJobs } = useJobs();
   const [department, setDepartment] = useState('All');
   const [expandedId, setExpandedId] = useState(null);
   const [formData, setFormData] = useState(emptyForm);
@@ -47,10 +49,6 @@ export const Careers = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef(null);
-
-  useEffect(() => {
-    adminDataService.getJobs().then((data) => setJobs((data || []).filter((j) => j.active)));
-  }, []);
 
   const departments = useMemo(
     () => ['All', ...Array.from(new Set(jobs.map((j) => j.department).filter(Boolean)))],
@@ -203,7 +201,9 @@ export const Careers = () => {
         </div>
 
         <div className="space-y-4">
-          {visibleJobs.length === 0 && (
+          {jobsStatus !== 'ready' && <ContentState status={jobsStatus} retry={retryJobs} variant="inline" />}
+
+          {jobsStatus === 'ready' && visibleJobs.length === 0 && (
             <div className="p-10 rounded-3xl text-center bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-sm text-[#4F6467] dark:text-[#AEB7BE]">
               No open roles right now — we still welcome general applications below.
             </div>

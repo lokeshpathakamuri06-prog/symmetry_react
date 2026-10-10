@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | Public content: `Cache-Control: no-cache` + ETag (304) | A publish must be visible on the next page load; a 304 costs ~30 ms and no body | `max-age=60, stale-while-revalidate=300` (up to 6 min stale) |
+| 2026-10-10 | Snapshot records keep the original frontend shapes | Pages switched data source with no field changes; verified by an exact-match test | Redesign the page data model now |
+| 2026-10-10 | If the API is down: skeleton, then a Retry state; no bundled fallback | Never show stale sample products or prices as if real | Fall back to bundled sample data |
+| 2026-10-10 | One `/api/public/content` payload, no per-item endpoints | ~31 KB compressed covers the whole site; simpler caching | Per-page or per-item endpoints |
+| 2026-10-10 | Contact details move to the DB in Part D, with the Page Content editor | Do it once, when the admin can actually edit them | Move them in Part C |
 | 2026-10-10 | Admin sessions: **2 h idle, 12 h max** | Balance for a shared office computer | 7-day sliding; 8 h fixed |
 | 2026-10-10 | `__Host-` session cookie + Origin allow-list + per-session CSRF header | Defence in depth on top of SameSite=Strict; the token is never in localStorage | JWT in localStorage; cookie only |
 | 2026-10-10 | Tests run against a separate `symmetry_test` database | Tests can wipe tables freely; they never touch real data | Mocks; transactions on the real DB |

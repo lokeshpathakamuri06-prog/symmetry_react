@@ -1,11 +1,11 @@
 # Project Status
 
-_Last updated: 2026-10-10 (Part B: real admin login)_
+_Last updated: 2026-10-10 (Part C: public site reads the database)_
 
 ## Summary
 | Area | State |
 |---|---|
-| Public website | ✅ Built and running (demo data) |
+| Public website | ✅ Running; **content comes from PostgreSQL** via `/api/public/content` (contact details still hard-coded until Part D) |
 | Admin portal UI | ✅ Built; Apple-style light/dark theme; **real server-side login** (content still in browser storage until Parts C/D) |
 | Careers (site + admin) | ✅ Built (stores in browser only until the API exists) |
 | Hosting | ✅ Caddy (frontend repo) + FastAPI (backend repo), Docker host networking |
@@ -13,7 +13,7 @@ _Last updated: 2026-10-10 (Part B: real admin login)_
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
 | FastAPI backend | 🟡 Live: `/api/health` and admin auth (`/api/auth/*`); content endpoints next |
 | Cloudinary image pipeline | ⏳ After FastAPI |
-| Frontend connected to backend | ⏳ Not yet; site still uses `src/data` + `localStorage` |
+| Frontend connected to backend | 🟡 Public pages read the API (Part C); admin content screens still use `localStorage` until Part D |
 | HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
 
 ## Work log
@@ -130,10 +130,31 @@ _Last updated: 2026-10-10 (Part B: real admin login)_
   - 18/18 headless-browser checks: demo and fake logins rejected; the localStorage flag no longer grants access; deep link → login → back; reload keeps the session; a server-side revoke signs you out; Sign Out and the Back button behave; the cookie isn't readable by JavaScript; the public site is unaffected.
   - The temporary QA admin and the test login attempts were deleted afterwards.
 
+### 2026-10-10: Part C, public site reads the database
+- **Backend:**
+  - `app/content/snapshot.py` builds a published-content snapshot in the original frontend shapes.
+  - `app/content/publish.py` stores it in `publish_events`, with dedupe by hash.
+  - `GET /api/public/content`: per-worker cache, ETag/304 that works behind Caddy's compression, `no-cache`, bootstrap on first request, last-good snapshot if the DB is down.
+  - `POST /api/admin/publish` (session + CSRF) and `python -m app.cli publish`.
+- **Tests:** 21 pass, including an exact-match check of every product, project, blog, testimonial, team member, category, job and page section against the original data.
+- **Frontend:**
+  - `PublicContentContext` and `ContentState` (skeleton plus a Retry state); content preloaded in `index.html`.
+  - Home, Shop, ProductDetail, Projects, ProjectDetail, Journal and JournalDetail are wrapped: the wrapper loads content and the original page body becomes the view.
+  - SearchModal, TestimonialCarousel, CategoryCircleMarquee, About (team) and Careers (jobs) use the content hooks.
+- **Verified:**
+  - All 14 baseline pages and searches have identical text after the switch. The only difference was a hero slideshow frame captured at a different moment.
+  - One content request per page load; client-side navigation reuses it.
+  - A product renamed in the DB, then published, shows on Shop, the product page and search, then reverts.
+  - With the API stopped, pages show Retry; after a restart, Retry loads the content without a page reload.
+- **Changes from the plan:**
+  - Caching changed from `max-age=60, stale-while-revalidate=300` to `no-cache` with ETag. Testing showed publishes would take up to 6 minutes to appear.
+  - Blogs keep their seeded order (`position`) rather than newest-first, so the Journal page looks the same.
+- **Bug fixed along the way:** "Buy Now" on every product page crashed the page (`total` undefined in `RazorpayModalPlaceholder`, present since the initial commit). Now defined as subtotal + GST and browser-verified.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
-| 1 | Admin edits don't reach the public site (public pages import `src/data` directly) | Step 4: connect frontend to API |
+| 1 | Admin edits don't reach the public site. **Public side done (Part C):** pages read the DB. Remaining: admin screens still save to localStorage | Part D: admin CRUD + Publish button |
 | 2 | Admin Products page shows broken thumbnails and "Out of Stock" (field mismatch: `images`/`inStock` vs `image`/`in_stock`) | Step 4 |
 | 3 | ~~Demo admin login in the browser~~ | ✅ Fixed 2026-10-10: server-side login (Part B) |
 | 4 | Forms (contact, careers, checkout, newsletter) save only to the visitor's browser | Step 4 |
@@ -143,4 +164,5 @@ _Last updated: 2026-10-10 (Part B: real admin login)_
 | 8 | ~~Changes not committed; backend not in git~~ | ✅ Fixed 2026-10-10: committed locally; not pushed yet |
 | 9 | Category `item_count_label` texts ("6 Models", "5 Designs") are marketing copy, not real counts (most categories have 1–2 sample products) | Show real counts from the API in Step 4, or the client edits the labels |
 | 10 | Page titles repeat the brand (e.g. "… \| Symmetry Interiors \| Symmetry Interiors & Building Solutions"): pages pass the brand and `SeoMeta` appends it again | Step 6 SEO pass |
+| 12 | `FlippingCollections` (unused component) calls an undefined `setUserInteracted`; it would crash if used | Delete the component or fix it when it's needed |
 | 11 | Main JS bundle is 299 KB compressed (target < 200 KB): the admin portal and all pages ship in one file | Step 6: code splitting per route |

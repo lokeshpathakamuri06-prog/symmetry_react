@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { testimonials } from '../data/testimonials';
+import { useTestimonials } from '../context/PublicContentContext';
 
 export const TestimonialCarousel = () => {
+  const { items: testimonials } = useTestimonials();
+  if (testimonials.length === 0) return null;
+  return <TestimonialCarouselView testimonials={testimonials} />;
+};
+
+const TestimonialCarouselView = ({ testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 

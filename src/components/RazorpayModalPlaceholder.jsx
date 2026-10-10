@@ -21,6 +21,7 @@ export default function RazorpayModalPlaceholder({
 
   const subtotal = product.price * quantity;
   const gst = Math.round(subtotal * 0.18);
+  const total = subtotal + gst;
   const testOrderId = `order_SYM_${(product?.id || 'LUX').replace(/[^a-zA-Z0-9]/g, '').toUpperCase()}_77X`;
 
   const handleSimulatePayment = () => {

@@ -17,10 +17,17 @@ import SeoMeta from '../components/SeoMeta';
 import ProductCard from '../components/ProductCard';
 import FilterDrawer from '../components/FilterDrawer';
 import QuickViewModal from '../components/QuickViewModal';
-import { products } from '../data/products';
-import { shopCategories } from '../data/categories';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
+// Loads published content, then renders the page exactly as before
 export const Shop = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="grid" />;
+  return <ShopView products={content.products} shopCategories={content.categories} />;
+};
+
+const ShopView = ({ products, shopCategories }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = searchParams.get('category') || 'all';
 

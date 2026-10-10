@@ -25,9 +25,17 @@ import ProductCard from '../components/ProductCard';
 import FullscreenGalleryModal from '../components/FullscreenGalleryModal';
 import RazorpayModalPlaceholder from '../components/RazorpayModalPlaceholder';
 import { useCart } from '../context/CartContext';
-import { products } from '../data/products';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
+// Loads published content, then renders the page exactly as before
 export const ProductDetail = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="detail" />;
+  return <ProductDetailView products={content.products} />;
+};
+
+const ProductDetailView = ({ products }) => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
   const { addToCart, wishlist, toggleWishlist } = useCart();

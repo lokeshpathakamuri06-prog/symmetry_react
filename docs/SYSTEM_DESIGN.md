@@ -264,7 +264,7 @@ Base path `/api`. JSON throughout. Admin routes need a valid session cookie.
 
 | Method | Path | Purpose | Caching |
 |---|---|---|---|
-| GET | `/public/content` | All published site content in one response: sections, banners, categories, products, projects, blogs, testimonials, team, jobs | `Cache-Control: public, max-age=60, stale-while-revalidate=600` + `ETag` |
+| GET | `/public/content` | **Built.** All published site content in one response: sections, banners, categories, collections, products, projects, blogs, testimonials, team, jobs | `Cache-Control: no-cache` + `ETag` (revalidates every load and gets a 304 when unchanged) |
 | GET | `/public/products/{slug}` | Single product (deep links) | Same |
 | GET | `/public/projects/{slug}` | Single project | Same |
 | POST | `/public/inquiries` | Contact form | Rate-limited |
@@ -302,11 +302,19 @@ Base path `/api`. JSON throughout. Admin routes need a valid session cookie.
 
 ### Public content caching
 
-1. `POST /admin/publish` builds the full public content JSON from published rows, computes its hash, and stores it in memory and in a cache table.
-2. `GET /public/content` returns the pre-built JSON with an `ETag` equal to that hash, so unchanged content gets a `304` response.
-3. Caddy may also micro-cache this response for 30–60 s.
-
-The result is one small request per visit instead of nine, and no database queries for public traffic.
+**As built (Part C):**
+1. **Building the snapshot:** `app/content/snapshot.py` builds the snapshot from rows with `status = 'published'` (plus `active` for jobs and banners), ordered by `position`.
+   - Records keep the **exact shape of the original frontend objects** (`id` = SKU or slug, `images`, `heroImage`, `relatedImages`, `categoryName`, `date` as "January 04, 2025"…), so pages only changed where they get data from.
+   - A test checks every record against the original seed data.
+2. **Publishing:** `publish()` (`app/content/publish.py`) stores the snapshot in `publish_events.payload`, with `content_hash` = sha256 of the content (excluding `generatedAt`). Publishing unchanged content does not add a row.
+   - Triggers: `POST /api/admin/publish` (needs a session and CSRF token; the button comes in Part D) or `python -m app.cli publish`.
+   - **Bootstrap:** the first request after a deploy with no snapshot publishes one automatically.
+3. **Serving:** `GET /api/public/content` serves the latest snapshot from a per-worker memory cache keyed by event id, so a request costs one primary-key query.
+   - `ETag` is the hash. `If-None-Match` returns 304, which tolerates Caddy's `-zstd` ETag suffix and `W/`.
+   - `Cache-Control: no-cache`, so a publish is visible on the next page load.
+   - If the DB is down, the last cached snapshot is served; if there's nothing cached, 503.
+4. **Size:** about 101 KB raw, 31 KB zstd. `index.html` preloads it in parallel with the JS bundle; one request per page load, and client-side navigation reuses it.
+5. **Frontend:** `PublicContentContext` loads it once and refreshes when the tab regains focus after 5 minutes. Pages render `<ContentState>` (skeleton, or "Couldn't load, Retry") until it is ready. There is no fallback to bundled sample data.
 
 ---
 

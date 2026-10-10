@@ -4,6 +4,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { SearchProvider } from './context/SearchContext';
 import { SiteContentProvider } from './context/SiteContentContext';
+import { PublicContentProvider } from './context/PublicContentContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 
@@ -93,6 +94,7 @@ export const App = () => {
       <CartProvider>
         <SearchProvider>
           <SiteContentProvider>
+            <PublicContentProvider>
             <AdminAuthProvider>
               <BrowserRouter>
                 <StorefrontOpener />
@@ -143,6 +145,7 @@ export const App = () => {
                 </StorefrontShell>
               </BrowserRouter>
             </AdminAuthProvider>
+            </PublicContentProvider>
           </SiteContentProvider>
         </SearchProvider>
       </CartProvider>

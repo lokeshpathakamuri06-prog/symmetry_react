@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Search, X, ArrowRight, Layers, Sparkles, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearch } from '../context/SearchContext';
-import { products } from '../data/products';
-import { projects } from '../data/projects';
-import { blogs } from '../data/blogs';
+import { usePublicContent } from '../context/PublicContentContext';
 
 export const SearchModal = () => {
   const { isOpen, closeSearch } = useSearch();
+  const { content } = usePublicContent();
+  const products = content?.products ?? [];
+  const projects = content?.projects ?? [];
+  const blogs = content?.blogs ?? [];
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
   const navigate = useNavigate();

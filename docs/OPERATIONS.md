@@ -100,6 +100,17 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 | Clean up old sessions and login attempts | `.venv/bin/python -m app.cli prune` |
 | Unblock a rate-limited email now | `sudo -u postgres psql -d symmetry -c "delete from login_attempts where email='…'"` |
 
+## Publishing content
+- The public site shows the **latest published snapshot** of the database, not live rows.
+- After changing content directly in the DB, run:
+  ```bash
+  cd /root/dev/symmetry_backend && .venv/bin/python -m app.cli publish
+  ```
+  It prints `published new snapshot` or `unchanged`. Visitors see the change on their next page load.
+- From Part D, the admin **Publish** button does the same.
+- **Site shows old content?** Run `publish`. If the API was just restarted, wait a few seconds: pages show a Retry button while the API is starting.
+- After a fresh deploy, the first request creates a snapshot automatically if none exists.
+
 ## Tests
 ```bash
 cd /root/dev/symmetry_backend && .venv/bin/pytest -q

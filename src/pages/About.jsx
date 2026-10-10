@@ -17,11 +17,12 @@ import {
   sourcingGuarantees, 
   missionData, 
   visionData, 
-  teamMembers, 
   whyChoosePillars 
 } from '../data/aboutData';
+import { useTeam } from '../context/PublicContentContext';
 
 export const About = () => {
+  const { items: teamMembers } = useTeam();
   // Department filter for team section
   const [selectedDept, setSelectedDept] = useState('All');
 

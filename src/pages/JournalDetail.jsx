@@ -14,7 +14,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import BlogCard from '../components/BlogCard';
-import { blogs } from '../data/blogs';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
 const XIcon = () => (
   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -28,7 +29,14 @@ const LinkedinIcon = () => (
   </svg>
 );
 
+// Loads published content, then renders the page exactly as before
 export const JournalDetail = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="detail" />;
+  return <JournalDetailView blogs={content.blogs} />;
+};
+
+const JournalDetailView = ({ blogs }) => {
   const { id } = useParams();
   const [copied, setCopied] = useState(false);
 

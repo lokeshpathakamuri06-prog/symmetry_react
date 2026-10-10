@@ -6,9 +6,17 @@ import Breadcrumb from '../components/Breadcrumb';
 import ImageGallery from '../components/ImageGallery';
 import ProjectCard from '../components/ProjectCard';
 import Button from '../components/Button';
-import { projects } from '../data/projects';
+import ContentState from '../components/ContentState';
+import { usePublicContent } from '../context/PublicContentContext';
 
+// Loads published content, then renders the page exactly as before
 export const ProjectDetail = () => {
+  const { content, status, retry } = usePublicContent();
+  if (status !== 'ready') return <ContentState status={status} retry={retry} variant="detail" />;
+  return <ProjectDetailView projects={content.projects} />;
+};
+
+const ProjectDetailView = ({ projects }) => {
   const { id } = useParams();
   const projectIndex = projects.findIndex((p) => p.id === id);
 
