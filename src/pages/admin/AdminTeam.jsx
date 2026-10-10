@@ -62,10 +62,10 @@ export const AdminTeam = () => {
     <AdminLayout title="Team Profiles Manager" subtitle="Manage executive directors, principal architects, and master craftsmen">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <p className="text-xs text-white/50">{team.length} team members</p>
+          <p className="text-xs text-adm-fg/50">{team.length} team members</p>
           <button
             onClick={handleOpenAdd}
-            className="px-4 py-2.5 bg-[#36656B] hover:bg-[#2b5257] text-white rounded-xl text-xs font-medium flex items-center gap-2 transition-all shadow-lg shadow-[#36656B]/30"
+            className="px-4 py-2.5 bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent rounded-xl text-xs font-medium flex items-center gap-2 transition-all"
           >
             <Plus className="w-4 h-4" /> Add Team Member
           </button>
@@ -73,91 +73,91 @@ export const AdminTeam = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {team.map((m) => (
-            <div key={m.id} className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl p-5 space-y-4 group">
+            <div key={m.id} className="adm-card p-5 space-y-4 group">
               <div className="flex items-center gap-4">
-                <img src={m.image} alt={m.name} className="w-16 h-16 rounded-2xl object-cover border border-[#1B2E3D]" />
+                <img src={m.image} alt={m.name} className="w-16 h-16 rounded-2xl object-cover border border-adm-border" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-serif font-semibold text-white text-sm truncate">{m.name}</h4>
+                    <h4 className="font-semibold text-adm-fg text-sm truncate">{m.name}</h4>
                     <div className="flex items-center gap-1">
-                      <button onClick={() => handleOpenEdit(m)} className="p-1 text-white/40 hover:text-white"><Edit2 className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => handleDelete(m.id)} className="p-1 text-white/40 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => handleOpenEdit(m)} className="p-1 text-adm-fg/40 hover:text-adm-fg"><Edit2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => handleDelete(m.id)} className="p-1 text-adm-fg/40 hover:text-red-600 dark:hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
                   </div>
-                  <p className="text-xs text-[#36656B] font-medium truncate">{m.role}</p>
-                  <p className="text-[10px] text-white/40">{m.department}</p>
+                  <p className="text-xs text-adm-accent font-medium truncate">{m.role}</p>
+                  <p className="text-[10px] text-adm-fg/40">{m.department}</p>
                 </div>
               </div>
 
-              <p className="text-xs text-white/60 line-clamp-3">{m.bio}</p>
+              <p className="text-xs text-adm-fg/60 line-clamp-3">{m.bio}</p>
             </div>
           ))}
         </div>
 
         {isModalOpen && editingMember && (
-          <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl w-full max-w-md p-6 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1B2E3D]">
-                <h3 className="text-sm font-serif font-semibold text-white">
+          <div className="fixed inset-0 z-50 bg-black/25 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="adm-card w-full max-w-md p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-adm-border">
+                <h3 className="text-sm font-semibold text-adm-fg">
                   {editingMember.id ? 'Edit Team Member' : 'Add Team Member'}
                 </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-white/40 hover:text-white"><X className="w-5 h-5" /></button>
+                <button onClick={() => setIsModalOpen(false)} className="text-adm-fg/40 hover:text-adm-fg"><X className="w-5 h-5" /></button>
               </div>
 
               <form onSubmit={handleSave} className="space-y-3 text-xs">
                 <div>
-                  <label className="block text-white/70 mb-1">Full Name</label>
+                  <label className="block text-adm-fg/70 mb-1">Full Name</label>
                   <input
                     type="text"
                     required
                     value={editingMember.name}
                     onChange={(e) => setEditingMember({ ...editingMember, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-white/70 mb-1">Role Title</label>
+                    <label className="block text-adm-fg/70 mb-1">Role Title</label>
                     <input
                       type="text"
                       required
                       value={editingMember.role}
                       onChange={(e) => setEditingMember({ ...editingMember, role: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 mb-1">Department</label>
+                    <label className="block text-adm-fg/70 mb-1">Department</label>
                     <input
                       type="text"
                       value={editingMember.department}
                       onChange={(e) => setEditingMember({ ...editingMember, department: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-white/70 mb-1">Photo URL</label>
+                  <label className="block text-adm-fg/70 mb-1">Photo URL</label>
                   <input
                     type="url"
                     required
                     value={editingMember.image}
                     onChange={(e) => setEditingMember({ ...editingMember, image: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-white/70 mb-1">Bio</label>
+                  <label className="block text-adm-fg/70 mb-1">Bio</label>
                   <textarea
                     rows={3}
                     value={editingMember.bio}
                     onChange={(e) => setEditingMember({ ...editingMember, bio: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
-                <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#1B2E3D]">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-white/5 rounded-xl text-white">Cancel</button>
-                  <button type="submit" className="px-5 py-2 bg-[#36656B] rounded-xl text-white font-medium">Save Profile</button>
+                <div className="pt-3 flex items-center justify-end gap-3 border-t border-adm-border">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-adm-fg/5 rounded-xl text-adm-fg">Cancel</button>
+                  <button type="submit" className="px-5 py-2 bg-adm-accent rounded-xl text-adm-on-accent font-medium">Save Profile</button>
                 </div>
               </form>
             </div>

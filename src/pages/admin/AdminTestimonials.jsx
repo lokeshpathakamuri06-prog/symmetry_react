@@ -62,10 +62,10 @@ export const AdminTestimonials = () => {
     <AdminLayout title="Testimonials Manager" subtitle="Manage client reviews, quotes, ratings, and avatars">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <p className="text-xs text-white/50">{testimonials.length} client testimonials</p>
+          <p className="text-xs text-adm-fg/50">{testimonials.length} client testimonials</p>
           <button
             onClick={handleOpenAdd}
-            className="px-4 py-2.5 bg-[#36656B] hover:bg-[#2b5257] text-white rounded-xl text-xs font-medium flex items-center gap-2 transition-all shadow-lg shadow-[#36656B]/30"
+            className="px-4 py-2.5 bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent rounded-xl text-xs font-medium flex items-center gap-2 transition-all"
           >
             <Plus className="w-4 h-4" /> Add Testimonial
           </button>
@@ -73,28 +73,28 @@ export const AdminTestimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t) => (
-            <div key={t.id} className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl p-6 relative flex flex-col justify-between group">
+            <div key={t.id} className="adm-card p-6 relative flex flex-col justify-between group">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-amber-400">
+                  <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
                     {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-600 dark:text-amber-400" />
                     ))}
                   </div>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => handleOpenEdit(t)} className="p-1 text-white/40 hover:text-white"><Edit2 className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => handleDelete(t.id)} className="p-1 text-white/40 hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => handleOpenEdit(t)} className="p-1 text-adm-fg/40 hover:text-adm-fg"><Edit2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => handleDelete(t.id)} className="p-1 text-adm-fg/40 hover:text-red-600 dark:hover:text-red-400"><Trash2 className="w-3.5 h-3.5" /></button>
                   </div>
                 </div>
 
-                <p className="text-xs text-white/80 italic leading-relaxed">"{t.quote}"</p>
+                <p className="text-xs text-adm-fg/80 italic leading-relaxed">"{t.quote}"</p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-[#1B2E3D] flex items-center gap-3">
-                <img src={t.avatar} alt={t.author} className="w-10 h-10 rounded-full object-cover border border-[#1B2E3D]" />
+              <div className="pt-4 mt-4 border-t border-adm-border flex items-center gap-3">
+                <img src={t.avatar} alt={t.author} className="w-10 h-10 rounded-full object-cover border border-adm-border" />
                 <div>
-                  <h4 className="text-xs font-semibold text-white">{t.author}</h4>
-                  <p className="text-[10px] text-white/50">{t.role} • {t.location}</p>
+                  <h4 className="text-xs font-semibold text-adm-fg">{t.author}</h4>
+                  <p className="text-[10px] text-adm-fg/50">{t.role} • {t.location}</p>
                 </div>
               </div>
             </div>
@@ -102,68 +102,68 @@ export const AdminTestimonials = () => {
         </div>
 
         {isModalOpen && editingTestimonial && (
-          <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl w-full max-w-md p-6 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1B2E3D]">
-                <h3 className="text-sm font-serif font-semibold text-white">
+          <div className="fixed inset-0 z-50 bg-black/25 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="adm-card w-full max-w-md p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-adm-border">
+                <h3 className="text-sm font-semibold text-adm-fg">
                   {editingTestimonial.id ? 'Edit Testimonial' : 'Add Testimonial'}
                 </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-white/40 hover:text-white"><X className="w-5 h-5" /></button>
+                <button onClick={() => setIsModalOpen(false)} className="text-adm-fg/40 hover:text-adm-fg"><X className="w-5 h-5" /></button>
               </div>
 
               <form onSubmit={handleSave} className="space-y-3 text-xs">
                 <div>
-                  <label className="block text-white/70 mb-1">Author Name</label>
+                  <label className="block text-adm-fg/70 mb-1">Author Name</label>
                   <input
                     type="text"
                     required
                     value={editingTestimonial.author}
                     onChange={(e) => setEditingTestimonial({ ...editingTestimonial, author: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-white/70 mb-1">Role / Designation</label>
+                    <label className="block text-adm-fg/70 mb-1">Role / Designation</label>
                     <input
                       type="text"
                       value={editingTestimonial.role}
                       onChange={(e) => setEditingTestimonial({ ...editingTestimonial, role: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 mb-1">Location</label>
+                    <label className="block text-adm-fg/70 mb-1">Location</label>
                     <input
                       type="text"
                       value={editingTestimonial.location}
                       onChange={(e) => setEditingTestimonial({ ...editingTestimonial, location: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-white/70 mb-1">Avatar Image URL</label>
+                  <label className="block text-adm-fg/70 mb-1">Avatar Image URL</label>
                   <input
                     type="url"
                     value={editingTestimonial.avatar}
                     onChange={(e) => setEditingTestimonial({ ...editingTestimonial, avatar: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-white/70 mb-1">Quote</label>
+                  <label className="block text-adm-fg/70 mb-1">Quote</label>
                   <textarea
                     rows={3}
                     required
                     value={editingTestimonial.quote}
                     onChange={(e) => setEditingTestimonial({ ...editingTestimonial, quote: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
-                <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#1B2E3D]">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-white/5 rounded-xl text-white">Cancel</button>
-                  <button type="submit" className="px-5 py-2 bg-[#36656B] rounded-xl text-white font-medium">Save Review</button>
+                <div className="pt-3 flex items-center justify-end gap-3 border-t border-adm-border">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-adm-fg/5 rounded-xl text-adm-fg">Cancel</button>
+                  <button type="submit" className="px-5 py-2 bg-adm-accent rounded-xl text-adm-on-accent font-medium">Save Review</button>
                 </div>
               </form>
             </div>

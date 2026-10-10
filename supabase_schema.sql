@@ -177,6 +177,39 @@ CREATE TABLE IF NOT EXISTS public.media_assets (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- 13. CAREERS: JOB OPENINGS
+CREATE TABLE IF NOT EXISTS public.job_openings (
+  id VARCHAR(100) PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  department VARCHAR(100),
+  location VARCHAR(255),
+  type VARCHAR(50) DEFAULT 'Full-time',
+  experience VARCHAR(100),
+  summary TEXT,
+  responsibilities TEXT[] DEFAULT '{}',
+  requirements TEXT[] DEFAULT '{}',
+  active BOOLEAN DEFAULT TRUE,
+  posted_at DATE DEFAULT CURRENT_DATE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 14. CAREERS: JOB APPLICATIONS
+CREATE TABLE IF NOT EXISTS public.job_applications (
+  id VARCHAR(100) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(100),
+  job_id VARCHAR(100),
+  job_title VARCHAR(255),
+  experience_years VARCHAR(50),
+  portfolio_url TEXT,
+  resume_url TEXT,
+  message TEXT,
+  status VARCHAR(50) DEFAULT 'new', -- new, shortlisted, interview, hired, rejected
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- RLS POLICIES (ENABLE PUBLIC READ, AUTHENTICATED/API WRITE)
 ALTER TABLE public.site_sections ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.banners ENABLE ROW LEVEL SECURITY;
@@ -190,6 +223,8 @@ ALTER TABLE public.team_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.media_assets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.job_openings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.job_applications ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to all content tables
 CREATE POLICY "Public Read Site Sections" ON public.site_sections FOR SELECT USING (true);
@@ -201,11 +236,14 @@ CREATE POLICY "Public Read Projects" ON public.projects FOR SELECT USING (true);
 CREATE POLICY "Public Read Blogs" ON public.blogs FOR SELECT USING (true);
 CREATE POLICY "Public Read Testimonials" ON public.testimonials FOR SELECT USING (true);
 CREATE POLICY "Public Read Team" ON public.team_members FOR SELECT USING (true);
+CREATE POLICY "Public Read Job Openings" ON public.job_openings FOR SELECT USING (true);
 
 -- Allow public insert on inquiries (contact form)
 CREATE POLICY "Public Insert Inquiries" ON public.inquiries FOR INSERT WITH CHECK (true);
 -- Allow public insert on orders (checkout)
 CREATE POLICY "Public Insert Orders" ON public.orders FOR INSERT WITH CHECK (true);
+-- Allow public insert on job applications (careers form)
+CREATE POLICY "Public Insert Job Applications" ON public.job_applications FOR INSERT WITH CHECK (true);
 
 -- Allow full access for anon/authenticated (controlled by frontend / API)
 CREATE POLICY "Full Access Site Sections" ON public.site_sections FOR ALL USING (true);
@@ -220,3 +258,5 @@ CREATE POLICY "Full Access Team" ON public.team_members FOR ALL USING (true);
 CREATE POLICY "Full Access Inquiries" ON public.inquiries FOR ALL USING (true);
 CREATE POLICY "Full Access Orders" ON public.orders FOR ALL USING (true);
 CREATE POLICY "Full Access Media" ON public.media_assets FOR ALL USING (true);
+CREATE POLICY "Full Access Job Openings" ON public.job_openings FOR ALL USING (true);
+CREATE POLICY "Full Access Job Applications" ON public.job_applications FOR ALL USING (true);

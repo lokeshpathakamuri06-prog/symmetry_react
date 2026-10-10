@@ -149,28 +149,28 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-3 text-sm sm:text-[15px] text-[#4F6467] dark:text-[#AEB7BE]">
               <li>
-                <Link to="/shop?category=living" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Living Collection
+                <Link to="/shop?category=luxury-sofas" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
+                  Luxury Sofas
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=dining" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Dining Tables
+                <Link to="/shop?category=dining-furniture" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
+                  Dining Furniture
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=bedroom" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Sanctuary &amp; Beds
+                <Link to="/shop?category=bedroom-furniture" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
+                  Bedroom Furniture
                 </Link>
               </li>
               <li>
                 <Link to="/shop?category=lighting" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Murano Lighting
+                  Lighting
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=accents" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Travertine Objects
+                <Link to="/shop?category=decorative-accessories" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
+                  Decorative Accessories
                 </Link>
               </li>
             </ul>
@@ -205,6 +205,11 @@ export const Footer = () => {
               <li>
                 <Link to="/journal" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
                   Design Journal
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
+                  Careers
                 </Link>
               </li>
               <li>

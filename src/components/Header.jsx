@@ -61,6 +61,7 @@ export const Header = () => {
     { label: 'TURNKEY PROJECTS', to: '/projects' },
     { label: 'GLOBAL SOURCING', to: '/sourcing' },
     { label: 'JOURNAL', to: '/journal' },
+    { label: 'CAREERS', to: '/careers' },
     { label: 'CONTACT', to: '/contact' },
   ];
 
@@ -98,7 +99,7 @@ export const Header = () => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-5 xl:space-x-7" aria-label="Main Navigation">
+          <nav className="hidden min-[1440px]:flex items-center space-x-5" aria-label="Main Navigation">
             {navLinks.map((link) => {
               const isActive =
                 link.to === '/'
@@ -261,7 +262,7 @@ export const Header = () => {
             {/* Mobile / Tablet Menu Trigger */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] cursor-pointer shrink-0"
+              className="min-[1440px]:hidden p-1.5 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] cursor-pointer shrink-0"
               aria-label="Open mobile menu"
             >
               <Menu className="w-6 h-6" />

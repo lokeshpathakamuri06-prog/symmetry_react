@@ -1,3 +1,9 @@
+# Symmetry Interiors — Website
+
+Project documentation: **[docs/README.md](docs/README.md)** (status, next steps, design, decisions, assets, operations).
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

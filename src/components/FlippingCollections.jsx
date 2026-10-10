@@ -6,8 +6,8 @@ export const FlippingCollections = () => {
   const collections = [
     {
       id: 'living',
-      name: 'Living',
-      slug: 'living',
+      name: 'Luxury Sofas',
+      slug: 'luxury-sofas',
       tagline: 'Sculptural Seating & Compositions',
       frontImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80',
       itemCount: '18 Curated Pieces',
@@ -17,8 +17,8 @@ export const FlippingCollections = () => {
     },
     {
       id: 'dining',
-      name: 'Dining',
-      slug: 'dining',
+      name: 'Dining Furniture',
+      slug: 'dining-furniture',
       tagline: 'Monolithic Stone & Entertaining',
       frontImage: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1000&q=80',
       itemCount: '14 Curated Pieces',
@@ -28,8 +28,8 @@ export const FlippingCollections = () => {
     },
     {
       id: 'bedroom',
-      name: 'Bedroom',
-      slug: 'bedroom',
+      name: 'Bedroom Furniture',
+      slug: 'bedroom-furniture',
       tagline: 'Sanctuary & Architectural Beds',
       frontImage: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1000&q=80',
       itemCount: '12 Curated Pieces',
@@ -39,8 +39,8 @@ export const FlippingCollections = () => {
     },
     {
       id: 'lounge',
-      name: 'Lounge',
-      slug: 'lounge',
+      name: 'Lounge Chairs',
+      slug: 'lounge-chairs',
       tagline: 'Tactile Chairs & Daybeds',
       frontImage: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=1000&q=80',
       itemCount: '16 Curated Pieces',
@@ -50,8 +50,8 @@ export const FlippingCollections = () => {
     },
     {
       id: 'office',
-      name: 'Office',
-      slug: 'office',
+      name: 'Office Furniture',
+      slug: 'office-furniture',
       tagline: 'Executive Suites & Workspace',
       frontImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=80',
       itemCount: '8 Curated Pieces',
@@ -61,8 +61,8 @@ export const FlippingCollections = () => {
     },
     {
       id: 'outdoor',
-      name: 'Outdoor',
-      slug: 'outdoor',
+      name: 'Outdoor Furniture',
+      slug: 'outdoor-furniture',
       tagline: 'All-Weather Teak & Bronze',
       frontImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80',
       itemCount: '10 Curated Pieces',

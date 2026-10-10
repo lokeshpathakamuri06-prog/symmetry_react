@@ -43,6 +43,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
     { label: 'TURNKEY PROJECTS', to: '/projects' },
     { label: 'GLOBAL SOURCING', to: '/sourcing' },
     { label: 'JOURNAL', to: '/journal' },
+    { label: 'CAREERS', to: '/careers' },
     { label: 'CONTACT', to: '/contact' },
   ];
 

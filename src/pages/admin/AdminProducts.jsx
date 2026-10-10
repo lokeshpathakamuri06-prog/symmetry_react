@@ -98,22 +98,22 @@ export const AdminProducts = () => {
     <AdminLayout title="Product Catalog Manager" subtitle="Manage store inventory, prices, badges, and stock availability">
       <div className="space-y-6">
         {/* Search & Filter Header */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0A1622] p-4 rounded-2xl border border-[#1B2E3D]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-adm-surface p-4 rounded-2xl border border-adm-border">
           <div className="flex items-center gap-3 w-full sm:w-auto flex-1 max-w-md">
             <div className="relative w-full">
-              <Search className="w-4 h-4 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-adm-fg/40 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#36656B]"
+                className="w-full pl-9 pr-4 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-xs text-adm-fg placeholder-adm-muted/70 focus:outline-none focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
               />
             </div>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-xs text-white focus:outline-none focus:border-[#36656B]"
+              className="px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-xs text-adm-fg focus:outline-none focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
             >
               <option value="all">All Categories</option>
               {categories.map(c => (
@@ -124,18 +124,18 @@ export const AdminProducts = () => {
 
           <button
             onClick={handleOpenAdd}
-            className="w-full sm:w-auto px-5 py-2.5 bg-[#36656B] hover:bg-[#2b5257] text-white rounded-xl text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#36656B]/30 whitespace-nowrap"
+            className="w-full sm:w-auto px-5 py-2.5 bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent rounded-xl text-xs font-medium flex items-center justify-center gap-2 transition-all whitespace-nowrap"
           >
             <Plus className="w-4 h-4" /> Add Product
           </button>
         </div>
 
         {/* Products Table */}
-        <div className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl overflow-hidden">
+        <div className="adm-card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#1B2E3D] bg-[#07121C] text-white/40 uppercase tracking-wider">
+                <tr className="border-b border-adm-border bg-adm-surface2 text-adm-fg/40 uppercase tracking-wider">
                   <th className="p-4 font-medium">Product</th>
                   <th className="p-4 font-medium">Category</th>
                   <th className="p-4 font-medium">Price</th>
@@ -144,40 +144,40 @@ export const AdminProducts = () => {
                   <th className="p-4 font-medium text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1B2E3D]">
+              <tbody className="divide-y divide-adm-border">
                 {filteredProducts.map((product) => (
-                  <tr key={product.id} className="hover:bg-white/5 transition-colors">
+                  <tr key={product.id} className="hover:bg-adm-fg/5 transition-colors">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="w-12 h-12 rounded-xl object-cover border border-[#1B2E3D]"
+                          className="w-12 h-12 rounded-xl object-cover border border-adm-border"
                         />
                         <div>
-                          <p className="font-semibold text-white">{product.name}</p>
-                          <p className="text-[10px] text-white/40 font-mono">ID: {product.id}</p>
+                          <p className="font-semibold text-adm-fg">{product.name}</p>
+                          <p className="text-[10px] text-adm-fg/40 font-mono">ID: {product.id}</p>
                         </div>
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 text-[11px]">
+                      <span className="px-2.5 py-1 rounded-full bg-adm-fg/5 border border-adm-fg/10 text-adm-fg/80 text-[11px]">
                         {product.category}
                       </span>
                     </td>
                     <td className="p-4 font-medium">
-                      <p className="text-white">{formatPrice(product.price)}</p>
+                      <p className="text-adm-fg">{formatPrice(product.price)}</p>
                       {product.sale_price && (
-                        <p className="text-[10px] text-emerald-400">Sale: {formatPrice(product.sale_price)}</p>
+                        <p className="text-[10px] text-emerald-600 dark:text-emerald-400">Sale: {formatPrice(product.sale_price)}</p>
                       )}
                     </td>
                     <td className="p-4">
                       {product.badge ? (
-                        <span className="px-2 py-0.5 rounded bg-[#36656B]/20 border border-[#36656B]/30 text-[#36656B] text-[10px] font-semibold uppercase">
+                        <span className="px-2 py-0.5 rounded bg-adm-accent/20 border border-adm-accent/30 text-adm-accent text-[10px] font-semibold uppercase">
                           {product.badge}
                         </span>
                       ) : (
-                        <span className="text-white/30 text-[10px]">-</span>
+                        <span className="text-adm-fg/30 text-[10px]">-</span>
                       )}
                     </td>
                     <td className="p-4">
@@ -185,8 +185,8 @@ export const AdminProducts = () => {
                         onClick={() => handleToggleStock(product.id)}
                         className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium transition-colors ${
                           product.in_stock
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                            : 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
                         }`}
                       >
                         {product.in_stock ? <ToggleRight className="w-4 h-4" /> : <ToggleLeft className="w-4 h-4" />}
@@ -197,13 +197,13 @@ export const AdminProducts = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenEdit(product)}
-                          className="p-2 rounded-lg bg-white/5 hover:bg-[#36656B] text-white transition-colors"
+                          className="p-2 rounded-lg bg-adm-fg/5 hover:bg-adm-accent text-adm-fg transition-colors"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => handleDelete(product.id)}
-                          className="p-2 rounded-lg bg-white/5 hover:bg-red-500 text-red-400 hover:text-white transition-colors"
+                          className="p-2 rounded-lg bg-adm-fg/5 hover:bg-red-500 text-red-600 dark:text-red-400 hover:text-adm-fg transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -213,7 +213,7 @@ export const AdminProducts = () => {
                 ))}
                 {filteredProducts.length === 0 && (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-white/40">
+                    <td colSpan="6" className="p-8 text-center text-adm-fg/40">
                       No products found matching filters.
                     </td>
                   </tr>
@@ -225,106 +225,106 @@ export const AdminProducts = () => {
 
         {/* Add / Edit Modal */}
         {isModalOpen && editingProduct && (
-          <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#0A1622] border border-[#1B2E3D] rounded-2xl w-full max-w-lg p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-[#1B2E3D]">
-                <h3 className="text-sm font-serif font-semibold text-white">
+          <div className="fixed inset-0 z-50 bg-black/25 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="adm-card w-full max-w-lg p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-3 border-b border-adm-border">
+                <h3 className="text-sm font-semibold text-adm-fg">
                   {editingProduct.id ? 'Edit Product' : 'Add New Product'}
                 </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-white/40 hover:text-white">
+                <button onClick={() => setIsModalOpen(false)} className="text-adm-fg/40 hover:text-adm-fg">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <form onSubmit={handleSave} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-white/70 mb-1">Product Title</label>
+                  <label className="block text-adm-fg/70 mb-1">Product Title</label>
                   <input
                     type="text"
                     required
                     value={editingProduct.name}
                     onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-white/70 mb-1">Category</label>
+                    <label className="block text-adm-fg/70 mb-1">Category</label>
                     <input
                       type="text"
                       required
                       value={editingProduct.category}
                       onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 mb-1">Badge Tag</label>
+                    <label className="block text-adm-fg/70 mb-1">Badge Tag</label>
                     <input
                       type="text"
                       value={editingProduct.badge}
                       onChange={(e) => setEditingProduct({ ...editingProduct, badge: e.target.value })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-white/70 mb-1">Price (₹)</label>
+                    <label className="block text-adm-fg/70 mb-1">Price (₹)</label>
                     <input
                       type="number"
                       required
                       value={editingProduct.price}
                       onChange={(e) => setEditingProduct({ ...editingProduct, price: Number(e.target.value) })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 mb-1">Sale Price (Optional)</label>
+                    <label className="block text-adm-fg/70 mb-1">Sale Price (Optional)</label>
                     <input
                       type="number"
                       value={editingProduct.sale_price || ''}
                       onChange={(e) => setEditingProduct({ ...editingProduct, sale_price: e.target.value ? Number(e.target.value) : '' })}
-                      className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                      className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-white/70 mb-1">Image URL</label>
+                  <label className="block text-adm-fg/70 mb-1">Image URL</label>
                   <input
                     type="url"
                     required
                     value={editingProduct.image}
                     onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-white/70 mb-1">Description</label>
+                  <label className="block text-adm-fg/70 mb-1">Description</label>
                   <textarea
                     rows={3}
                     value={editingProduct.description}
                     onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
-                    className="w-full px-3 py-2 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-white focus:border-[#36656B]"
+                    className="w-full px-3 py-2 bg-adm-surface2 border border-adm-border rounded-xl text-adm-fg focus:border-adm-accent focus:ring-2 focus:ring-adm-accent/20 focus:outline-none"
                   />
                 </div>
 
-                <div className="pt-4 flex items-center justify-end gap-3 border-t border-[#1B2E3D]">
+                <div className="pt-4 flex items-center justify-end gap-3 border-t border-adm-border">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-white"
+                    className="px-4 py-2 bg-adm-fg/5 hover:bg-adm-fg/10 rounded-xl text-adm-fg"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 bg-[#36656B] hover:bg-[#2b5257] rounded-xl text-white font-medium shadow-lg shadow-[#36656B]/30"
+                    className="px-5 py-2 bg-adm-accent hover:bg-adm-accent-hover rounded-xl text-adm-on-accent font-medium"
                   >
                     Save Product
                   </button>

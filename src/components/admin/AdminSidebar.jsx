@@ -1,30 +1,44 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Sliders, 
-  Package, 
-  Grid, 
-  Layers, 
-  FolderKanban, 
-  BookOpen, 
-  Quote, 
-  Users, 
-  MessageSquare, 
-  ShoppingBag, 
-  Image as ImageIcon, 
-  Settings, 
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  FileText,
+  Sliders,
+  Package,
+  Grid,
+  Layers,
+  FolderKanban,
+  BookOpen,
+  Quote,
+  Users,
+  MessageSquare,
+  ShoppingBag,
+  Image as ImageIcon,
+  Settings,
   ExternalLink,
   LogOut,
   ChevronLeft,
-  Sparkles
+  Briefcase,
+  UserCheck
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import adminDataService from '../../services/adminDataService';
+import logoImg from '../../assets/logo.png';
+import logoDarkImg from '../../assets/logo-dark.png';
 
 export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
   const { logoutAdmin } = useAdminAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [newApplications, setNewApplications] = useState(0);
+
+  useEffect(() => {
+    adminDataService.getApplications().then((apps) => {
+      setNewApplications((apps || []).filter((a) => a.status === 'new').length);
+    });
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     await logoutAdmin();
@@ -33,10 +47,10 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
 
   const navGroups = [
     {
-      title: 'Main Overview',
+      title: 'Overview',
       items: [
         { label: 'Dashboard', path: '/admin', icon: LayoutDashboard, exact: true },
-        { label: 'Page Content CMS', path: '/admin/content', icon: FileText, badge: 'All Pages' }
+        { label: 'Page Content', path: '/admin/content', icon: FileText }
       ]
     },
     {
@@ -59,6 +73,13 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
       ]
     },
     {
+      title: 'Careers',
+      items: [
+        { label: 'Job Openings', path: '/admin/careers', icon: Briefcase },
+        { label: 'Applications', path: '/admin/applications', icon: UserCheck, count: newApplications }
+      ]
+    },
+    {
       title: 'CRM & Assets',
       items: [
         { label: 'Contact Enquiries', path: '/admin/inquiries', icon: MessageSquare },
@@ -74,93 +95,101 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
   ];
 
   return (
-    <aside 
-      className={`fixed top-0 left-0 z-40 h-screen w-72 bg-[#0A1622] border-r border-[#1B2E3D] text-[#F5F1E8] flex flex-col transition-transform duration-300 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-      }`}
-    >
-      {/* Brand Header */}
-      <div className="p-6 border-b border-[#1B2E3D] flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#36656B]"></span>
-            <h1 className="font-serif text-xl tracking-[0.2em] font-semibold text-[#F5F1E8]">SYMMETRY</h1>
-          </div>
-          <p className="text-[10px] uppercase tracking-widest text-white/50 mt-1 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-[#36656B]" /> Admin Control Center
-          </p>
-        </div>
-        <button 
+    <>
+      {/* Mobile scrim */}
+      {isOpen && (
+        <div
           onClick={toggleSidebar}
-          className="lg:hidden p-1.5 text-white/60 hover:text-white rounded-lg hover:bg-white/5"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-      </div>
+          className="lg:hidden fixed inset-0 z-30 bg-black/20 backdrop-blur-sm"
+        />
+      )}
 
-      {/* Navigation Links */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 custom-scrollbar">
-        {navGroups.map((group, groupIdx) => (
-          <div key={groupIdx}>
-            <p className="px-3 text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 mb-2">
-              {group.title}
-            </p>
-            <div className="space-y-1">
-              {group.items.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    end={item.exact}
-                    className={({ isActive }) =>
-                      `flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 group ${
-                        isActive
-                          ? 'bg-[#36656B] text-white shadow-lg shadow-[#36656B]/20 font-semibold'
-                          : 'text-white/70 hover:text-white hover:bg-white/5'
-                      }`
-                    }
-                  >
-                    <div className="flex items-center gap-3">
-                      <IconComponent className="w-4 h-4 transition-transform group-hover:scale-110" />
-                      <span>{item.label}</span>
-                    </div>
-                    {item.badge && (
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-white/10 text-white/80">
-                        {item.badge}
-                      </span>
-                    )}
-                  </NavLink>
-                );
-              })}
-            </div>
+      <aside
+        className={`fixed top-0 left-0 z-40 h-screen w-72 adm-glass border-r border-adm-border text-adm-fg flex flex-col transition-transform duration-300 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        }`}
+      >
+        {/* Brand Header */}
+        <div className="px-6 pt-6 pb-5 flex items-center justify-between">
+          <div>
+            <img
+              src={isDark ? logoDarkImg : logoImg}
+              alt="Symmetry Interiors"
+              className="h-9 w-auto object-contain"
+            />
+            <p className="text-[11px] text-adm-muted mt-2 font-medium">Admin Console</p>
           </div>
-        ))}
-      </div>
+          <button
+            onClick={toggleSidebar}
+            className="lg:hidden p-1.5 text-adm-muted hover:text-adm-fg rounded-lg hover:bg-adm-fg/5"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+        </div>
 
-      {/* Footer / Storefront Switcher */}
-      <div className="p-4 border-t border-[#1B2E3D] bg-[#07121C]/60 space-y-2">
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors"
-        >
-          <span className="flex items-center gap-2">
-            <ExternalLink className="w-4 h-4 text-[#36656B]" /> Live Storefront
-          </span>
-          <span className="text-[10px] text-white/40">Open site ↗</span>
-        </a>
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-red-400 hover:bg-red-500/10 transition-colors"
-        >
-          <span className="flex items-center gap-2">
-            <LogOut className="w-4 h-4" /> Sign Out
-          </span>
-        </button>
-      </div>
-    </aside>
+        {/* Navigation Links */}
+        <nav className="flex-1 overflow-y-auto px-3 pb-6 space-y-5 custom-scrollbar">
+          {navGroups.map((group) => (
+            <div key={group.title}>
+              <p className="px-3 text-[11px] font-semibold text-adm-muted mb-1.5">
+                {group.title}
+              </p>
+              <div className="space-y-0.5">
+                {group.items.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      end={item.exact}
+                      onClick={() => isOpen && toggleSidebar()}
+                      className={({ isActive }) =>
+                        `flex items-center justify-between px-3 py-2 rounded-[10px] text-[13px] transition-colors duration-150 ${
+                          isActive
+                            ? 'bg-adm-accent/10 text-adm-accent font-semibold'
+                            : 'text-adm-fg/80 hover:bg-adm-fg/5 hover:text-adm-fg'
+                        }`
+                      }
+                    >
+                      <span className="flex items-center gap-3">
+                        <IconComponent className="w-[17px] h-[17px]" strokeWidth={1.8} />
+                        <span>{item.label}</span>
+                      </span>
+                      {item.count > 0 && (
+                        <span className="min-w-[20px] h-5 px-1.5 rounded-full bg-adm-accent text-adm-on-accent text-[10px] font-semibold flex items-center justify-center">
+                          {item.count}
+                        </span>
+                      )}
+                    </NavLink>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </nav>
+
+        {/* Footer / Storefront Switcher */}
+        <div className="p-3 border-t border-adm-border space-y-0.5">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between px-3 py-2 rounded-[10px] text-[13px] text-adm-fg/80 hover:text-adm-fg hover:bg-adm-fg/5 transition-colors"
+          >
+            <span className="flex items-center gap-3">
+              <ExternalLink className="w-[17px] h-[17px] text-adm-accent" strokeWidth={1.8} /> View Website
+            </span>
+            <span className="text-[11px] text-adm-muted">↗</span>
+          </a>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-[10px] text-[13px] text-red-600 dark:text-red-400 hover:bg-red-500/10 transition-colors"
+          >
+            <LogOut className="w-[17px] h-[17px]" strokeWidth={1.8} /> Sign Out
+          </button>
+        </div>
+      </aside>
+    </>
   );
 };
 

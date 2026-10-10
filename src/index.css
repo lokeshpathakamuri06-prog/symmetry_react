@@ -237,3 +237,71 @@
   animation: heroScrollHighlight 2s ease-in-out infinite;
 }
 
+
+/* =========================================================================
+   ADMIN PORTAL — APPLE-STYLE THEME TOKENS (light default, dark via .dark)
+   ========================================================================= */
+
+.admin-theme {
+  --adm-bg: 245 245 247;
+  --adm-surface: 255 255 255;
+  --adm-surface-2: 242 244 244;
+  --adm-border: 227 231 232;
+  --adm-fg: 29 29 31;
+  --adm-muted: 110 110 115;
+  --adm-accent: 54 101 107;
+  --adm-accent-hover: 37 75 80;
+  --adm-on-accent: 255 255 255;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+}
+
+.dark .admin-theme {
+  --adm-bg: 7 18 28;
+  --adm-surface: 13 28 41;
+  --adm-surface-2: 19 40 56;
+  --adm-border: 30 52 71;
+  --adm-fg: 245 241 232;
+  --adm-muted: 174 183 190;
+  --adm-accent: 188 165 117;
+  --adm-accent-hover: 168 140 91;
+  --adm-on-accent: 7 18 28;
+}
+
+.adm-glass {
+  background: rgb(var(--adm-surface) / 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.adm-card {
+  background: rgb(var(--adm-surface));
+  border: 1px solid rgb(var(--adm-border) / 0.8);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.dark .adm-card {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.adm-input {
+  background: rgb(var(--adm-surface-2));
+  border: 1px solid rgb(var(--adm-border));
+  color: rgb(var(--adm-fg));
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.adm-input::placeholder {
+  color: rgb(var(--adm-muted) / 0.7);
+}
+
+.adm-input:focus {
+  outline: none;
+  border-color: rgb(var(--adm-accent));
+  box-shadow: 0 0 0 3px rgb(var(--adm-accent) / 0.25);
+}
+
+.admin-theme select option {
+  background: rgb(var(--adm-surface));
+  color: rgb(var(--adm-fg));
+}

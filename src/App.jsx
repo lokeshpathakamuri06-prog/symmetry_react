@@ -31,6 +31,7 @@ import OrderSuccess from './pages/OrderSuccess';
 import Journal from './pages/Journal';
 import JournalDetail from './pages/JournalDetail';
 import Contact from './pages/Contact';
+import Careers from './pages/Careers';
 import NotFound from './pages/NotFound';
 
 // Admin Pages
@@ -49,6 +50,14 @@ import AdminInquiries from './pages/admin/AdminInquiries';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminMedia from './pages/admin/AdminMedia';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminCareers from './pages/admin/AdminCareers';
+import AdminApplications from './pages/admin/AdminApplications';
+
+// Intro animation is for the public site only, not the admin console
+const StorefrontOpener = () => {
+  const location = useLocation();
+  return location.pathname.startsWith('/admin') ? null : <SiteOpener />;
+};
 
 // Shell Layout Wrapper
 const StorefrontShell = ({ children }) => {
@@ -56,7 +65,7 @@ const StorefrontShell = ({ children }) => {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   if (isAdminRoute) {
-    return <div className="min-h-screen bg-[#07121C] text-[#F5F1E8]">{children}</div>;
+    return <div className="admin-theme min-h-screen bg-adm-bg text-adm-fg">{children}</div>;
   }
 
   return (
@@ -86,7 +95,7 @@ export const App = () => {
           <SiteContentProvider>
             <AdminAuthProvider>
               <BrowserRouter>
-                <SiteOpener />
+                <StorefrontOpener />
                 <StorefrontShell>
                   <Routes>
                     {/* Public Routes */}
@@ -104,6 +113,7 @@ export const App = () => {
                     <Route path="/journal" element={<Journal />} />
                     <Route path="/journal/:id" element={<JournalDetail />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/careers" element={<Careers />} />
                     
                     {/* Admin Unprotected Route */}
                     <Route path="/admin/login" element={<AdminLogin />} />
@@ -123,6 +133,8 @@ export const App = () => {
                     <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
                     <Route path="/admin/media" element={<AdminProtectedRoute><AdminMedia /></AdminProtectedRoute>} />
                     <Route path="/admin/settings" element={<AdminProtectedRoute><AdminSettings /></AdminProtectedRoute>} />
+                    <Route path="/admin/careers" element={<AdminProtectedRoute><AdminCareers /></AdminProtectedRoute>} />
+                    <Route path="/admin/applications" element={<AdminProtectedRoute><AdminApplications /></AdminProtectedRoute>} />
 
                     {/* Fallback 404 Routes */}
                     <Route path="/404" element={<NotFound />} />

@@ -8,6 +8,17 @@ export default {
   theme: {
     extend: {
       colors: {
+        adm: {
+          bg: 'rgb(var(--adm-bg) / <alpha-value>)',
+          surface: 'rgb(var(--adm-surface) / <alpha-value>)',
+          surface2: 'rgb(var(--adm-surface-2) / <alpha-value>)',
+          border: 'rgb(var(--adm-border) / <alpha-value>)',
+          fg: 'rgb(var(--adm-fg) / <alpha-value>)',
+          muted: 'rgb(var(--adm-muted) / <alpha-value>)',
+          accent: 'rgb(var(--adm-accent) / <alpha-value>)',
+          'accent-hover': 'rgb(var(--adm-accent-hover) / <alpha-value>)',
+          'on-accent': 'rgb(var(--adm-on-accent) / <alpha-value>)',
+        },
         sym: {
           bg: {
             DEFAULT: '#F4F7F6',

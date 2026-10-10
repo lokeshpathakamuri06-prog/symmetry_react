@@ -654,6 +654,23 @@ export const About = () => {
               ))}
             </AnimatePresence>
           </div>
+
+          {/* Join Our Team CTA */}
+          <div className="mt-4 p-8 sm:p-10 rounded-3xl bg-[#131E20] dark:bg-[#0D1C29] border border-[#131E20] dark:border-[#1E3447] flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <span className="text-xs uppercase tracking-luxury text-[#A7C3C6] dark:text-[#BCA575] font-semibold">Careers</span>
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">Join Our Team</h3>
+              <p className="text-sm text-white/70 mt-2 max-w-xl">
+                We&apos;re looking for designers, site engineers and visualisers who care about craft. Explore our open roles in Hyderabad.
+              </p>
+            </div>
+            <Link
+              to="/careers"
+              className="shrink-0 inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white text-[#131E20] text-xs uppercase tracking-luxury font-semibold hover:bg-[#BCA575] hover:text-white transition"
+            >
+              View Open Roles
+            </Link>
+          </div>
         </div>
       </section>
 

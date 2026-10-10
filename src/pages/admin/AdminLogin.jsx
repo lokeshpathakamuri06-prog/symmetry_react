@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles, KeyRound } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, KeyRound } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import ThemeToggle from '../../components/ThemeToggle';
+import logoImg from '../../assets/logo.png';
+import logoDarkImg from '../../assets/logo-dark.png';
 
 export const AdminLogin = () => {
   const [email, setEmail] = useState('admin@symmetry.com');
@@ -10,6 +14,7 @@ export const AdminLogin = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const { loginAdmin } = useAdminAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,58 +45,64 @@ export const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#07121C] text-[#F5F1E8] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Subtle Background Lighting */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#36656B]/15 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div className="admin-theme min-h-screen bg-adm-bg text-adm-fg flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Soft ambient gradient */}
+      <div className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-adm-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-40 -right-40 w-[520px] h-[520px] bg-adm-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="w-full max-w-md bg-[#0A1622] border border-[#1B2E3D] rounded-3xl p-8 shadow-2xl shadow-black/80 relative z-10 backdrop-blur-xl">
+      <div className="absolute top-5 right-5 z-20">
+        <ThemeToggle />
+      </div>
+
+      <div className="w-full max-w-[400px] adm-card p-8 sm:p-10 relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#36656B]/20 border border-[#36656B]/30 text-xs text-[#36656B] font-medium mb-4">
-            <Sparkles className="w-3.5 h-3.5" /> Management Portal
-          </div>
-          <h1 className="text-2xl font-serif tracking-[0.2em] font-semibold text-white">SYMMETRY</h1>
-          <p className="text-xs text-white/50 mt-1">Sign in to control your website content & store</p>
+          <img
+            src={isDark ? logoDarkImg : logoImg}
+            alt="Symmetry Interiors"
+            className="h-12 w-auto object-contain mx-auto mb-5"
+          />
+          <h1 className="text-2xl font-semibold tracking-tight text-adm-fg">Sign in to Admin</h1>
+          <p className="text-[13px] text-adm-muted mt-1.5">Manage your website content, store and careers</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs leading-relaxed">
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs leading-relaxed">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-xs uppercase tracking-wider font-medium text-white/70 mb-2">
+            <label className="block text-[13px] font-medium text-adm-fg mb-1.5">
               Email Address
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-adm-fg/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="admin@symmetry.com"
-                className="w-full pl-10 pr-4 py-3 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#36656B] transition-colors"
+                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm adm-input"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-wider font-medium text-white/70 mb-2">
+            <label className="block text-[13px] font-medium text-adm-fg mb-1.5">
               Password
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-adm-fg/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 bg-[#07121C] border border-[#1B2E3D] rounded-xl text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#36656B] transition-colors"
+                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm adm-input"
               />
             </div>
           </div>
@@ -99,24 +110,24 @@ export const AdminLogin = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3.5 px-6 rounded-xl bg-[#36656B] text-white font-medium text-xs tracking-wider uppercase hover:bg-[#2b5257] transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#36656B]/30 disabled:opacity-50"
+            className="w-full py-3 px-6 rounded-xl bg-adm-accent text-adm-on-accent font-semibold text-sm hover:bg-adm-accent-hover active:scale-[0.99] transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {submitting ? 'Authenticating...' : 'Sign In To Dashboard'}
+            {submitting ? 'Authenticating...' : 'Sign In'}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
         {/* Quick Demo Helper Box */}
-        <div className="mt-8 pt-6 border-t border-[#1B2E3D] text-center">
-          <p className="text-[11px] text-white/50 mb-3 flex items-center justify-center gap-1.5">
-            <KeyRound className="w-3.5 h-3.5 text-amber-400" /> Default Demo Admin Account:
+        <div className="mt-8 pt-6 border-t border-adm-border text-center">
+          <p className="text-[11px] text-adm-fg/50 mb-3 flex items-center justify-center gap-1.5">
+            <KeyRound className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Default Demo Admin Account:
           </p>
-          <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] font-mono text-white/80 flex items-center justify-between">
+          <div className="p-3 bg-adm-fg/5 rounded-xl border border-adm-fg/10 text-[11px] font-mono text-adm-fg/80 flex items-center justify-between">
             <span>admin@symmetry.com / admin123</span>
             <button
               onClick={fillDemoCredentials}
               type="button"
-              className="px-2.5 py-1 rounded bg-[#36656B]/40 text-[#54979e] hover:text-white transition-colors text-[10px] font-sans uppercase font-medium"
+              className="px-2.5 py-1 rounded-full bg-adm-accent/10 text-adm-accent hover:bg-adm-accent hover:text-adm-on-accent transition-colors text-[11px] font-sans font-medium"
             >
               Fill Credentials
             </button>

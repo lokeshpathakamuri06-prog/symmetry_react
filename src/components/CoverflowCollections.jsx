@@ -12,7 +12,7 @@ export const CoverflowCollections = () => {
       title: 'Luna Sofa',
       subtitle: 'A sculptural form for everyday comfort.',
       image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=living',
+      link: '/shop?category=luxury-sofas',
     },
     {
       id: '02',
@@ -20,7 +20,7 @@ export const CoverflowCollections = () => {
       title: 'Aurelia Table',
       subtitle: 'Where conversations feel at home.',
       image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=dining',
+      link: '/shop?category=dining-furniture',
     },
     {
       id: '03',
@@ -28,7 +28,7 @@ export const CoverflowCollections = () => {
       title: 'Nuvola Bed',
       subtitle: 'Sanctuary crafted for restful stillness.',
       image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=bedroom',
+      link: '/shop?category=bedroom-furniture',
     },
     {
       id: '04',
@@ -36,7 +36,7 @@ export const CoverflowCollections = () => {
       title: 'Elysian Chair',
       subtitle: 'Designed for moments of quiet reflection.',
       image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=lounge',
+      link: '/shop?category=lounge-chairs',
     },
     {
       id: '05',
@@ -44,7 +44,7 @@ export const CoverflowCollections = () => {
       title: 'Kyoto Desk',
       subtitle: 'Precision workspaces engineered for clarity.',
       image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=office',
+      link: '/shop?category=office-furniture',
     },
     {
       id: '06',
@@ -52,7 +52,7 @@ export const CoverflowCollections = () => {
       title: 'Pavilion Teak',
       subtitle: 'All-weather architectural comfort.',
       image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=outdoor',
+      link: '/shop?category=outdoor-furniture',
     },
   ];
 
