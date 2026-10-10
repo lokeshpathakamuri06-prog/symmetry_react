@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-10 (Part D2: forms, inbox, page text, cleanup)_
+_Last updated: 2026-10-10 (Part E: Cloudinary uploads and fast images)_
 
 ## Summary
 | Area | State |
@@ -12,7 +12,7 @@ _Last updated: 2026-10-10 (Part D2: forms, inbox, page text, cleanup)_
 | System design | ✅ Written ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md)) |
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
 | FastAPI backend | 🟡 Live: `/api/health` and admin auth (`/api/auth/*`); content endpoints next |
-| Cloudinary image pipeline | ⏳ After FastAPI |
+| Cloudinary image pipeline | ✅ Uploads from admin, CDN delivery with responsive sizes; 158 client photos imported |
 | Frontend connected to backend | ✅ Everything uses the API. Browser storage now holds only cart, wishlist, theme and the last order confirmation |
 | HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
 
@@ -207,6 +207,31 @@ _Last updated: 2026-10-10 (Part D2: forms, inbox, page text, cleanup)_
   - In the browser: the Contact, Careers, Newsletter and Checkout forms (including a tampered ₹1 cart price, ignored) all reach the admin inbox with matching references and badges.
   - Changing the phone, WhatsApp number and hero title in Page Content, then Publishing, updates the Footer, Contact page, all 3 WhatsApp links, the mobile menu and the Home hero.
   - Test data was removed afterwards and the content hash is restored.
+
+### 2026-10-10: Part E, Cloudinary uploads and fast images
+- **Account checked:** cloud `pft7pzaf`, Free plan, 10 MB / 25 MP per image limit. The admin therefore resizes large photos in the browser (≤3000 px, JPEG 0.9) before uploading.
+- **Backend:**
+  - `app/media/cloudinary.py`: signed uploads, verification (response signature plus an Admin API re-read; must be under `symmetry/`), destroy with CDN invalidation, preset setup.
+  - `POST /api/admin/media/sign` and `/media/cloudinary`; Cloudinary-aware delete (502 keeps the record if the remote delete fails).
+  - **CLI:** `cloudinary-setup`, `cloudinary-import`, `cloudinary-cleanup`, `media-dedupe`.
+  - **Preset:** signed, formats, 3000 px cap. Eager versions were dropped after testing showed Cloudinary strips `f_auto` from them, so they'd only waste credits.
+- **Import:** 158 photos from `public/drive_products` uploaded in 3 min. 12 existing records were converted in place (15 product photo slots switched with no relinking) and 146 added to the library. A re-run skips all 158.
+- **Frontend:**
+  - `src/lib/images.js` and `<SmartImage>` (srcset, sizes, blur placeholder, lazy loading, priority images, `onError` fallbacks that still work) on 27 content images in 20 files.
+  - Preconnect to `res.cloudinary.com`.
+  - `ImageUploader` (drag and drop, folders, 3 uploads in parallel, progress, retry) in the Media Library, and an **Upload new** tab in the editors' Library picker.
+  - Admin thumbnails use small Cloudinary versions.
+- **Verified:**
+  - 90 tests pass, with Cloudinary mocked.
+  - Delivery: a w_800 request returns an 800×936 WebP of 15 KB, against the 111 KB original; blur placeholders average 67 B.
+  - In a real admin browser test: a 5000 px PNG was resized to 3000×1800, a text file was rejected, uploads went straight to Cloudinary, and a photo attached from the editor Library went live after Publish.
+  - Deleting through the API removes the photo from Cloudinary.
+  - Credits used: 0.29 of 25.
+- **Bug found and fixed:**
+  - Saving a product whose photos are on Cloudinary created duplicate "external" image records pointing at the Cloudinary URL.
+  - The URL→image lookup now recognises our own Cloudinary URLs.
+  - `media-dedupe` repaired the 3 duplicates the test had created.
+  - Two regression tests were added.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

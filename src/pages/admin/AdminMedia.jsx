@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Check, Copy, ImagePlus, Search, Trash2, UploadCloud } from 'lucide-react';
+import ImageUploader from '../../components/admin/ImageUploader';
+import { cloudinaryUrl } from '../../lib/images';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { media } from '../../services/adminApi';
 
@@ -10,6 +12,7 @@ export const AdminMedia = () => {
   const [url, setUrl] = useState('');
   const [message, setMessage] = useState(null); // {kind, text}
   const [copiedId, setCopiedId] = useState(null);
+  const [showUpload, setShowUpload] = useState(false);
 
   const load = useCallback(() => {
     media.list({ q, unused: unusedOnly }).then((r) => setItems(r.items)).catch((err) => setMessage({ kind: 'error', text: err.message }));
@@ -84,11 +87,13 @@ export const AdminMedia = () => {
               <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Add image by URL (https://…)" className="px-3 py-2 rounded-xl adm-input text-[13px] w-72" />
               <button type="submit" className="px-3 py-2 rounded-xl bg-adm-fg/5 hover:bg-adm-fg/10 text-[13px] inline-flex items-center gap-1.5"><ImagePlus className="w-4 h-4" /> Add</button>
             </form>
-            <button type="button" disabled title="Direct uploads arrive with the Cloudinary integration" className="px-3 py-2 rounded-xl bg-adm-accent text-adm-on-accent text-[13px] inline-flex items-center gap-1.5 opacity-40 cursor-not-allowed">
-              <UploadCloud className="w-4 h-4" /> Upload (coming soon)
+            <button type="button" onClick={() => setShowUpload((v) => !v)} className="px-3 py-2 rounded-xl bg-adm-accent hover:bg-adm-accent-hover text-adm-on-accent text-[13px] inline-flex items-center gap-1.5">
+              <UploadCloud className="w-4 h-4" /> {showUpload ? 'Hide upload' : 'Upload photos'}
             </button>
           </div>
         </div>
+
+        {showUpload && <ImageUploader onUploaded={() => load()} />}
 
         {message && (
           <div role={message.kind === 'error' ? 'alert' : 'status'} className={`p-3 rounded-xl text-[13px] ${message.kind === 'error' ? 'bg-red-500/10 text-red-700 dark:text-red-400' : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'}`}>
@@ -107,7 +112,7 @@ export const AdminMedia = () => {
               {items.map((asset) => (
                 <div key={asset.id} className="adm-card overflow-hidden flex flex-col">
                   <div className="aspect-square bg-adm-surface2">
-                    <img src={asset.url} alt={asset.altText || ''} loading="lazy" className="w-full h-full object-cover" />
+                    <img src={cloudinaryUrl(asset.url, { width: 300 })} alt={asset.altText || ''} loading="lazy" className="w-full h-full object-cover" />
                   </div>
                   <div className="p-2.5 space-y-1.5 text-[11px]">
                     <p className="font-medium text-adm-fg truncate" title={asset.filename}>{asset.filename || 'image'}</p>

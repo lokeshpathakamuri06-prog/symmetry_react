@@ -3,6 +3,7 @@ import { Star, Quote } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 export const TestimonialCard = ({ testimonial }) => {
   return (
@@ -32,7 +33,7 @@ export const TestimonialCard = ({ testimonial }) => {
 
         {/* Author Details */}
         <div className="flex items-center gap-3 pt-6">
-          <img
+          <SmartImage sizes="96px"
             src={testimonial.avatar}
             alt={testimonial.author}
             className="w-11 h-11 rounded-full object-cover shadow-sm"

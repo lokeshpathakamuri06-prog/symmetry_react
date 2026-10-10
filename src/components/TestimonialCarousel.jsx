@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTestimonials } from '../context/PublicContentContext';
+import SmartImage from './SmartImage';
 
 export const TestimonialCarousel = () => {
   const { items: testimonials } = useTestimonials();
@@ -64,7 +65,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
             {/* Author */}
             <div className="flex items-center gap-4 pt-6 border-t border-[#D1DCDE]/50 dark:border-[#1E3447]">
               {current.avatar && (
-                <img
+                <SmartImage sizes="96px"
                   src={current.avatar}
                   alt={current.author}
                   className="w-12 h-12 rounded-full object-cover border border-[#D1DCDE] dark:border-[#1E3447]"

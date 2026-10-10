@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { X, ShoppingBag, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
+import SmartImage from './SmartImage';
 
 export const QuickViewModal = ({ product, onClose }) => {
   const { addToCart } = useCart();
@@ -56,7 +57,7 @@ export const QuickViewModal = ({ product, onClose }) => {
             {/* Gallery Left */}
             <div className="md:col-span-6 space-y-3">
               <div className="aspect-square rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
-                <img
+                <SmartImage sizes="(min-width: 768px) 50vw, 100vw"
                   src={product.images?.[selectedImage] || product.images?.[0] || product.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80'}
                   alt={product.name}
                   onError={(e) => {
@@ -77,7 +78,7 @@ export const QuickViewModal = ({ product, onClose }) => {
                           : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img
+                      <SmartImage sizes="96px"
                         src={img}
                         alt="Angle"
                         onError={(e) => {

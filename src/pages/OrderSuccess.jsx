@@ -5,6 +5,7 @@ import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import Button from '../components/Button';
 import { useCart } from '../context/CartContext';
+import SmartImage from '../components/SmartImage';
 
 export const OrderSuccess = () => {
   const { lastOrder } = useCart();
@@ -131,7 +132,7 @@ export const OrderSuccess = () => {
             {order.items?.map((item, idx) => (
               <div key={idx} className="flex items-center justify-between gap-4 text-xs pb-3 border-b border-[#D1DCDE]/30 dark:border-[#1E3447]">
                 <div className="flex items-center gap-3">
-                  <img
+                  <SmartImage sizes="96px"
                     src={item.images ? item.images[0] : item.image}
                     alt={item.name}
                     className="w-14 h-14 rounded-lg object-cover bg-[#E5ECEC]"

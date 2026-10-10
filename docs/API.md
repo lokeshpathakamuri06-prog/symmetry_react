@@ -78,7 +78,7 @@ All forms: allowed Origin, honeypot `website` (if filled, the API answers succes
 | PUT | `/admin/{resource}-order` | `{ids: [...]}` sets the display order |
 
 - **Records** are the public snapshot shape plus `status` and `updatedAt`. Testimonials also include `projectId` (the linked project's slug).
-- **Images** are URLs. An unknown URL creates an `external` media asset; known URLs reuse the existing asset.
+- **Images** are URLs. Our own Cloudinary URLs resolve to their existing asset (by `public_id`); other known URLs reuse their asset; an unknown URL creates an `external` asset.
 - **Validation** (422 with `field`): required fields, price ≥ 0, rating 0–5, image URL format, ≥1 product image, colour hex `#RRGGBB`, known category/collection/project, ≥1 blog paragraph.
 
 ## Admin: publishing, dashboard, page text (`app/api/admin.py`)
@@ -95,8 +95,10 @@ All forms: allowed Origin, honeypot `website` (if filled, the API answers succes
 |---|---|---|
 | GET | `/admin/media?q=&unused=true` | `{items: [{id, url, provider, filename, folder, altText, tags, width, height, usedIn, createdAt}]}` |
 | POST | `/admin/media` | `{url, altText?}`, add by URL |
+| POST | `/admin/media/sign` | `{folder}` (one of `products, projects, banners, journal, team, categories, misc`) → `{cloudName, apiKey, uploadUrl, timestamp, folder, uploadPreset, signature}`. The browser then POSTs the file to `uploadUrl` with exactly these fields. 503 if Cloudinary is not configured |
+| POST | `/admin/media/cloudinary` | `{publicId, version, signature, originalFilename?, altText?}`, the Cloudinary upload result. Verified with the API secret **and** re-read from the Admin API; it must be under `symmetry/`. 201 with the media record; 403 if invalid; idempotent per `publicId` |
 | PATCH | `/admin/media/{id}` | `{altText?, tags?}` (tags are lower-cased and de-duplicated) |
-| DELETE | `/admin/media/{id}` | 204; **409** if the image is used anywhere |
+| DELETE | `/admin/media/{id}` | 204; **409** if used anywhere. Cloudinary images are also destroyed remotely (CDN invalidated); a remote failure gives 502 and keeps the record |
 
 ## Admin: inbox (`app/api/admin_inbox.py`)
 | Method | Path | Notes |

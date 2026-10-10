@@ -109,19 +109,33 @@ The product's web address uses its ID (e.g. `/shop/sym-001`). IDs are created au
 ---
 
 ## 6. Images
-Until direct uploads are switched on (coming with Cloudinary), images are added **by link**:
+### Uploading photos
+1. Go to **Media Library** and click **Upload photos**.
+2. Choose the folder (Products, Projects, Banners, Journal, Team, Categories or Other).
+3. Drag photos onto the box, or click **Choose photos**. You can select many at once.
+4. Each photo shows a progress bar. ✅ means it's uploaded, and it appears at the top of the library.
 
-1. In an editor, under **Images**, paste the image address (starting with `https://`) and click **Add**.
-2. Or click **Library** to reuse an image already on the website.
-3. Use the arrows to reorder and the bin icon to remove.
+**Good to know:**
+- **Formats:** JPG, PNG, WebP, AVIF and HEIC (iPhone).
+- **Large photos are resized automatically** to 3000 px on the long side before uploading. That's still more than any screen needs, and the file stays under the 10 MB limit.
+- **HEIC larger than 10 MB:** some browsers can't resize these. You'll be asked to export the photo as JPEG first.
+- **Failed uploads:** if one fails (for example the connection dropped), click ↻ to retry it.
+
+### Adding photos to a product, project and so on
+In an editor, under **Images**:
+- Click **Library** to choose an existing photo. Use the **Upload new** tab to upload one without leaving the editor; it then appears first in the Library.
+- Or paste an image link (`https://…`) and click **Add**.
+- Use the arrows to reorder and the bin icon to remove. **The first product photo is the main one.**
+
+Save, then **Publish**.
 
 ### Media Library
-- Shows every image, with **where it's used** ("Used in 3").
-- Search by file name (e.g. `LC0045`), alt text or tag.
-- Type **alt text** under an image (a short description for accessibility and Google); it saves when you click elsewhere.
-- **Unused only** shows images not used anywhere. Only unused images can be deleted.
+- **Usage:** each image shows **where it's used** ("Used in 3").
+- **Search** by file name (e.g. `LC0045`), alt text or tag.
+- **Alt text:** type a short description under an image, for accessibility and Google. It saves when you click elsewhere.
+- **Deleting:** **Unused only** shows images not used anywhere, and only unused images can be deleted. Deleting removes the photo from the image service too.
 
----
+The website automatically sends each visitor a version sized for their screen, in a modern format. You never need to make smaller copies yourself.
 
 ## 7. Page Content: texts and contact details
 **Page Content** has one tab per page:
@@ -177,6 +191,6 @@ On **Contact Enquiries**, click **View newsletter subscribers**. **Export CSV** 
 | I saved, but the website hasn't changed | Click **Publish** (top right), then reload the website |
 | I deleted (archived) something by mistake | Open the **Archived** tab, click **Restore**, set it to Published, then Publish |
 | The website says "We couldn't load this page" | The server is restarting; wait a few seconds and click **Retry** |
-| A photo won't add | The link must start with `https://` (or `/` for images already on the site) |
+| A photo won't add | Uploads: use JPG, PNG, WebP, AVIF or HEIC (HEIC over 10 MB: export as JPEG). Links must start with `https://` |
 | I can't delete an image | It's still used somewhere; remove it from that product or project first |
 | Who changed something? | The Dashboard shows **Recent edits**; the top bar shows who published last |

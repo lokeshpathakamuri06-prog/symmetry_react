@@ -26,11 +26,11 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 **Done when:** you can log in with `admin@symmetryinteriors.com` through the API over HTTPS, and `/api/public/content` returns the seeded data.
 
 ## Step 3: Cloudinary image pipeline
-- [ ] **Needs from you:** Cloudinary **cloud name**, plus API key and secret. Put them in `symmetry_backend/.env` on the server; never paste them in chat or commit them.
-- [ ] Create the signed upload preset `symmetry_signed` (formats, 40 MB limit, 3000 px cap, eager 400/800/1600).
-- [ ] `POST /api/admin/media/sign` and `POST /api/admin/media` (verify, then save to `media_assets`).
-- [ ] Admin Media Library: multi-upload with progress, alt text, delete (blocked if in use).
-- [ ] Nightly cleanup of orphaned uploads.
+- [x] Cloudinary account and keys (cloud `pft7pzaf`, Free plan).
+- [x] Signed upload preset `symmetry_signed` (formats, 3000 px cap; browser resize for the 10 MB Free-plan limit).
+- [x] `POST /api/admin/media/sign` and `POST /api/admin/media/cloudinary` (verify, then save to `media_assets`).
+- [x] Admin Media Library: multi-upload with progress, alt text, delete (blocked if in use).
+- [x] Orphaned-upload cleanup command (`cloudinary-cleanup`); add the cron line from OPERATIONS to run it nightly.
 
 **Done when:** the client can upload 20+ photos at once, and they appear in the Media Library with dimensions.
 
@@ -47,8 +47,8 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 **Done when:** an edit in admin, followed by Publish, shows on the public site from any device, and a form submitted on a phone appears in admin.
 
 ## Step 5: Fast images on the site
-- [ ] `<SmartImage>` component: Cloudinary `f_auto,q_auto`, srcset, blur placeholder, lazy loading, priority hero.
-- [ ] Use it everywhere images appear; `preconnect` to Cloudinary.
+- [x] `<SmartImage>` component: Cloudinary `f_auto,q_auto`, srcset, blur placeholder, lazy loading, priority hero.
+- [x] Used on all content images; `preconnect` to Cloudinary.
 - [ ] Client replaces placeholder images and sample prices ([ASSETS.md](ASSETS.md)).
 
 **Done when:** Lighthouse mobile LCP is under 2.0 s on Home, Shop and Project pages.

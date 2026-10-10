@@ -29,6 +29,7 @@ import AppleCardWrapper from '../components/AppleCardWrapper';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import { useSiteText } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 // Data imports
 
@@ -253,7 +254,7 @@ const HomeView = ({ products, projects, blogs }) => {
                   to={`/projects/${proj.id}`}
                   className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#E5ECEC] dark:bg-[#132838] mb-4 block shadow-sm group-hover:shadow-luxury-hover transition-all duration-500"
                 >
-                  <img
+                  <SmartImage sizes="(min-width: 1024px) 50vw, 100vw"
                     src={proj.heroImage}
                     alt={proj.title}
                     loading="lazy"

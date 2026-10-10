@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | Resize large photos **in the browser** (≤3000 px, JPEG 0.9) before upload | Free plan caps uploads at 10 MB / 25 MP; 3000 px is more than any screen needs | Paid plan; reject large files |
+| 2026-10-10 | No eager transformations in the preset | Cloudinary strips `f_auto` from eager versions, so they'd never match website URLs and would only cost credits | Pre-build 400/800/1600 |
+| 2026-10-10 | Imported photos convert the existing media record **in place** | Every product, category and project link keeps working with no relinking | Create new records and relink |
+| 2026-10-10 | `SmartImage` only for content images (from the database) | Static design art is fixed and local; content is what the client changes | Convert every `<img>` |
+| 2026-10-10 | Our own Cloudinary URLs resolve to the existing record by `public_id` | Re-saving content must never create duplicate image records | Treat every URL as external |
 | 2026-10-10 | Orders are re-priced on the server; card and UPI details are never accepted | Prices can't be tampered with in the browser; no payment data to protect yet | Trust cart prices |
 | 2026-10-10 | Page text rebuilt to exactly the texts the pages show, plus a shared `company` section for contact details | Every field in the editor visibly changes the site; one place to change a phone number | Keep the old ~52-field editor |
 | 2026-10-10 | Forms: honeypot + 5 per 10 min per IP; a bot gets a fake success | Stops casual spam without a CAPTCHA; bots get no signal | CAPTCHA |

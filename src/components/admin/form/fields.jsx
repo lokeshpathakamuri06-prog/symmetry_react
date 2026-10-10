@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowDown, ArrowUp, ImagePlus, Images, Plus, Search, Trash2, X } from 'lucide-react';
 import { media } from '../../../services/adminApi';
+import ImageUploader from '../ImageUploader';
+import { cloudinaryUrl } from '../../../lib/images';
 
 // Form inputs for the admin content editors. Every field gets {field, value, onChange, error}.
 
@@ -191,25 +193,45 @@ const RowsInput = ({ value, onChange, columns, addLabel, error }) => {
 export const MediaPicker = ({ onPick, onClose }) => {
   const [q, setQ] = useState('');
   const [items, setItems] = useState(null);
+  const [tab, setTab] = useState('library');
+  const [reload, setReload] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => media.list({ q }).then((r) => setItems(r.items)).catch(() => setItems([])), 200);
     return () => clearTimeout(t);
-  }, [q]);
+  }, [q, reload]);
   return (
     <div className="fixed inset-0 z-[60] bg-black/25 backdrop-blur-md flex items-center justify-center p-4" onClick={onClose}>
       <div className="adm-card w-full max-w-4xl max-h-[85vh] flex flex-col" onClick={(e) => e.stopPropagation()} data-lenis-prevent>
         <div className="p-4 border-b border-adm-border flex items-center gap-3">
-          <Search className="w-4 h-4 text-adm-muted" />
-          <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by file name, alt text or tag…" className="flex-1 bg-transparent outline-none text-[13px]" />
+          <div className="inline-flex p-1 rounded-xl bg-adm-fg/5 shrink-0">
+            {[['library', 'Library'], ['upload', 'Upload new']].map(([v, l]) => (
+              <button key={v} type="button" onClick={() => setTab(v)} className={`px-3 py-1 rounded-lg text-[12px] font-medium ${tab === v ? 'bg-adm-surface text-adm-fg shadow-sm' : 'text-adm-muted'}`}>{l}</button>
+            ))}
+          </div>
+          {tab === 'library' && (
+            <>
+              <Search className="w-4 h-4 text-adm-muted" />
+              <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by file name, alt text or tag…" className="flex-1 bg-transparent outline-none text-[13px]" />
+            </>
+          )}
+          <span className="flex-1" />
           <IconButton title="Close" onClick={onClose}><X className="w-4 h-4" /></IconButton>
         </div>
-        <div className="p-4 overflow-y-auto grid grid-cols-3 sm:grid-cols-5 gap-3">
+        {tab === 'upload' && (
+          <div className="p-4 overflow-y-auto">
+            <ImageUploader compact onUploaded={() => setReload((n) => n + 1)} />
+            <p className="mt-3 text-[12px] text-adm-muted">
+              When the uploads finish, <button type="button" onClick={() => setTab('library')} className="text-adm-accent hover:underline">go back to the Library</button> and click a photo to use it. New photos appear first.
+            </p>
+          </div>
+        )}
+        <div className={`p-4 overflow-y-auto grid grid-cols-3 sm:grid-cols-5 gap-3 ${tab === 'upload' ? 'hidden' : ''}`}>
           {items === null && <p className="col-span-full text-center text-adm-muted text-[13px] py-10">Loading…</p>}
           {items?.length === 0 && <p className="col-span-full text-center text-adm-muted text-[13px] py-10">No images found.</p>}
           {items?.map((m) => (
             <button key={m.id} type="button" onClick={() => onPick(m.url)} className="group text-left">
               <div className="aspect-square rounded-xl overflow-hidden bg-adm-surface2 ring-adm-accent group-hover:ring-2">
-                <img src={m.url} alt={m.altText || ''} loading="lazy" className="w-full h-full object-cover" />
+                <img src={cloudinaryUrl(m.url, { width: 300 })} alt={m.altText || ''} loading="lazy" className="w-full h-full object-cover" />
               </div>
               <p className="mt-1 text-[10px] text-adm-muted truncate">{m.filename}</p>
             </button>
@@ -252,7 +274,7 @@ const AddImage = ({ onAdd }) => {
 
 const Thumb = ({ url, children }) => (
   <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-adm-surface2 border border-adm-border shrink-0">
-    <img src={url} alt="" className="w-full h-full object-cover" />
+    <img src={cloudinaryUrl(url, { width: 200 })} alt="" className="w-full h-full object-cover" />
     {children}
   </div>
 );

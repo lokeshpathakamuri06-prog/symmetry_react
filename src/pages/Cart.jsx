@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import { useCart } from '../context/CartContext';
+import SmartImage from '../components/SmartImage';
 
 export const Cart = () => {
   const {
@@ -188,7 +189,7 @@ export const Cart = () => {
                           to={`/shop/${item.id}`}
                           className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shrink-0 block relative group/img"
                         >
-                          <img
+                          <SmartImage sizes="96px"
                             src={itemImage}
                             alt={item.name}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"

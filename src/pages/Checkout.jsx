@@ -20,6 +20,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import { useCart } from '../context/CartContext';
 import Honeypot from '../components/Honeypot';
 import { submitOrder, formErrorMessage } from '../services/publicApi';
+import SmartImage from '../components/SmartImage';
 
 export const Checkout = () => {
   const { cartItems, subtotal, tax, shipping, totalAmount, recordOrder } = useCart();
@@ -711,7 +712,7 @@ export const Checkout = () => {
             <div className="space-y-3 max-h-64 overflow-y-auto pr-1 pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
               {cartItems.map((item) => (
                 <div key={item.cartKey} className="flex items-center gap-3 text-xs">
-                  <img
+                  <SmartImage sizes="96px"
                     src={item.images?.[0] || item.image}
                     alt={item.name}
                     className="w-12 h-12 rounded-lg object-cover bg-stone-100 shrink-0 border border-stone-200 dark:border-stone-800"

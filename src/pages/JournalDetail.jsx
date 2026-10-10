@@ -16,6 +16,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import BlogCard from '../components/BlogCard';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 const XIcon = () => (
   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -195,7 +196,7 @@ const JournalDetailView = ({ blogs }) => {
 
         {/* Hero Cover Image */}
         <div className="my-10 aspect-[16/9] sm:aspect-[21/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury border border-[#D1DCDE] dark:border-[#1E3447]">
-          <img
+          <SmartImage sizes="100vw" priority
             src={blog.coverImage}
             alt={blog.title}
             className="w-full h-full object-cover"
@@ -228,7 +229,7 @@ const JournalDetailView = ({ blogs }) => {
               {blog.relatedImages.map((img, idx) => (
                 <figure key={idx} className="group space-y-2.5">
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447]">
-                    <img
+                    <SmartImage sizes="(min-width: 768px) 50vw, 100vw"
                       src={img.url}
                       alt={img.caption || `Plate ${idx + 1}`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

@@ -5,7 +5,7 @@ _Last updated: 2026-10-10._ Paths are relative to `symmetry_react/`. Everything 
 ## Summary
 | Asset group | Location | Count / size | Status |
 |---|---|---|---|
-| Product photos (client, LC series) | `public/drive_products/LC00xx(-n).jpeg` | 158 files, 21 MB (avg ~130 KB, ~1000–2000 px) | ⚠️ Only **13** used on the site |
+| Product photos (client, LC series) | Cloudinary `symmetry/products/LC00xx(-n)` (originals also still in `public/drive_products/`) | 158 files, 21 MB | ✅ All 158 in the Media Library; 7 products use them. Delete the local folder once the client confirms |
 | Page hero images | `public/images/hero/*.jpeg` | 17 files | ✅ Used as page banners |
 | Home about image | `public/images/home/home-about.jpeg` | 1 | ✅ Used |
 | Placeholder stock photos | Unsplash URLs in code | **61 unique** URLs | ❌ Must be replaced with client photos |
@@ -32,13 +32,13 @@ Unsplash URLs are used in:
 | Real testimonials | 3 samples | With client permission |
 | Alt text / captions | All images | Can be added in the Media Library |
 
-## Replacing images today (until Cloudinary, Part E)
+## Replacing images (before Cloudinary uploads, by link)
 1. Put the image somewhere public: a URL starting with `https://`, or a file under `public/` such as `/drive_products/LC0045.jpeg`.
 2. In the admin editor (product, project and so on) paste the URL under **Images**, or click **Library** to reuse one already in the Media Library.
 3. Reorder with the arrows. The first product photo is the main one.
 4. Save, then **Publish**.
 
-The Media Library shows where each image is used and only lets you delete unused ones. Direct uploads arrive with Cloudinary.
+The Media Library shows where each image is used and only lets you delete unused ones. Direct uploads are now available: see ADMIN_GUIDE §6.
 
 ## Rules for images going forward
 - Upload originals only through the admin Media Library, which goes to Cloudinary. Don't put new photos in `public/`.

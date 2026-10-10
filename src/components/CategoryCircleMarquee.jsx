@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCategories } from '../context/PublicContentContext';
+import SmartImage from './SmartImage';
 
 export const CategoryCircleMarquee = () => {
   const { items: shopCategories } = useCategories();
@@ -54,7 +55,7 @@ export const CategoryCircleMarquee = () => {
               {/* Circular Image Container */}
               <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1.5 border border-[#D1DCDE] dark:border-[#1E3447] group-hover/item:border-[#36656B] dark:group-hover/item:border-[#BCA575] bg-white dark:bg-[#0D1C29] shadow-sm group-hover/item:shadow-luxury transition-all duration-400 mb-3">
                 <div className="w-full h-full rounded-full overflow-hidden">
-                  <img
+                  <SmartImage sizes="160px"
                     src={cat.image}
                     alt={cat.name}
                     onError={(e) => {

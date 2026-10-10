@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 export const BlogCard = ({ blog, index = 0 }) => {
   if (!blog) return null;
@@ -23,7 +24,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
         aria-label={`Read ${blog.title}`}
         className="relative aspect-[16/10] overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] block cursor-pointer"
       >
-        <img
+        <SmartImage sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           src={blog.coverImage}
           alt={blog.title}
           loading="lazy"

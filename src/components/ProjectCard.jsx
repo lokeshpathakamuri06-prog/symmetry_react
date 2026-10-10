@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, MapPin, Calendar, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 export const ProjectCard = ({ project, index = 0, className = '' }) => {
   if (!project) return null;
@@ -26,7 +27,7 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
         aria-label={`View ${project.title} details`}
         className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] block cursor-pointer"
       >
-        <img
+        <SmartImage sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           src={project.heroImage}
           alt={project.title}
           loading="lazy"

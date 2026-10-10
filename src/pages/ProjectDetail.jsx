@@ -8,6 +8,7 @@ import ProjectCard from '../components/ProjectCard';
 import Button from '../components/Button';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 // Loads published content, then renders the page exactly as before
 export const ProjectDetail = () => {
@@ -89,7 +90,7 @@ const ProjectDetailView = ({ projects }) => {
 
         {/* Hero Image */}
         <div className="mt-12 aspect-[16/9] lg:aspect-[21/9] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
-          <img
+          <SmartImage sizes="100vw" priority
             src={project.heroImage}
             alt={project.title}
             className="w-full h-full object-cover"

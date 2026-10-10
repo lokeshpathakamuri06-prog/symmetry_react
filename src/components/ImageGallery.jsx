@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SmartImage from './SmartImage';
 
 export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
   const [lightboxIndex, setLightboxIndex] = useState(null);
@@ -31,7 +32,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
               idx === 0 ? 'md:col-span-2 aspect-[16/10]' : 'aspect-square'
             }`}
           >
-            <img
+            <SmartImage sizes="(min-width: 768px) 33vw, 50vw"
               src={img}
               alt={`${title} - view ${idx + 1}`}
               loading="lazy"
@@ -76,7 +77,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
               onClick={(e) => e.stopPropagation()}
               className="max-w-5xl max-h-[85vh] overflow-hidden rounded-2xl relative"
             >
-              <img
+              <SmartImage sizes="100vw"
                 src={images[lightboxIndex]}
                 alt={`${title} view`}
                 className="w-full h-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"

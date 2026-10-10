@@ -39,6 +39,8 @@ export const media = {
     return api(`/admin/media?${params}`);
   },
   addByUrl: (url, altText) => api('/admin/media', { method: 'POST', body: { url, altText } }),
+  sign: (folder) => api('/admin/media/sign', { method: 'POST', body: { folder } }),
+  registerCloudinary: (upload) => api('/admin/media/cloudinary', { method: 'POST', body: upload }),
   update: (id, changes) => api(`/admin/media/${enc(id)}`, { method: 'PATCH', body: changes }).then(changed),
   remove: (id) => api(`/admin/media/${enc(id)}`, { method: 'DELETE' }),
 };

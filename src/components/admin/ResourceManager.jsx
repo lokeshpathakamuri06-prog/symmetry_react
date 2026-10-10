@@ -3,6 +3,7 @@ import { Archive, ArchiveRestore, ArrowDown, ArrowUp, Edit2, Loader2, Plus, Sear
 import AdminLayout from './AdminLayout';
 import { FormField } from './form/fields';
 import { content } from '../../services/adminApi';
+import { cloudinaryUrl } from '../../lib/images';
 
 // One list + editor for every content type. Screens pass a config:
 //   resource, title, subtitle, sections: [{title, fields: [...]}], newRecord(), row: {thumb, primary, secondary, meta}
@@ -217,7 +218,7 @@ export const ResourceManager = ({ config }) => {
                 <li key={item.id} className="p-4 flex items-center gap-4 hover:bg-adm-fg/[0.02]">
                   {config.row.thumb && (
                     <div className="w-14 h-14 rounded-xl overflow-hidden bg-adm-surface2 shrink-0">
-                      {config.row.thumb(item) && <img src={config.row.thumb(item)} alt="" loading="lazy" className="w-full h-full object-cover" />}
+                      {config.row.thumb(item) && <img src={cloudinaryUrl(config.row.thumb(item), { width: 120 })} alt="" loading="lazy" className="w-full h-full object-cover" />}
                     </div>
                   )}
                   <div className="flex-1 min-w-0">

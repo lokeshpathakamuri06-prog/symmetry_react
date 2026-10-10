@@ -10,6 +10,7 @@ import ProjectCard from '../components/ProjectCard';
 import Button from '../components/Button';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 // Curated architectural project walkthrough video streams
 const PROJECT_VIDEOS = [
@@ -195,7 +196,7 @@ const ProjectsView = ({ projects }) => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
               {/* Featured Visual */}
               <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-lg">
-                <img
+                <SmartImage sizes="100vw" priority
                   src={featuredProject.heroImage}
                   alt={featuredProject.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

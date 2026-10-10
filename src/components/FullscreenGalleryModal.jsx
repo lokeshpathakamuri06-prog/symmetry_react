@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
+import SmartImage from './SmartImage';
 
 /**
  * Fullscreen Lightbox / Zoom Gallery Modal
@@ -143,7 +144,7 @@ export default function FullscreenGalleryModal({
                     : 'border-stone-800 opacity-50 hover:opacity-90'
                 }`}
               >
-                <img
+                <SmartImage sizes="100vw"
                   src={img}
                   alt={`Thumbnail ${idx + 1}`}
                   className="w-full h-full object-cover"

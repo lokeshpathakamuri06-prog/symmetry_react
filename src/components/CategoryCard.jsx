@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 export const CategoryCard = ({ category }) => {
   return (
@@ -15,7 +16,7 @@ export const CategoryCard = ({ category }) => {
     >
       <AppleCardWrapper className="group relative aspect-[4/5] rounded-3xl overflow-hidden block bg-[#E5ECEC] dark:bg-[#132838]">
         <Link to={`/shop?category=${category.slug}`} className="block w-full h-full relative">
-          <img
+          <SmartImage sizes="(min-width: 1024px) 25vw, 50vw"
             src={category.image}
             alt={category.name}
             onError={(e) => {

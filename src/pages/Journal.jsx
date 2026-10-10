@@ -6,6 +6,7 @@ import SeoMeta from '../components/SeoMeta';
 import BlogCard from '../components/BlogCard';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 const CATEGORIES = [
   'All',
@@ -216,7 +217,7 @@ const JournalView = ({ blogs }) => {
                 to={`/journal/${featuredBlog.id}`}
                 className="lg:col-span-7 aspect-[16/10] lg:aspect-auto overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] block relative"
               >
-                <img
+                <SmartImage sizes="(min-width: 1024px) 60vw, 100vw" priority
                   src={featuredBlog.coverImage}
                   alt={featuredBlog.title}
                   className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"

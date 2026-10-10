@@ -94,6 +94,13 @@ Browsers block HTTPS pages from calling plain-HTTP APIs ("mixed content"), and a
 
 ## 5. Image pipeline
 
+> **As built (Part E):**
+> - The account is on the Free plan: **max 10 MB / 25 MP per image**. The 40 MB figure below doesn't apply on this plan.
+> - The admin resizes photos **in the browser** to ≤3000 px (JPEG 0.9) before upload when needed.
+> - Preset `symmetry_signed`: signed, the formats `jpg, jpeg, png, webp, avif, heic`, an incoming `c_limit` cap at 3000 px, unique file names, no overwrite. **No eager transformations**, because the website requests `f_auto` and eager files would never be used.
+> - The website builds `f_auto,q_auto,c_limit,w_N` srcsets via `src/lib/images.js` and `<SmartImage>`, plus a `w_32,e_blur` placeholder.
+> - The 158 `public/drive_products` photos were imported to `symmetry/products/`. The 12 that were already in use were converted in place, so the same asset ids stayed linked.
+
 ### 5.1 Upload flow (client adds photos)
 
 ```

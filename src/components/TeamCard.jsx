@@ -14,6 +14,7 @@ const LinkedInIcon = ({ className = 'w-4 h-4' }) => (
 );
 
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 export const TeamCard = ({ member, index = 0, className = '' }) => {
   if (!member) return null;
@@ -29,7 +30,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
       <AppleCardWrapper className="group flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
         {/* Portrait Image Container */}
         <div className="relative aspect-[4/5] overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
-          <img
+          <SmartImage sizes="(min-width: 1024px) 33vw, 100vw"
             src={member.image}
             alt={member.name}
             className="w-full h-full object-cover object-center filter grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"

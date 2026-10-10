@@ -27,6 +27,7 @@ import RazorpayModalPlaceholder from '../components/RazorpayModalPlaceholder';
 import { useCart } from '../context/CartContext';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from '../components/SmartImage';
 
 // Loads published content, then renders the page exactly as before
 export const ProductDetail = () => {
@@ -137,7 +138,7 @@ const ProductDetailView = ({ products }) => {
           {/* LEFT: Interactive Gallery & Fullscreen Trigger */}
           <div className="lg:col-span-7 space-y-4">
             <div className="relative group aspect-[4/3] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm">
-              <img
+              <SmartImage sizes="(min-width: 1024px) 50vw, 100vw" priority
                 src={product.images[selectedImage] || product.images[0]}
                 alt={product.name}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -203,7 +204,7 @@ const ProductDetailView = ({ products }) => {
                         : 'border-[#D1DCDE] dark:border-[#1E3447] opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img
+                    <SmartImage sizes="120px"
                       src={img}
                       alt={`${product.name} angle ${idx + 1}`}
                       className="w-full h-full object-cover"

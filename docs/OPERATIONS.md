@@ -119,7 +119,23 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 - Save each tab, then **Publish**. The phone, email and WhatsApp change everywhere: header menu, footer, Contact page and WhatsApp buttons.
 
 ## ⚠️ Never re-run the seed on live data
-`python -m app.cli seed` overwrites products, projects, page text and the rest with the original sample content. It is only for a fresh or test database. **Do not run it once the client has started editing.**
+`python -m app.cli seed` overwrites products, projects, page text and the rest with the original sample content. It also relinks the imported photos back to local files, **undoing the Cloudinary import**. It is only for a fresh or test database. **Do not run it on the live database.**
+
+## Cloudinary (images)
+- **Account:** cloud `pft7pzaf`, Free plan (25 credits a month; **max 10 MB and 25 MP per image**). Keys are in `symmetry_backend/.env`.
+- **Usage:** check it at cloudinary.com, or with `python -m app.cli cloudinary-setup`, which also prints credits used.
+
+| Task (in `/root/dev/symmetry_backend`) | Command |
+|---|---|
+| Create or update the upload preset (after changing settings) | `.venv/bin/python -m app.cli cloudinary-setup` |
+| Bulk-import a folder of photos (safe to re-run) | `.venv/bin/python -m app.cli cloudinary-import --dir <folder> --folder products` |
+| Remove abandoned uploads (older than 24 h, not in the library) | `.venv/bin/python -m app.cli cloudinary-cleanup` (`--dry-run` to preview) |
+| Merge duplicate image records (repair) | `.venv/bin/python -m app.cli media-dedupe` |
+
+**Nightly cleanup** (optional): add to root's crontab with `crontab -e`:
+```
+30 3 * * * cd /root/dev/symmetry_backend && .venv/bin/python -m app.cli cloudinary-cleanup >> /var/log/symmetry-cloudinary-cleanup.log 2>&1
+```
 
 ## Publishing content
 - The public site shows the **latest published snapshot** of the database, not live rows.

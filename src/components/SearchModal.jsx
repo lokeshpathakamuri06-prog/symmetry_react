@@ -4,6 +4,7 @@ import { Search, X, ArrowRight, Layers, Sparkles, BookOpen } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearch } from '../context/SearchContext';
 import { usePublicContent } from '../context/PublicContentContext';
+import SmartImage from './SmartImage';
 
 export const SearchModal = () => {
   const { isOpen, closeSearch } = useSearch();
@@ -159,7 +160,7 @@ export const SearchModal = () => {
                             onClick={() => handleSelect(`/shop/${p.id}`)}
                             className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
                           >
-                            <img
+                            <SmartImage sizes="64px"
                               src={p.images[0]}
                               alt={p.name}
                               className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"
@@ -193,7 +194,7 @@ export const SearchModal = () => {
                             onClick={() => handleSelect(`/projects/${proj.id}`)}
                             className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
                           >
-                            <img
+                            <SmartImage sizes="64px"
                               src={proj.heroImage}
                               alt={proj.title}
                               className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"
@@ -227,7 +228,7 @@ export const SearchModal = () => {
                             onClick={() => handleSelect(`/journal/${b.id}`)}
                             className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
                           >
-                            <img
+                            <SmartImage sizes="64px"
                               src={b.coverImage}
                               alt={b.title}
                               className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"

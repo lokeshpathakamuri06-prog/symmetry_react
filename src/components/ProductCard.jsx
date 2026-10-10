@@ -4,6 +4,7 @@ import { Heart, Eye, Star, ArrowRight, ShoppingBag, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import AppleCardWrapper from './AppleCardWrapper';
+import SmartImage from './SmartImage';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80';
 
@@ -134,7 +135,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
         >
           {/* Image with smooth zoom on hover */}
           <Link to={`/shop/${product.id}`} className="block w-full h-full overflow-hidden">
-            <img
+            <SmartImage sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
               src={imgSrc}
               alt={product.name}
               onError={() => setImgSrc(FALLBACK_IMAGE)}
