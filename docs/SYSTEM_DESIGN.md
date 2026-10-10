@@ -345,17 +345,21 @@ The result is one small request per visit instead of nine, and no database queri
 
 ### Docker Compose services
 
+**As built (2026-10-10):** both containers use **host networking**, and PostgreSQL is the host's system service (not a container).
+
 ```
-caddy      ports 80, 443   → TLS, static files (React build), reverse proxy /api → fastapi:8000
-fastapi    internal :8000  → uvicorn, 2–4 workers
-postgres   internal :5432  → volume pgdata
-backup     cron            → nightly pg_dump → compressed, kept 14 days, copied off-server
+symmetry_react/docker-compose.yml    web  (Caddy)    :80 :443 (+ :8080 redirect)  TLS, React build, /api → 127.0.0.1:8000
+symmetry_backend/docker-compose.yml  api  (FastAPI)  127.0.0.1:8000 only          uvicorn ×2 workers, non-root
+host systemd                         PostgreSQL 16   127.0.0.1:5432 only          database `symmetry`
+planned                              backup (cron)   nightly pg_dump → compressed, kept 14 days, copied off-server
 ```
 
 ### Environment variables (FastAPI)
 
 ```
-DATABASE_URL=postgresql+asyncpg://symmetry:<pw>@postgres:5432/symmetry
+ENVIRONMENT=prod
+DATABASE_URL=postgresql+psycopg://symmetry_app:<pw>@127.0.0.1:5432/symmetry
+MIGRATIONS_DATABASE_URL=postgresql+psycopg://symmetry_owner:<pw>@127.0.0.1:5432/symmetry
 SESSION_SECRET=<random 64 bytes>
 CLOUDINARY_CLOUD_NAME=<cloud_name>
 CLOUDINARY_API_KEY=<key>

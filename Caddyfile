@@ -1,0 +1,40 @@
+# Symmetry Interiors: website + API on one HTTPS origin.
+# Until a domain is bought, sslip.io maps 169-58-13-62.sslip.io to this server's IP.
+# To switch domains later, replace the hostname below and in the redirect target.
+
+169-58-13-62.sslip.io {
+	encode zstd gzip
+
+	header {
+		# Short HSTS while the hostname is temporary; raise once a real domain is live
+		Strict-Transport-Security "max-age=86400"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "SAMEORIGIN"
+		-Server
+	}
+
+	# FastAPI (docker compose in symmetry_backend), bound to localhost only
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8000
+	}
+
+	# React build
+	handle {
+		root * /srv
+
+		# Vite-hashed files never change; everything else must be revalidated
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		@pages not path /assets/*
+		header @pages Cache-Control "no-cache"
+
+		try_files {path} /index.html
+		file_server
+	}
+}
+
+# Old addresses (bare IP and the previous :8080 port) redirect to HTTPS
+http://169.58.13.62, http://:8080 {
+	redir https://169-58-13-62.sslip.io{uri} permanent
+}

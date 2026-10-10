@@ -18,9 +18,10 @@ A website for **Symmetry Interiors & Building Solutions Pvt. Ltd.** (Ameerpet, H
 ## Where the code lives
 | Folder | What |
 |---|---|
-| `/root/dev/symmetry_react` | Frontend: public website + admin portal (React 19, Vite, Tailwind). Git repo. |
-| `/root/dev/symmetry_backend` | Backend: database schema, migrations, seed; FastAPI to come. Not yet a git repo. |
+| `/root/dev/symmetry_react` | Frontend: public website + admin portal (React 19, Vite, Tailwind) and the Caddy web server. Git repo, work on `develop`. |
+| `/root/dev/symmetry_backend` | Backend: FastAPI app, database schema, migrations, seed. Git repo (no remote yet). |
 
 ## Current live address
-- Website: http://169.58.13.62:8080
-- Admin: http://169.58.13.62:8080/admin/login (still demo login; see PROJECT_STATUS)
+- Website: https://169-58-13-62.sslip.io
+- Admin: https://169-58-13-62.sslip.io/admin/login (still the demo login until Part B; see PROJECT_STATUS)
+- API health: https://169-58-13-62.sslip.io/api/health

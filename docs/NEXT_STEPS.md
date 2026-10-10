@@ -1,27 +1,27 @@
 # Next Steps
 
-_Last updated: 2026-10-10_. Work top to bottom; each step lists what "done" means. Architecture details are in [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md).
+_Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to bottom; each step lists what "done" means. Architecture details are in [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md).
 
 ## Step 0: Save the work (do first, ~15 min)
-- [ ] Commit the frontend changes in `symmetry_react` (admin theme, Careers, Docker, docs).
-- [ ] `git init` in `symmetry_backend` and make the first commit (`.env` is already gitignored).
-- [ ] Decide where the repos are pushed (GitHub / GitLab), and whether frontend and backend stay as two repos.
+- [x] Commit the frontend changes in `symmetry_react` (on branch `develop`).
+- [x] `git init` in `symmetry_backend` and make the first commit (`.env` is already gitignored).
+- [ ] Decide where the repos are pushed. The frontend already has GitHub `origin`; the backend needs a new remote. Push `develop`, then open a PR to `main`.
 
 **Done when:** both folders are in git, and nothing is committed that contains secrets.
 
 ## Step 1: HTTPS (Caddy + sslip.io)
-- [ ] Replace the frontend's nginx container with **Caddy**, serving `https://169-58-13-62.sslip.io`.
-- [ ] Caddy serves the React build at `/` and proxies `/api/*` to FastAPI (added in Step 2).
-- [ ] Open ports 80 and 443; close 8080.
+- [x] Replace the frontend's nginx container with **Caddy**, serving `https://169-58-13-62.sslip.io`.
+- [x] Caddy serves the React build at `/` and proxies `/api/*` to FastAPI.
+- [x] Ports 80 and 443 serve HTTPS; 8080 now only redirects to HTTPS.
 
 **Done when:** the site loads over HTTPS with a valid certificate, and http redirects to https.
 
 ## Step 2: FastAPI foundation (in `symmetry_backend`)
-- [ ] FastAPI app (`app/main.py`), settings, DB session using the existing models.
+- [x] FastAPI app (`app/main.py`), settings, DB session using the existing models.
 - [ ] Auth: `POST /api/auth/login` (argon2 verify against `admin_users`), `logout`, `me`. httpOnly session cookie, login rate limit.
 - [ ] Public read: `GET /api/public/content` (one cached JSON with ETag).
-- [ ] Docker: `fastapi` service in compose. Postgres connectivity from the container (README → "When FastAPI runs in Docker").
-- [ ] Health check `GET /api/health`.
+- [x] Docker: `api` service in `symmetry_backend/docker-compose.yml`, host networking (no Postgres changes needed).
+- [x] Health check `GET /api/health`.
 
 **Done when:** you can log in with `admin@symmetryinteriors.com` through the API over HTTPS, and `/api/public/content` returns the seeded data.
 

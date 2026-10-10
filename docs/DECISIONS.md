@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-10 | Frontend work goes on branch `develop`; `main` only via PR | Keep `main` deployable; review before merging | Commit straight to `main` |
+| 2026-10-10 | API JSON is **camelCase** (`CamelModel`), the DB is snake_case | Pages already read camelCase (`images`, `inStock`…), so wiring needs minimal page changes | Change every page to snake_case |
+| 2026-10-10 | **Caddy** replaces nginx; it lives in the frontend repo and serves the build + proxies `/api` | Automatic HTTPS and renewal, one config file | nginx + certbot |
+| 2026-10-10 | Containers use **host networking**; API bound to `127.0.0.1:8000` | Reach the host's Postgres on localhost with no config changes; nothing new exposed | Docker bridge + Postgres listen/pg_hba changes |
+| 2026-10-10 | Migrations run manually (`alembic upgrade head`), not on container start | Explicit, reviewable schema changes; no surprises on restart | Auto-migrate in the container entrypoint |
 | 2026-10-10 | Database categories are the single source of category names and slugs; frontend links use the same slugs and names | Requested: "both sides same"; avoids broken filter links | Keep separate marketing labels |
 | 2026-10-10 | Server-side admin sessions (`admin_sessions`, token hashed) + DB-backed login rate limiting (`login_attempts`) | Sessions can be revoked instantly; rate limits work across multiple API workers | JWT cookies; in-memory rate limit |
 | 2026-10-10 | Backend in its own folder `/root/dev/symmetry_backend` | Requested; keeps frontend and backend deployable separately | `backend/` inside the frontend repo |

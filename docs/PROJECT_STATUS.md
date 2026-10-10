@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-10 (migration 0002)_
+_Last updated: 2026-10-10 (groundwork: HTTPS + FastAPI)_
 
 ## Summary
 | Area | State |
@@ -8,13 +8,13 @@ _Last updated: 2026-10-10 (migration 0002)_
 | Public website | ✅ Built and running (demo data) |
 | Admin portal UI | ✅ Built; Apple-style light/dark theme |
 | Careers (site + admin) | ✅ Built (stores in browser only until the API exists) |
-| Docker hosting | ✅ Running on `169.58.13.62:8080` (plain HTTP) |
+| Hosting | ✅ Caddy (frontend repo) + FastAPI (backend repo), Docker host networking |
 | System design | ✅ Written ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md)) |
 | PostgreSQL database | ✅ 23 tables, migrations 0001–0002, seed, first admin user |
-| FastAPI backend | ⏳ Next |
+| FastAPI backend | 🟡 Skeleton live: `/api/health`; auth and content endpoints next |
 | Cloudinary image pipeline | ⏳ After FastAPI |
 | Frontend connected to backend | ⏳ Not yet; site still uses `src/data` + `localStorage` |
-| HTTPS | ❌ Not yet; planned via Caddy + `169-58-13-62.sslip.io` |
+| HTTPS | ✅ https://169-58-13-62.sslip.io (Let's Encrypt, auto-renewing) |
 
 ## Work log
 
@@ -80,6 +80,36 @@ _Last updated: 2026-10-10 (migration 0002)_
 - **Database password:** set to the requested password for both DB roles (stored in `symmetry_backend/.env`).
 - **Category links fixed:** the footer, home showcase and the unused FlippingCollections component used non-existent slugs (`living`, `dining`…). They now use the database category slugs, and the footer labels use the database category names. Browser-tested: all 22 category links on the home page show products.
 
+### 2026-10-10: Groundwork (Part A)
+- **Git:**
+  - Frontend committed on a new `develop` branch (`683f1b4`).
+  - Backend initialised as its own repo, first commit `bf2dbb4`.
+  - Nothing pushed; no secrets committed.
+- **FastAPI skeleton** (`symmetry_backend/app/main.py`):
+  - Routes under `/api`.
+  - `GET /api/health` reports DB status and migration version, and returns 503 when the DB is down.
+  - JSON error format `{"error": {code, message}}`.
+  - Request logging.
+  - API docs at `/api/docs` in dev only.
+  - `CamelModel` base class, so API JSON is camelCase like the frontend.
+- **API container:** Dockerfile and compose in the backend repo.
+  - Host networking; uvicorn with 2 workers, non-root.
+  - Bound to `127.0.0.1:8000`, so it can't be reached from outside.
+  - Docker healthcheck.
+- **Caddy replaces nginx** (frontend repo `Caddyfile`):
+  - Automatic HTTPS for `169-58-13-62.sslip.io` (Let's Encrypt, valid to 2027-01-08, auto-renews).
+  - `/api/*` → FastAPI; the React build is served with an SPA fallback.
+  - zstd/gzip: the main JS bundle goes from 1.1 MB to 299 KB.
+  - Assets cached for a year, pages revalidated.
+  - Security headers: HSTS for 1 day while on the temporary hostname, nosniff, frame, referrer.
+  - `http://IP`, `http://IP:8080` and `http://` all redirect to HTTPS.
+- **Dev proxy:** `vite.config.js` proxies `/api` to `127.0.0.1:8000`.
+- **Verified:**
+  - Valid TLS over HTTP/2; all redirects; headers; SPA deep links.
+  - API through Caddy, and a 502 while the API is stopped, recovering afterwards.
+  - The certificate survives container rebuilds and restarts.
+  - A headless browser over HTTPS (home, careers apply, admin login, same-origin `/api` fetch) shows no mixed-content or console errors.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
@@ -87,8 +117,10 @@ _Last updated: 2026-10-10 (migration 0002)_
 | 2 | Admin Products page shows broken thumbnails and "Out of Stock" (field mismatch: `images`/`inStock` vs `image`/`in_stock`) | Step 4 |
 | 3 | Demo admin login in the browser: `admin@symmetry.com` / `admin123` and *any* email containing "admin" work | Step 2: real login via API |
 | 4 | Forms (contact, careers, checkout, newsletter) save only to the visitor's browser | Step 4 |
-| 5 | Site is plain HTTP on a public IP | Step 1: Caddy + HTTPS |
+| 5 | ~~Site is plain HTTP on a public IP~~ | ✅ Fixed 2026-10-10: HTTPS via Caddy |
 | 6 | 61 placeholder Unsplash images and sample prices | Client uploads via Cloudinary (see [ASSETS.md](ASSETS.md)) |
 | 7 | `supabase_schema.sql` has open write policies | Superseded; delete when Supabase code is removed |
-| 8 | Changes not committed; backend not in git | Do before Step 1 |
+| 8 | ~~Changes not committed; backend not in git~~ | ✅ Fixed 2026-10-10: committed locally; not pushed yet |
 | 9 | Category `item_count_label` texts ("6 Models", "5 Designs") are marketing copy, not real counts (most categories have 1–2 sample products) | Show real counts from the API in Step 4, or the client edits the labels |
+| 10 | Page titles repeat the brand (e.g. "… \| Symmetry Interiors \| Symmetry Interiors & Building Solutions"): pages pass the brand and `SeoMeta` appends it again | Step 6 SEO pass |
+| 11 | Main JS bundle is 299 KB compressed (target < 200 KB): the admin portal and all pages ship in one file | Step 6: code splitting per route |
