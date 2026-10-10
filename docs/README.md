@@ -8,6 +8,8 @@ A website for **Symmetry Interiors & Building Solutions Pvt. Ltd.** (Ameerpet, H
 ## Documents
 | File | Read it when you want to know… |
 |---|---|
+| [ADMIN_GUIDE.md](ADMIN_GUIDE.md) | How to run the website day to day: Save and Publish, editing, images, page text, inbox (for the client's team) |
+| [API.md](API.md) | Every backend endpoint, its rules and responses (for developers) |
 | [PROJECT_STATUS.md](PROJECT_STATUS.md) | What has been built so far, and the current state of each part |
 | [NEXT_STEPS.md](NEXT_STEPS.md) | What we do next, in order, with what "done" means for each step |
 | [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md) | The target architecture: backend, database, image pipeline, API, security |
@@ -23,5 +25,5 @@ A website for **Symmetry Interiors & Building Solutions Pvt. Ltd.** (Ameerpet, H
 
 ## Current live address
 - Website: https://169-58-13-62.sslip.io
-- Admin: https://169-58-13-62.sslip.io/admin/login (still the demo login until Part B; see PROJECT_STATUS)
+- Admin: https://169-58-13-62.sslip.io/admin/login (real accounts only; see ADMIN_GUIDE)
 - API health: https://169-58-13-62.sslip.io/api/health
