@@ -54,7 +54,9 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 **Done when:** Lighthouse mobile LCP is under 2.0 s on Home, Shop and Project pages.
 
 ## Step 6: Performance and hardening
-- [ ] Code splitting per route, so the admin bundle is separate. Pre-render the main pages. Self-host the Inter font.
+- [x] Code splitting per route, so the admin bundle is separate (Step 6a).
+- [x] Self-host the Inter font; WebP banners; lazy below-the-fold images (Step 6a).
+- [ ] Pre-render the main pages (SEO and first paint).
 - [ ] Nightly `pg_dump` backups copied off the server, plus a monthly restore test.
 - [ ] Uptime monitoring and error logging.
 - [ ] Security pass: CSRF, rate limits, headers.

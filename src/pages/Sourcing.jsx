@@ -12,6 +12,7 @@ import {
 import SeoMeta from '../components/SeoMeta';
 import Button from '../components/Button';
 import { sourcingCountries, sourcingProcess, sourcingStats } from '../data/sourcing';
+import { heroImage } from '../lib/staticImages';
 
 // Framer Motion Animation Variants
 const fadeInUp = {
@@ -43,7 +44,7 @@ export const Sourcing = () => {
         {/* Full-bleed background media with architectural image & overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-sourcing.jpeg"
+            {...heroImage('/images/hero/hero-sourcing.jpeg')}
             alt="Symmetry Interiors Global Sourcing &amp; Quarry Extraction"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />
@@ -210,7 +211,7 @@ export const Sourcing = () => {
                   <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-2' : ''}`}>
                     {/* Primary Large Image Frame */}
                     <div className="relative aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE]/70 dark:border-[#1E3447] shadow-lg group">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={country.galleryImages[0].url}
                         alt={`${country.name} procurement showcase`}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
@@ -240,7 +241,7 @@ export const Sourcing = () => {
                           key={imgIdx}
                           className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE]/70 dark:border-[#1E3447] shadow-sm group cursor-pointer"
                         >
-                          <img
+                          <img loading="lazy" decoding="async"
                             src={img.url}
                             alt={img.caption}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"

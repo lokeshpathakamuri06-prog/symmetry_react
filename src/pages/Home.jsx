@@ -30,6 +30,7 @@ import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import { useSiteText } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
+import { heroImage } from '../lib/staticImages';
 
 // Data imports
 
@@ -90,7 +91,7 @@ const HomeView = ({ products, projects, blogs }) => {
           >
             <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury">
               <img
-                src="/images/home/home-about.jpeg"
+                {...heroImage('/images/home/home-about.jpeg', '(min-width: 1024px) 50vw, 100vw')}
                 alt="Architectural space planning and interior design"
                 loading="lazy"
                 className="w-full h-full object-cover"

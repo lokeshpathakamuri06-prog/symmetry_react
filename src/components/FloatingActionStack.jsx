@@ -255,7 +255,7 @@ export const FloatingActionStack = () => {
                 {/* Left Side: Catalog Visual Cover Box */}
                 <div className="md:col-span-5 relative group">
                   <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#F4F7F6] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl relative">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=85"
                       alt="Symmetry Interiors Official Catalog"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

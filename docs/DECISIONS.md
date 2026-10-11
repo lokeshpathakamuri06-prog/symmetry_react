@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-11 | Home ships in the main bundle; every other page (and all admin) loads on demand | Fastest first paint for the most common landing page; visitors never download admin code | Lazy-load Home too |
+| 2026-10-11 | Prefetch other public pages only after the first interaction (or 6 s) | `import()` also runs the code, which competed with the first page's rendering in tests | Prefetch on idle right after load |
+| 2026-10-11 | Group react, framer-motion and lucide into 3 shared files | Otherwise lucide splits into one file per icon (370 requests) | Default splitting |
+| 2026-10-11 | Static banners: WebP copies made by a script and committed (not Cloudinary) | Design images stay with the site; no extra service or credits; JPEG fallback | Upload banners to Cloudinary |
+| 2026-10-11 | Self-host Inter (variable font) | Removes 2 third-party connections before text can render | Google Fonts |
 | 2026-10-10 | Resize large photos **in the browser** (≤3000 px, JPEG 0.9) before upload | Free plan caps uploads at 10 MB / 25 MP; 3000 px is more than any screen needs | Paid plan; reject large files |
 | 2026-10-10 | No eager transformations in the preset | Cloudinary strips `f_auto` from eager versions, so they'd never match website URLs and would only cost credits | Pre-build 400/800/1600 |
 | 2026-10-10 | Imported photos convert the existing media record **in place** | Every product, category and project link keeps working with no relinking | Create new records and relink |

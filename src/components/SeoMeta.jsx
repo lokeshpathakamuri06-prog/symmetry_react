@@ -2,9 +2,12 @@ import { useEffect } from 'react';
 
 export const SeoMeta = ({ title, description }) => {
   useEffect(() => {
-    const fullTitle = title
-      ? `${title} | Symmetry Interiors & Building Solutions`
-      : 'Symmetry Interiors & Building Solutions | Bespoke Architecture & Luxury Furniture';
+    // Many pages already name the brand in their title; only add it when missing
+    const fullTitle = !title
+      ? 'Symmetry Interiors & Building Solutions | Bespoke Architecture & Luxury Furniture'
+      : /symmetry/i.test(title)
+        ? title
+        : `${title} | Symmetry Interiors`;
     document.title = fullTitle;
 
     if (description) {

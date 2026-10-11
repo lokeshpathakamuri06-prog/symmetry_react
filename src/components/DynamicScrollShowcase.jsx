@@ -147,7 +147,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: leftYTop, rotate: leftRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80"
                   alt="Roman Travertine Portal"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -163,7 +163,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: leftYMid }}
                 className="w-48 lg:w-60 aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative ml-6 group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80"
                   alt="Fluted Travertine Coffee Table"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -179,7 +179,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: leftYBottom, rotate: leftRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80"
                   alt="Saddle Leather Lounge"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -203,7 +203,7 @@ export const DynamicScrollShowcase = () => {
               }
               className="relative z-20 w-[90%] sm:w-[480px] md:w-[560px] lg:w-[640px] aspect-[16/10] rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.8)] border border-white/20 bg-[#07121C] group"
             >
-              <img
+              <img loading="lazy" decoding="async"
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
                 alt="Jubilee Hills Master Sky Pavilion"
                 className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
@@ -256,7 +256,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: rightYTop, rotate: rightRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80"
                   alt="Milan Sourcing & Carrara Marble"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -272,7 +272,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: rightYMid }}
                 className="w-48 lg:w-60 aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative mr-6 group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80"
                   alt="Murano Glass Lighting"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -288,7 +288,7 @@ export const DynamicScrollShowcase = () => {
                 style={shouldReduceMotion ? {} : { y: rightYBottom, rotate: rightRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#132838] relative group"
               >
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
                   alt="Outdoor Plantation Teak"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -347,7 +347,7 @@ export const DynamicScrollShowcase = () => {
 
           {/* Central Main Project Card */}
           <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-[#07121C]">
-            <img
+            <img loading="lazy" decoding="async"
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
               alt="Jubilee Hills Master Sky Pavilion"
               className="w-full h-full object-cover object-center"
@@ -403,7 +403,7 @@ export const DynamicScrollShowcase = () => {
                     }}
                     className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white/15 bg-[#132838] relative group"
                   >
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={card.image}
                       alt={card.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

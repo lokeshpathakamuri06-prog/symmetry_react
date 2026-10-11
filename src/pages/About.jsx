@@ -21,6 +21,7 @@ import {
 } from '../data/aboutData';
 import { useTeam } from '../context/PublicContentContext';
 import { useSiteText } from '../context/PublicContentContext';
+import { heroImage } from '../lib/staticImages';
 
 export const About = () => {
   const text = useSiteText('about');
@@ -48,7 +49,7 @@ export const About = () => {
         {/* Full-bleed background media with architectural image & overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-about.jpeg"
+            {...heroImage('/images/hero/hero-about.jpeg')}
             alt="Symmetry Interiors Architectural Atelier & Pavilion"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />
@@ -198,7 +199,7 @@ export const About = () => {
               transition={{ duration: 0.7 }}
               className="col-span-7 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-lg"
             >
-              <img
+              <img loading="lazy" decoding="async"
                 src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80"
                 alt="Architectural details and precision stonework"
                 className="w-full h-full object-cover"
@@ -213,7 +214,7 @@ export const About = () => {
               className="col-span-5 space-y-4 sm:space-y-6 pt-8 sm:pt-12"
             >
               <div className="aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-lg">
-                <img
+                <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80"
                   alt="Bespoke timber joinery atelier"
                   className="w-full h-full object-cover"
@@ -346,7 +347,7 @@ export const About = () => {
                       }`}
                     >
                       <div className="relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-md group">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={item.image}
                           alt={item.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -421,7 +422,7 @@ export const About = () => {
               >
                 {/* Hub Header Image */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={hub.image}
                     alt={`${hub.country} sourcing origin`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

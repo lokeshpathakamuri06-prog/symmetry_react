@@ -19,6 +19,7 @@ import FilterDrawer from '../components/FilterDrawer';
 import QuickViewModal from '../components/QuickViewModal';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
+import { heroImage } from '../lib/staticImages';
 
 // Loads published content, then renders the page exactly as before
 export const Shop = () => {
@@ -145,7 +146,7 @@ const ShopView = ({ products, shopCategories }) => {
         {/* Full-bleed background hero image with luxury vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-shop.jpeg"
+            {...heroImage('/images/hero/hero-shop.jpeg')}
             alt="Symmetry Interiors Curated Furniture &amp; Architectural Objects"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

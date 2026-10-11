@@ -19,6 +19,7 @@ import { useSiteText } from '../context/PublicContentContext';
 import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/contact';
 import Honeypot from '../components/Honeypot';
 import { submitInquiry, formErrorMessage } from '../services/publicApi';
+import { heroImage } from '../lib/staticImages';
 
 // Social links helper icons
 const InstagramIcon = () => (
@@ -185,7 +186,7 @@ export const Contact = () => {
         <div className="relative rounded-3xl overflow-hidden h-[260px] sm:h-[340px] flex items-center justify-center text-center shadow-xl border border-[#D1DCDE] dark:border-[#1E3447] group">
           {/* Background Image */}
           <img
-            src="/images/hero/hero-contact.jpeg"
+            {...heroImage('/images/hero/hero-contact.jpeg')}
             alt="Symmetry Consultation Atelier"
             className="absolute inset-0 w-full h-full object-cover object-center scale-100 transition-transform duration-1000 ease-out group-hover:scale-105"
           />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSiteText } from '../context/PublicContentContext';
+import { heroImage } from '../lib/staticImages';
 
 // 3 Specific HAJ images requested: HAJ0025.jpeg, HAJ0026-1.jpeg, HAJ0035-1.jpeg
 const HERO_IMAGES = [
@@ -51,7 +52,8 @@ export const Hero = () => {
         <AnimatePresence mode="popLayout">
           <motion.img
             key={HERO_IMAGES[currentImageIndex].src}
-            src={HERO_IMAGES[currentImageIndex].src}
+            {...heroImage(HERO_IMAGES[currentImageIndex].src)}
+            fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
             alt={HERO_IMAGES[currentImageIndex].title}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}

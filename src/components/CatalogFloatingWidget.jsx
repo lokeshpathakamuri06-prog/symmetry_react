@@ -97,7 +97,7 @@ export const CatalogFloatingWidget = () => {
                 {/* Left Side: Catalog Cover Image Card */}
                 <div className="md:col-span-5">
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl group bg-[#132838]">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=85"
                       alt="Symmetry Interiors Official Catalog"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

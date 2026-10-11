@@ -18,6 +18,7 @@ import { submitApplication, formErrorMessage } from '../services/publicApi';
 import { careerPerks } from '../data/careers';
 import { useJobs } from '../context/PublicContentContext';
 import ContentState from '../components/ContentState';
+import { heroImage } from '../lib/staticImages';
 
 const perkIcons = [Award, Globe2, Hammer, TrendingUp];
 
@@ -133,7 +134,7 @@ export const Careers = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden h-[280px] sm:h-[360px] flex items-center justify-center text-center shadow-xl border border-[#D1DCDE] dark:border-[#1E3447] group">
           <img
-            src="/images/hero/hero-haj-banner-2.jpeg"
+            {...heroImage('/images/hero/hero-haj-banner-2.jpeg')}
             alt="Symmetry Interiors studio"
             className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
           />

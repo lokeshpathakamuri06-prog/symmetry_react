@@ -179,7 +179,7 @@ export const CoverflowSourcing = () => {
                   }`}
                 >
                   {/* Card Image */}
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={item.image}
                     alt={item.country}
                     className="w-full h-full object-cover pointer-events-none"

@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-10 (Part E: Cloudinary uploads and fast images)_
+_Last updated: 2026-10-11 (Step 6a: faster website)_
 
 ## Summary
 | Area | State |
@@ -233,6 +233,30 @@ _Last updated: 2026-10-10 (Part E: Cloudinary uploads and fast images)_
   - `media-dedupe` repaired the 3 duplicates the test had created.
   - Two regression tests were added.
 
+### 2026-10-11: Step 6a, faster website
+- **Code loads per page** (`src/App.jsx`):
+  - Home is in the main bundle; the other 15 public pages and all 17 admin pages load on demand (`React.lazy` + `Suspense` with the existing skeleton).
+  - Shared libraries are grouped into `react`, `motion` and `icons` files (Rolldown `codeSplitting`). Without that, lucide would have produced one file per icon: 370 → 47 files.
+  - Other public pages are prefetched after the visitor's first interaction (or 6 s). **Visitors never download admin code.**
+- **Banners:** `scripts/optimize-images.mjs` (sharp) made WebP copies at 1280 and 2048 px for the 12 banners in use; `src/lib/staticImages.js` adds them as `srcset`. On phones the home slide is 53 KB instead of 275 KB; the JPEGs stay as a fallback.
+- **Lazy loading** for 19 static images below the fold (showcase sections, coverflow, About, Sourcing).
+- **Font:** Inter is self-hosted (`@fontsource-variable/inter`); Google Fonts and its two preconnects are removed.
+- **Page titles** no longer repeat the brand (`SeoMeta`).
+- **Deleted unused files:** 6 hero JPEGs, the CTA PNGs, `hero.png`, React/Vite template icons, `icons.svg` and `favicon.svg` (5.4 MB).
+- **Measured** with Lighthouse mobile (simulated mid-range phone on 4G; median of 3 runs after):
+
+  | Page | Score | LCP | Downloaded | First-load JS |
+  |---|---|---|---|---|
+  | Home | 37 → **43** | 6.8 → **5.1 s** | 2,597 → **897 KB** | 261 → **188 KB** |
+  | Shop | 39 → **56** | 7.2 → **4.1 s** | 1,093 → **642 KB** | 261 → **194 KB** |
+
+- **Verified:**
+  - Visitors never request admin chunks; no Google Fonts requests.
+  - Phones get the 1280 WebP banners, desktops the 2048 ones; no duplicated titles.
+  - Page text is identical to the previous baseline (the only differences were the admin edits made on 2026-10-10: sym-015 set to draft and jobs reordered).
+  - Screenshots on desktop and phone look right; the admin loads lazily; no console errors.
+- **What still limits Home:** the intro animation ("Welcome to SYMMETRY", about 2–3 s before the headline shows) and framer-motion's start-up work (blocking time 1.4–3.6 s, varying with this shared CPU). Changing the intro is a design decision for the client.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
@@ -245,7 +269,8 @@ _Last updated: 2026-10-10 (Part E: Cloudinary uploads and fast images)_
 | 7 | ~~`supabase_schema.sql` has open write policies~~ | ✅ Deleted with all Supabase code (Part D2) |
 | 8 | ~~Changes not committed; backend not in git~~ | ✅ Fixed 2026-10-10: committed locally; not pushed yet |
 | 9 | ~~Category count labels were fixed marketing text~~ | ✅ Fixed 2026-10-10: real product counts (Part D2) |
-| 10 | Page titles repeat the brand (e.g. "… \| Symmetry Interiors \| Symmetry Interiors & Building Solutions"): pages pass the brand and `SeoMeta` appends it again | Step 6 SEO pass |
+| 10 | ~~Page titles repeat the brand~~ | ✅ Fixed 2026-10-11 (Step 6a) |
 | 13 | **Phone numbers need confirming:** the site used +91 98765 43210 (a common placeholder) in most places and +91 99634 99635 in the mobile menu and floating WhatsApp. Now: phone = 98765…, WhatsApp = 99634… | Client sets the real numbers in Admin → Page Content → Company & Contact |
 | 12 | `FlippingCollections` (unused component) calls an undefined `setUserInteracted`; it would crash if used | Delete the component or fix it when it's needed |
-| 11 | Main JS bundle is 299 KB compressed (target < 200 KB): the admin portal and all pages ship in one file | Step 6: code splitting per route |
+| 11 | ~~One large JS bundle for every page~~ | ✅ Fixed 2026-10-11: per-page loading, first-load JS 188 KB, no admin code for visitors |
+| 14 | Home's intro animation delays the headline by about 2–3 s on phones (the main remaining LCP cost) | Client decision: keep, shorten, or show it only on the first visit |

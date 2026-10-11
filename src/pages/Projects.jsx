@@ -11,6 +11,7 @@ import Button from '../components/Button';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
+import { heroImage } from '../lib/staticImages';
 
 // Curated architectural project walkthrough video streams
 const PROJECT_VIDEOS = [
@@ -98,7 +99,7 @@ const ProjectsView = ({ projects }) => {
         {/* Full-Bleed Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-projects.jpeg"
+            {...heroImage('/images/hero/hero-projects.jpeg')}
             alt="Symmetry Interiors Architectural Projects"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

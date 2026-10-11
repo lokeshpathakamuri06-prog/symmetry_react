@@ -7,6 +7,7 @@ import BlogCard from '../components/BlogCard';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
+import { heroImage } from '../lib/staticImages';
 
 const CATEGORIES = [
   'All',
@@ -107,7 +108,7 @@ const JournalView = ({ blogs }) => {
         {/* Full-bleed background media with architectural library image & luxury film vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-journal.jpeg"
+            {...heroImage('/images/hero/hero-journal.jpeg')}
             alt="Symmetry Architectural Journal & Monographs"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

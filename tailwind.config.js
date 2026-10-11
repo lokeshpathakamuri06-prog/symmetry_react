@@ -53,9 +53,9 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Inter"', 'sans-serif'],
-        display: ['"Inter"', 'sans-serif'],
-        sans: ['"Inter"', 'sans-serif'],
+        serif: ['"Inter Variable"', '"Inter"', 'sans-serif'],
+        display: ['"Inter Variable"', '"Inter"', 'sans-serif'],
+        sans: ['"Inter Variable"', '"Inter"', 'sans-serif'],
       },
       letterSpacing: {
         'luxury': '0.15em',

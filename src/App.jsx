@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
@@ -15,43 +15,88 @@ import FloatingActionStack from './components/FloatingActionStack';
 import SmoothScroll from './components/SmoothScroll';
 import ScrollProgressBar from './components/ScrollProgressBar';
 import SiteOpener from './components/SiteOpener';
+import ContentState from './components/ContentState';
 
-// Public Pages
+// Public pages: Home ships in the main bundle (first paint); the rest load on demand
 import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Projects from './pages/Projects';
-import ProjectDetail from './pages/ProjectDetail';
-import Sourcing from './pages/Sourcing';
-import Shop from './pages/Shop';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import OrderSuccess from './pages/OrderSuccess';
-import Journal from './pages/Journal';
-import JournalDetail from './pages/JournalDetail';
-import Contact from './pages/Contact';
-import Careers from './pages/Careers';
-import NotFound from './pages/NotFound';
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Projects = lazy(() => import('./pages/Projects'));
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const Sourcing = lazy(() => import('./pages/Sourcing'));
+const Shop = lazy(() => import('./pages/Shop'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const OrderSuccess = lazy(() => import('./pages/OrderSuccess'));
+const Journal = lazy(() => import('./pages/Journal'));
+const JournalDetail = lazy(() => import('./pages/JournalDetail'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Careers = lazy(() => import('./pages/Careers'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Admin Pages
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminPageContent from './pages/admin/AdminPageContent';
-import AdminBanners from './pages/admin/AdminBanners';
-import AdminProducts from './pages/admin/AdminProducts';
-import AdminCategories from './pages/admin/AdminCategories';
-import AdminCollections from './pages/admin/AdminCollections';
-import AdminProjects from './pages/admin/AdminProjects';
-import AdminBlogs from './pages/admin/AdminBlogs';
-import AdminTestimonials from './pages/admin/AdminTestimonials';
-import AdminTeam from './pages/admin/AdminTeam';
-import AdminInquiries from './pages/admin/AdminInquiries';
-import AdminOrders from './pages/admin/AdminOrders';
-import AdminMedia from './pages/admin/AdminMedia';
-import AdminSettings from './pages/admin/AdminSettings';
-import AdminCareers from './pages/admin/AdminCareers';
-import AdminApplications from './pages/admin/AdminApplications';
+// Admin pages: separate chunks, downloaded only when someone opens the admin
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminPageContent = lazy(() => import('./pages/admin/AdminPageContent'));
+const AdminBanners = lazy(() => import('./pages/admin/AdminBanners'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminCategories = lazy(() => import('./pages/admin/AdminCategories'));
+const AdminCollections = lazy(() => import('./pages/admin/AdminCollections'));
+const AdminProjects = lazy(() => import('./pages/admin/AdminProjects'));
+const AdminBlogs = lazy(() => import('./pages/admin/AdminBlogs'));
+const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
+const AdminTeam = lazy(() => import('./pages/admin/AdminTeam'));
+const AdminInquiries = lazy(() => import('./pages/admin/AdminInquiries'));
+const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminMedia = lazy(() => import('./pages/admin/AdminMedia'));
+const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
+const AdminCareers = lazy(() => import('./pages/admin/AdminCareers'));
+const AdminApplications = lazy(() => import('./pages/admin/AdminApplications'));
+
+// Once the visitor starts interacting, quietly fetch the other public pages so navigation is instant.
+// Admin code is never prefetched for visitors.
+const PUBLIC_PAGE_LOADERS = [
+  () => import('./pages/About'),
+  () => import('./pages/Services'),
+  () => import('./pages/Projects'),
+  () => import('./pages/ProjectDetail'),
+  () => import('./pages/Sourcing'),
+  () => import('./pages/Shop'),
+  () => import('./pages/ProductDetail'),
+  () => import('./pages/Cart'),
+  () => import('./pages/Checkout'),
+  () => import('./pages/OrderSuccess'),
+  () => import('./pages/Journal'),
+  () => import('./pages/JournalDetail'),
+  () => import('./pages/Contact'),
+  () => import('./pages/Careers'),
+  () => import('./pages/NotFound'),
+];
+
+const PrefetchPublicPages = () => {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+  useEffect(() => {
+    if (isAdmin) return undefined;
+    // Wait until the visitor interacts (or 6 s), so loading other pages never competes with the first one
+    const events = ['pointerdown', 'scroll', 'keydown', 'mousemove', 'touchstart'];
+    let timer;
+    function cleanup() {
+      clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, start));
+    }
+    function start() {
+      cleanup();
+      const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
+      idle(() => PUBLIC_PAGE_LOADERS.forEach((load) => load().catch(() => {})));
+    }
+    timer = setTimeout(start, 6000);
+    events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
+    return cleanup;
+  }, [isAdmin]);
+  return null;
+};
 
 // Intro animation is for the public site only, not the admin console
 const StorefrontOpener = () => {
@@ -96,7 +141,9 @@ export const App = () => {
             <AdminAuthProvider>
               <BrowserRouter>
                 <StorefrontOpener />
+                <PrefetchPublicPages />
                 <StorefrontShell>
+                  <Suspense fallback={<ContentState status="loading" />}>
                   <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={<Home />} />
@@ -140,6 +187,7 @@ export const App = () => {
                     <Route path="/404" element={<NotFound />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
+                  </Suspense>
                 </StorefrontShell>
               </BrowserRouter>
             </AdminAuthProvider>

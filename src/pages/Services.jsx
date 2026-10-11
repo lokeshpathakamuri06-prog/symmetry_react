@@ -13,6 +13,7 @@ import SeoMeta from '../components/SeoMeta';
 import Button from '../components/Button';
 import FinalCta from '../components/FinalCta';
 import { services, processSteps } from '../data/services';
+import { heroImage } from '../lib/staticImages';
 
 // Animation variants for smooth scroll reveal
 const fadeInUp = {
@@ -744,7 +745,7 @@ export const Services = () => {
         {/* Full-bleed background media with architectural image & luxury vignette */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/hero/hero-services.jpeg"
+            {...heroImage('/images/hero/hero-services.jpeg')}
             alt="Symmetry Interiors Architectural Services & Execution"
             className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
           />

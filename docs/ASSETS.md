@@ -6,13 +6,12 @@ _Last updated: 2026-10-10._ Paths are relative to `symmetry_react/`. Everything 
 | Asset group | Location | Count / size | Status |
 |---|---|---|---|
 | Product photos (client, LC series) | Cloudinary `symmetry/products/LC00xx(-n)` (originals also still in `public/drive_products/`) | 158 files, 21 MB | ✅ All 158 in the Media Library; 7 products use them. Delete the local folder once the client confirms |
-| Page hero images | `public/images/hero/*.jpeg` | 17 files | ✅ Used as page banners |
-| Home about image | `public/images/home/home-about.jpeg` | 1 | ✅ Used |
+| Page hero images | `public/images/hero/*.jpeg` + WebP copies (`-1280.webp`, `-2048.webp`) | 11 banners (unused ones deleted 2026-10-11) | ✅ Used; served as WebP |
+| Home about image | `public/images/home/home-about.jpeg` + WebP copies | 1 | ✅ Used; served as WebP |
 | Placeholder stock photos | Unsplash URLs in code | **61 unique** URLs | ❌ Must be replaced with client photos |
 | Product catalogue | `public/Symmetry-Interiors-Catalog.pdf` | 4.6 MB | ✅ Download link in header/footer |
 | Logos | `src/assets/logo.png` (light), `src/assets/logo-dark.png` (dark), `public/logo-emblem.svg` (favicon) | 3 | ✅ Used |
-| CTA / hero graphics | `src/assets/cta-banner-full.png`, `cta-clean-bg.png`, `cta-interior.png`, `hero.png` | 4 (≈1.5 MB together) | ✅ Used; candidates for compression |
-| Unused template files | `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`, `public/favicon.svg` | 4 | 🗑️ Can be deleted |
+| Unused files | CTA PNGs, `hero.png`, template icons, 6 unused hero JPEGs | 5.4 MB | 🗑️ Deleted 2026-10-11 |
 
 ## Where placeholders appear
 Unsplash URLs are used in:
@@ -39,6 +38,15 @@ Unsplash URLs are used in:
 4. Save, then **Publish**.
 
 The Media Library shows where each image is used and only lets you delete unused ones. Direct uploads are now available: see ADMIN_GUIDE §6.
+
+## Adding or replacing a page banner
+1. Put the JPEG in `public/images/hero/` (about 2048 px wide is plenty).
+2. Make the WebP copies:
+   ```bash
+   cd /root/dev/symmetry_react
+   docker run --rm -v "$PWD":/app -v /tmp/sharp:/tools -w /tools node:22 sh -c "npm init -y >/dev/null && npm i --silent sharp; cd /app && NODE_PATH=/tools/node_modules node scripts/optimize-images.mjs"
+   ```
+3. Use it in the page with `{...heroImage('/images/hero/<name>.jpeg')}` (from `src/lib/staticImages.js`), then rebuild.
 
 ## Rules for images going forward
 - Upload originals only through the admin Media Library, which goes to Cloudinary. Don't put new photos in `public/`.
