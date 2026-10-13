@@ -63,7 +63,7 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 
 ## Step 7: Make the remaining fixed content editable
 Inventory of what is still fixed in code: [ASSETS.md § Still in code](ASSETS.md#still-in-code-not-editable-in-admin).
-- [ ] **7a** Home slideshow ← Hero Banners; Home collections carousel ← Featured collections (code done; data + deploy waiting for approval).
+- [x] **7a** Home slideshow ← Hero Banners; Home collections carousel ← Featured collections (2026-10-13).
 - [ ] **7b** Page banners (About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers) and the other Home carousels editable, with Cloudinary photos.
 - [ ] **7c** Services, Sourcing and About sections (and Careers perks, page headings) into Page Content.
 

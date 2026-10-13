@@ -22,7 +22,7 @@ const slideImage = (src) => {
 
 export const Hero = () => {
   const text = useSiteText('home');
-  const banners = useBanners().filter((b) => b.image);
+  const banners = useBanners().items.filter((b) => b.image);
   const slides = banners.length ? banners : FALLBACK_SLIDES;
   const [slideIndex, setSlideIndex] = useState(0);
   const currentImageIndex = slideIndex % slides.length;

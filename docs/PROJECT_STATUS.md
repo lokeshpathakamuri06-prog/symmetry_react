@@ -265,7 +265,9 @@ _Last updated: 2026-10-13 (Step 7a: Home slideshow and collections from admin)_
 - **Backend:** migration **0004** adds `collections.label` and `collections.link` (applied; API redeployed); records, snapshot and a new test (91 tests).
 - **Admin forms:** Hero Banners shows only what the slideshow uses (photo, photo description, active). Collections gets "Carousel label" and "Card link", and Featured now says "Show in the Home page carousel".
 - **Data** (`cloudinary-import`): the 3 slideshow photos are uploaded to Cloudinary (`symmetry/banners/hero-haj-slide-1..3`).
-- **⏳ Waiting for approval:** saving the 3 banners and 6 featured collections through the admin API, Publish, then deploying the frontend. The frontend must not go live before the data, or the slideshow would show the 2 old banners and the carousel would disappear.
+- **Data** (saved through the admin API, then published): 3 Hero Banners (`ban-1..3`) with the 3 slideshow photos (the 2 old banners reused; their stock photo replaced), and 6 Featured collections matching the old cards (Luna Sofa … Pavilion Teak, still stock photos). Data first, then the frontend deploy, so the site never showed the old banners.
+- **Verified** (headless browser, desktop 1440 px and phone 390 px): slideshow photos load from Cloudinary (1600 px desktop, 800 px phone), 3 dots, same headline; carousel shows "01 — LIVING" … "06 — OUTDOOR" with the same links; screenshots match the previous look; no console errors.
+- **Problem found and fixed:** the first deploy crashed Home (`useBanners()` returns `{ items }`, not a list). Found by the browser check within minutes and fixed.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

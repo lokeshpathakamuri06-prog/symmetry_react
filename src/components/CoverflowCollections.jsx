@@ -17,7 +17,7 @@ const toCard = (c, i) => ({
 });
 
 export const CoverflowCollections = () => {
-  const items = useCollections().filter((c) => c.featured && c.image).map(toCard);
+  const items = useCollections().items.filter((c) => c.featured && c.image).map(toCard);
 
   const [selected, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
