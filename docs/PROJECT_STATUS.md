@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-11 (Step 6a: faster website)_
+_Last updated: 2026-10-13 (Step 7a: Home slideshow and collections from admin)_
 
 ## Summary
 | Area | State |
@@ -256,6 +256,16 @@ _Last updated: 2026-10-11 (Step 6a: faster website)_
   - Page text is identical to the previous baseline (the only differences were the admin edits made on 2026-10-10: sym-015 set to draft and jobs reordered).
   - Screenshots on desktop and phone look right; the admin loads lazily; no console errors.
 - **What still limits Home:** the intro animation ("Welcome to SYMMETRY", about 2–3 s before the headline shows) and framer-motion's start-up work (blocking time 1.4–3.6 s, varying with this shared CPU). Changing the intro is a design decision for the client.
+
+### 2026-10-13: Step 7a, Home slideshow and collections carousel read the admin
+**Why:** the admin had **Hero Banners** and **Collections** screens, but the Home page ignored them: the slideshow used 3 fixed photos and the "Designs That Inspire Living" carousel used 6 fixed cards. Editing those screens changed nothing on the site.
+- **Slideshow** (`components/Hero.jsx`): shows the photos of active, published Hero Banners in admin order. The headline and buttons stay in Page Content → Home, because the design has one headline over all photos. If no banner has a photo, the 3 local photos are used.
+  - Cloudinary photos get a `srcset` (800–2560 px); local `/images/...` paths keep their WebP copies.
+- **Collections carousel** (`components/CoverflowCollections.jsx`): shows Featured collections that have a cover image, in admin order, and hides itself if there are none. Card number comes from the order; the small label and the link are new fields.
+- **Backend:** migration **0004** adds `collections.label` and `collections.link` (applied; API redeployed); records, snapshot and a new test (91 tests).
+- **Admin forms:** Hero Banners shows only what the slideshow uses (photo, photo description, active). Collections gets "Carousel label" and "Card link", and Featured now says "Show in the Home page carousel".
+- **Data** (`cloudinary-import`): the 3 slideshow photos are uploaded to Cloudinary (`symmetry/banners/hero-haj-slide-1..3`).
+- **⏳ Waiting for approval:** saving the 3 banners and 6 featured collections through the admin API, Publish, then deploying the frontend. The frontend must not go live before the data, or the slideshow would show the 2 old banners and the carousel would disappear.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

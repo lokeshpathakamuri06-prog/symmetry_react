@@ -4,6 +4,9 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-13 | Hero Banners = slideshow **photos only**; the headline stays in Page Content | The design has one headline over all photos; no visible change | Per-slide headline and button |
+| 2026-10-13 | Home collections carousel = **Featured** collections with a cover image; new `label` and `link` columns | Reuses the existing Collections screen; links can point anywhere (category, search) | A separate "Home cards" screen |
+| 2026-10-13 | Slideshow falls back to the 3 local photos; the carousel hides when empty | The top of Home is never blank; an empty carousel looks broken | Hide the slideshow too |
 | 2026-10-11 | Home ships in the main bundle; every other page (and all admin) loads on demand | Fastest first paint for the most common landing page; visitors never download admin code | Lazy-load Home too |
 | 2026-10-11 | Prefetch other public pages only after the first interaction (or 6 s) | `import()` also runs the code, which competed with the first page's rendering in tests | Prefetch on idle right after load |
 | 2026-10-11 | Group react, framer-motion and lucide into 3 shared files | Otherwise lucide splits into one file per icon (370 requests) | Default splitting |

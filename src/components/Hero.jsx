@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSiteText } from '../context/PublicContentContext';
+import { useBanners, useSiteText } from '../context/PublicContentContext';
 import { heroImage } from '../lib/staticImages';
+import { cloudinaryUrl, isCloudinary, srcSet } from '../lib/images';
 
-// 3 Specific HAJ images requested: HAJ0025.jpeg, HAJ0026-1.jpeg, HAJ0035-1.jpeg
-const HERO_IMAGES = [
-  {
-    id: 1,
-    title: 'HAJ0025 Architecture',
-    src: '/images/hero/hero-haj-slide-1.jpeg',
-  },
-  {
-    id: 2,
-    title: 'HAJ0026 Interior',
-    src: '/images/hero/hero-haj-slide-2.jpeg',
-  },
-  {
-    id: 3,
-    title: 'HAJ0035 Living Pavilion',
-    src: '/images/hero/hero-haj-slide-3.jpeg',
-  },
+// Slideshow photos come from admin "Hero Banners" (active + published, in admin order).
+// The headline and buttons come from Page Content > Home. These local photos are only a fallback.
+const FALLBACK_SLIDES = [
+  { id: 'hero-1', title: 'HAJ0025 Architecture', image: '/images/hero/hero-haj-slide-1.jpeg' },
+  { id: 'hero-2', title: 'HAJ0026 Interior', image: '/images/hero/hero-haj-slide-2.jpeg' },
+  { id: 'hero-3', title: 'HAJ0035 Living Pavilion', image: '/images/hero/hero-haj-slide-3.jpeg' },
 ];
+
+const HERO_WIDTHS = [800, 1280, 1600, 2048, 2560];
+
+const slideImage = (src) => {
+  if (isCloudinary(src)) return { src: cloudinaryUrl(src, { width: 1600 }), srcSet: srcSet(src, HERO_WIDTHS), sizes: '100vw' };
+  if (src.startsWith('/images/')) return heroImage(src);
+  return { src };
+};
 
 export const Hero = () => {
   const text = useSiteText('home');
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const banners = useBanners().filter((b) => b.image);
+  const slides = banners.length ? banners : FALLBACK_SLIDES;
+  const [slideIndex, setSlideIndex] = useState(0);
+  const currentImageIndex = slideIndex % slides.length;
+  const slide = slides[currentImageIndex];
 
   // Smooth scroll handler
   const scrollToSection = (id) => {
@@ -37,24 +39,24 @@ export const Hero = () => {
   // Auto-advance hero background images every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+      setSlideIndex((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   return (
     <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-[#07121C] overflow-hidden flex flex-col justify-between select-none">
       {/* =========================================================================
-          1. FULL-BLEED HERO BACKGROUND IMAGE SLIDESHOW LAYER (12 HAJ Images)
+          1. FULL-BLEED HERO BACKGROUND IMAGE SLIDESHOW LAYER (admin Hero Banners)
           ========================================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.img
-            key={HERO_IMAGES[currentImageIndex].src}
-            {...heroImage(HERO_IMAGES[currentImageIndex].src)}
+            key={slide.id}
+            {...slideImage(slide.image)}
             fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
-            alt={HERO_IMAGES[currentImageIndex].title}
+            alt={slide.title}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
@@ -105,10 +107,10 @@ export const Hero = () => {
 
         {/* Slide Indicator Dots */}
         <div className="absolute bottom-8 flex items-center justify-center gap-2">
-          {HERO_IMAGES.map((img, idx) => (
+          {slides.map((img, idx) => (
             <button
               key={img.id}
-              onClick={() => setCurrentImageIndex(idx)}
+              onClick={() => setSlideIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
               className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
                 currentImageIndex === idx

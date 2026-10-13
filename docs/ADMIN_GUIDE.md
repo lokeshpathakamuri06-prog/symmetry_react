@@ -47,6 +47,11 @@ This lets you prepare several changes (for example a new product, its photos and
 
 Numbers next to **Customer Orders**, **Applications** and **Contact Enquiries** show new items waiting for you.
 
+### Home page slideshow and collections carousel
+- **Slideshow photos:** Hero Banners. Each active, published banner is one photo; the order of the list is the slide order. Use landscape photos at least 2400 px wide. The headline and buttons over the photos are in **Page Content → Home**.
+- **"Designs That Inspire Living" carousel:** Collections marked **Featured** that have a cover image, in list order. Each card shows the **Carousel label** (e.g. "Living"), title and subtitle; **Card link** is where "View Product" goes (e.g. `/shop?category=luxury-sofas`). Portrait cover photos work best.
+- As always: Save, then **Publish**.
+
 ---
 
 ## 4. Editing content (products, projects, journal and more)

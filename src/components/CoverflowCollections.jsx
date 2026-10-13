@@ -2,67 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useCollections } from '../context/PublicContentContext';
+import SmartImage from './SmartImage';
+
+// Cards are the admin "Collections" marked Featured that have a cover image, in admin order
+const toCard = (c, i) => ({
+  id: c.id,
+  number: String(i + 1).padStart(2, '0'),
+  categoryNumber: [String(i + 1).padStart(2, '0'), c.label?.toUpperCase()].filter(Boolean).join(' — '),
+  title: c.title,
+  subtitle: c.subtitle,
+  image: c.image,
+  link: c.link || '/shop',
+});
 
 export const CoverflowCollections = () => {
-  // 6 Curated collections: Living, Dining, Bedroom, Lounge, Office, Outdoor
-  const items = [
-    {
-      id: '01',
-      categoryNumber: '01 — LIVING',
-      title: 'Luna Sofa',
-      subtitle: 'A sculptural form for everyday comfort.',
-      image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=luxury-sofas',
-    },
-    {
-      id: '02',
-      categoryNumber: '02 — DINING',
-      title: 'Aurelia Table',
-      subtitle: 'Where conversations feel at home.',
-      image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=dining-furniture',
-    },
-    {
-      id: '03',
-      categoryNumber: '03 — BEDROOM',
-      title: 'Nuvola Bed',
-      subtitle: 'Sanctuary crafted for restful stillness.',
-      image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=bedroom-furniture',
-    },
-    {
-      id: '04',
-      categoryNumber: '04 — LOUNGE',
-      title: 'Elysian Chair',
-      subtitle: 'Designed for moments of quiet reflection.',
-      image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=lounge-chairs',
-    },
-    {
-      id: '05',
-      categoryNumber: '05 — OFFICE',
-      title: 'Kyoto Desk',
-      subtitle: 'Precision workspaces engineered for clarity.',
-      image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=office-furniture',
-    },
-    {
-      id: '06',
-      categoryNumber: '06 — OUTDOOR',
-      title: 'Pavilion Teak',
-      subtitle: 'All-weather architectural comfort.',
-      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-      link: '/shop?category=outdoor-furniture',
-    },
-  ];
+  const items = useCollections().filter((c) => c.featured && c.image).map(toCard);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [selected, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const total = items.length;
+  const activeIndex = total ? selected % total : 0;
 
   // Auto-scroll / Auto-advance interval
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || total < 2) return;
 
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % total);
@@ -70,6 +34,8 @@ export const CoverflowCollections = () => {
 
     return () => clearInterval(timer);
   }, [isPaused, total]);
+
+  if (!total) return null;
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
@@ -166,8 +132,9 @@ export const CoverflowCollections = () => {
                   }`}
                 >
                   {/* Card Image */}
-                  <img loading="lazy" decoding="async"
+                  <SmartImage
                     src={item.image}
+                    sizes="(min-width: 768px) 400px, (min-width: 640px) 350px, 290px"
                     alt={item.title}
                     className="w-full h-full object-cover pointer-events-none"
                   />
@@ -236,7 +203,7 @@ export const CoverflowCollections = () => {
                     : 'text-[#4F6467]/60 dark:text-[#AEB7BE]/60 hover:text-[#131E20]'
                 }`}
               >
-                <span>{item.id}</span>
+                <span>{item.number}</span>
                 {isActive && (
                   <motion.span
                     layoutId="activeCoverflowDot"

@@ -1,6 +1,6 @@
 # Assets Inventory
 
-_Last updated: 2026-10-10._ Paths are relative to `symmetry_react/`. Everything here will eventually move to Cloudinary, except logos, icons and the PDF, which stay with the site.
+_Last updated: 2026-10-13._ Paths are relative to `symmetry_react/`. Everything here will eventually move to Cloudinary, except logos, icons and the PDF, which stay with the site.
 
 ## Summary
 | Asset group | Location | Count / size | Status |
@@ -12,6 +12,29 @@ _Last updated: 2026-10-10._ Paths are relative to `symmetry_react/`. Everything 
 | Product catalogue | `public/Symmetry-Interiors-Catalog.pdf` | 4.6 MB | ✅ Download link in header/footer |
 | Logos | `src/assets/logo.png` (light), `src/assets/logo-dark.png` (dark), `public/logo-emblem.svg` (favicon) | 3 | ✅ Used |
 | Unused files | CTA PNGs, `hero.png`, template icons, 6 unused hero JPEGs | 5.4 MB | 🗑️ Deleted 2026-10-11 |
+
+## Still in code (not editable in admin)
+Checked 2026-10-13. Products, projects, journal, categories, team, jobs and testimonials all come from the admin; so do the Home slideshow and collections carousel (Step 7a).
+
+| Where | What is fixed | Images |
+|---|---|---|
+| Page banners: About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers | Photo | 8 local (`public/images/hero/`) |
+| Home "About" block | Photo | 1 local (`public/images/home/`) |
+| Home "Sourcing" carousel (`CoverflowSourcing`) | Photos and text | 5 Unsplash |
+| Home scroll showcase (`DynamicScrollShowcase`) | Photos and text | 14 Unsplash |
+| Home Instagram grid (`InstagramMosaic`) | Photos | 6 local (`/drive_products/`) |
+| About page | Timeline, mission/vision, philosophy, why-choose, comparison, stats (`data/aboutData.js`) and 2 photos | 14 Unsplash |
+| Services page | 6 services and process steps (`data/services.js`); also the header/mobile menu service list | 18 Unsplash |
+| Sourcing page | Countries, process, stats (`data/sourcing.js`) | 20 Unsplash |
+| Careers page | Perks list (`data/careers.js`) | none |
+| Shop, Projects, Journal, Careers | Page headings | none |
+| Catalogue pop-up and floating button | Cover picture | 1 Unsplash |
+| Order Success page | Example order shown without a real order | 1 Unsplash |
+| Logos, favicon, catalogue PDF | Meant to stay in code | 4 local |
+
+Also in code, on purpose: the fallback photo shown when a product or category image is missing (product card, category card, quick view, cart).
+
+**Editable, but still stock photos** (client replaces them by uploading; live counts 2026-10-13): products 21 of 33 photos, projects 30/30, journal 36/36, categories 11/12, team 5/6, testimonials 3/3.
 
 ## Where placeholders appear
 Unsplash URLs are used in:

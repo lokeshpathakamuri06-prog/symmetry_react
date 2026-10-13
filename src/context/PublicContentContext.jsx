@@ -72,6 +72,8 @@ export const useBlogs = () => useCollection('blogs');
 export const useTestimonials = () => useCollection('testimonials');
 export const useTeam = () => useCollection('team');
 export const useJobs = () => useCollection('jobs');
+export const useBanners = () => useCollection('banners');
+export const useCollections = () => useCollection('collections');
 
 // Page text edited in admin Page Content: useSiteText('home'), useSiteText('company'), ...
 const EMPTY_SECTION = Object.freeze({});
