@@ -14,8 +14,8 @@ import ScrollToTop from './components/ScrollToTop';
 import SearchModal from './components/SearchModal';
 import FloatingActionStack from './components/FloatingActionStack';
 import SmoothScroll from './components/SmoothScroll';
+import PageTransition, { RouteFallback } from './components/motion/PageTransition';
 import SiteOpener from './components/SiteOpener';
-import ContentState from './components/ContentState';
 
 // Public pages: Home ships in the main bundle (first paint); the rest load on demand
 import Home from './pages/Home';
@@ -121,7 +121,7 @@ const StorefrontShell = ({ children }) => {
         <Header />
 
         <main className="flex-1">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
 
         <Footer />
@@ -149,7 +149,7 @@ export const App = () => {
                 <StorefrontOpener />
                 <PrefetchPublicPages />
                 <StorefrontShell>
-                  <Suspense fallback={<ContentState status="loading" />}>
+                  <Suspense fallback={<RouteFallback />}>
                   <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={<Home />} />

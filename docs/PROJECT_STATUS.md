@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-17 (Motion plan: Phases 0–2)_
+_Last updated: 2026-10-17 (Motion plan: Phases 0–3)_
 
 ## Summary
 | Area | State |
@@ -322,6 +322,11 @@ _Last updated: 2026-10-17 (Motion plan: Phases 0–2)_
   - Search and the mobile menu (phone, touch) lock the page, and scrolling resumes after closing;
   - the reading line appears on articles only.
 - **Also checked:** all 15 pages at 1440 and 390 px: no errors, nothing left hidden. Lint: 53 warnings (was 56).
+
+### 2026-10-17: Motion plan, Phase 3: page transitions (frontend only)
+- `components/motion/PageTransition.jsx`: the page area (not the header) fades in and rises 12 px on every page change (~0.35 s). The page a visit starts on is not animated, so first paint is not delayed, and a query-only change (Shop filters) does not replay it.
+- Lazy page code: a blank canvas instead of a spinner; the spinner shows only if loading takes longer than 0.5 s (`RouteFallback`).
+- **Verified:** first load has no animation; after a click the opacity goes 0.6 → 0.92 → 1 over about 0.3 s, then settles with no leftover transform; Search opened right after a transition covers the full window. The 16 scroll checks still pass, and all 15 pages have no errors. Lint: 53 warnings.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

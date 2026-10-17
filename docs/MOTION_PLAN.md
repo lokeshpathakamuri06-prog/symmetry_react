@@ -1,6 +1,6 @@
 # Apple-style Motion & Polish Plan (public website)
 
-_Written: 2026-10-17. Status: **Phases 0–2 done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
+_Written: 2026-10-17. Status: **Phases 0–3 done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
 
 ## Goal
 Make every public page feel like apple.com: calm, spacious, and smooth to scroll, with motion that is **consistent, quick and purposeful**. Animation should help the eye follow the story and stay out of the way. It must never slow down the page or make people feel sick.
@@ -68,8 +68,8 @@ Lighthouse mobile (simulated 4× slower CPU), production build served locally:
 
 **Done when:** wheel, trackpad, touch, keyboard (Space, PgDn, Home) and anchor links all scroll correctly; modals never scroll the page behind them; Back returns to the same place.
 
-### Phase 3: Page transitions (≈0.5 day)
-- Route crossfade: the old page fades out in 0.15 s and the new one fades in and rises 12 px in 0.35 s (`AnimatePresence mode="wait"` keyed on the path).
+### Phase 3: Page transitions (≈0.5 day): ✅ done 2026-10-17
+- Route crossfade: the old page fades out in 0.15 s and the new one fades in and rises 12 px in 0.35 s (`AnimatePresence mode="wait"` keyed on the path). _Built as enter-only:_ an exit fade would hold the old page on screen while the scroll position changes underneath it, so the new page just fades in and rises 12 px (`components/motion/PageTransition.jsx`).
 - Replace the Suspense spinner with a quiet blank canvas, so lazy pages don't flash a loader.
 - _Stretch:_ View Transitions API morph from a card image to the detail hero (Projects → ProjectDetail, Shop → ProductDetail), where the browser supports it.
 
