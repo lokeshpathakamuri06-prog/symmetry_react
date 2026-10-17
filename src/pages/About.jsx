@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { 
   CheckCircle2, 
   MapPin, 
@@ -61,33 +62,24 @@ export const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Narrative Column */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <m.div
+              {...reveal()}
               className="flex items-center gap-3"
             >
               <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                 Our Story
               </span>
-            </motion.div>
+            </m.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <m.h2
+              {...reveal({ order: 1 })}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-[1.15] tracking-tight"
             >
               {text.storyTitle}
-            </motion.h2>
+            </m.h2>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.div
+              {...reveal({ order: 2 })}
               className="space-y-4 text-base sm:text-lg text-muted font-light leading-relaxed"
             >
               <p className="font-normal text-fg">
@@ -101,14 +93,11 @@ export const About = () => {
                   {text.storyParagraph3}
                 </p>
               )}
-            </motion.div>
+            </m.div>
 
             {/* Brand Message & Company Details Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+            <m.div
+              {...reveal({ order: 3 })}
               className="p-6 sm:p-8 rounded-2xl bg-sunken/40 dark:bg-surface border-l-4 border-accent border-y border-r border-line space-y-3"
             >
               <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
@@ -128,16 +117,13 @@ export const About = () => {
                   CIN: <span className="font-mono text-accent">U51909TG2017PTC115299</span>
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Editorial Asymmetric Visual Grid */}
           <div className="lg:col-span-6 grid grid-cols-12 gap-4 sm:gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+            <m.div
+              {...reveal()}
               className="col-span-7 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg"
             >
               <img loading="lazy" decoding="async"
@@ -145,13 +131,10 @@ export const About = () => {
                 alt="Architectural details and precision stonework"
                 className="w-full h-full object-cover"
               />
-            </motion.div>
+            </m.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.15 }}
+            <m.div
+              {...reveal({ order: 1 })}
               className="col-span-5 space-y-4 sm:space-y-6 pt-8 sm:pt-12"
             >
               <div className="aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg">
@@ -171,7 +154,7 @@ export const About = () => {
                   Zero sub-contracting risk
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </section>
@@ -183,37 +166,28 @@ export const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Heading */}
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <m.div
+              {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
               <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                 Our History
               </span>
-            </motion.div>
+            </m.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <m.h2
+              {...reveal({ order: 1 })}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
             >
               25 Years in the Making
-            </motion.h2>
+            </m.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.p
+              {...reveal({ order: 2 })}
               className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
             >
               How a small design studio grew into one of South Asia’s leading turnkey interior companies.
-            </motion.p>
+            </m.p>
           </div>
 
           {/* Visual Timeline Spine */}
@@ -226,12 +200,9 @@ export const About = () => {
                 const isEven = idx % 2 === 0;
 
                 return (
-                  <motion.div
+                  <m.div
+                    {...reveal({ order: 1 })}
                     key={item.year}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.7, delay: 0.1 }}
                     className={`relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${
                       isEven ? 'lg:text-right' : 'lg:text-left'
                     }`}
@@ -297,7 +268,7 @@ export const About = () => {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>
@@ -313,49 +284,37 @@ export const About = () => {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+              <m.div
+                {...reveal()}
                 className="flex items-center gap-3 mb-3"
               >
                 <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                   25+ Years of Global Sourcing
                 </span>
-              </motion.div>
+              </m.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+              <m.h2
+                {...reveal({ order: 1 })}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight max-w-2xl"
               >
                 25+ Years of Global Sourcing Mastery
-              </motion.h2>
+              </m.h2>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.p
+              {...reveal({ order: 2 })}
               className="text-sm sm:text-base text-muted font-light max-w-xl leading-relaxed"
             >
               Direct quarry extractions, multi-generational weaving guilds, and European hardware leaders. We eliminate trading brokers to ensure immaculate material purity.
-            </motion.p>
+            </m.p>
           </div>
 
           {/* Sourcing Hubs Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {sourcingHubs.map((hub, idx) => (
-              <motion.div
+              <m.div
+                {...reveal({ order: idx })}
                 key={hub.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.08 }}
                 className="group rounded-2xl sm:rounded-3xl bg-surface border border-line overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between"
               >
                 {/* Hub Header Image */}
@@ -408,7 +367,7 @@ export const About = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
@@ -445,11 +404,8 @@ export const About = () => {
       <section id="mission-vision-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Mission Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+          <m.div
+            {...reveal()}
             className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-surface border border-line shadow-sm flex flex-col justify-between relative overflow-hidden"
           >
             <div className="relative z-10 space-y-6">
@@ -490,14 +446,11 @@ export const About = () => {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Vision Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+          <m.div
+            {...reveal()}
             className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-fg dark:bg-canvas text-[#F5F1E8] border border-[#333] dark:border-line shadow-xl flex flex-col justify-between relative overflow-hidden"
           >
             {/* Ambient gold glow */}
@@ -535,7 +488,7 @@ export const About = () => {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -547,27 +500,21 @@ export const About = () => {
           {/* Header & Filter Controls */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+              <m.div
+                {...reveal()}
                 className="flex items-center gap-3 mb-3"
               >
                 <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                   Our Team
                 </span>
-              </motion.div>
+              </m.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
+              <m.h2
+                {...reveal({ order: 1 })}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-fg font-normal leading-tight tracking-tight"
               >
                 Our Leadership &amp; Mastercraft
-              </motion.h2>
+              </m.h2>
             </div>
 
             {/* Department Filter Tabs */}
@@ -623,37 +570,28 @@ export const About = () => {
         <div className="space-y-16">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <m.div
+              {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
               <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                 Why Choose Symmetry
               </span>
-            </motion.div>
+            </m.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <m.h2
+              {...reveal({ order: 1 })}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-fg font-normal leading-tight tracking-tight"
             >
               Why Choose Symmetry
-            </motion.h2>
+            </m.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.p
+              {...reveal({ order: 2 })}
               className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
             >
               How working with one team that designs, sources and builds compares with a typical contractor.
-            </motion.p>
+            </m.p>
           </div>
 
           {/* 6 Value Pillars */}
@@ -661,12 +599,9 @@ export const About = () => {
             {whyChoosePillars.map((item, idx) => {
               const IconComponent = item.icon;
               return (
-                <motion.div
+                <m.div
+                  {...reveal({ order: idx })}
                   key={item.number}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.08 }}
                   className="p-8 rounded-2xl sm:rounded-3xl bg-surface border border-line shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
@@ -695,7 +630,7 @@ export const About = () => {
                       {item.number}/06
                     </span>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>

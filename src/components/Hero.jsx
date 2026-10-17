@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { ease, enter } from '../lib/motion';
 import { useBanners, useSiteText } from '../context/PublicContentContext';
 import { heroImage } from '../lib/staticImages';
 import { cloudinaryUrl, isCloudinary, srcSet } from '../lib/images';
@@ -50,8 +51,10 @@ export const Hero = () => {
     <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-black overflow-hidden select-none">
       {/* Slideshow photos (admin Hero Banners) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <AnimatePresence mode="popLayout">
-          <motion.img
+        {/* initial={false}: the first photo is on screen at once (it is the page's main image);
+            later slides cross-fade in with a slow settle from a slight zoom */}
+        <AnimatePresence mode="popLayout" initial={false}>
+          <m.img
             key={slide.id}
             {...slideImage(slide.image)}
             fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
@@ -59,7 +62,7 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.6, ease: [0.28, 0.11, 0.32, 1] }}
+            transition={{ opacity: { duration: 1.2, ease: ease.apple }, scale: { duration: 6, ease: ease.out } }}
             className="w-full h-full object-cover object-center absolute inset-0"
           />
         </AnimatePresence>
@@ -73,30 +76,25 @@ export const Hero = () => {
 
       {/* Copy */}
       <div className="relative z-10 h-full site-container flex flex-col justify-end pb-24 sm:pb-28">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.2, ease: [0.28, 0.11, 0.32, 1] }}
-          className="max-w-3xl"
-        >
-          <p className="text-[13px] sm:text-[14px] font-semibold tracking-[0.14em] uppercase text-white/90 mb-4 [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
+        <div className="max-w-3xl">
+          <m.p {...enter({ variant: 'fadeIn' })} className="text-[13px] sm:text-[14px] font-semibold tracking-[0.14em] uppercase text-white/90 mb-4 [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
             Symmetry Interiors
-          </p>
+          </m.p>
           <h1 className="text-display-xl text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.25)]">
             {text.heroTitle} <span className="text-[#D9C59A]">{text.heroTitleHighlight}</span>
           </h1>
-          <p className="mt-5 text-[18px] sm:text-[21px] text-white/90 leading-[1.5] max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]">
+          <m.p {...enter({ order: 1 })} className="mt-5 text-[18px] sm:text-[21px] text-white/90 leading-[1.5] max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]">
             {text.heroSubtitle}
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          </m.p>
+          <m.div {...enter({ order: 2 })} className="mt-8 flex flex-wrap items-center gap-3">
             <button type="button" onClick={() => scrollToSection('projects-section')} className="btn-light cursor-pointer">
               {text.heroPrimaryCta}
             </button>
             <button type="button" onClick={() => scrollToSection('about-section')} className="btn-glass cursor-pointer">
               {text.heroSecondaryCta}
             </button>
-          </div>
-        </motion.div>
+          </m.div>
+        </div>
 
         {/* Slide indicators */}
         <div className="absolute bottom-8 right-5 sm:right-8 lg:right-10 flex items-center gap-2 rounded-full bg-black/25 backdrop-blur-md px-3 py-2">

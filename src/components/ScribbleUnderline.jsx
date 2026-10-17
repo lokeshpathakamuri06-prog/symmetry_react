@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { ease, VIEWPORT } from '../lib/motion';
 
 /**
  * ScribbleUnderline
@@ -16,7 +17,7 @@ export const ScribbleUnderline = ({ children, className = '', color = '#36656B' 
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
       >
-        <motion.path
+        <m.path
           d="M2 11C45 4 155 3 198 12C140 7 70 8 3 14"
           stroke={color}
           strokeWidth="3"
@@ -24,8 +25,8 @@ export const ScribbleUnderline = ({ children, className = '', color = '#36656B' 
           strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 0.85 }}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          viewport={{ ...VIEWPORT, amount: 0.8 }}
+          transition={{ duration: 0.9, ease: ease.out, delay: 0.2 }}
         />
       </svg>
     </span>

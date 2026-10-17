@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { 
   Layers, 
   MapPin 
@@ -114,12 +115,9 @@ const ProjectsView = ({ projects }) => {
           ========================================================================= */}
       {featuredProject && (
         <section id="featured-commission" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+          <m.div
+            {...reveal()}
             whileHover={{ y: -4 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="group rounded-3xl sm:rounded-[40px] bg-sunken/40 dark:bg-surface border border-line hover:border-accent/60 p-6 sm:p-10 lg:p-14 overflow-hidden shadow-luxury hover:shadow-2xl transition-all duration-500 relative"
           >
             {/* Ambient golden radial glow */}
@@ -220,7 +218,7 @@ const ProjectsView = ({ projects }) => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </section>
       )}
 
@@ -275,7 +273,7 @@ const ProjectsView = ({ projects }) => {
           SECTION 4: MASONRY / EDITORIAL PROJECT GALLERY
           ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
+        <m.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
         >
@@ -289,10 +287,10 @@ const ProjectsView = ({ projects }) => {
               />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
 
         {filteredProjects.length === 0 && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="py-24 text-center rounded-3xl bg-surface border border-line shadow-sm"
@@ -312,7 +310,7 @@ const ProjectsView = ({ projects }) => {
                 Reset Filter to All
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </section>
     </div>

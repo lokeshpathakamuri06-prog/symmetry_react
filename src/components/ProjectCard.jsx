@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, MapPin, Calendar, Layers } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import AppleCardWrapper from './AppleCardWrapper';
 import SmartImage from './SmartImage';
 
@@ -12,12 +13,9 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
   const category = project.category || project.typology || 'Residential';
 
   return (
-    <motion.div
+    <m.div
+      {...reveal({ order: index % 6 })}
       layout
-      initial={{ opacity: 0, y: 35, scale: 0.98 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className={`h-full ${className}`}
     >
       <AppleCardWrapper className="group relative flex flex-col h-full bg-surface overflow-hidden">
@@ -113,7 +111,7 @@ export const ProjectCard = ({ project, index = 0, className = '' }) => {
         )}
       </div>
       </AppleCardWrapper>
-    </motion.div>
+    </m.div>
   );
 };
 

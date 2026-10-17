@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import { m, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 
@@ -109,7 +110,7 @@ export const DynamicScrollShowcase = () => {
           <div className="absolute inset-0 bg-[radial-gradient(rgba(54,101,107,0.08)_1px,transparent_1px)] [background-size:28px_28px] opacity-30 pointer-events-none" />
 
           {/* Section Header */}
-          <motion.div
+          <m.div
             style={shouldReduceMotion ? {} : { y: titleY, opacity: titleOpacity }}
             className="relative z-20 text-center max-w-3xl mx-auto pt-4 shrink-0"
           >
@@ -125,12 +126,12 @@ export const DynamicScrollShowcase = () => {
             <p className="mt-2 text-sm sm:text-base text-[#A1A1A6] font-light leading-relaxed max-w-lg mx-auto">
               Keep scrolling to step inside one of our homes.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Interactive Kinetic Multi-Layer Gallery Stage */}
           <div className="relative flex-1 w-full max-w-7xl mx-auto flex items-center justify-center my-auto">
             {/* LEFT 3 SATELLITE CARDS */}
-            <motion.div
+            <m.div
               style={
                 shouldReduceMotion
                   ? { opacity: 1 }
@@ -143,7 +144,7 @@ export const DynamicScrollShowcase = () => {
               className="absolute left-0 sm:left-4 md:left-8 lg:left-14 z-10 flex flex-col gap-5 pointer-events-auto"
             >
               {/* Top Left Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: leftYTop, rotate: leftRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative group"
               >
@@ -156,10 +157,10 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">01 &bull; Portals</span>
                   <span className="text-xs font-serif leading-tight">Roman Travertine</span>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Mid Left Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: leftYMid }}
                 className="w-48 lg:w-60 aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative ml-6 group"
               >
@@ -172,10 +173,10 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">02 &bull; Monoliths</span>
                   <span className="text-xs font-serif leading-tight">Fluted Cavern Stone</span>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Bottom Left Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: leftYBottom, rotate: leftRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative group"
               >
@@ -188,11 +189,11 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">03 &bull; Ergonomics</span>
                   <span className="text-xs font-serif leading-tight">Cognac Saddle Leather</span>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
 
             {/* CENTER HERO FOCAL PAVILION */}
-            <motion.div
+            <m.div
               style={
                 shouldReduceMotion
                   ? { opacity: 1 }
@@ -236,10 +237,10 @@ export const DynamicScrollShowcase = () => {
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* RIGHT 3 SATELLITE CARDS */}
-            <motion.div
+            <m.div
               style={
                 shouldReduceMotion
                   ? { opacity: 1 }
@@ -252,7 +253,7 @@ export const DynamicScrollShowcase = () => {
               className="absolute right-0 sm:right-4 md:right-8 lg:right-14 z-10 flex flex-col gap-5 pointer-events-auto"
             >
               {/* Top Right Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: rightYTop, rotate: rightRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative group"
               >
@@ -265,10 +266,10 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">04 &bull; Quarries</span>
                   <span className="text-xs font-serif leading-tight">Verona Bookmatch</span>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Mid Right Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: rightYMid }}
                 className="w-48 lg:w-60 aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative mr-6 group"
               >
@@ -281,10 +282,10 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">05 &bull; Luminaires</span>
                   <span className="text-xs font-serif leading-tight">Mouth-Blown Murano</span>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Bottom Right Card */}
-              <motion.div
+              <m.div
                 style={shouldReduceMotion ? {} : { y: rightYBottom, rotate: rightRotate }}
                 className="w-44 lg:w-56 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-[#1C1C1E] relative group"
               >
@@ -297,12 +298,12 @@ export const DynamicScrollShowcase = () => {
                   <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">06 &bull; Landscape</span>
                   <span className="text-xs font-serif leading-tight">Kiln-Dried Hardwood</span>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </div>
 
           {/* Bottom Navigation Strip */}
-          <motion.div
+          <m.div
             style={shouldReduceMotion ? {} : { opacity: actionOpacity, y: actionY }}
             className="relative z-20 max-w-4xl mx-auto w-full pt-2 flex items-center justify-between text-xs sm:text-sm text-[#A1A1A6] border-t border-white/10"
           >
@@ -314,13 +315,13 @@ export const DynamicScrollShowcase = () => {
             <div className="flex items-center gap-4 font-light">
               <span className="hidden sm:inline">Keep scrolling</span>
               <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
-                <motion.div
+                <m.div
                   style={{ scaleX: smoothProgress, transformOrigin: 'left' }}
                   className="w-full h-full bg-accent"
                 />
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -389,18 +390,10 @@ export const DynamicScrollShowcase = () => {
 
             <div className="grid grid-cols-2 gap-3">
               {mobileSatellites.map((card, idx) => {
-                const isLeft = card.side === 'left';
                 return (
-                  <motion.div
+                  <m.div
+                    {...reveal({ order: idx % 2 })}
                     key={card.id}
-                    initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -30 : 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: '-20px' }}
-                    transition={{
-                      duration: shouldReduceMotion ? 0 : 0.55,
-                      delay: shouldReduceMotion ? 0 : (idx % 2) * 0.1,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
                     className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white/15 bg-[#1C1C1E] relative group"
                   >
                     <img loading="lazy" decoding="async"
@@ -416,7 +409,7 @@ export const DynamicScrollShowcase = () => {
                         {card.title}
                       </span>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>

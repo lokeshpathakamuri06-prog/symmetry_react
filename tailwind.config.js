@@ -90,8 +90,15 @@ export default {
         'display-lg': ['clamp(2.25rem, 4.8vw, 4.25rem)', { lineHeight: '1.05', letterSpacing: '-0.03em', fontWeight: '640' }],
         'display-md': ['clamp(1.875rem, 3.4vw, 3rem)', { lineHeight: '1.08', letterSpacing: '-0.025em', fontWeight: '640' }],
       },
+      // Motion tokens: same values as src/lib/motion.js
       transitionTimingFunction: {
-        'apple': 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+        'apple': 'var(--ease-apple)',
+        'out-expo': 'var(--ease-out)',
+      },
+      transitionDuration: {
+        'fast': 'var(--dur-fast)',
+        'base': 'var(--dur-base)',
+        'slow': 'var(--dur-slow)',
       },
       boxShadow: {
         // Softer, wider shadows (Apple-style) for every card that uses the Tailwind defaults

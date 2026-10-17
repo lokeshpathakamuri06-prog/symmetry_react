@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sun, Moon } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
 export const ThemeToggle = ({ className = '', onPhoto = false }) => {
@@ -13,7 +13,7 @@ export const ThemeToggle = ({ className = '', onPhoto = false }) => {
       title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
       className={`relative w-9 h-9 inline-flex items-center justify-center rounded-full transition-colors ${onPhoto ? 'text-white/90 hover:text-white hover:bg-white/15' : 'text-fg/80 hover:text-fg hover:bg-fg/[0.06]'} ${className}`}
     >
-      <motion.span
+      <m.span
         key={theme}
         initial={{ rotate: -60, opacity: 0, scale: 0.8 }}
         animate={{ rotate: 0, opacity: 1, scale: 1 }}
@@ -21,7 +21,7 @@ export const ThemeToggle = ({ className = '', onPhoto = false }) => {
         className="inline-flex"
       >
         {isDark ? <Sun className="w-[18px] h-[18px]" strokeWidth={1.8} /> : <Moon className="w-[18px] h-[18px]" strokeWidth={1.8} />}
-      </motion.span>
+      </m.span>
     </button>
   );
 };

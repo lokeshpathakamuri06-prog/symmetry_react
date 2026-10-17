@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { 
   MapPin, 
   CheckCircle2, 
@@ -14,15 +15,6 @@ import { sourcingCountries, sourcingProcess, sourcingStats } from '../data/sourc
 import { heroImage } from '../lib/staticImages';
 import PageHero from '../components/PageHero';
 
-// Framer Motion Animation Variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 35 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } 
-  }
-};
 
 export const Sourcing = () => {
   const scrollToAnchor = (anchorId) => {
@@ -98,11 +90,8 @@ export const Sourcing = () => {
               id={country.anchorId}
               className="scroll-mt-28"
             >
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-70px' }}
-                variants={fadeInUp}
+              <m.div
+                {...reveal()}
                 className="rounded-3xl sm:rounded-[44px] bg-gradient-to-b from-surface via-surface to-surface dark:via-canvas border border-line hover:border-accent/50 p-6 sm:p-10 lg:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] relative overflow-hidden transition-all duration-500"
               >
                 {/* Subtle ambient decorative radial glow */}
@@ -274,7 +263,7 @@ export const Sourcing = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             </section>
           );
         })}
@@ -289,37 +278,28 @@ export const Sourcing = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <m.div
+              {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
               <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                 Five-Stage Sourcing Pipeline
               </span>
-            </motion.div>
+            </m.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <m.h2
+              {...reveal({ order: 1 })}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
             >
               The End-to-End Procurement Journey
-            </motion.h2>
+            </m.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.p
+              {...reveal({ order: 2 })}
               className="mt-4 text-xs sm:text-sm md:text-base text-muted font-light max-w-2xl mx-auto leading-relaxed"
             >
               Every stone slab, hardwood piece and Murano chandelier is checked at the source before it is packed and shipped.
-            </motion.p>
+            </m.p>
           </div>
 
           {/* Stepper Progress Track Connector (Desktop Only) */}
@@ -342,13 +322,10 @@ export const Sourcing = () => {
               const StepIcon = step.icon;
 
               return (
-                <motion.div
+                <m.div
+                  {...reveal({ order: idx })}
                   key={idx}
-                  initial={{ opacity: 0, y: 40, scale: 0.96 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: '-60px' }}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="relative p-6 sm:p-7 rounded-[32px] bg-gradient-to-b from-surface via-surface to-canvas dark:via-canvas border border-line shadow-lg hover:shadow-[0_25px_50px_rgba(54,101,107,0.16)] dark:hover:shadow-[0_25px_50px_rgba(0,0,0,0.7)] hover:border-accent/70 transition-all duration-500 flex flex-col justify-between overflow-hidden group"
                 >
 
@@ -410,7 +387,7 @@ export const Sourcing = () => {
                       </span>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>

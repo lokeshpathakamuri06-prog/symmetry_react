@@ -18,7 +18,7 @@ import {
   Send,
   CreditCard
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import ProductCard from '../components/ProductCard';
@@ -418,7 +418,7 @@ const ProductDetailView = ({ products }) => {
               {/* Add to Cart Toast Notification */}
               <AnimatePresence>
                 {addedToast && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
@@ -436,7 +436,7 @@ const ProductDetailView = ({ products }) => {
                     >
                       View Cart &rarr;
                     </Link>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -542,7 +542,7 @@ const ProductDetailView = ({ products }) => {
 
               <AnimatePresence>
                 {careExpanded && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
@@ -576,7 +576,7 @@ const ProductDetailView = ({ products }) => {
                         </div>
                       </>
                     )}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -643,7 +643,7 @@ const ProductDetailView = ({ products }) => {
       <AnimatePresence>
         {isCustomModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
@@ -763,7 +763,7 @@ const ProductDetailView = ({ products }) => {
                   </div>
                 </form>
               )}
-            </motion.div>
+            </m.div>
           </div>
         )}
       </AnimatePresence>

@@ -12,7 +12,6 @@ export default defineConfig({
         codeSplitting: {
           groups: [
             { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/ },
-            { name: 'motion', test: /node_modules[\\/](framer-motion|motion-dom|motion-utils)[\\/]/ },
             { name: 'icons', test: /node_modules[\\/]lucide-react[\\/]/ },
           ],
         },

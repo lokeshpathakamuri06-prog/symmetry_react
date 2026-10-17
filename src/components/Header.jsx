@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Search, Heart, ShoppingBag, Menu, ChevronDown, ArrowRight } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import logoDarkImg from '../assets/logo-dark.png';
@@ -159,7 +159,7 @@ export const Header = () => {
         {/* Services mega menu (desktop) */}
         <AnimatePresence>
           {servicesOpen && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -195,7 +195,7 @@ export const Header = () => {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </header>

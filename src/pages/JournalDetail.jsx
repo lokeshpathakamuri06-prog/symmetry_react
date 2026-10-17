@@ -10,7 +10,7 @@ import {
   MessageCircle,
   Camera
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import BlogCard from '../components/BlogCard';
@@ -182,7 +182,7 @@ const JournalDetailView = ({ blogs }) => {
         {/* Copy Link Toast Notification */}
         <AnimatePresence>
           {copied && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -190,7 +190,7 @@ const JournalDetailView = ({ blogs }) => {
             >
               <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Link copied.</span>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 

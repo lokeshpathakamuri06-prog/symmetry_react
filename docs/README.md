@@ -13,6 +13,7 @@ A website for **Symmetry Interiors & Building Solutions Pvt. Ltd.** (Ameerpet, H
 | [PROJECT_STATUS.md](PROJECT_STATUS.md) | What has been built so far, and the current state of each part |
 | [NEXT_STEPS.md](NEXT_STEPS.md) | What we do next, in order, with what "done" means for each step |
 | [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md) | The target architecture: backend, database, image pipeline, API, security |
+| [MOTION_PLAN.md](MOTION_PLAN.md) | The plan for Apple-style scrolling, animations and polish on every public page |
 | [DECISIONS.md](DECISIONS.md) | Why things are the way they are (decision log) |
 | [ASSETS.md](ASSETS.md) | Every image, logo, document and placeholder, and what must be replaced |
 | [OPERATIONS.md](OPERATIONS.md) | How to run, rebuild and check everything on the server |

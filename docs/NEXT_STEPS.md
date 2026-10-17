@@ -64,10 +64,24 @@ _Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to botto
 ## Step 7: Make the remaining fixed content editable
 Inventory of what is still fixed in code: [ASSETS.md § Still in code](ASSETS.md#still-in-code-not-editable-in-admin).
 - [x] **7a** Home slideshow ← Hero Banners; Home collections carousel ← Featured collections (2026-10-13).
-- [ ] **7b** Page banners (About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers) and the other Home carousels editable, with Cloudinary photos.
+- [~] **7b** Page banners (About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers) editable: done 2026-10-14 (Admin → Page Banners, in preview, deploy pending). Still to do: the other Home carousels.
 - [ ] **7c** Services, Sourcing and About sections (and Careers perks, page headings) into Page Content.
 
 **Done when:** every photo and text block a visitor sees can be changed in the admin, except logos and the catalogue PDF.
+
+## Step 8: Apple-style motion and smooth scrolling (frontend only)
+Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
+- [x] Phase 0: commit the 2026-10-14 redesign; record the Lighthouse and screenshot baseline (2026-10-17)
+- [x] Phase 1: motion tokens, `reveal()`/`<Reveal>`/`<CountUp>`, lazy motion engine; 60 reveals converted (2026-10-17)
+- [ ] Phase 2: Lenis as the only scroll owner; native touch scrolling; modal scroll lock; Back keeps the scroll position
+- [ ] Phase 3: page-change crossfade
+- [ ] Phase 4: signature scroll moments on each page
+- [ ] Phase 5: micro-interactions (header, menu, buttons, cards, modals, forms)
+- [ ] Phase 6: visual polish (spacing, type, colour check)
+- [ ] Phase 7: performance and accessibility guardrails
+- [ ] Phase 8: QA on real devices; preview; deploy
+
+**Done when:** every public page uses the shared motion system, scrolls smoothly with mouse, trackpad and touch, respects reduced motion, and Lighthouse mobile performance is at least 90.
 
 ## Later / optional
 - Buy a domain, then change the hostname in the Caddyfile.

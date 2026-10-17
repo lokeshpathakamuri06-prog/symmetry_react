@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, ArrowRight, Layers, Sparkles, BookOpen } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useSearch } from '../context/SearchContext';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from './SmartImage';
@@ -70,7 +70,7 @@ export const SearchModal = () => {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[1200] flex items-start justify-center pt-16 sm:pt-24 px-4">
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -78,7 +78,7 @@ export const SearchModal = () => {
             className="fixed inset-0 bg-black/80 backdrop-blur-md"
           />
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.96, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -20 }}
@@ -250,7 +250,7 @@ export const SearchModal = () => {
                 </>
               )}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </AnimatePresence>

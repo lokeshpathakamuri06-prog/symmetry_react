@@ -1,16 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import AppleCardWrapper from './AppleCardWrapper';
 
 export const ServiceCard = ({ service }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    <m.div
+      {...reveal()}
       className="h-full"
     >
       <AppleCardWrapper className="group relative p-8 sm:p-10 rounded-3xl bg-surface flex flex-col justify-between h-full">
@@ -47,7 +45,7 @@ export const ServiceCard = ({ service }) => {
           </Link>
         </div>
       </AppleCardWrapper>
-    </motion.div>
+    </m.div>
   );
 };
 

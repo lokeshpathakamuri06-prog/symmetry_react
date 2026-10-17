@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Button from './Button';
 
 export const CoverflowSourcing = () => {
@@ -154,7 +154,7 @@ export const CoverflowSourcing = () => {
               const opacity = 1 - Math.abs(offset) * 0.22; // subtle fade for adjacent cards
 
               return (
-                <motion.div
+                <m.div
                   key={item.id}
                   onClick={() => setActiveIndex(index)}
                   animate={{
@@ -194,7 +194,7 @@ export const CoverflowSourcing = () => {
                       {item.country}
                     </h3>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -216,7 +216,7 @@ export const CoverflowSourcing = () => {
               >
                 <span>{item.id}</span>
                 {isActive && (
-                  <motion.span
+                  <m.span
                     layoutId="activeSourcingCoverflowDot"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-fg dark:bg-accent rounded-full"
                   />

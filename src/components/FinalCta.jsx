@@ -1,15 +1,13 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import Button from './Button';
 
 export const FinalCta = ({ className = '' }) => {
   return (
     <section className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-0 ${className}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+      <m.div
+        {...reveal()}
         className="rounded-3xl bg-sunken/30 dark:bg-surface border border-line p-8 sm:p-12 lg:p-16 text-center shadow-sm"
       >
         <div className="max-w-2xl mx-auto space-y-5">
@@ -45,7 +43,7 @@ export const FinalCta = ({ className = '' }) => {
             Studio visits in Hyderabad by appointment
           </p>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };

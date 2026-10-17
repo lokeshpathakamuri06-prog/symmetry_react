@@ -13,7 +13,7 @@ import {
   Navigation,
   ShieldCheck
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import { useSiteText } from '../context/PublicContentContext';
 import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/contact';
@@ -208,7 +208,7 @@ export const Contact = () => {
             <AnimatePresence mode="wait">
               {submitted ? (
                 /* SUCCESS SUBMISSION MESSAGE */
-                <motion.div
+                <m.div
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -250,7 +250,7 @@ export const Contact = () => {
                       <span>Follow-up on WhatsApp</span>
                     </a>
                   </div>
-                </motion.div>
+                </m.div>
               ) : (
                 /* CONTACT FORM */
                 <form key="form" onSubmit={handleSubmit} className="space-y-6">

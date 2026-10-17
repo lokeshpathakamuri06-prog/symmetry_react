@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import {
   Briefcase,
   MapPin,
@@ -155,12 +156,9 @@ export const Careers = () => {
           {careerPerks.map((perk, i) => {
             const Icon = perkIcons[i % perkIcons.length];
             return (
-              <motion.div
+              <m.div
+                {...reveal({ order: i })}
                 key={perk.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
                 className="p-6 rounded-3xl bg-surface border border-line shadow-apple dark:shadow-apple-dark"
               >
                 <div className="w-11 h-11 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mb-4">
@@ -168,7 +166,7 @@ export const Careers = () => {
                 </div>
                 <h3 className="text-base font-semibold text-fg">{perk.title}</h3>
                 <p className="text-xs text-muted mt-2 leading-relaxed">{perk.description}</p>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -239,7 +237,7 @@ export const Careers = () => {
 
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -273,7 +271,7 @@ export const Careers = () => {
                           Apply for this role
                         </button>
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -287,7 +285,7 @@ export const Careers = () => {
         <div className="p-8 sm:p-12 rounded-3xl bg-surface border border-line shadow-luxury">
           <AnimatePresence mode="wait">
             {submitted ? (
-              <motion.div
+              <m.div
                 key="success"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -308,9 +306,9 @@ export const Careers = () => {
                 >
                   Submit Another Application
                 </button>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.form key="form" onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <m.form key="form" onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div>
                   <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">Apply Now</span>
                   <h2 className="text-2xl font-bold tracking-tight text-fg mt-0.5">Join Our Team</h2>
@@ -375,7 +373,7 @@ export const Careers = () => {
                   <Send className="w-4 h-4" />
                   {submitting ? 'Submitting...' : 'Submit Application'}
                 </button>
-              </motion.form>
+              </m.form>
             )}
           </AnimatePresence>
         </div>

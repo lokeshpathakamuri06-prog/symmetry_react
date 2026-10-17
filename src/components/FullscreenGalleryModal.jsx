@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 import SmartImage from './SmartImage';
 
@@ -50,7 +50,7 @@ export default function FullscreenGalleryModal({
 
   return (
     <AnimatePresence>
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -103,7 +103,7 @@ export default function FullscreenGalleryModal({
             className={`relative max-w-5xl max-h-[75vh] transition-transform duration-300 ease-out cursor-${isZoomed ? 'zoom-out' : 'zoom-in'}`}
             onClick={() => setIsZoomed(!isZoomed)}
           >
-            <motion.img
+            <m.img
               key={currentIndex}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{
@@ -153,7 +153,7 @@ export default function FullscreenGalleryModal({
             ))}
           </div>
         )}
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 }

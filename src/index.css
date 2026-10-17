@@ -9,6 +9,13 @@
      Values are RGB channels so Tailwind opacity modifiers (bg-accent/10) work.
      ======================================================================= */
   :root {
+    /* Motion: same values as src/lib/motion.js */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+    --dur-fast: 200ms;
+    --dur-base: 500ms;
+    --dur-slow: 900ms;
+
     --c-canvas: 248 247 244;
     --c-surface: 255 255 255;
     --c-sunken: 240 238 233;

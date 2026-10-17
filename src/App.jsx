@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { LazyMotion, MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { SearchProvider } from './context/SearchContext';
@@ -133,8 +134,14 @@ const StorefrontShell = ({ children }) => {
   );
 };
 
+// Animation engine downloads after first paint; <m.*> elements wait for it
+const loadMotionFeatures = () => import('./lib/motionFeatures').then((mod) => mod.default);
+
 export const App = () => {
   return (
+    // reducedMotion="user": visitors who turn motion off in their settings get fades only
+    <MotionConfig reducedMotion="user">
+    <LazyMotion features={loadMotionFeatures} strict>
     <ThemeProvider>
       <CartProvider>
         <SearchProvider>
@@ -197,6 +204,8 @@ export const App = () => {
         </SearchProvider>
       </CartProvider>
     </ThemeProvider>
+    </LazyMotion>
+    </MotionConfig>
   );
 };
 

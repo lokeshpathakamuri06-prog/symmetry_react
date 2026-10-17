@@ -1,17 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import AppleCardWrapper from './AppleCardWrapper';
 import SmartImage from './SmartImage';
 
 export const CategoryCard = ({ category }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    <m.div
+      {...reveal()}
       className="h-full"
     >
       <AppleCardWrapper className="group relative aspect-[4/5] rounded-3xl overflow-hidden block bg-sunken">
@@ -54,7 +52,7 @@ export const CategoryCard = ({ category }) => {
           </div>
         </Link>
       </AppleCardWrapper>
-    </motion.div>
+    </m.div>
   );
 };
 

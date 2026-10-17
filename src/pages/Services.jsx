@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { 
   Check, 
   Sparkles, 
@@ -15,19 +16,6 @@ import { services, processSteps } from '../data/services';
 import { heroImage } from '../lib/staticImages';
 import PageHero from '../components/PageHero';
 
-// Animation variants for smooth scroll reveal
-const fadeInUp = {
-  hidden: { opacity: 0, y: 35 },
-  visible: (custom = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      delay: custom * 0.1,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
 
 /* =========================================================================
    1. RESIDENTIAL INTERIORS: Grand Editorial Asymmetric Split
@@ -42,11 +30,8 @@ const ResidentialSection = ({ service }) => {
 
   return (
     <section ref={containerRef} id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-700"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -123,7 +108,7 @@ const ResidentialSection = ({ service }) => {
           {/* Asymmetric Overlapping Visuals */}
           <div className="lg:col-span-6 space-y-4">
             <div className="relative aspect-[4/3] lg:aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line shadow-lg group">
-              <motion.img
+              <m.img
                 style={{ y: imageY }}
                 src={service.image}
                 alt={service.title}
@@ -158,7 +143,7 @@ const ResidentialSection = ({ service }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -169,11 +154,8 @@ const ResidentialSection = ({ service }) => {
 const CommercialSection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="relative rounded-3xl sm:rounded-[36px] overflow-hidden bg-fg dark:bg-canvas text-[#F5F1E8] border border-[#333] dark:border-line shadow-2xl p-6 sm:p-10 lg:p-14"
       >
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
@@ -262,7 +244,7 @@ const CommercialSection = ({ service }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -273,11 +255,8 @@ const CommercialSection = ({ service }) => {
 const HospitalitySection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
       >
         {/* Header */}
@@ -341,7 +320,7 @@ const HospitalitySection = ({ service }) => {
             ))}
           </ul>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -352,11 +331,8 @@ const HospitalitySection = ({ service }) => {
 const TurnkeySection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-700"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -446,7 +422,7 @@ const TurnkeySection = ({ service }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -457,11 +433,8 @@ const TurnkeySection = ({ service }) => {
 const CustomizedFurnitureSection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -535,7 +508,7 @@ const CustomizedFurnitureSection = ({ service }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -546,11 +519,8 @@ const CustomizedFurnitureSection = ({ service }) => {
 const FurnitureSourcingSection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm space-y-8"
       >
         {/* Header Strip */}
@@ -615,7 +585,7 @@ const FurnitureSourcingSection = ({ service }) => {
             </Button>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -626,11 +596,8 @@ const FurnitureSourcingSection = ({ service }) => {
 const LightingDecorSection = ({ service }) => {
   return (
     <section id={service.id} className="scroll-mt-28">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-70px' }}
-        variants={fadeInUp}
+      <m.div
+        {...reveal()}
         className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -716,7 +683,7 @@ const LightingDecorSection = ({ service }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };
@@ -813,49 +780,37 @@ export const Services = () => {
       <section className="bg-sunken/40 dark:bg-surface/60 py-20 sm:py-28 border-y border-line/70 dark:border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <m.div
+              {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
               <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
                 Our Process
               </span>
-            </motion.div>
+            </m.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <m.h2
+              {...reveal({ order: 1 })}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
             >
               How a Project Works
-            </motion.h2>
+            </m.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <m.p
+              {...reveal({ order: 2 })}
               className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
             >
               Six clear steps that keep your project on budget, true to the design and on time.
-            </motion.p>
+            </m.p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {processSteps.map((phase, idx) => {
               const IconComp = phase.icon;
               return (
-                <motion.div
+                <m.div
+                  {...reveal({ order: idx })}
                   key={phase.step}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.08 }}
                   className="p-8 rounded-2xl sm:rounded-3xl bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
@@ -897,7 +852,7 @@ export const Services = () => {
                       ))}
                     </ul>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>

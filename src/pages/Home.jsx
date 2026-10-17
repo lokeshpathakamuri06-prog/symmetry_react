@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import {
   ArrowUpRight,
   Globe,
@@ -82,11 +83,8 @@ const HomeView = ({ products, projects, blogs }) => {
       <section id="about-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Image with Subtle Reveal */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+          <m.div
+            {...reveal()}
             className="lg:col-span-6 relative"
           >
             <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-sunken shadow-luxury">
@@ -106,14 +104,11 @@ const HomeView = ({ products, projects, blogs }) => {
                 25,000 sq.ft. Own Workshop
               </p>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right Column: Text & Editorial Narrative */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+          <m.div
+            {...reveal()}
             className="lg:col-span-6 space-y-6"
           >
             <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
@@ -143,7 +138,7 @@ const HomeView = ({ products, projects, blogs }) => {
                 <span>{text.storyBadgeText}</span>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -235,7 +230,7 @@ const HomeView = ({ products, projects, blogs }) => {
 
         {/* 4 Equal Size Architectural Showcase Grid (Balanced 2x2 Layout) */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={projectFilter}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -244,7 +239,7 @@ const HomeView = ({ products, projects, blogs }) => {
             className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch"
           >
             {filteredProjects.map((proj, idx) => (
-              <motion.div
+              <m.div
                 key={proj.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -327,9 +322,9 @@ const HomeView = ({ products, projects, blogs }) => {
                     ))}
                   </div>
                 )}
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         <div className="text-center mt-8">
@@ -425,12 +420,9 @@ const HomeView = ({ products, projects, blogs }) => {
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
-              <motion.div
+              <m.div
+                {...reveal({ order: idx })}
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
                 className="h-full"
               >
                 <AppleCardWrapper className="group relative p-8 sm:p-9 rounded-[32px] bg-surface flex flex-col justify-between h-full">
@@ -469,7 +461,7 @@ const HomeView = ({ products, projects, blogs }) => {
                     </span>
                   </div>
                 </AppleCardWrapper>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

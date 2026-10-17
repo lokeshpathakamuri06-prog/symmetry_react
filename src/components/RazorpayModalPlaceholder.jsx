@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, ShieldCheck, CreditCard, Lock, CheckCircle2, AlertCircle, PhoneCall } from 'lucide-react';
 
 /**
@@ -39,7 +39,7 @@ export default function RazorpayModalPlaceholder({
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -203,7 +203,7 @@ export default function RazorpayModalPlaceholder({
               </div>
             )}
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </AnimatePresence>
   );

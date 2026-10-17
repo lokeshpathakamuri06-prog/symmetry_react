@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { X, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import logoImg from '../assets/logo.png';
 import logoDarkImg from '../assets/logo-dark.png';
 import ThemeToggle from './ThemeToggle';
@@ -50,7 +50,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -80,7 +80,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           </div>
 
           {/* Links */}
-          <motion.ul
+          <m.ul
             initial="closed"
             animate="open"
             variants={{ open: { transition: { staggerChildren: 0.035, delayChildren: 0.05 } } }}
@@ -89,7 +89,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
             {navLinks.map((item) => {
               const active = isActive(item.to);
               return (
-                <motion.li
+                <m.li
                   key={item.to}
                   variants={{ closed: { opacity: 0, y: -8 }, open: { opacity: 1, y: 0, transition: { duration: 0.35, ease } } }}
                   className="border-b border-line/60 dark:border-line"
@@ -119,7 +119,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                   {item.menu && (
                     <AnimatePresence initial={false}>
                       {servicesOpen && (
-                        <motion.div
+                        <m.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -142,14 +142,14 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                               </Link>
                             ))}
                           </div>
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
                   )}
-                </motion.li>
+                </m.li>
               );
             })}
-          </motion.ul>
+          </m.ul>
 
           {/* Contact strip */}
           <div className="site-container pb-8 space-y-5 shrink-0">
@@ -171,7 +171,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
               Book a consultation
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

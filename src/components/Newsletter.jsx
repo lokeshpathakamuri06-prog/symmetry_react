@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Honeypot from './Honeypot';
 import { subscribeNewsletter, formErrorMessage } from '../services/publicApi';
 
@@ -42,14 +42,14 @@ export const Newsletter = ({ className = '' }) => {
 
         <div>
           {submitted ? (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-3 text-[16px] text-accent font-medium"
             >
               <CheckCircle2 className="w-5 h-5" />
               <span>Thank you for subscribing. Welcome to the Symmetry circle.</span>
-            </motion.div>
+            </m.div>
           ) : (
             <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3">
               <Honeypot value={website} onChange={setWebsite} />

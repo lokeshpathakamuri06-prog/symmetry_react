@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useTestimonials } from '../context/PublicContentContext';
 import SmartImage from './SmartImage';
 
@@ -42,7 +42,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
         <Quote className="w-16 h-16 sm:w-24 sm:h-24 text-accent/10 absolute -top-4 -right-4 pointer-events-none" />
 
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={current.id}
             initial={{ opacity: 0, x: 25 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         {/* Carousel Navigation Controls */}

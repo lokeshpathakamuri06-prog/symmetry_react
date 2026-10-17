@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, RotateCcw } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 export const FilterDrawer = ({
   isOpen,
@@ -34,7 +34,7 @@ export const FilterDrawer = ({
       {isOpen && (
         <div className="fixed inset-0 z-[1200] flex justify-end">
           {/* Backdrop */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -43,7 +43,7 @@ export const FilterDrawer = ({
           />
 
           {/* Drawer Body */}
-          <motion.div
+          <m.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -205,7 +205,7 @@ export const FilterDrawer = ({
                 Apply Filters
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </AnimatePresence>

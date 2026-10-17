@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-14 (Website redesign: Apple-style design system on every page)_
+_Last updated: 2026-10-17 (Motion plan: Phases 0–1)_
 
 ## Summary
 | Area | State |
@@ -291,6 +291,19 @@ _Last updated: 2026-10-14 (Website redesign: Apple-style design system on every 
 - The flat dark film over the slideshow made the bright interiors look grey, and white text sat on light walls. Now: shade only where the text is (from the left on desktop, from the bottom on phones) plus a light shade under the navigation; soft text shadows on the copy.
 - On Home, the navigation bar is transparent with white text and the light logo while it sits on the photo; it turns into the frosted bar on scroll or when the Services menu opens.
 - Verified on the dev server (light, dark, phone, all 3 slides, scrolled) and on the refreshed preview; no errors, no new lint warnings.
+
+### 2026-10-17: Motion plan, Phases 0–1 (frontend only)
+**Why:** requested: Apple-style smooth scrolling and animations on every page. Plan: [MOTION_PLAN.md](MOTION_PLAN.md) (NEXT_STEPS Step 8).
+- **Phase 0:** the 2026-10-14 redesign is committed (`d17b7e0`). Baseline Lighthouse numbers are in MOTION_PLAN.
+- **Motion tokens** `src/lib/motion.js`: curves (`ease.out`, `ease.apple`), speeds (0.2 / 0.5 / 0.9 s), 0.06 s stagger, 24 px distance, plus `reveal()` (on scroll) and `enter()` (on load). Matching CSS variables and Tailwind names: `ease-out-expo`, `ease-apple`, `duration-fast/base/slow`.
+- **New components:** `components/motion/Reveal.jsx` and `CountUp.jsx`. PageHero stats now count up ("25+", "100%"; text without a number is unchanged).
+- **All 60 scroll reveals** now use `reveal()`, converted by script. Sideways slide-ins became fade-ups, delays became sequence numbers, and local helpers in Services, Sourcing and SectionHeading were removed. ScribbleUnderline uses the tokens.
+- **Lighter engine:** `motion.*` → `m.*` in 45 files. `<LazyMotion strict>` loads the animation engine after first paint, and the forced `motion` chunk was removed from `vite.config.js`. **First-load JS: 175 → 158 KB gzip.**
+- **Reduced motion everywhere:** `<MotionConfig reducedMotion="user">` keeps fades and drops all movement.
+- **Hero:** page headlines (PageHero, Home) and the first Home slide show on first paint, and the text around them fades in. Later slides cross-fade with a slow 6 s settle.
+- **Verified** with a production build served locally and the live API, in headless Chromium: 15 pages, with normal and with reduced motion. No console errors. No content left invisible after scrolling (only the card hover-glare layers, which are meant to be hidden). Screenshots match the baseline. Build passes; lint unchanged (56 warnings).
+- **Finding:** LCP did not improve (it is about 4.8 s on Home). The cause is about 4.9 s of style and layout work, not animation; this moved to Phase 7 (details in MOTION_PLAN § Baseline).
+- Not deployed; the preview has not been refreshed yet.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

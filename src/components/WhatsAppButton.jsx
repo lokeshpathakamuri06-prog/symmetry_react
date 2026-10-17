@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useSiteText } from '../context/PublicContentContext';
 import { whatsappHref } from '../lib/contact';
 
@@ -22,7 +22,7 @@ export const WhatsAppButton = () => {
     <div className="fixed bottom-6 left-6 z-40">
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -69,11 +69,11 @@ export const WhatsAppButton = () => {
                 Initiate WhatsApp Chat
               </button>
             </form>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
-      <motion.button
+      <m.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen((prev) => !prev)}
@@ -82,7 +82,7 @@ export const WhatsAppButton = () => {
       >
         <MessageSquare className="w-4 h-4 text-accent dark:text-canvas group-hover:text-on-accent dark:group-hover:text-canvas transition-colors" />
         <span className="text-xs font-medium tracking-wider hidden sm:inline">Concierge</span>
-      </motion.button>
+      </m.button>
     </div>
   );
 };

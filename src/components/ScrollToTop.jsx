@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 export const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -40,7 +40,7 @@ export const ScrollToTop = () => {
   return (
     <AnimatePresence>
       {showButton && (
-        <motion.button
+        <m.button
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -50,7 +50,7 @@ export const ScrollToTop = () => {
           className="fixed bottom-[230px] right-6 sm:bottom-[240px] sm:right-8 z-40 p-3 sm:p-3.5 rounded-full bg-surface/80 backdrop-blur-md border border-line text-fg hover:text-accent hover:border-accent shadow-luxury transition-all duration-300 group"
         >
           <ArrowUp className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-1" />
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   );

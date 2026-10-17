@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useCollections } from '../context/PublicContentContext';
 import SmartImage from './SmartImage';
 
@@ -107,7 +107,7 @@ export const CoverflowCollections = () => {
               const opacity = isCenter ? 1 : 0.98; // High opacity so frosted glass effect shines
 
               return (
-                <motion.div
+                <m.div
                   key={item.id}
                   onClick={() => setActiveIndex(index)}
                   animate={{
@@ -183,7 +183,7 @@ export const CoverflowCollections = () => {
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -205,7 +205,7 @@ export const CoverflowCollections = () => {
               >
                 <span>{item.number}</span>
                 {isActive && (
-                  <motion.span
+                  <m.span
                     layoutId="activeCoverflowDot"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-fg dark:bg-accent rounded-full"
                   />

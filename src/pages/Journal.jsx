@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { ArrowUpRight, Search, X, ChevronLeft, ChevronRight, Sparkles, BookOpen, Clock, MapPin } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import BlogCard from '../components/BlogCard';
@@ -136,11 +137,8 @@ const JournalView = ({ blogs }) => {
               </span>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+            <m.div
+              {...reveal()}
               className="rounded-3xl overflow-hidden bg-surface border border-line shadow-luxury grid grid-cols-1 lg:grid-cols-12 group transition-all duration-500 hover:border-accent/60 hover:shadow-2xl relative"
             >
               {/* Shimmer Light Reflection Sweep */}
@@ -200,17 +198,14 @@ const JournalView = ({ blogs }) => {
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         )}
 
         {/* Filter & Search Bar Section */}
-        <motion.div
+        <m.div
+          {...reveal()}
           id="journal-grid-section"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
           className="mt-16 pt-8 border-t border-line/70 dark:border-line scroll-mt-24"
         >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -278,13 +273,13 @@ const JournalView = ({ blogs }) => {
               </button>
             )}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Article Grid with Full-Page Animated Entrance */}
         <div className="mt-10">
           <AnimatePresence mode="wait">
             {paginatedBlogs.length > 0 ? (
-              <motion.div
+              <m.div
                 key={`grid-page-${currentPage}-${selectedCategory}-${searchQuery}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -295,10 +290,10 @@ const JournalView = ({ blogs }) => {
                 {paginatedBlogs.map((blog, idx) => (
                   <BlogCard key={blog.id} blog={blog} index={idx} />
                 ))}
-              </motion.div>
+              </m.div>
             ) : (
               /* Empty Search / Filter State */
-              <motion.div
+              <m.div
                 key="empty-state"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -324,18 +319,15 @@ const JournalView = ({ blogs }) => {
                 >
                   Clear All Filters
                 </button>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
 
         {/* Pagination Section */}
         {totalPages > 1 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+          <m.div
+            {...reveal({ variant: 'fadeIn' })}
             className="mt-16 pt-8 border-t border-line/60 dark:border-line flex items-center justify-between"
           >
             {/* Previous Button */}
@@ -374,7 +366,7 @@ const JournalView = ({ blogs }) => {
               <span>Next</span>
               <ChevronRight className="w-4 h-4" />
             </button>
-          </motion.div>
+          </m.div>
         )}
       </section>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2, MessageSquare, Send, MessageCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useSiteText } from '../context/PublicContentContext';
 import { whatsappHref } from '../lib/contact';
 
@@ -68,7 +68,7 @@ export const FloatingActionStack = () => {
               <div key={b.id} className="relative flex items-center">
                 <AnimatePresence>
                   {hoveredButton === b.id && (
-                    <motion.span
+                    <m.span
                       initial={{ opacity: 0, x: 6 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 6 }}
@@ -76,7 +76,7 @@ export const FloatingActionStack = () => {
                       className="hidden sm:block absolute right-full mr-3 px-3 py-1.5 rounded-full bg-fg text-canvas text-[12px] font-medium whitespace-nowrap pointer-events-none"
                     >
                       {b.label}
-                    </motion.span>
+                    </m.span>
                   )}
                 </AnimatePresence>
                 <Tag
@@ -113,7 +113,7 @@ export const FloatingActionStack = () => {
       <AnimatePresence>
         {whatsappModalOpen && (
           <div className="fixed inset-0 z-[1300] flex items-end sm:items-center justify-end p-4 sm:p-8 pointer-events-none">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -160,7 +160,7 @@ export const FloatingActionStack = () => {
                   <span>Start WhatsApp Chat</span>
                 </button>
               </form>
-            </motion.div>
+            </m.div>
           </div>
         )}
       </AnimatePresence>
@@ -172,7 +172,7 @@ export const FloatingActionStack = () => {
         {catalogModalOpen && (
           <div className="fixed inset-0 z-[1300] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -181,7 +181,7 @@ export const FloatingActionStack = () => {
             />
 
             {/* Modal Container */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.94, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
@@ -287,7 +287,7 @@ export const FloatingActionStack = () => {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         )}
       </AnimatePresence>

@@ -1,13 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-
-const ease = [0.28, 0.11, 0.32, 1];
-const reveal = (delay = 0) => ({
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.8, delay, ease },
-});
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 
 export const SectionHeading = ({
   eyebrow,
@@ -27,27 +20,27 @@ export const SectionHeading = ({
   return (
     <div className={`flex flex-col max-w-3xl ${alignClasses[align]} ${className}`}>
       {eyebrow && (
-        <motion.span {...reveal(0)} className={`eyebrow mb-3 ${light ? '!text-[#D9C59A]' : ''}`}>
+        <m.span {...reveal()} className={`eyebrow mb-3 ${light ? '!text-[#D9C59A]' : ''}`}>
           {eyebrow}
-        </motion.span>
+        </m.span>
       )}
 
       {title && (
-        <motion.h2
-          {...reveal(0.06)}
+        <m.h2
+          {...reveal({ order: 1 })}
           className={titleClassName || `text-display-lg ${light ? 'text-white' : 'text-fg'}`}
         >
           {title}
-        </motion.h2>
+        </m.h2>
       )}
 
       {subtitle && (
-        <motion.p
-          {...reveal(0.12)}
+        <m.p
+          {...reveal({ order: 2 })}
           className={`mt-4 sm:mt-5 text-[17px] sm:text-[19px] leading-relaxed ${light ? 'text-white/75' : 'text-muted'}`}
         >
           {subtitle}
-        </motion.p>
+        </m.p>
       )}
     </div>
   );

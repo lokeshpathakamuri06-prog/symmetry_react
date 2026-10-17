@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import SmartImage from './SmartImage';
 
 export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
@@ -50,7 +50,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
       {/* Lightbox Modal */}
       <AnimatePresence>
         {lightboxIndex !== null && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -94,7 +94,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
             >
               <ChevronRight className="w-6 h-6" />
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

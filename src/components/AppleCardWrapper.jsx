@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 /**
  * AppleCardWrapper
@@ -75,7 +75,7 @@ export const AppleCardWrapper = ({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
@@ -107,7 +107,7 @@ export const AppleCardWrapper = ({
       <div className="relative z-10 h-full w-full rounded-card overflow-hidden">
         {children}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
 

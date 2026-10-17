@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 export const Button = ({
   children,
@@ -62,7 +62,7 @@ export const Button = ({
   }
 
   return (
-    <motion.button
+    <m.button
       whileTap={{ scale: disabled ? 1 : 0.98 }}
       type={type}
       onClick={onClick}
@@ -71,7 +71,7 @@ export const Button = ({
       {...rest}
     >
       {content}
-    </motion.button>
+    </m.button>
   );
 };
 

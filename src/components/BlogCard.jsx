@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock, BookOpen } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import AppleCardWrapper from './AppleCardWrapper';
 import SmartImage from './SmartImage';
 
@@ -9,12 +10,9 @@ export const BlogCard = ({ blog, index = 0 }) => {
   if (!blog) return null;
 
   return (
-    <motion.article
+    <m.article
+      {...reveal({ order: index % 6 })}
       layout
-      initial={{ opacity: 0, y: 35, scale: 0.98 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: (index % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
       <AppleCardWrapper className="group relative flex flex-col h-full bg-surface overflow-hidden">
@@ -98,7 +96,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
         </div>
       </div>
       </AppleCardWrapper>
-    </motion.article>
+    </m.article>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { Mail, Award } from 'lucide-react';
 
 const LinkedInIcon = ({ className = 'w-4 h-4' }) => (
@@ -20,11 +21,8 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
   if (!member) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    <m.div
+      {...reveal({ order: index })}
       className={`h-full ${className}`}
     >
       <AppleCardWrapper className="group flex flex-col h-full bg-surface rounded-3xl overflow-hidden">
@@ -117,7 +115,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
           )}
         </div>
       </AppleCardWrapper>
-    </motion.div>
+    </m.div>
   );
 };
 

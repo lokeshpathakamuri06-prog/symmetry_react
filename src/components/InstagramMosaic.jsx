@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { useSiteText } from '../context/PublicContentContext';
 
 const InstagramIcon = ({ className = 'w-4 h-4' }) => (
@@ -88,15 +89,12 @@ export const InstagramMosaic = () => {
       {/* 6-Grid Mosaic */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {posts.map((post, idx) => (
-          <motion.a
+          <m.a
+            {...reveal({ order: idx })}
             key={idx}
             href={instagram}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: idx * 0.05 }}
             className="group relative aspect-square rounded-2xl overflow-hidden bg-sunken block"
           >
             <img
@@ -119,7 +117,7 @@ export const InstagramMosaic = () => {
                 </span>
               </div>
             </div>
-          </motion.a>
+          </m.a>
         ))}
       </div>
     </div>

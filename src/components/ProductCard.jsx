@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Eye, Star, ArrowRight, ShoppingBag, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { reveal } from '../lib/motion';
 import { useCart } from '../context/CartContext';
 import AppleCardWrapper from './AppleCardWrapper';
 import SmartImage from './SmartImage';
@@ -30,7 +31,6 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
   });
 
   // Stagger delay based on column index (wave effect)
-  const staggerDelay = (index % 3) * 0.1;
 
   const toggleWishlist = (e) => {
     e.preventDefault();
@@ -109,21 +109,15 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
   const badgeConfig = getBadgeConfig();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '50px 0px' }}
-      transition={{ duration: 0.5, delay: staggerDelay, ease: [0.16, 1, 0.3, 1] }}
+    <m.div
+      {...reveal({ order: index % 3 })}
       className="h-full"
     >
       <AppleCardWrapper className="group relative flex flex-col h-full bg-surface overflow-hidden">
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-sunken">
-        <motion.div
-          initial={{ opacity: 0, scale: 1.05 }}
-          whileInView={{ opacity: 1, scale: 1.0 }}
-          viewport={{ once: true, margin: '50px 0px' }}
-          transition={{ duration: 0.9, ease: [0.28, 0.11, 0.32, 1], delay: staggerDelay }}
+        <m.div
+          {...reveal({ variant: 'image', order: index % 3 })}
           className="w-full h-full relative"
         >
           <Link to={`/shop/${product.id}`} className="block w-full h-full overflow-hidden">
@@ -135,7 +129,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
               className="w-full h-full object-cover transition-transform duration-[900ms] ease-apple group-hover:scale-[1.04]"
             />
           </Link>
-        </motion.div>
+        </m.div>
 
         {/* Badge */}
         <div className="absolute top-3 left-3 pointer-events-none z-10">
@@ -252,7 +246,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
         </div>
       </div>
       </AppleCardWrapper>
-    </motion.div>
+    </m.div>
   );
 };
 

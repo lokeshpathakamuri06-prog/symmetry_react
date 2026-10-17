@@ -14,7 +14,7 @@ import {
   RotateCcw,
   CheckCircle2
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import { useCart } from '../context/CartContext';
@@ -99,7 +99,7 @@ export const Cart = () => {
         {/* Removed Item Toast Notification */}
         <AnimatePresence>
           {removedNotification && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -109,14 +109,14 @@ export const Cart = () => {
                 <RotateCcw className="w-4 h-4 text-accent" />
                 <span>{removedNotification}</span>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 
         {/* Content: Empty State vs Active Cart */}
         {cartItems.length === 0 ? (
           /* PREMIUM EMPTY CART STATE */
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="py-16 sm:py-24 px-6 sm:px-12 rounded-3xl bg-surface border border-line text-center max-w-3xl mx-auto shadow-sm"
@@ -163,7 +163,7 @@ export const Cart = () => {
               <span>Explore Furniture Collections</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
-          </motion.div>
+          </m.div>
         ) : (
           /* ACTIVE CART GRID */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -174,7 +174,7 @@ export const Cart = () => {
                 {cartItems.map((item) => {
                   const itemImage = item.images?.[0] || item.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop';
                   return (
-                    <motion.div
+                    <m.div
                       key={item.cartKey}
                       layout
                       initial={{ opacity: 0, y: 15 }}
@@ -288,7 +288,7 @@ export const Cart = () => {
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                    </motion.div>
+                    </m.div>
                   );
                 })}
               </AnimatePresence>

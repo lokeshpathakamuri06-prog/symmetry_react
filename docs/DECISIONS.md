@@ -4,6 +4,11 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-17 | Motion tokens in `src/lib/motion.js`; scroll reveals use `{...reveal()}` / `enter()` | 60 reveals had 21 durations and 4 curves; one place now sets every speed | Keep per-component values; a `<Reveal>` wrapper everywhere (it is available for new code) |
+| 2026-10-17 | Two curves, not one: `ease.out` for things entering, `ease.apple` (Apple's own) for things already on screen | Entering needs a long soft landing; menus and accordions read better with Apple's curve | One curve for everything (the plan's first idea) |
+| 2026-10-17 | `LazyMotion` (strict) with `domMax` loaded after first paint; no forced `motion` chunk in `vite.config.js` | First-load JS 175 → 158 KB gzip; `strict` fails loudly if a heavy `motion.*` component comes back | Keep full `motion` components |
+| 2026-10-17 | Page headlines and the first hero photo are never animated in | They are what the browser measures as "loaded" (LCP) and must show on first paint | Fade everything in |
+| 2026-10-17 | Motion plan decisions: native touch scrolling, progress bar removed (Journal articles only), header hides on scroll down, crossfade page transitions, pinned sections desktop-only | Approved by the client ("go") with the recommendations in MOTION_PLAN.md | See MOTION_PLAN.md § Decisions |
 | 2026-10-14 | Page banners reuse the existing `banners` table: the page key goes in `badge`, the highlighted words in `cta_text` | Requested with "no backend/API/database changes"; the fields existed and were unused | Migration adding a `placement` column (cleaner; can still be done later) |
 | 2026-10-14 | Intro plays once per browser session, ~1.5 s, never with reduced motion | It delayed every page load by ~3 s (known issue 14) | Remove it; keep it on every load |
 | 2026-10-14 | Wording simplified only in code text; database content (products, projects, journal, Page Content) left to the client | Keeps the database untouched as requested | Rewrite database content too |
