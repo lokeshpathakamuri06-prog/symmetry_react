@@ -1,6 +1,6 @@
 # Apple-style Motion & Polish Plan (public website)
 
-_Written: 2026-10-17. Status: **Phases 0–3 done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
+_Written: 2026-10-17. Status: **Phases 0–3 done, Phase 4 in progress: Home done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
 
 ## Goal
 Make every public page feel like apple.com: calm, spacious, and smooth to scroll, with motion that is **consistent, quick and purposeful**. Animation should help the eye follow the story and stay out of the way. It must never slow down the page or make people feel sick.
@@ -75,7 +75,7 @@ Lighthouse mobile (simulated 4× slower CPU), production build served locally:
 
 **Done when:** every page change fades smoothly, with no flash or jump and no layout shift.
 
-### Phase 4: Signature scroll moments, page by page (≈3–4 days)
+### Phase 4: Signature scroll moments, page by page (≈3–4 days): 🟡 Home done 2026-10-17
 Each page gets **one or two** "Apple moments". The rest uses plain `<Reveal>`.
 
 | Page | Signature moment(s) |

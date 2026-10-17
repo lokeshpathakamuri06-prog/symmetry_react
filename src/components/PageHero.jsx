@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { m, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { reveal, enter } from '../lib/motion';
+import { m, useScroll, useReducedMotion } from 'framer-motion';
+import { reveal, enter, useScrollRange } from '../lib/motion';
 import CountUp from './motion/CountUp';
 import { ChevronRight } from 'lucide-react';
 import { useBanners } from '../context/PublicContentContext';
@@ -57,8 +57,8 @@ export const PageHero = ({
   const frameRef = useRef(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'end start'] });
-  const scale = useTransform(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [1.08, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['-4%', '4%']);
+  const scale = useScrollRange(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [1.08, 1]);
+  const y = useScrollRange(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['-4%', '4%']);
 
   return (
     <section className="pt-28 sm:pt-32 lg:pt-36">

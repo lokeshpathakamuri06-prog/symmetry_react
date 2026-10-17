@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { reveal } from '../lib/motion';
+import { reveal, dur, ease } from '../lib/motion';
 import {
   ArrowUpRight,
   Globe,
@@ -25,6 +25,7 @@ import CoverflowSourcing from '../components/CoverflowSourcing';
 import CategoryCircleMarquee from '../components/CategoryCircleMarquee';
 import FinalCta from '../components/FinalCta';
 import DynamicScrollShowcase from '../components/DynamicScrollShowcase';
+import ZoomOutPhoto from '../components/motion/ZoomOutPhoto';
 import ScribbleUnderline from '../components/ScribbleUnderline';
 import AppleCardWrapper from '../components/AppleCardWrapper';
 import ContentState from '../components/ContentState';
@@ -229,21 +230,17 @@ const HomeView = ({ products, projects, blogs }) => {
         </div>
 
         {/* 4 Equal Size Architectural Showcase Grid (Balanced 2x2 Layout) */}
-        <AnimatePresence mode="wait">
-          <m.div
-            key={projectFilter}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch"
-          >
-            {filteredProjects.map((proj, idx) => (
+        {/* Filter changes: cards that stay glide to their new place, others fade out/in */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {filteredProjects.map((proj) => (
               <m.div
+                layout
                 key={proj.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: dur.base, ease: ease.out }}
                 className="group flex flex-col h-full"
               >
                 <Link
@@ -324,8 +321,8 @@ const HomeView = ({ products, projects, blogs }) => {
                 )}
               </m.div>
             ))}
-          </m.div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
 
         <div className="text-center mt-8">
           <Button to="/projects" variant="outline" size="md" showArrow>
@@ -356,15 +353,15 @@ const HomeView = ({ products, projects, blogs }) => {
           5. Curated Material Authenticity
           6. Private Concierge & 10-Yr Warranty
       ========================================================================= */}
+      <ZoomOutPhoto
+        image={heroImage('/images/hero/hero-haj-slide-3.jpeg')}
+        alt="A finished Symmetry living space"
+        eyebrow="Why Symmetry"
+        title={text.whyTitle}
+        subtitle={text.whySubtitle}
+      />
+
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <SectionHeading
-            eyebrow="Why Symmetry"
-            title={text.whyTitle}
-            subtitle={text.whySubtitle}
-            align="center"
-          />
-        </div>
 
         {/* Apple-style Bento 6-Card Grid (3 cols desktop, 2 cols tablet, 1 col mobile) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

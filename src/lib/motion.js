@@ -1,3 +1,5 @@
+import { useTransform } from 'framer-motion';
+
 /**
  * Motion tokens for the public website: one place for every speed, curve and distance,
  * so all pages move the same way. CSS has matching variables (--ease-*, --dur-*) and
@@ -65,3 +67,25 @@ export const enter = ({ variant = 'fadeUp', order = 0, speed } = {}) => ({
   variants: variants[variant],
   transition: transition(speed || 'base', staggerDelay(order)),
 });
+
+/**
+ * Scroll-linked value: maps scroll progress (0–1) to output values, like useTransform,
+ * but always covers the full 0–1 range. Framer Motion hands simple ranges such as opacity
+ * to the browser's native scroll timeline, and there a range that stops short of 0 or 1
+ * drifts back to the element's base value outside it (a fade-in fading out again at the end).
+ *
+ *   const opacity = useScrollRange(scrollYProgress, [0.3, 0.6], [0, 1]);
+ */
+export const useScrollRange = (progress, input, output) => {
+  const i = [...input];
+  const o = [...output];
+  if (i[0] > 0) {
+    i.unshift(0);
+    o.unshift(o[0]);
+  }
+  if (i[i.length - 1] < 1) {
+    i.push(1);
+    o.push(o[o.length - 1]);
+  }
+  return useTransform(progress, i, o);
+};

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll } from 'framer-motion';
 import { scrollToTarget } from '../lib/scroll';
-import { reveal } from '../lib/motion';
+import { reveal, useScrollRange } from '../lib/motion';
 import { 
   Check, 
   Sparkles, 
@@ -27,7 +27,7 @@ const ResidentialSection = ({ service }) => {
     target: containerRef,
     offset: ['start end', 'end start'],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  const imageY = useScrollRange(scrollYProgress, [0, 1], [-30, 30]);
 
   return (
     <section ref={containerRef} id={service.id} className="scroll-mt-28">

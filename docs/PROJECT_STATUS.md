@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-17 (Motion plan: Phases 0–3)_
+_Last updated: 2026-10-17 (Motion plan: Phases 0–3, Phase 4 Home)_
 
 ## Summary
 | Area | State |
@@ -327,6 +327,14 @@ _Last updated: 2026-10-17 (Motion plan: Phases 0–3)_
 - `components/motion/PageTransition.jsx`: the page area (not the header) fades in and rises 12 px on every page change (~0.35 s). The page a visit starts on is not animated, so first paint is not delayed, and a query-only change (Shop filters) does not replay it.
 - Lazy page code: a blank canvas instead of a spinner; the spinner shows only if loading takes longer than 0.5 s (`RouteFallback`).
 - **Verified:** first load has no animation; after a click the opacity goes 0.6 → 0.92 → 1 over about 0.3 s, then settles with no leftover transform; Search opened right after a transition covers the full window. The 16 scroll checks still pass, and all 15 pages have no errors. Lint: 53 warnings.
+
+### 2026-10-17: Motion plan, Phase 4: Home (frontend only)
+- **Zoom-out moment** (`components/motion/ZoomOutPhoto.jsx`): before the "Why Symmetry" cards, a full-screen interior photo stays pinned and closes in to a rounded card, and the Why heading and text (Page Content, editable) fade in over it. This is desktop only; phones and reduced motion get a still rounded photo with the same text.
+- **Featured projects filter:** cards that stay glide to their new place, and the others fade out or in (`layout` + `AnimatePresence popLayout`). Before, the whole grid faded out and back in.
+- **Pinned gallery** (`DynamicScrollShowcase`): the spring on top of Lenis is removed, since it lagged behind the scroll. The 700 px `blur-[140px]` glow is replaced by a radial gradient that is cheap to paint and looks the same.
+- **Bug fixed, new helper `useScrollRange()`:** Framer Motion runs simple scroll-linked ranges on the browser's scroll timeline, where values outside the range drift back to the base value. The Why heading faded out again, and removing the spring would have done the same to the gallery's button. All 27 scroll-linked ranges now use the helper.
+- **Verified:** zoom-out values measured at 0, 30, 55, 90 and 100 % of the section (heading opacity 0 → 0.83 → 1 → 1); gallery button visible at 95 %; phone and reduced-motion still version; filter glide screenshots. The 16 scroll checks pass in both modes; Home has no errors at 1440 and 390 px. Lint: 53 warnings.
+- 7 other large blur effects remain on other pages; they are for Phase 7.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

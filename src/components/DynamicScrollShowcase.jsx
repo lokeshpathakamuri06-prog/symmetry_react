@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { m, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
-import { reveal } from '../lib/motion';
+import { m, useScroll, useReducedMotion } from 'framer-motion';
+import { reveal, useScrollRange } from '../lib/motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 
@@ -14,42 +14,38 @@ export const DynamicScrollShowcase = () => {
     offset: ['start start', 'end end'],
   });
 
-  // Smooth out scroll progress with spring physics
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
-  });
+  // Lenis already smooths the wheel; a spring on top only made the cards lag behind the scroll
+  const smoothProgress = scrollYProgress;
 
   // Central Card Animations (Desktop)
-  const centerScale = useTransform(smoothProgress, [0, 0.45, 0.9], [0.82, 1, 1.08]);
-  const centerOpacity = useTransform(smoothProgress, [0, 0.15], [0.4, 1]);
+  const centerScale = useScrollRange(smoothProgress, [0, 0.45, 0.9], [0.82, 1, 1.08]);
+  const centerOpacity = useScrollRange(smoothProgress, [0, 0.15], [0.4, 1]);
 
   // Satellite Floating Cards - Fade in early, then drift outward in parallax (Desktop)
-  const satelliteOpacity = useTransform(smoothProgress, [0, 0.15, 0.7, 0.95], [0, 1, 1, 0.2]);
-  const satelliteScale = useTransform(smoothProgress, [0, 0.25], [0.8, 1]);
+  const satelliteOpacity = useScrollRange(smoothProgress, [0, 0.15, 0.7, 0.95], [0, 1, 1, 0.2]);
+  const satelliteScale = useScrollRange(smoothProgress, [0, 0.25], [0.8, 1]);
 
   // Left Cards Horizontal & Rotation Parallax Drift (Desktop)
-  const leftX = useTransform(smoothProgress, [0.35, 0.85], [0, -220]);
-  const leftYTop = useTransform(smoothProgress, [0, 0.85], [30, -50]);
-  const leftYMid = useTransform(smoothProgress, [0, 0.85], [10, -10]);
-  const leftYBottom = useTransform(smoothProgress, [0, 0.85], [-20, 60]);
-  const leftRotate = useTransform(smoothProgress, [0.35, 0.85], [-2, -8]);
+  const leftX = useScrollRange(smoothProgress, [0.35, 0.85], [0, -220]);
+  const leftYTop = useScrollRange(smoothProgress, [0, 0.85], [30, -50]);
+  const leftYMid = useScrollRange(smoothProgress, [0, 0.85], [10, -10]);
+  const leftYBottom = useScrollRange(smoothProgress, [0, 0.85], [-20, 60]);
+  const leftRotate = useScrollRange(smoothProgress, [0.35, 0.85], [-2, -8]);
 
   // Right Cards Horizontal & Rotation Parallax Drift (Desktop)
-  const rightX = useTransform(smoothProgress, [0.35, 0.85], [0, 220]);
-  const rightYTop = useTransform(smoothProgress, [0, 0.85], [30, -50]);
-  const rightYMid = useTransform(smoothProgress, [0, 0.85], [10, -10]);
-  const rightYBottom = useTransform(smoothProgress, [0, 0.85], [-20, 60]);
-  const rightRotate = useTransform(smoothProgress, [0.35, 0.85], [2, 8]);
+  const rightX = useScrollRange(smoothProgress, [0.35, 0.85], [0, 220]);
+  const rightYTop = useScrollRange(smoothProgress, [0, 0.85], [30, -50]);
+  const rightYMid = useScrollRange(smoothProgress, [0, 0.85], [10, -10]);
+  const rightYBottom = useScrollRange(smoothProgress, [0, 0.85], [-20, 60]);
+  const rightRotate = useScrollRange(smoothProgress, [0.35, 0.85], [2, 8]);
 
   // Title fade & slide (Desktop)
-  const titleY = useTransform(smoothProgress, [0, 0.3], [0, -25]);
-  const titleOpacity = useTransform(smoothProgress, [0.65, 0.85], [1, 0.4]);
+  const titleY = useScrollRange(smoothProgress, [0, 0.3], [0, -25]);
+  const titleOpacity = useScrollRange(smoothProgress, [0.65, 0.85], [1, 0.4]);
 
   // Bottom action bar reveal (Desktop)
-  const actionOpacity = useTransform(smoothProgress, [0.45, 0.75], [0, 1]);
-  const actionY = useTransform(smoothProgress, [0.45, 0.75], [25, 0]);
+  const actionOpacity = useScrollRange(smoothProgress, [0.45, 0.75], [0, 1]);
+  const actionY = useScrollRange(smoothProgress, [0.45, 0.75], [25, 0]);
 
   // Satellite card data for Mobile View
   const mobileSatellites = [
@@ -106,7 +102,7 @@ export const DynamicScrollShowcase = () => {
         {/* Pinned Sticky Viewport Frame */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-4 sm:px-6 lg:px-8 bg-black text-[#F5F5F7] border-y border-white/10">
           {/* Ambient Dark Luxury Glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-accent/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[800px] bg-[radial-gradient(closest-side,rgba(54,101,107,0.16),transparent)] pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(54,101,107,0.08)_1px,transparent_1px)] [background-size:28px_28px] opacity-30 pointer-events-none" />
 
           {/* Section Header */}

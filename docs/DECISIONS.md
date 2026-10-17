@@ -4,6 +4,8 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-17 | Scroll-linked values use `useScrollRange()` (ranges padded to 0–1), not bare `useTransform` | Framer Motion runs simple ranges on the browser's native scroll timeline, where a range ending before 1 drifts back to the base value (a fade-in faded out again) | Keep a spring on the progress (adds lag on top of Lenis) |
+| 2026-10-17 | Home hero headline is not split into animated lines | It is the page's LCP element and must paint immediately (Phase 1 rule) | Line-by-line reveal from the plan |
 | 2026-10-17 | Page transitions are enter-only (fade + 12 px rise, ~0.35 s), not a crossfade with an exit | An exit fade keeps the old page visible while the scroll moves to the new position, and makes Back slower | `AnimatePresence mode="wait"` crossfade; View Transitions API (stretch, not done) |
 | 2026-10-17 | All scrolling and scroll locks go through `src/lib/scroll.js` (`scrollToTarget`, `useScrollLock`); `SmoothScroll` owns page-change scrolling | Two scroll owners fought each other; 10 popups either let the page scroll behind them or set `body.overflow` on their own | Fix each component separately |
 | 2026-10-17 | Scroll positions saved per history entry (sessionStorage), restored on Back/Forward and on reload | Apple-like: Back returns you where you were; before, every Back jumped to the top | React Router `ScrollRestoration` (needs a data router: larger change) |
