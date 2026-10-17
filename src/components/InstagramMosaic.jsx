@@ -56,21 +56,21 @@ export const InstagramMosaic = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5">
         <div>
           <a
             href={instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold mb-2 hover:opacity-80 transition-opacity group"
+            className="eyebrow mb-2 hover:opacity-80 transition-opacity group"
           >
             <InstagramIcon className="w-4 h-4 transition-transform group-hover:scale-[1.05]" />
             <span>@symmetryinteriors.ltd</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
-          <h3 className="text-2xl sm:text-3xl font-serif text-fg">
+          <h3 className="text-display-md text-fg">
             Follow Our Work on Instagram
           </h3>
         </div>
@@ -79,7 +79,7 @@ export const InstagramMosaic = () => {
           href={instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-[14px] sm:text-[15px] tracking-[-0.01em] font-medium text-fg hover:text-accent transition-colors px-4 py-2 rounded-full border border-line hover:border-accent"
+          className="btn-secondary btn-sm self-start sm:self-auto"
         >
           <span>Follow On Instagram</span>
           <ArrowUpRight className="w-4 h-4" />
@@ -95,13 +95,13 @@ export const InstagramMosaic = () => {
             href={instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative aspect-square rounded-2xl overflow-hidden bg-sunken block"
+            className="group relative aspect-square rounded-[22px] overflow-hidden bg-sunken block"
           >
             <img
               src={post.image}
               alt={post.caption}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+              className="tile-media w-full h-full object-cover"
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between text-white">
@@ -109,10 +109,10 @@ export const InstagramMosaic = () => {
                 <InstagramIcon className="w-4 h-4 text-[#BCA575]" />
               </div>
               <div>
-                <p className="text-xs sm:text-sm font-light leading-snug line-clamp-3 text-[#F5F1E8]">
+                <p className="text-[13px] leading-snug line-clamp-3 text-white">
                   {post.caption}
                 </p>
-                <span className="text-[11px] sm:text-xs uppercase tracking-luxury text-[#BCA575] mt-1.5 block font-medium">
+                <span className="text-[12px] text-[#D9C59A] mt-1.5 block">
                   {post.tag}
                 </span>
               </div>

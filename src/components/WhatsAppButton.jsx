@@ -27,17 +27,17 @@ export const WhatsAppButton = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="mb-3 w-80 sm:w-96 rounded-2xl bg-surface p-5 shadow-2xl border border-line text-fg"
+            className="mb-3 w-80 sm:w-96 rounded-2xl bg-surface p-5 text-fg"
           >
             <div className="flex items-start justify-between pb-3 border-b border-line/60 dark:border-line">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <p className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                  <p className="text-xs text-accent font-semibold">
                     VIP Concierge
                   </p>
                 </div>
-                <h4 className="text-base font-serif font-medium mt-0.5">Symmetry Client Advisor</h4>
+                <h4 className="text-base font-medium mt-0.5">Symmetry Client Advisor</h4>
                 <p className="text-xs text-muted">Typically responds within 15 minutes</p>
               </div>
               <button

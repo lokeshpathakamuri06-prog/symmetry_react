@@ -22,8 +22,11 @@ export const getLenis = () => lenis;
 
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-/** Space left above a scrolled-to element so the fixed header doesn't cover it */
-export const headerOffset = () => (document.querySelector('[data-site-header]')?.offsetHeight ?? 64) + 16;
+/** Space left above a scrolled-to element so the fixed header and the sticky page bar don't cover it */
+export const headerOffset = () =>
+  (document.querySelector('[data-site-header]')?.offsetHeight ?? 48) +
+  (document.querySelector('[data-local-nav]')?.offsetHeight ?? 0) +
+  16;
 
 const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 

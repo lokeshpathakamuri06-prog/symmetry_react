@@ -2,6 +2,10 @@ import React from 'react';
 import { m } from 'framer-motion';
 import { reveal } from '../lib/motion';
 
+/**
+ * Section opening, Apple style: a short coloured line, a big semibold headline,
+ * and a lead paragraph. `light` is for photos and black bands (white text).
+ */
 export const SectionHeading = ({
   eyebrow,
   title,
@@ -20,7 +24,7 @@ export const SectionHeading = ({
   return (
     <div className={`flex flex-col max-w-3xl ${alignClasses[align]} ${className}`}>
       {eyebrow && (
-        <m.span {...reveal()} className={`eyebrow mb-3 ${light ? '!text-[#D9C59A]' : ''}`}>
+        <m.span {...reveal()} className={`eyebrow mb-2 sm:mb-3 ${light ? '!text-[#D9C59A]' : ''}`}>
           {eyebrow}
         </m.span>
       )}
@@ -35,10 +39,7 @@ export const SectionHeading = ({
       )}
 
       {subtitle && (
-        <m.p
-          {...reveal({ order: 2 })}
-          className={`mt-4 sm:mt-5 text-[17px] sm:text-[19px] leading-relaxed ${light ? 'text-white/75' : 'text-muted'}`}
-        >
+        <m.p {...reveal({ order: 2 })} className={`lede mt-4 sm:mt-5 ${light ? '!text-white/75' : ''}`}>
           {subtitle}
         </m.p>
       )}

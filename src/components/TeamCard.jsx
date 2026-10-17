@@ -25,22 +25,20 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
       {...reveal({ order: index })}
       className={`h-full ${className}`}
     >
-      <AppleCardWrapper className="group flex flex-col h-full bg-surface rounded-3xl overflow-hidden">
+      <AppleCardWrapper className="flex flex-col h-full">
         {/* Portrait Image Container */}
         <div className="relative aspect-[4/5] overflow-hidden bg-sunken">
           <SmartImage sizes="(min-width: 1024px) 33vw, 100vw"
             src={member.image}
             alt={member.name}
-            className="w-full h-full object-cover object-center filter grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+            className="tile-media w-full h-full object-cover object-center"
             loading="lazy"
           />
 
-          {/* Ambient Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           {/* Experience Pill Overlay on Top */}
           <div className="absolute top-4 left-4 z-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md shadow-sm">
+            <span className="glass inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium text-fg">
               <Award className="w-3 h-3 text-accent" />
               {member.experience || member.department}
             </span>
@@ -74,28 +72,28 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
           <div>
             {/* Department & Credentials */}
             <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[11px] uppercase tracking-luxury font-medium text-accent">
+              <span className="text-[13px] font-semibold text-accent">
                 {member.department}
               </span>
               {member.credentials && (
-                <span className="text-[10px] uppercase font-sans tracking-wider text-subtle truncate max-w-[140px]">
+                <span className="text-[12px] text-subtle truncate max-w-[140px]">
                   {member.credentials}
                 </span>
               )}
             </div>
 
             {/* Member Name */}
-            <h3 className="text-2xl sm:text-[26px] font-medium text-fg leading-tight group-hover:text-accent transition-colors duration-300">
+            <h3 className="text-[21px] sm:text-[24px] font-semibold tracking-tight text-fg leading-tight">
               {member.name}
             </h3>
 
             {/* Role */}
-            <p className="text-xs sm:text-[13px] font-sans font-medium text-muted mt-1 mb-3">
+            <p className="text-[14px] text-fg/80 mt-1 mb-3">
               {member.role}
             </p>
 
             {/* Bio Snippet */}
-            <p className="text-xs sm:text-[13px] text-muted font-light leading-relaxed mb-5">
+            <p className="text-[14px] text-muted leading-relaxed mb-5">
               {member.bio}
             </p>
           </div>
@@ -106,7 +104,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
               {member.specialties.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 rounded-md text-[10px] font-sans uppercase tracking-wider bg-canvas text-muted"
+                  className="px-2.5 py-1 rounded-full text-[12px] bg-canvas text-muted"
                 >
                   {tag}
                 </span>

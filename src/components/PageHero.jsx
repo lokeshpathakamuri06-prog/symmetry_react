@@ -1,32 +1,35 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { m, useScroll, useReducedMotion } from 'framer-motion';
+import { m, useScroll, useReducedMotion, useTransform } from 'framer-motion';
 import { reveal, enter, useScrollRange } from '../lib/motion';
 import CountUp from './motion/CountUp';
-import { ChevronRight } from 'lucide-react';
+import LocalNav from './LocalNav';
 import { useBanners } from '../context/PublicContentContext';
 import { bannerImage } from '../lib/pageBanners';
 
 /**
- * The opening of every inner page, Apple style: headline on a calm background,
- * then a large rounded photograph that settles into place as you scroll.
- * Text never sits on the photo, so it stays readable whatever the image.
+ * The opening of every inner page, Apple product-page style:
+ *   1. a sticky page bar (LocalNav) with the page name and one action;
+ *   2. a large centred headline on a calm background;
+ *   3. a clean photograph (no overlay) that starts as a rounded inset card and
+ *      widens to the full screen as you scroll;
+ *   4. optional figures that count up.
  *
  *   <PageHero
- *     breadcrumb={[{ label: 'About' }]}
+ *     page="about"
+ *     breadcrumb={[{ label: 'About' }]}      // its last label names the page bar
  *     eyebrow="Our story"
  *     title="Built on legacy."
  *     highlight="Designed for modern living."
  *     subtitle="…"
- *     image={heroImage('/images/hero/hero-about.jpeg')}
+ *     image={heroImage('/images/hero/stock-about.jpeg')}
  *     imageAlt="…"
  *     stats={[{ value: '25+', label: 'Years of expertise', sub: '…' }]}
  *     actions={<Link className="btn-primary" to="/contact">Start a project</Link>}
- *     page="about"
+ *     navCta={{ label: 'Apply now', href: '#apply' }}   // page-bar action (default: Book a consultation)
  *   />
  *
- * The headline and photo are visible from the first frame (they are what the browser
- * measures as "page loaded"); the lines around them fade in, and the photo moves with scroll.
+ * Must be the first child of the page's root element (see LocalNav). The headline and photo are
+ * visible from the first frame (they are what the browser measures as "page loaded").
  *
  * With `page`, a published banner from Admin → Page Banners replaces the headline
  * (and the photo / text under it, when those are filled in). Without one, the props are used.
@@ -43,6 +46,7 @@ export const PageHero = ({
   imageClassName = '',
   stats,
   actions,
+  navCta,
   children,
 }) => {
   const banners = useBanners().items;
@@ -56,103 +60,86 @@ export const PageHero = ({
 
   const frameRef = useRef(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'end start'] });
-  const scale = useScrollRange(scrollYProgress, [0, 0.5], reduce ? [1, 1] : [1.08, 1]);
-  const y = useScrollRange(scrollYProgress, [0, 1], reduce ? ['0%', '0%'] : ['-4%', '4%']);
+  // 0 when the photo's top enters at the bottom of the screen, 1 when it reaches the top
+  const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'start start'] });
+  const frameScale = useScrollRange(scrollYProgress, [0.35, 0.95], reduce ? [1, 1] : [0.9, 1]);
+  const radius = useScrollRange(scrollYProgress, [0.35, 0.95], reduce ? [0, 0] : [28, 0]);
+  const borderRadius = useTransform(radius, (r) => `${r}px`);
+  const photoScale = useScrollRange(scrollYProgress, [0.35, 1], reduce ? [1, 1] : [1.12, 1]);
+
+  const navTitle = breadcrumb.length ? breadcrumb[breadcrumb.length - 1].label : title;
 
   return (
-    <section className="pt-28 sm:pt-32 lg:pt-36">
-      <div className="site-container text-center">
-        {breadcrumb.length > 0 && (
-          <m.nav
-            aria-label="Breadcrumb"
-            {...enter({ variant: 'fadeIn' })}
-            className="mb-6 flex items-center justify-center gap-1.5 text-[13px] text-subtle"
-          >
-            <Link to="/" className="hover:text-fg transition-colors">Home</Link>
-            {breadcrumb.map((item, i) => (
-              <React.Fragment key={i}>
-                <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-                {item.to ? (
-                  <Link to={item.to} className="hover:text-fg transition-colors">{item.label}</Link>
-                ) : (
-                  <span className="text-fg/80">{item.label}</span>
-                )}
-              </React.Fragment>
-            ))}
-          </m.nav>
-        )}
-
-        {eyebrow && (
-          <m.p {...enter({ variant: 'fadeIn' })} className="eyebrow mb-4">
-            {eyebrow}
-          </m.p>
-        )}
-
-        <h1 className="text-display-xl text-fg max-w-5xl mx-auto">
-          {title}
-          {highlight && (
-            <>
-              {' '}
-              <span className="text-accent">{highlight}</span>
-            </>
+    <>
+      <LocalNav title={navTitle} cta={navCta} />
+      <section className="pt-14 sm:pt-20">
+        <div className="site-container text-center">
+          {eyebrow && (
+            <m.p {...enter({ variant: 'fadeIn' })} className="eyebrow mb-3 sm:mb-4">
+              {eyebrow}
+            </m.p>
           )}
-        </h1>
 
-        {subtitle && (
-          <m.p
-            {...enter({ order: 1 })}
-            className="mt-6 text-[18px] sm:text-[21px] leading-[1.5] text-muted max-w-2xl mx-auto"
-          >
-            {subtitle}
-          </m.p>
-        )}
+          <h1 className="text-display-xl text-fg max-w-5xl mx-auto">
+            {title}
+            {highlight && (
+              <>
+                {' '}
+                <span className="text-accent">{highlight}</span>
+              </>
+            )}
+          </h1>
 
-        {actions && (
-          <m.div
-            {...enter({ order: 2 })}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
-          >
-            {actions}
-          </m.div>
-        )}
-      </div>
+          {subtitle && (
+            <m.p {...enter({ order: 1 })} className="lede mt-5 sm:mt-6 max-w-3xl mx-auto">
+              {subtitle}
+            </m.p>
+          )}
 
-      {image && (
-        <div ref={frameRef} className="site-container mt-12 sm:mt-16">
-          <div className="relative overflow-hidden rounded-[22px] sm:rounded-panel bg-sunken aspect-[4/3] sm:aspect-[16/8] lg:aspect-[21/9]">
-            <m.img
-              {...image}
-              alt={imageAlt}
-              fetchPriority="high"
-              style={{ scale, y }}
-              className={`absolute inset-0 w-full h-full object-cover ${imageClassName}`}
-            />
+          {actions && (
+            <m.div {...enter({ order: 2 })} className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              {actions}
+            </m.div>
+          )}
+        </div>
+
+        {image && (
+          <div ref={frameRef} className="mt-12 sm:mt-16">
+            <m.div
+              style={{ scale: frameScale, borderRadius }}
+              className="relative overflow-hidden bg-sunken h-[58svh] min-h-[340px] sm:h-[72svh] sm:min-h-[460px] max-h-[860px] origin-top will-change-transform"
+            >
+              <m.img
+                {...image}
+                alt={imageAlt}
+                fetchPriority="high"
+                style={{ scale: photoScale }}
+                className={`absolute inset-0 w-full h-full object-cover ${imageClassName}`}
+              />
+            </m.div>
           </div>
-        </div>
-      )}
+        )}
 
-      {stats && stats.length > 0 && (
-        <div className="site-container mt-10 sm:mt-14">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 border-y border-line/80 dark:border-line py-8 sm:py-10">
-            {stats.map((s, i) => (
-              <m.div
-                {...reveal({ order: i })}
-                key={i}
-                className={`text-center px-3 ${i % 2 === 1 ? 'border-l border-line/80 dark:border-line' : ''} ${i >= 1 ? 'lg:border-l lg:border-line/80 dark:lg:border-line' : ''}`}
-              >
-                <dt className="sr-only">{s.label}</dt>
-                <dd className="text-[28px] sm:text-[40px] font-semibold tracking-tight text-fg leading-none"><CountUp value={s.value} /></dd>
-                <dd className="mt-2 text-[14px] font-medium text-fg/90">{s.label}</dd>
-                {s.sub && <dd className="mt-0.5 text-[12.5px] text-subtle">{s.sub}</dd>}
-              </m.div>
-            ))}
-          </dl>
-        </div>
-      )}
+        {stats && stats.length > 0 && (
+          <div className="site-container mt-14 sm:mt-20">
+            <dl className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+              {stats.map((s, i) => (
+                <m.div {...reveal({ order: i })} key={i} className="text-center px-2">
+                  <dt className="sr-only">{s.label}</dt>
+                  <dd className="text-[40px] sm:text-[56px] font-semibold tracking-[-0.035em] text-fg leading-none">
+                    <CountUp value={s.value} />
+                  </dd>
+                  <dd className="mt-3 text-[15px] sm:text-[17px] font-semibold text-fg">{s.label}</dd>
+                  {s.sub && <dd className="mt-1 text-[13px] sm:text-[14px] text-muted">{s.sub}</dd>}
+                </m.div>
+              ))}
+            </dl>
+          </div>
+        )}
 
-      {children}
-    </section>
+        {children}
+      </section>
+    </>
   );
 };
 

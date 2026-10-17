@@ -45,7 +45,7 @@ export const QuickViewModal = ({ product, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative w-full max-w-4xl bg-surface rounded-3xl shadow-2xl border border-line overflow-hidden z-10 my-8"
+          className="relative w-full max-w-4xl bg-surface rounded-tile overflow-hidden z-10 my-8"
         >
           <button
             onClick={onClose}
@@ -97,10 +97,10 @@ export const QuickViewModal = ({ product, onClose }) => {
             {/* Product Details Right */}
             <div className="md:col-span-6 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                <span className="text-[12px] text-accent font-semibold block">
                   {product.collection} &bull; {product.category?.toUpperCase()}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-serif text-fg">
+                <h3 className="text-2xl sm:text-3xl text-fg">
                   {product.name}
                 </h3>
                 <div className="flex items-baseline gap-3">
@@ -113,14 +113,14 @@ export const QuickViewModal = ({ product, onClose }) => {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-muted leading-relaxed font-light line-clamp-3">
+                <p className="text-xs text-muted leading-relaxed line-clamp-3">
                   {product.description}
                 </p>
 
                 {/* Finishes */}
                 {product.finishes && (
                   <div className="pt-2">
-                    <span className="text-[11px] uppercase tracking-luxury text-muted font-medium block mb-2">
+                    <span className="text-[12px] text-muted font-medium block mb-2">
                       Finish: <strong className="text-fg">{selectedFinish}</strong>
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -151,7 +151,7 @@ export const QuickViewModal = ({ product, onClose }) => {
               {/* Actions */}
               <div className="space-y-3 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center border border-line rounded-full overflow-hidden bg-canvas">
+                  <div className="flex items-center rounded-full overflow-hidden bg-canvas">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                       className="px-3 py-2 text-xs text-fg hover:bg-[#E5ECEC]"

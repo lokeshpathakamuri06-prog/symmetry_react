@@ -87,7 +87,7 @@ const ProjectsView = ({ projects }) => {
   }, [videoIndex]);
 
   return (
-    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-hidden">
+    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-x-clip">
       <SeoMeta
         title="Projects — Symmetry Interiors"
         description="Homes, offices, hotels and hospitals designed and delivered by Symmetry Interiors."
@@ -100,8 +100,8 @@ const ProjectsView = ({ projects }) => {
         title="Spaces We’ve"
         highlight="Brought to Life"
         subtitle="Homes, offices, hotels and healthcare spaces we have designed and delivered from start to finish."
-        image={heroImage('/images/hero/hero-projects.jpeg')}
-        imageAlt="Symmetry Interiors Architectural Projects"
+        image={heroImage('/images/hero/stock-projects.jpeg')}
+        imageAlt="A pavilion house beside a pool"
         stats={[
           { value: '450+', label: 'Projects Delivered', sub: 'On Time' },
           { value: '3', label: 'Project Types', sub: 'Homes, Offices, Hospitality' },
@@ -114,18 +114,18 @@ const ProjectsView = ({ projects }) => {
           SECTION 2: FEATURED PROJECT SPOTLIGHT
           ========================================================================= */}
       {featuredProject && (
-        <section id="featured-commission" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
+        <section id="featured-commission" className="site-container scroll-mt-28">
           <m.div
             {...reveal()}
             whileHover={{ y: -4 }}
-            className="group rounded-3xl sm:rounded-[40px] bg-sunken/40 dark:bg-surface border border-line hover:border-accent/60 p-6 sm:p-10 lg:p-14 overflow-hidden shadow-luxury hover:shadow-2xl transition-all duration-500 relative"
+            className="group rounded-tile sm:rounded-[40px] bg-sunken/40 dark:bg-surface p-6 sm:p-10 lg:p-14 overflow-hidden transition-all duration-500 relative"
           >
             {/* Ambient golden radial glow */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none group-hover:scale-[1.05] transition-transform duration-700" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
               {/* Featured Visual */}
-              <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg">
+              <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken">
                 <SmartImage sizes="100vw" priority
                   src={featuredProject.heroImage}
                   alt={featuredProject.title}
@@ -135,7 +135,7 @@ const ProjectsView = ({ projects }) => {
 
                 {/* Floating Tag */}
                 <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3.5 py-1.5 rounded-full text-[11px] font-sans uppercase tracking-luxury font-medium bg-fg/85 dark:bg-canvas/85 text-[#BCA575] backdrop-blur-md border border-[#BCA575]/30 shadow-md">
+                  <span className="px-3.5 py-1.5 rounded-full text-[12px] font-sans font-medium bg-fg/85 dark:bg-canvas/85 text-[#BCA575] backdrop-blur-md border border-[#BCA575]/30 shadow-md">
                     Featured Project
                   </span>
                 </div>
@@ -152,7 +152,7 @@ const ProjectsView = ({ projects }) => {
               {/* Featured Narrative */}
               <div className="lg:col-span-5 space-y-5">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs uppercase tracking-luxury font-semibold text-accent">
+                  <span className="text-xs font-semibold text-accent">
                     {featuredProject.typology} Architecture
                   </span>
                   <span className="text-xs font-mono text-subtle">
@@ -160,11 +160,11 @@ const ProjectsView = ({ projects }) => {
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-fg leading-tight group-hover:text-accent transition-colors duration-300">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-fg leading-tight group-hover:text-accent transition-colors duration-300">
                   {featuredProject.title}
                 </h2>
 
-                <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted leading-relaxed">
                   {featuredProject.summary}
                 </p>
 
@@ -179,7 +179,7 @@ const ProjectsView = ({ projects }) => {
                         <p className="text-xs font-semibold text-fg">
                           {st.value}
                         </p>
-                        <p className="text-[10px] uppercase font-sans tracking-wider text-subtle">
+                        <p className="text-[12px] font-sans text-subtle">
                           {st.label}
                         </p>
                       </div>
@@ -197,7 +197,7 @@ const ProjectsView = ({ projects }) => {
                       {featuredProject.materialsPalette.slice(0, 4).map((mat, mIdx) => (
                         <span
                           key={mIdx}
-                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-surface dark:bg-canvas text-fg border border-line/60 dark:border-line hover:scale-105 hover:bg-accent/15 hover:text-accent transition-all cursor-default"
+                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-surface dark:bg-canvas text-fg hover:scale-105 hover:bg-accent/15 hover:text-accent transition-all cursor-default"
                         >
                           {mat}
                         </span>
@@ -225,13 +225,13 @@ const ProjectsView = ({ projects }) => {
       {/* =========================================================================
           SECTION 3: PROJECT FILTERS (ALL, RESIDENTIAL, COMMERCIAL, HOSPITALITY)
           ========================================================================= */}
-      <section id="browse-projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
+      <section id="browse-projects" className="site-container scroll-mt-28">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-line pb-6">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+            <span className="text-xs text-accent font-semibold block mb-1">
               All Projects
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
               Browse by Type
             </h2>
           </div>
@@ -246,7 +246,7 @@ const ProjectsView = ({ projects }) => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`relative px-5 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                  className={`relative px-5 py-2.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                     isActive
                       ? 'bg-fg text-canvas shadow-md ring-1 ring-accent'
                       : 'bg-surface text-muted border border-line hover:border-accent'
@@ -272,7 +272,7 @@ const ProjectsView = ({ projects }) => {
       {/* =========================================================================
           SECTION 4: MASONRY / EDITORIAL PROJECT GALLERY
           ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <m.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
@@ -293,19 +293,19 @@ const ProjectsView = ({ projects }) => {
           <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-24 text-center rounded-3xl bg-surface border border-line shadow-sm"
+            className="py-24 text-center rounded-tile bg-surface"
           >
             <Layers className="w-10 h-10 text-accent mx-auto mb-3 opacity-60 animate-pulse" />
-            <h3 className="font-bold tracking-tight text-2xl text-fg">
+            <h3 className="font-semibold tracking-tight text-2xl text-fg">
               No Projects in This Category
             </h3>
-            <p className="text-xs text-muted mt-2 max-w-sm mx-auto font-light">
+            <p className="text-xs text-muted mt-2 max-w-sm mx-auto">
               New projects in this category are coming soon.
             </p>
             <div className="mt-5">
               <button
                 onClick={() => setSelectedCategory('All')}
-                className="text-xs uppercase tracking-luxury text-accent hover:underline font-medium cursor-pointer"
+                className="text-xs text-accent hover:underline font-medium cursor-pointer"
               >
                 Reset Filter to All
               </button>

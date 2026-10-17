@@ -24,7 +24,7 @@ export const CatalogFloatingWidget = () => {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-fg/95 dark:bg-canvas/95 backdrop-blur-md text-surface dark:text-fg border border-surface/20 dark:border-accent/40 text-xs font-semibold uppercase tracking-luxury shadow-lg whitespace-nowrap pointer-events-none"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-fg/95 dark:bg-canvas/95 backdrop-blur-md text-surface dark:text-fg border border-surface/20 dark:border-accent/40 text-xs font-semibold shadow-lg whitespace-nowrap pointer-events-none"
             >
               <FileText className="w-3.5 h-3.5 text-accent" />
               <span>Download Catalog PDF</span>
@@ -84,7 +84,7 @@ export const CatalogFloatingWidget = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-4xl bg-surface rounded-3xl shadow-apple-dark dark:shadow-apple-dark overflow-hidden z-10 my-8"
+              className="relative w-full max-w-4xl bg-surface rounded-tile overflow-hidden z-10 my-8"
             >
               {/* Modal Close Button */}
               <button
@@ -107,20 +107,20 @@ export const CatalogFloatingWidget = () => {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-[#07121C] via-[#07121C]/40 to-transparent flex flex-col justify-between p-6">
                       <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white">
+                        <span className="px-3 py-1 rounded-full text-[12px] font-mono font-semibold bg-white/20 backdrop-blur-md text-white">
                           Official PDF
                         </span>
                         <Sparkles className="w-4 h-4 text-[#BCA575]" />
                       </div>
 
                       <div className="space-y-1.5 text-white">
-                        <p className="text-[10px] uppercase font-mono tracking-luxury text-[#BCA575]">
+                        <p className="text-[12px] font-mono text-[#BCA575]">
                           Symmetry Interiors &amp; Building Solutions
                         </p>
                         <h4 className="text-2xl font-medium leading-tight">
                           Where Vision Meets Craftsmanship
                         </h4>
-                        <p className="text-xs text-white/80 font-light">
+                        <p className="text-xs text-white/80">
                           25+ Years Sourcing &amp; Turnkey Execution
                         </p>
                       </div>
@@ -131,15 +131,15 @@ export const CatalogFloatingWidget = () => {
                 {/* Right Side: Catalog Description & Download Actions */}
                 <div className="md:col-span-7 space-y-5">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+                    <span className="text-xs text-accent font-semibold block mb-1">
                       Official Corporate Presentation
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-serif text-fg font-normal leading-tight">
+                    <h3 className="text-2xl sm:text-3xl text-fg font-semibold leading-tight">
                       Symmetry Interiors &amp; Building Solutions Catalog
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-muted leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-muted leading-relaxed">
                     Explore our comprehensive 11-page corporate dossier showcasing 25+ years of international furniture sourcing, bespoke joinery manufacturing, and turnkey interiors for luxury hotels, commercial spaces, healthcare facilities, and private estates.
                   </p>
 
@@ -163,7 +163,7 @@ export const CatalogFloatingWidget = () => {
                     <a
                       href={pdfUrl}
                       download="Symmetry-Interiors-Catalog.pdf"
-                      className="flex-1 py-3.5 px-6 rounded-2xl bg-accent text-on-accent dark:text-canvas font-semibold text-xs sm:text-sm uppercase tracking-luxury hover:bg-[#284c50] dark:hover:bg-[#d4be8d] transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="flex-1 py-3.5 px-6 rounded-2xl bg-accent text-on-accent dark:text-canvas font-semibold text-xs sm:text-sm hover:bg-[#284c50] dark:hover:bg-[#d4be8d] transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
                     >
                       <Download className="w-4 h-4" />
                       <span>Download Catalog (PDF)</span>
@@ -173,7 +173,7 @@ export const CatalogFloatingWidget = () => {
                       href={pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="py-3.5 px-5 rounded-2xl border border-line text-fg hover:border-accent text-xs font-semibold uppercase tracking-luxury transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="py-3.5 px-5 rounded-2xl border border-line text-fg hover:border-accent text-xs font-semibold transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
                     >
                       <span>View Online</span>
                       <ExternalLink className="w-4 h-4 text-accent" />

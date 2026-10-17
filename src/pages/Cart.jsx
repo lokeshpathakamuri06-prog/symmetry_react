@@ -59,7 +59,7 @@ export const Cart = () => {
         description="Review your curated bespoke furniture pieces, finishes, specifications, and white-glove delivery options at Symmetry Interiors."
       />
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <Breadcrumb
           items={[
             { label: 'Shop', to: '/shop' },
@@ -70,11 +70,11 @@ export const Cart = () => {
         {/* Page Title & Count */}
         <div className="mt-8 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-line/60 dark:border-line pb-6">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold flex items-center gap-2">
+            <span className="text-xs text-accent font-semibold flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Shopping Bag</span>
             </span>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-fg leading-tight mt-1">
+            <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-fg leading-tight mt-1">
               Your Curated Bag
             </h1>
           </div>
@@ -119,21 +119,21 @@ export const Cart = () => {
           <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="py-16 sm:py-24 px-6 sm:px-12 rounded-3xl bg-surface border border-line text-center max-w-3xl mx-auto shadow-sm"
+            className="py-16 sm:py-24 px-6 sm:px-12 rounded-tile bg-surface text-center max-w-3xl mx-auto"
           >
             <div className="w-20 h-20 rounded-full bg-sunken/60 dark:bg-sunken border border-line flex items-center justify-center mx-auto mb-6 text-accent">
               <ShoppingBag className="w-9 h-9 stroke-[1.25]" />
             </div>
 
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+            <span className="text-xs text-accent font-semibold">
               Nothing Here Yet
             </span>
 
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg mt-2 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg mt-2 mb-4">
               Your Bag is Empty
             </h2>
 
-            <p className="text-sm sm:text-base text-muted leading-relaxed max-w-lg mx-auto font-light mb-8">
+            <p className="text-sm sm:text-base text-muted leading-relaxed max-w-lg mx-auto mb-8">
               Browse our handcrafted furniture, made with natural stone, solid wood and Italian fabrics.
             </p>
 
@@ -181,13 +181,13 @@ export const Cart = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.25 }}
-                      className="p-5 sm:p-7 rounded-3xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative group"
+                      className="p-5 sm:p-7 rounded-tile bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative group"
                     >
                       {/* Product Thumbnail & Details */}
                       <div className="flex items-center gap-5 w-full sm:w-auto">
                         <Link
                           to={`/shop/${item.id}`}
-                          className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sunken border border-line shrink-0 block relative group/img"
+                          className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sunken shrink-0 block relative group/img"
                         >
                           <SmartImage sizes="96px"
                             src={itemImage}
@@ -197,7 +197,7 @@ export const Cart = () => {
                         </Link>
 
                         <div className="space-y-1 flex-1">
-                          <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                          <span className="text-[12px] text-accent font-semibold block">
                             {item.category || item.collection || 'Symmetry Interiors'}
                           </span>
                           
@@ -241,7 +241,7 @@ export const Cart = () => {
                       {/* Quantity Controls & Line Total */}
                       <div className="flex items-center justify-between sm:justify-end gap-5 sm:gap-8 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-line/60 dark:border-line">
                         {/* Quantity Controller Pill */}
-                        <div className="flex items-center border border-line rounded-full overflow-hidden bg-canvas">
+                        <div className="flex items-center rounded-full overflow-hidden bg-canvas">
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.cartKey, -1)}
@@ -297,7 +297,7 @@ export const Cart = () => {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <Link
                   to="/shop"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-luxury font-medium text-fg hover:text-accent transition"
+                  className="inline-flex items-center gap-2 text-xs font-medium text-fg hover:text-accent transition"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Continue Exploring Furniture</span>
@@ -311,12 +311,12 @@ export const Cart = () => {
             </div>
 
             {/* Right Column: Order Summary Panel (4 Cols Sticky) */}
-            <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6 shadow-sm sticky top-28">
+            <div className="lg:col-span-4 p-6 sm:p-8 rounded-tile bg-surface space-y-6 sticky top-28">
               <div>
-                <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                <span className="text-[12px] text-accent font-semibold block">
                   Your Order
                 </span>
-                <h3 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
+                <h3 className="text-2xl font-semibold tracking-tight text-fg mt-0.5">
                   Order Summary
                 </h3>
               </div>
@@ -341,7 +341,7 @@ export const Cart = () => {
                   <span>Delivery & Installation</span>
                   <span className="font-semibold text-fg">
                     {shipping === 0 ? (
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[12px]">
                         Complimentary
                       </span>
                     ) : (
@@ -359,7 +359,7 @@ export const Cart = () => {
 
                 <div className="pt-4 border-t border-line/80 dark:border-line flex justify-between items-baseline">
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-luxury text-fg block">
+                    <span className="text-xs font-semibold text-fg block">
                       Total
                     </span>
                     <span className="text-[10px] text-muted">
@@ -384,7 +384,7 @@ export const Cart = () => {
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="e.g. ARCHITECT or SYMMETRY10"
                     disabled={couponApplied}
-                    className="flex-1 px-3.5 py-2 rounded-xl text-xs border border-line bg-canvas/50 text-fg uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60"
+                    className="flex-1 px-3.5 py-2 rounded-xl text-xs border border-line bg-canvas/50 text-fg focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60"
                   />
                   <button
                     type="submit"

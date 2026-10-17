@@ -1,51 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { m } from 'framer-motion';
 import { reveal } from '../lib/motion';
-import Button from './Button';
+import TextReveal from './motion/TextReveal';
 
-export const FinalCta = ({ className = '' }) => {
-  return (
-    <section className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-0 ${className}`}>
-      <m.div
-        {...reveal()}
-        className="rounded-3xl bg-sunken/30 dark:bg-surface border border-line p-8 sm:p-12 lg:p-16 text-center shadow-sm"
-      >
-        <div className="max-w-2xl mx-auto space-y-5">
-          {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold text-center">
-              25+ Years of Expertise &bull; Global Sourcing &bull; Bespoke Interiors &bull; End-to-End Execution
-            </span>
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg tracking-tight leading-tight">
-            Your Space. Our Expertise.
-          </h2>
-
-          {/* Description */}
-          <p className="text-sm sm:text-base text-muted font-light leading-relaxed max-w-xl mx-auto">
-            From globally sourced furniture to complete interior execution, we create spaces designed around your vision.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
-            <Button to="/contact" variant="primary" size="lg" showArrow>
-              Let’s Create Your Space
-            </Button>
-            <Button to="/projects" variant="secondary" size="lg">
-              Explore Our Work
-            </Button>
-          </div>
-
-          {/* Subtle Atelier Detail */}
-          <p className="pt-4 text-xs text-subtle font-light">
-            Studio visits in Hyderabad by appointment
-          </p>
-        </div>
+/** Closing call to action: a black band with one big line and two actions (Home, About, Services) */
+export const FinalCta = ({ className = '' }) => (
+  <section className={`band-dark section text-center ${className}`}>
+    <div className="site-container max-w-3xl">
+      <m.p {...reveal()} className="eyebrow mb-4 !text-[15px] justify-center flex-wrap">
+        25+ Years of Expertise &bull; Global Sourcing &bull; Bespoke Interiors &bull; End-to-End Execution
+      </m.p>
+      <TextReveal as="h2" className="text-display-xl text-fg" text="Your Space." accent="Our Expertise." />
+      <m.p {...reveal({ order: 2 })} className="lede mt-6 max-w-xl mx-auto">
+        From globally sourced furniture to complete interior execution, we create spaces designed around your vision.
+      </m.p>
+      <m.div {...reveal({ order: 3 })} className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <Link to="/contact" className="btn-primary">Let’s Create Your Space</Link>
+        <Link to="/projects" className="btn-secondary">Explore Our Work</Link>
       </m.div>
-    </section>
-  );
-};
+      <m.p {...reveal({ order: 4 })} className="mt-8 text-[13px] text-subtle">Studio visits in Hyderabad by appointment</m.p>
+    </div>
+  </section>
+);
 
 export default FinalCta;

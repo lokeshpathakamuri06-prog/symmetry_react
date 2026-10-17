@@ -33,7 +33,7 @@ const ResidentialSection = ({ service }) => {
     <section ref={containerRef} id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-700"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-surface transition-all duration-700"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Narrative Column */}
@@ -42,21 +42,21 @@ const ResidentialSection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 01 &bull; {service.subtitle}
               </span>
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-[1.12] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg leading-[1.12] tracking-tight">
                 {service.title}
               </h2>
-              <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-2">
+              <p className="text-xs sm:text-sm text-accent font-medium mt-2">
                 {service.tagline}
               </p>
             </div>
 
-            <p className="text-base text-muted font-light leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               {service.description}
             </p>
 
@@ -70,7 +70,7 @@ const ResidentialSection = ({ service }) => {
                   <span className="block font-semibold text-base sm:text-lg text-fg">
                     {stat.value}
                   </span>
-                  <span className="block text-[10px] sm:text-[11px] uppercase tracking-wider text-subtle mt-0.5">
+                  <span className="block text-[12px] sm:text-[11px] text-subtle mt-0.5">
                     {stat.label}
                   </span>
                 </div>
@@ -79,13 +79,13 @@ const ResidentialSection = ({ service }) => {
 
             {/* Deliverables Checklist */}
             <div className="pt-2">
-              <h3 className="text-xs uppercase tracking-luxury text-fg font-semibold mb-3 flex items-center gap-2">
+              <h3 className="text-xs text-fg font-semibold mb-3 flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-accent" />
                 <span>Scope &amp; Key Deliverables</span>
               </h3>
               <ul className="space-y-2">
                 {service.features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light">
+                  <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted">
                     <div className="w-4 h-4 rounded-full bg-accent/15 text-accent flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-2.5 h-2.5" />
                     </div>
@@ -108,7 +108,7 @@ const ResidentialSection = ({ service }) => {
 
           {/* Asymmetric Overlapping Visuals */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-[4/3] lg:aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line shadow-lg group">
+            <div className="relative aspect-[4/3] lg:aspect-[16/11] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
               <m.img
                 style={{ y: imageY }}
                 src={service.image}
@@ -118,7 +118,7 @@ const ResidentialSection = ({ service }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60 shadow-sm">
+                <span className="px-3.5 py-1.5 rounded-full text-[12px] font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60 shadow-sm">
                   {service.accentBadge}
                 </span>
               </div>
@@ -130,14 +130,14 @@ const ResidentialSection = ({ service }) => {
 
             {/* Overlapping Inset Detail */}
             <div className="grid grid-cols-12 gap-4 items-center">
-              <div className="col-span-5 aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-sunken border border-[#D1DCDE]/70 shadow-sm">
+              <div className="col-span-5 aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-sunken">
                 <img src={service.detailImage} alt="Detail" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
               </div>
-              <div className="col-span-7 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-sunken/30 dark:bg-canvas border border-[#D1DCDE]/60">
-                <span className="text-[10px] uppercase font-mono tracking-wider text-accent block mb-1">
+              <div className="col-span-7 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-sunken/30 dark:bg-canvas">
+                <span className="text-[12px] font-mono text-accent block mb-1">
                   Millimeter Precision
                 </span>
-                <p className="text-xs text-muted font-light leading-snug">
+                <p className="text-xs text-muted leading-snug">
                   Full-height Italian marble reveals and continuous grain walnut joinery.
                 </p>
               </div>
@@ -157,7 +157,7 @@ const CommercialSection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="relative rounded-3xl sm:rounded-[36px] overflow-hidden bg-fg dark:bg-canvas text-[#F5F1E8] border border-[#333] dark:border-line shadow-2xl p-6 sm:p-10 lg:p-14"
+        className="relative rounded-tile sm:rounded-[36px] overflow-hidden bg-fg dark:bg-canvas text-[#F5F1E8] p-6 sm:p-10 lg:p-14"
       >
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -170,16 +170,16 @@ const CommercialSection = ({ service }) => {
                   {service.number}
                 </span>
                 <span className="w-8 h-px bg-[#BCA575]" />
-                <span className="text-xs uppercase tracking-luxury text-[#BCA575] font-semibold">
+                <span className="text-xs text-[#BCA575] font-semibold">
                   Practice 02 &bull; {service.subtitle}
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight">
                 {service.title}
               </h2>
             </div>
             <div className="flex items-center gap-3">
-              <span className="px-3.5 py-1.5 rounded-full text-xs uppercase tracking-luxury bg-white/10 border border-white/15 text-[#BCA575]">
+              <span className="px-3.5 py-1.5 rounded-full text-xs bg-white/10 border border-white/15 text-[#BCA575]">
                 {service.accentBadge}
               </span>
             </div>
@@ -189,7 +189,7 @@ const CommercialSection = ({ service }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: Panoramic Executive Imagery */}
             <div className="lg:col-span-7">
-              <div className="relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-white/15 shadow-xl group">
+              <div className="relative aspect-[16/10] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
                 <img
                   src={service.image}
                   alt={service.title}
@@ -206,7 +206,7 @@ const CommercialSection = ({ service }) => {
 
             {/* Right: Narrative & Enterprise Benchmarks */}
             <div className="lg:col-span-5 space-y-6">
-              <p className="text-base text-[#AEB7BE] font-light leading-relaxed">
+              <p className="text-base text-[#AEB7BE] leading-relaxed">
                 {service.description}
               </p>
 
@@ -217,7 +217,7 @@ const CommercialSection = ({ service }) => {
                     key={i}
                     className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between"
                   >
-                    <span className="text-xs uppercase tracking-luxury text-[#AEB7BE]">
+                    <span className="text-xs text-[#AEB7BE]">
                       {stat.label}
                     </span>
                     <span className="font-bold text-base text-[#BCA575]">
@@ -230,7 +230,7 @@ const CommercialSection = ({ service }) => {
               {/* Enterprise Features */}
               <ul className="space-y-2 pt-2">
                 {service.features.slice(0, 3).map((f, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-xs text-[#AEB7BE] font-light">
+                  <li key={i} className="flex items-start gap-2.5 text-xs text-[#AEB7BE]">
                     <Check className="w-3.5 h-3.5 text-[#BCA575] shrink-0 mt-0.5" />
                     <span>{f}</span>
                   </li>
@@ -258,7 +258,7 @@ const HospitalitySection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-sunken/30 dark:bg-surface space-y-8"
       >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -267,14 +267,14 @@ const HospitalitySection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 03 &bull; {service.subtitle}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg tracking-tight">
               {service.title}
             </h2>
-            <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-1">
+            <p className="text-xs sm:text-sm text-accent font-medium mt-1">
               {service.tagline}
             </p>
           </div>
@@ -285,18 +285,18 @@ const HospitalitySection = ({ service }) => {
 
         {/* 3-Image Gallery Triptych */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken border border-line shadow-sm group">
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken group">
             <img src={service.image} alt="Hospitality Suite" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken border border-line shadow-sm group">
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken group">
             <img src={service.detailImage} alt="Spa Lounge" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
-          <div className="p-6 sm:p-7 rounded-2xl bg-surface dark:bg-canvas border border-line flex flex-col justify-between">
+          <div className="p-6 sm:p-7 rounded-2xl bg-surface dark:bg-canvas flex flex-col justify-between">
             <div className="space-y-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-accent">
+              <span className="text-xs font-mono text-accent">
                 Sensory Vocabulary
               </span>
-              <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted leading-relaxed">
                 Stone bars, quiet private dining rooms and lighting that changes through the day.
               </p>
             </div>
@@ -309,12 +309,12 @@ const HospitalitySection = ({ service }) => {
 
         {/* Narrative & Checklist Split */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4 border-t border-line">
-          <p className="text-sm sm:text-base text-muted font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-muted leading-relaxed">
             {service.description}
           </p>
           <ul className="space-y-2">
             {service.features.map((f, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light">
+              <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted">
                 <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                 <span>{f}</span>
               </li>
@@ -334,7 +334,7 @@ const TurnkeySection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-700"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-surface transition-all duration-700"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Blueprint Narrative */}
@@ -343,40 +343,40 @@ const TurnkeySection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 04 &bull; {service.subtitle}
               </span>
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg leading-tight tracking-tight">
                 {service.title}
               </h2>
-              <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-2">
+              <p className="text-xs sm:text-sm text-accent font-medium mt-2">
                 {service.tagline}
               </p>
             </div>
 
-            <p className="text-base text-muted font-light leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               {service.description}
             </p>
 
             {/* 4-Phase Turnkey Protocol Badge Bar */}
-            <div className="p-4 rounded-2xl bg-sunken/40 dark:bg-canvas border border-line/60 dark:border-line space-y-2">
-              <span className="text-[10px] uppercase font-mono tracking-wider text-accent block font-semibold">
+            <div className="p-4 rounded-2xl bg-sunken/40 dark:bg-canvas space-y-2">
+              <span className="text-[12px] font-mono text-accent block font-semibold">
                 Single-Point Engineering Protocol:
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-medium text-fg">
-                <div className="p-2 rounded-lg bg-surface border border-[#D1DCDE]/50">01 Scan</div>
-                <div className="p-2 rounded-lg bg-surface border border-[#D1DCDE]/50">02 Civil</div>
-                <div className="p-2 rounded-lg bg-surface border border-[#D1DCDE]/50">03 Joinery</div>
-                <div className="p-2 rounded-lg bg-surface border border-[#D1DCDE]/50">04 Handover</div>
+                <div className="p-2 rounded-lg bg-surface">01 Scan</div>
+                <div className="p-2 rounded-lg bg-surface">02 Civil</div>
+                <div className="p-2 rounded-lg bg-surface">03 Joinery</div>
+                <div className="p-2 rounded-lg bg-surface">04 Handover</div>
               </div>
             </div>
 
             <ul className="space-y-2">
               {service.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light">
+                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted">
                   <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                   <span>{f}</span>
                 </li>
@@ -392,7 +392,7 @@ const TurnkeySection = ({ service }) => {
 
           {/* Right Column: Industrial Campus Visual */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-[4/3] lg:aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line shadow-lg group">
+            <div className="relative aspect-[4/3] lg:aspect-[16/11] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
               <img
                 src={service.image}
                 alt={service.title}
@@ -401,7 +401,7 @@ const TurnkeySection = ({ service }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60 shadow-sm">
+                <span className="px-3.5 py-1.5 rounded-full text-[12px] font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60 shadow-sm">
                   {service.accentBadge}
                 </span>
               </div>
@@ -412,10 +412,10 @@ const TurnkeySection = ({ service }) => {
             </div>
 
             {/* Turnkey Metric Card */}
-            <div className="p-4 rounded-2xl bg-sunken/30 dark:bg-canvas border border-[#D1DCDE]/60 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-sunken/30 dark:bg-canvas flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase font-mono text-accent">Turnkey Commitment</p>
-                <p className="text-sm font-serif font-medium text-fg mt-0.5">
+                <p className="text-sm font-medium text-fg mt-0.5">
                   Contracted Handover Date &bull; Fixed Cost Guarantee
                 </p>
               </div>
@@ -436,12 +436,12 @@ const CustomizedFurnitureSection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-sunken/30 dark:bg-surface space-y-8"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left: Atelier Photo */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line shadow-lg group">
+            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
               <img
                 src={service.image}
                 alt={service.title}
@@ -450,7 +450,7 @@ const CustomizedFurnitureSection = ({ service }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60">
+                <span className="px-3.5 py-1.5 rounded-full text-[12px] font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60">
                   {service.accentBadge}
                 </span>
               </div>
@@ -461,7 +461,7 @@ const CustomizedFurnitureSection = ({ service }) => {
             </div>
 
             {/* Tactile Material Pills */}
-            <div className="p-4 rounded-2xl bg-surface dark:bg-canvas border border-[#D1DCDE]/60 flex flex-wrap gap-2 text-xs font-medium text-fg">
+            <div className="p-4 rounded-2xl bg-surface dark:bg-canvas flex flex-wrap gap-2 text-xs font-medium text-fg">
               <span className="px-2.5 py-1 rounded-md bg-sunken/50 dark:bg-sunken">Burl Walnut</span>
               <span className="px-2.5 py-1 rounded-md bg-sunken/50 dark:bg-sunken">Smoked French Oak</span>
               <span className="px-2.5 py-1 rounded-md bg-sunken/50 dark:bg-sunken">Cast Bronze</span>
@@ -475,27 +475,27 @@ const CustomizedFurnitureSection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 05 &bull; {service.subtitle}
               </span>
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg leading-tight tracking-tight">
                 {service.title}
               </h2>
-              <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-2">
+              <p className="text-xs sm:text-sm text-accent font-medium mt-2">
                 {service.tagline}
               </p>
             </div>
 
-            <p className="text-base text-muted font-light leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               {service.description}
             </p>
 
             <ul className="space-y-2">
               {service.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light">
+                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted">
                   <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                   <span>{f}</span>
                 </li>
@@ -522,7 +522,7 @@ const FurnitureSourcingSection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-surface border border-line shadow-sm space-y-8"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-surface space-y-8"
       >
         {/* Header Strip */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-line">
@@ -531,14 +531,14 @@ const FurnitureSourcingSection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 06 &bull; {service.subtitle}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg tracking-tight">
               {service.title}
             </h2>
-            <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-1">
+            <p className="text-xs sm:text-sm text-accent font-medium mt-1">
               {service.tagline}
             </p>
           </div>
@@ -559,11 +559,11 @@ const FurnitureSourcingSection = ({ service }) => {
           ].map((hub, i) => (
             <div
               key={i}
-              className="p-5 rounded-2xl bg-sunken/40 dark:bg-canvas border border-line/60 space-y-2"
+              className="p-5 rounded-2xl bg-sunken/40 dark:bg-canvas space-y-2"
             >
               <span className="text-2xl">{hub.flag}</span>
               <h4 className="font-bold text-base text-fg">{hub.city}</h4>
-              <p className="text-xs text-muted font-light leading-relaxed">{hub.desc}</p>
+              <p className="text-xs text-muted leading-relaxed">{hub.desc}</p>
             </div>
           ))}
         </div>
@@ -571,7 +571,7 @@ const FurnitureSourcingSection = ({ service }) => {
         {/* Narrative & Action */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
           <div className="lg:col-span-8 space-y-3">
-            <p className="text-sm sm:text-base text-muted font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-muted leading-relaxed">
               {service.description}
             </p>
             <div className="flex flex-wrap gap-4 text-xs font-mono text-subtle">
@@ -599,7 +599,7 @@ const LightingDecorSection = ({ service }) => {
     <section id={service.id} className="scroll-mt-28">
       <m.div
         {...reveal()}
-        className="p-6 sm:p-10 lg:p-14 rounded-3xl sm:rounded-[36px] bg-sunken/30 dark:bg-surface border border-line shadow-sm space-y-8"
+        className="p-6 sm:p-10 lg:p-14 rounded-tile sm:rounded-[36px] bg-sunken/30 dark:bg-surface space-y-8"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left: Atmospheric Lighting Narrative */}
@@ -608,28 +608,28 @@ const LightingDecorSection = ({ service }) => {
               <span className="font-bold text-3xl sm:text-4xl text-accent">
                 {service.number}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Practice 07 &bull; {service.subtitle}
               </span>
             </div>
 
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-tight tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-fg leading-tight tracking-tight">
                 {service.title}
               </h2>
-              <p className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-medium mt-2">
+              <p className="text-xs sm:text-sm text-accent font-medium mt-2">
                 {service.tagline}
               </p>
             </div>
 
-            <p className="text-base text-muted font-light leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               {service.description}
             </p>
 
             {/* 3 Lighting Specs */}
             <div className="grid grid-cols-3 gap-3">
               {service.stats?.map((stat, i) => (
-                <div key={i} className="p-3.5 rounded-xl bg-surface dark:bg-canvas border border-[#D1DCDE]/60 text-center">
+                <div key={i} className="p-3.5 rounded-xl bg-surface dark:bg-canvas text-center">
                   <span className="block font-bold text-base text-accent">{stat.value}</span>
                   <span className="block text-[10px] uppercase text-subtle mt-0.5">{stat.label}</span>
                 </div>
@@ -638,7 +638,7 @@ const LightingDecorSection = ({ service }) => {
 
             <ul className="space-y-2">
               {service.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light">
+                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted">
                   <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                   <span>{f}</span>
                 </li>
@@ -654,7 +654,7 @@ const LightingDecorSection = ({ service }) => {
 
           {/* Right: Lighting Photography with Ambient Warm Glow */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line shadow-xl group">
+            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
               <img
                 src={service.image}
                 alt={service.title}
@@ -663,7 +663,7 @@ const LightingDecorSection = ({ service }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60">
+                <span className="px-3.5 py-1.5 rounded-full text-[12px] font-medium bg-canvas/90 text-fg backdrop-blur-md border border-[#D1DCDE]/60">
                   {service.accentBadge}
                 </span>
               </div>
@@ -673,7 +673,7 @@ const LightingDecorSection = ({ service }) => {
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-surface dark:bg-canvas border border-[#D1DCDE]/60 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-surface dark:bg-canvas flex items-center justify-between">
               <div>
                 <span className="text-xs uppercase font-mono text-accent">Acoustic Balance</span>
                 <p className="text-sm font-semibold text-fg mt-0.5">
@@ -694,7 +694,7 @@ const LightingDecorSection = ({ service }) => {
    ========================================================================= */
 export const Services = () => {
   return (
-    <div className="pb-0 space-y-16 sm:space-y-24 overflow-hidden">
+    <div className="pb-0 space-y-16 sm:space-y-24 overflow-x-clip">
       <SeoMeta
         title="Services — Symmetry Interiors & Building Solutions"
         description="Explore Symmetry Interiors' 7 dedicated practices: Residential Interiors, Commercial Interiors, Hospitality Interiors, Turnkey Projects, Customized Furniture, Furniture Sourcing, and Lighting & Decor."
@@ -707,8 +707,8 @@ export const Services = () => {
         title="Comprehensive Interior"
         highlight="Solutions"
         subtitle="From concept design to final turnkey execution across residential, commercial, hospitality, healthcare, and institutional spaces."
-        image={heroImage('/images/hero/hero-services.jpeg')}
-        imageAlt="Symmetry Interiors design and execution"
+        image={heroImage('/images/hero/stock-services.jpeg')}
+        imageAlt="A refined, neutral living room"
         stats={[
           { value: '07', label: 'Specialist Services', sub: 'One Team' },
           { value: '25k', label: 'Sq.Ft. Workshop', sub: 'German CNC Machines' },
@@ -720,13 +720,13 @@ export const Services = () => {
       {/* =========================================================================
           DISCIPLINE QUICK-NAV JUMP BAR
           ========================================================================= */}
-      <div id="services-grid" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <div id="services-grid" className="site-container pt-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-line">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+            <span className="text-xs text-accent font-semibold block mb-1">
               What We Do
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
               Our Services
             </h2>
           </div>
@@ -751,7 +751,7 @@ export const Services = () => {
       {/* =========================================================================
           SEVEN DEDICATED SERVICE SECTIONS WITH UNIQUE INDIVIDUAL STYLES
           ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
+      <div className="site-container space-y-16 sm:space-y-24">
         {/* 1. Residential Interiors */}
         <ResidentialSection service={services[0]} />
 
@@ -778,27 +778,27 @@ export const Services = () => {
           PROCESS SECTION: METHODOLOGY & THE TURNKEY ARCHITECTURAL JOURNEY
           ========================================================================= */}
       <section className="bg-sunken/40 dark:bg-surface/60 py-20 sm:py-28 border-y border-line/70 dark:border-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
             <m.div
               {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
-              <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs sm:text-sm text-accent font-semibold">
                 Our Process
               </span>
             </m.div>
 
             <m.h2
               {...reveal({ order: 1 })}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-fg leading-tight tracking-tight"
             >
               How a Project Works
             </m.h2>
 
             <m.p
               {...reveal({ order: 2 })}
-              className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
+              className="mt-4 text-base sm:text-lg text-muted leading-relaxed"
             >
               Six clear steps that keep your project on budget, true to the design and on time.
             </m.p>
@@ -811,7 +811,7 @@ export const Services = () => {
                 <m.div
                   {...reveal({ order: idx })}
                   key={phase.step}
-                  className="p-8 rounded-2xl sm:rounded-3xl bg-surface border border-line shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between"
+                  className="p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
@@ -823,15 +823,15 @@ export const Services = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold tracking-tight text-fg mb-1">
+                    <h3 className="text-2xl font-semibold tracking-tight text-fg mb-1">
                       {phase.name}
                     </h3>
 
-                    <p className="text-xs uppercase tracking-luxury text-accent font-medium mb-3">
+                    <p className="text-xs text-accent font-medium mb-3">
                       {phase.tagline}
                     </p>
 
-                    <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
                       {phase.description}
                     </p>
                   </div>

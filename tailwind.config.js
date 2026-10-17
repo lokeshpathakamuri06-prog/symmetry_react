@@ -86,9 +86,11 @@ export default {
       },
       fontSize: {
         // Fluid display sizes for page and section headlines
-        'display-xl': ['clamp(2.75rem, 6.4vw, 5.75rem)', { lineHeight: '1.02', letterSpacing: '-0.035em', fontWeight: '640' }],
-        'display-lg': ['clamp(2.25rem, 4.8vw, 4.25rem)', { lineHeight: '1.05', letterSpacing: '-0.03em', fontWeight: '640' }],
-        'display-md': ['clamp(1.875rem, 3.4vw, 3rem)', { lineHeight: '1.08', letterSpacing: '-0.025em', fontWeight: '640' }],
+        // Fluid display sizes (Apple: 96 / 64 / 48 px on desktop, semibold, tight tracking)
+        'display-xl': ['clamp(2.75rem, 7vw, 6rem)', { lineHeight: '1.04', letterSpacing: '-0.035em', fontWeight: '600' }],
+        'display-lg': ['clamp(2.25rem, 5vw, 4rem)', { lineHeight: '1.06', letterSpacing: '-0.03em', fontWeight: '600' }],
+        'display-md': ['clamp(1.75rem, 3.4vw, 3rem)', { lineHeight: '1.1', letterSpacing: '-0.025em', fontWeight: '600' }],
+        'display-sm': ['clamp(1.5rem, 2.4vw, 2rem)', { lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: '600' }],
       },
       // Motion tokens: same values as src/lib/motion.js
       transitionTimingFunction: {
@@ -107,6 +109,7 @@ export default {
         '2xl': '0 4px 12px rgba(0, 0, 0, 0.04), 0 28px 70px rgba(0, 0, 0, 0.12)',
         'card': '0 1px 2px rgba(0, 0, 0, 0.03), 0 6px 24px rgba(0, 0, 0, 0.05)',
         'card-hover': '0 2px 6px rgba(0, 0, 0, 0.04), 0 22px 50px rgba(0, 0, 0, 0.10)',
+        'tile-hover': '0 4px 14px rgba(0, 0, 0, 0.06), 0 18px 44px rgba(0, 0, 0, 0.08)',
         'apple': '0 8px 30px rgba(0, 0, 0, 0.04)',
         'apple-hover': '0 20px 40px rgba(0, 0, 0, 0.08)',
         'apple-dark': '0 8px 30px rgba(0, 0, 0, 0.35)',
@@ -119,6 +122,7 @@ export default {
         'luxury': '16px',
         'card': '22px',
         'panel': '28px',
+        'tile': '28px',
       }
     },
   },

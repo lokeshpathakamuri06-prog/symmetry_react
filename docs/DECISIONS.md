@@ -4,6 +4,10 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-17 | Home slideshow shows **photos only**: no dark overlay and no text on the photos; the headline and buttons sit in the section below | Requested ("remove overlay effect on hero slides"); white text is unreadable on bright photos without an overlay | Text on the photo with a small glass card; text above a framed photo | Small glass card on the photo; text above the photo |
+| 2026-10-17 | **Free stock photos (Unsplash licence)** for the inner page heroes, saved locally as `public/images/hero/stock-*.jpeg` + WebP | Requested as temporary images until the client supplies photos; the old banners stay in the repo | Client's own product / project photos; wait for new photos |
+| 2026-10-17 | New Apple-style look: grey page, white and black bands, borderless 28 px tiles, thin global bar that hides on scroll, sticky page bar on inner pages, swipeable card galleries instead of coverflows | Requested: "new modern website of Apple theme", content unchanged | Polish the 2026-10-14 look only |
+| 2026-10-17 | Brand teal (gold in dark mode) kept as the accent instead of Apple blue | Keeps the brand recognisable; one token (`--c-accent` in `index.css`) changes it | Apple blue `#0071e3` |
 | 2026-10-17 | Careers resumes and portfolios are uploaded to **our own backend** and stored on the server (Docker volume `application_files`), downloadable only by signed-in admins | Personal data must not be public; no third party needs access; Cloudinary would need a public signing endpoint and serves files from a CDN | Cloudinary private uploads; links to Google Drive only (the old form) |
 | 2026-10-17 | File type decided from the file's first bytes (PDF / OLE .doc / ZIP with `word/document.xml`), random stored names, owner-only permissions, size caps 5 MB / 15 MB | A renamed HTML or executable file is rejected; nothing guessable on disk | Trust the file extension or the browser's content type |
 | 2026-10-17 | New endpoint `/public/career-applications` (multipart) next to the old JSON one | The live site keeps working until the new frontend is deployed | Change the old endpoint |
@@ -82,3 +86,7 @@ Newest first. Each entry records what was decided, and why. If a decision change
 | 2026-10-07 | Admin theme: Apple-style light + dark, sharing the site's toggle | Requested; matches the website's two themes | Light only; dark only |
 | 2026-10-07 | Full header menu only at ≥1440 px | Menu overflowed at 1024–1366 px even before Careers | Shorter labels; smaller text |
 | 2026-10-07 | Docker (nginx) for hosting on the VPS | Fastest way to get the site live | Netlify (config exists in repo) |
+| 2026-10-17 | Apple-style redesign: grey page / white tiles / black bands, brand teal kept as accent (not Apple blue) | Keeps the brand; the accent is one token (`--c-accent` in `src/index.css`) if Apple blue is wanted | Apple blue `#0071E3` for links and buttons |
+| 2026-10-17 | Home slideshow shows photos only (no text, no overlay); headline moved to the next section | Requested; white text would be unreadable on bright photos without an overlay | Text on the photo with a small glass card; text above a framed photo |
+| 2026-10-17 | Free Unsplash photos as temporary page heroes (`stock-*.jpeg`) | Requested until the client supplies photos; listed with the other placeholders in ASSETS | Client's own product photos; waiting for new photos |
+

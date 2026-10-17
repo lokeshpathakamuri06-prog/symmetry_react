@@ -91,7 +91,7 @@ export const Careers = () => {
   const hrPhone = company.hrPhone?.trim();
 
   return (
-    <div className="pb-20 sm:pb-28 space-y-20 sm:space-y-28 overflow-hidden">
+    <div className="pb-20 sm:pb-28 space-y-20 sm:space-y-28 overflow-x-clip">
       <SeoMeta
         title="Careers"
         description="Internships and fresher roles at Symmetry Interiors & Building Solutions for architecture and interior design students and creative professionals."
@@ -105,8 +105,9 @@ export const Careers = () => {
         title="Start Your Design Journey"
         highlight="With Symmetry"
         subtitle="Are you an architecture or interior design student ready to move beyond the classroom? Our internship and fresher opportunities offer exposure to the practical side of the interiors industry."
-        image={heroImage('/images/hero/hero-haj-banner-2.jpeg')}
-        imageAlt="A finished Symmetry interior"
+        image={heroImage('/images/hero/stock-careers.jpeg')}
+        imageAlt="An architect drawing plans by hand"
+        navCta={{ label: 'Apply now', href: '#apply' }}
         actions={
           <>
             <a href="#opportunities" className="btn-primary">Explore opportunities</a>
@@ -159,7 +160,7 @@ export const Careers = () => {
           </div>
           <ul className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {expectations.map((item, i) => (
-              <m.li {...reveal({ order: i })} key={item} className="flex gap-3 rounded-2xl bg-surface border border-line/70 dark:border-line p-5">
+              <m.li {...reveal({ order: i })} key={item} className="flex gap-3 rounded-2xl bg-surface p-5">
                 <CircleCheck className="w-5 h-5 shrink-0 text-accent mt-0.5" aria-hidden="true" />
                 <span className="text-[16px] leading-relaxed text-fg">{item}</span>
               </m.li>
@@ -228,7 +229,7 @@ export const Careers = () => {
                 {jobs.map((job) => {
                   const isOpen = expandedId === job.id;
                   return (
-                    <div key={job.id} className="rounded-2xl bg-surface border border-line/70 dark:border-line overflow-hidden">
+                    <div key={job.id} className="rounded-2xl bg-surface overflow-hidden">
                       <button
                         type="button"
                         onClick={() => setExpandedId(isOpen ? null : job.id)}
@@ -236,7 +237,7 @@ export const Careers = () => {
                         className="w-full p-4 flex items-start justify-between gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
                       >
                         <span>
-                          <span className="block text-[12px] font-semibold uppercase tracking-[0.08em] text-accent">{job.department}</span>
+                          <span className="block text-[12px] font-semibold text-accent">{job.department}</span>
                           <span className="block text-[16px] font-semibold text-fg mt-0.5">{job.title}</span>
                           <span className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[13px] text-muted">
                             {job.location && <span className="inline-flex items-center gap-1"><MapPin className="w-3.5 h-3.5" aria-hidden="true" />{job.location}</span>}
@@ -413,7 +414,7 @@ export const Careers = () => {
       <section className="site-container">
         <m.div {...reveal({ variant: 'scaleIn' })} className="relative overflow-hidden rounded-panel bg-black text-white">
           <img
-            {...heroImage('/images/hero/hero-haj-slide-2.jpeg', '(min-width: 1280px) 1280px, 100vw')}
+            {...heroImage('/images/hero/stock-careers-cta.jpeg', '(min-width: 1280px) 1280px, 100vw')}
             alt=""
             loading="lazy"
             decoding="async"

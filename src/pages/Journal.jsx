@@ -95,7 +95,7 @@ const JournalView = ({ blogs }) => {
   };
 
   return (
-    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-hidden">
+    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-x-clip">
       <SeoMeta
         title="The Symmetry Journal | Interiors, Furniture & Materials"
         description="Essays, material guides, buying guides, and project spotlights exploring quiet luxury, Italian craftsmanship, and bespoke living."
@@ -108,8 +108,8 @@ const JournalView = ({ blogs }) => {
         title="The Symmetry"
         highlight="Journal"
         subtitle="Ideas, material guides and buying advice from our designers, craftspeople and sourcing team."
-        image={heroImage('/images/hero/hero-journal.jpeg')}
-        imageAlt="The Symmetry Journal"
+        image={heroImage('/images/hero/stock-journal.jpeg')}
+        imageAlt="A calm, minimal room with plants"
         stats={[
           { value: '06', label: 'Editorial Disciplines', sub: 'Design & Procurement' },
           { value: '100%', label: 'Studio Essays', sub: 'Written by Our Team' },
@@ -121,12 +121,12 @@ const JournalView = ({ blogs }) => {
       {/* =========================================================================
           FEATURED MONOGRAPH SECTION & BLOG GRID
           ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         {/* Featured Article Hero Card */}
         {featuredBlog && selectedCategory === 'All' && !searchQuery && (
           <div id="featured-monograph" className="pt-4 scroll-mt-24">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold flex items-center gap-2">
+              <span className="text-xs text-accent font-semibold flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5" />
                 Featured Article
               </span>
@@ -137,7 +137,7 @@ const JournalView = ({ blogs }) => {
 
             <m.div
               {...reveal()}
-              className="rounded-3xl overflow-hidden bg-surface border border-line shadow-luxury grid grid-cols-1 lg:grid-cols-12 group transition-all duration-500 hover:border-accent/60 hover:shadow-2xl relative"
+              className="rounded-tile overflow-hidden bg-surface grid grid-cols-1 lg:grid-cols-12 group transition-all duration-500 relative"
             >
               {/* Shimmer Light Reflection Sweep */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/10 dark:via-white/5 to-transparent pointer-events-none z-20" />
@@ -152,7 +152,7 @@ const JournalView = ({ blogs }) => {
                   className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3.5 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-fg/85 dark:bg-canvas/85 backdrop-blur-md text-[#F4F7F6] border border-white/10 shadow-sm">
+                  <span className="px-3.5 py-1 rounded-full text-xs font-medium bg-fg/85 dark:bg-canvas/85 backdrop-blur-md text-[#F4F7F6] border border-white/10 shadow-sm">
                     Featured Article
                   </span>
                 </div>
@@ -160,7 +160,7 @@ const JournalView = ({ blogs }) => {
 
               <div className="lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between space-y-6 relative z-10">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-xs uppercase tracking-luxury text-accent font-semibold">
+                  <div className="flex items-center gap-3 text-xs text-accent font-semibold">
                     <span>{featuredBlog.category}</span>
                     <span>&bull;</span>
                     <span className="flex items-center gap-1">
@@ -172,12 +172,12 @@ const JournalView = ({ blogs }) => {
                   </div>
 
                   <Link to={`/journal/${featuredBlog.id}`} className="block hover:text-accent transition-colors">
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-fg leading-snug">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-fg leading-snug">
                       {featuredBlog.title}
                     </h2>
                   </Link>
 
-                  <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted leading-relaxed">
                     {featuredBlog.excerpt}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ const JournalView = ({ blogs }) => {
 
                   <Link
                     to={`/journal/${featuredBlog.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs uppercase tracking-luxury font-medium text-accent hover:translate-x-1 transition-transform"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:translate-x-1 transition-transform"
                   >
                     <span>Read Article</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -215,7 +215,7 @@ const JournalView = ({ blogs }) => {
                   <button
                     key={category}
                     onClick={() => handleCategoryChange(category)}
-                    className={`px-4 py-2 rounded-full text-xs uppercase tracking-luxury shrink-0 transition-all cursor-pointer font-medium ${
+                    className={`px-4 py-2 rounded-full text-xs shrink-0 transition-all cursor-pointer font-medium ${
                       isActive
                         ? 'bg-fg text-canvas shadow-sm'
                         : 'border border-line text-muted hover:border-accent hover:text-[#1D1D1F] dark:hover:text-white'
@@ -265,7 +265,7 @@ const JournalView = ({ blogs }) => {
                   setSearchQuery('');
                   setCurrentPage(1);
                 }}
-                className="text-xs uppercase tracking-luxury text-accent hover:underline cursor-pointer"
+                className="text-xs text-accent hover:underline cursor-pointer"
               >
                 Reset Filters
               </button>
@@ -297,13 +297,13 @@ const JournalView = ({ blogs }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
-                className="py-20 px-6 rounded-3xl bg-surface border border-line text-center max-w-xl mx-auto my-8 shadow-sm"
+                className="py-20 px-6 rounded-tile bg-surface text-center max-w-xl mx-auto my-8"
               >
                 <BookOpen className="w-10 h-10 text-accent mx-auto mb-3 stroke-[1.2]" />
-                <h3 className="text-xl font-bold tracking-tight text-fg">
+                <h3 className="text-xl font-semibold tracking-tight text-fg">
                   No Essays Found
                 </h3>
-                <p className="text-xs text-muted mt-2 mb-6 font-light">
+                <p className="text-xs text-muted mt-2 mb-6">
                   We couldn’t find any articles matching your search. Try searching for "Travertine", "Lighting", or "Bouclé".
                 </p>
                 <button

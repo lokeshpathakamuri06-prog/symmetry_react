@@ -80,7 +80,7 @@ export const SearchModal = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-2xl bg-surface rounded-2xl shadow-apple dark:shadow-apple-dark overflow-hidden z-10"
+            className="relative w-full max-w-2xl bg-surface rounded-2xl overflow-hidden z-10"
           >
             {/* Search Input Bar */}
             <div className="flex items-center px-5 py-4">
@@ -96,7 +96,7 @@ export const SearchModal = () => {
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="text-xs uppercase tracking-luxury text-muted hover:text-[#1D1D1F] dark:hover:text-white mr-2"
+                  className="text-xs text-muted hover:text-[#1D1D1F] dark:hover:text-white mr-2"
                 >
                   Clear
                 </button>
@@ -114,7 +114,7 @@ export const SearchModal = () => {
             <div className="max-h-[60vh] overflow-y-auto p-5 space-y-6">
               {!cleanQuery ? (
                 <div className="py-8 text-center text-muted">
-                  <p className="text-xs uppercase tracking-luxury text-accent mb-2 font-medium">
+                  <p className="text-xs text-accent mb-2 font-medium">
                     Popular Searches
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2 mt-4 max-w-md mx-auto">
@@ -136,7 +136,7 @@ export const SearchModal = () => {
                 </div>
               ) : totalResults === 0 ? (
                 <div className="py-12 text-center">
-                  <p className="font-serif text-xl text-fg">No matches found</p>
+                  <p className="text-xl text-fg">No matches found</p>
                   <p className="text-xs text-muted mt-1">
                     No results for &ldquo;{query}&rdquo;. Try searching for &lsquo;sofa&rsquo;, &lsquo;penthouse&rsquo;, or &lsquo;lighting&rsquo;.
                   </p>
@@ -146,7 +146,7 @@ export const SearchModal = () => {
                   {/* Products Section */}
                   {filteredProducts.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs text-accent font-semibold mb-3">
                         <Sparkles className="w-3.5 h-3.5" />
                         Furniture Pieces ({filteredProducts.length})
                       </div>
@@ -180,7 +180,7 @@ export const SearchModal = () => {
                   {/* Projects Section */}
                   {filteredProjects.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs text-accent font-semibold mb-3">
                         <Layers className="w-3.5 h-3.5" />
                         Projects ({filteredProjects.length})
                       </div>
@@ -214,7 +214,7 @@ export const SearchModal = () => {
                   {/* Blogs Section */}
                   {filteredBlogs.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs text-accent font-semibold mb-3">
                         <BookOpen className="w-3.5 h-3.5" />
                         Design Journal ({filteredBlogs.length})
                       </div>

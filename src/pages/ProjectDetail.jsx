@@ -40,7 +40,7 @@ const ProjectDetailView = ({ projects }) => {
       />
 
       {/* Header & Meta */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <Breadcrumb
           items={[
             { label: 'Projects', to: '/projects' },
@@ -51,15 +51,15 @@ const ProjectDetailView = ({ projects }) => {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-8 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-accent/15 text-accent">
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-accent/15 text-accent">
                 {project.typology}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-muted">
+              <span className="text-xs text-muted">
                 {project.location} &bull; {project.completionYear}
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-fg leading-tight">
               {project.title}
             </h1>
 
@@ -68,28 +68,28 @@ const ProjectDetailView = ({ projects }) => {
             </p>
           </div>
 
-          <div className="lg:col-span-4 p-6 rounded-2xl bg-surface shadow-apple dark:shadow-apple-dark space-y-3 text-xs text-muted">
+          <div className="lg:col-span-4 p-6 rounded-2xl bg-surface space-y-3 text-xs text-muted">
             <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
-              <span className="uppercase tracking-wider">Client</span>
+              <span className="">Client</span>
               <span className="font-medium text-fg">{project.client}</span>
             </div>
             <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
-              <span className="uppercase tracking-wider">Total Area</span>
+              <span className="">Total Area</span>
               <span className="font-medium text-fg">{project.areaSqFt}</span>
             </div>
             <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
-              <span className="uppercase tracking-wider">Location</span>
+              <span className="">Location</span>
               <span className="font-medium text-fg">{project.location}</span>
             </div>
             <div className="pt-1">
-              <span className="uppercase tracking-wider block mb-1">Scope of Work</span>
+              <span className="block mb-1">Scope of Work</span>
               <span className="font-medium text-fg">{project.scope}</span>
             </div>
           </div>
         </div>
 
         {/* Hero Image */}
-        <div className="mt-12 aspect-[16/9] lg:aspect-[21/9] rounded-3xl overflow-hidden bg-sunken">
+        <div className="mt-12 aspect-[16/9] lg:aspect-[21/9] rounded-tile overflow-hidden bg-sunken">
           <SmartImage sizes="100vw" priority
             src={project.heroImage}
             alt={project.title}
@@ -100,11 +100,11 @@ const ProjectDetailView = ({ projects }) => {
 
       {/* Architectural Metrics Bar */}
       {project.stats && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 rounded-2xl bg-sunken/40 dark:bg-surface border border-line grid grid-cols-2 md:grid-cols-4 gap-6">
+        <section className="site-container">
+          <div className="p-8 rounded-2xl bg-sunken/40 dark:bg-surface grid grid-cols-2 md:grid-cols-4 gap-6">
             {project.stats.map((st, i) => (
               <div key={i} className="space-y-1">
-                <span className="text-[11px] uppercase tracking-luxury text-accent font-semibold block">
+                <span className="text-[12px] text-accent font-semibold block">
                   {st.label}
                 </span>
                 <span className="font-bold text-xl sm:text-2xl text-fg">
@@ -117,30 +117,30 @@ const ProjectDetailView = ({ projects }) => {
       )}
 
       {/* Design Narrative (Concept, Challenge, Solution) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-6">
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+            <span className="text-xs text-accent font-semibold">
               The Story
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-fg">
+            <h2 className="text-3xl font-semibold tracking-tight text-fg">
               Design & Execution
             </h2>
-            <p className="text-sm text-muted leading-relaxed font-light">
+            <p className="text-sm text-muted leading-relaxed">
               Every space is different. Here is how we approached this one.
             </p>
 
             {/* Material Palette */}
             {project.materialsPalette && (
               <div className="pt-6 border-t border-line/70 dark:border-line">
-                <h4 className="text-xs uppercase tracking-luxury text-fg font-semibold mb-3">
+                <h4 className="text-xs text-fg font-semibold mb-3">
                   Materials Used
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.materialsPalette.map((mat, i) => (
                     <span
                       key={i}
-                      className="text-xs px-3 py-1.5 rounded-full bg-surface dark:bg-sunken border border-line text-fg"
+                      className="text-xs px-3 py-1.5 rounded-full bg-surface dark:bg-sunken text-fg"
                     >
                       {mat}
                     </span>
@@ -151,29 +151,29 @@ const ProjectDetailView = ({ projects }) => {
           </div>
 
           <div className="lg:col-span-8 space-y-8">
-            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
-              <h3 className="text-lg font-bold text-accent">
+            <div className="p-8 rounded-2xl bg-surface space-y-3">
+              <h3 className="text-lg font-semibold text-accent">
                 01 &bull; The Idea
               </h3>
-              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg leading-relaxed">
                 {project.concept}
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
-              <h3 className="text-lg font-bold text-accent">
+            <div className="p-8 rounded-2xl bg-surface space-y-3">
+              <h3 className="text-lg font-semibold text-accent">
                 02 &bull; The Challenge
               </h3>
-              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg leading-relaxed">
                 {project.challenge}
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
-              <h3 className="text-lg font-bold text-accent">
+            <div className="p-8 rounded-2xl bg-surface space-y-3">
+              <h3 className="text-lg font-semibold text-accent">
                 03 &bull; The Result
               </h3>
-              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg leading-relaxed">
                 {project.solution}
               </p>
             </div>
@@ -182,12 +182,12 @@ const ProjectDetailView = ({ projects }) => {
       </section>
 
       {/* High Resolution Gallery */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="mb-8">
-          <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+          <span className="text-xs text-accent font-semibold">
             Gallery
           </span>
-          <h2 className="text-3xl font-bold tracking-tight text-fg mt-1">
+          <h2 className="text-3xl font-semibold tracking-tight text-fg mt-1">
             Spaces & Details
           </h2>
         </div>
@@ -196,7 +196,7 @@ const ProjectDetailView = ({ projects }) => {
       </section>
 
       {/* Project Navigation (Prev / Next) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="pt-10 border-t border-line/70 dark:border-line flex items-center justify-between">
           <Link
             to={`/projects/${prevProject.id}`}
@@ -206,7 +206,7 @@ const ProjectDetailView = ({ projects }) => {
               <ArrowLeft className="w-4 h-4 text-accent" />
             </div>
             <div>
-              <span className="text-[10px] uppercase tracking-luxury text-muted block">
+              <span className="text-[12px] text-muted block">
                 Previous Project
               </span>
               <span className="text-sm sm:text-base font-semibold text-fg group-hover:text-accent transition-colors">
@@ -220,7 +220,7 @@ const ProjectDetailView = ({ projects }) => {
             className="group flex items-center gap-3 text-right"
           >
             <div>
-              <span className="text-[10px] uppercase tracking-luxury text-muted block">
+              <span className="text-[12px] text-muted block">
                 Next Project
               </span>
               <span className="text-sm sm:text-base font-semibold text-fg group-hover:text-accent transition-colors">
@@ -235,12 +235,12 @@ const ProjectDetailView = ({ projects }) => {
       </section>
 
       {/* Related Projects */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="mb-10">
-          <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+          <span className="text-xs text-accent font-semibold">
             More Projects
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg mt-1">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg mt-1">
             You May Also Like
           </h2>
         </div>

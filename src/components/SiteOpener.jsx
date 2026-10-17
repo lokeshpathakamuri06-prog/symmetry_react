@@ -83,7 +83,7 @@ export const SiteOpener = () => {
             isRevealing ? 'site-opener-line-revealing' : 'clip-path-inset-full'
           }`}
         >
-          <span className="font-light text-[#D9C59A] mr-3 sm:mr-4">Welcome to</span>
+          <span className="text-[#D9C59A] mr-3 sm:mr-4">Welcome to</span>
           <span className="font-semibold tracking-[0.16em]">SYMMETRY</span>
         </h1>
       </div>

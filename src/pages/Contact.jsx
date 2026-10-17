@@ -177,7 +177,7 @@ export const Contact = () => {
   };
 
   return (
-    <div className="pb-20 sm:pb-28 space-y-16 sm:space-y-24 overflow-hidden">
+    <div className="pb-20 sm:pb-28 space-y-16 sm:space-y-24 overflow-x-clip">
       <SeoMeta
         title="Let's Create Something Exceptional | Contact Symmetry Interiors"
         description="Talk to our interior designers and furniture team. Book a consultation at our studio in Hyderabad."
@@ -190,8 +190,9 @@ export const Contact = () => {
         title={contactText.heroTitle}
         highlight={contactText.heroTitleHighlight}
         subtitle={contactText.heroSubtitle}
-        image={heroImage('/images/hero/hero-contact.jpeg')}
-        imageAlt="Symmetry Consultation Atelier"
+        image={heroImage('/images/hero/stock-contact.jpeg')}
+        imageAlt="A bright, calm living room"
+        navCta={{ label: 'Schedule a Consultation', href: '#inquiry-form' }}
         actions={
           <>
             <a href="#inquiry-form" className="btn-primary">Schedule a Consultation</a>
@@ -201,11 +202,11 @@ export const Contact = () => {
       />
 
       {/* Main Grid: Contact Form + Direct Channels */}
-      <section id="inquiry-form" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="inquiry-form" className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* LEFT 7 COLS: Interactive Contact Form */}
-          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-surface border border-line shadow-luxury">
+          <div className="lg:col-span-7 p-8 sm:p-12 rounded-tile bg-surface">
             <AnimatePresence mode="wait">
               {submitted ? (
                 /* SUCCESS SUBMISSION MESSAGE */
@@ -221,15 +222,15 @@ export const Contact = () => {
                   </div>
 
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+                    <span className="text-xs text-accent font-semibold block">
                       Inquiry Logged &bull; Reference #{inquiryId}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg mt-1">
+                    <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg mt-1">
                       Thank You, We Have Your Request
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
                     Thank you, <strong className="text-[#1D1D1F] dark:text-white font-medium">{formData.name}</strong>. Your request for <em className="text-accent">{formData.projectType}</em> has reached our design team. Someone will contact you within <strong>24 business hours</strong> with initial scheduling options.
                   </p>
 
@@ -256,13 +257,13 @@ export const Contact = () => {
                 /* CONTACT FORM */
                 <form key="form" onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+                    <span className="text-xs text-accent font-semibold block">
                       Tell Us About Your Project
                     </span>
-                    <h2 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
+                    <h2 className="text-2xl font-semibold tracking-tight text-fg mt-0.5">
                       Schedule a Consultation
                     </h2>
-                    <p className="text-xs text-muted mt-1 font-light">
+                    <p className="text-xs text-muted mt-1">
                       Share your details and what you have in mind. We reply within one working day.
                     </p>
                   </div>
@@ -270,7 +271,7 @@ export const Contact = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Name */}
                     <div className="sm:col-span-2">
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         Full Name *
                       </label>
                       <input
@@ -279,7 +280,7 @@ export const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="e.g. Vikramaditya Rao or Ar. Ananya Roy"
-                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas ${
                           errors.name
                             ? 'border-red-500 ring-1 ring-red-500'
                             : 'border-line'
@@ -295,7 +296,7 @@ export const Contact = () => {
 
                     {/* Email */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         Email Address *
                       </label>
                       <input
@@ -304,7 +305,7 @@ export const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="name@domain.com"
-                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas ${
                           errors.email
                             ? 'border-red-500 ring-1 ring-red-500'
                             : 'border-line'
@@ -320,7 +321,7 @@ export const Contact = () => {
 
                     {/* Phone */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         Phone Number *
                       </label>
                       <input
@@ -329,7 +330,7 @@ export const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+91 98765 43210"
-                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas ${
                           errors.phone
                             ? 'border-red-500 ring-1 ring-red-500'
                             : 'border-line'
@@ -345,7 +346,7 @@ export const Contact = () => {
 
                     {/* Project Type */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         Project Type *
                       </label>
                       <select
@@ -364,7 +365,7 @@ export const Contact = () => {
 
                     {/* Budget Range */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         Budget Range *
                       </label>
                       <select
@@ -383,7 +384,7 @@ export const Contact = () => {
 
                     {/* Message */}
                     <div className="sm:col-span-2">
-                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                      <label className="block text-xs text-muted mb-1.5 font-medium">
                         About Your Project *
                       </label>
                       <textarea
@@ -392,7 +393,7 @@ export const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         placeholder="Where is the property, what stage is it at (bare shell, under construction, renovation), when do you need it ready, and any styles or materials you like..."
-                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas ${
                           errors.message
                             ? 'border-red-500 ring-1 ring-red-500'
                             : 'border-line'
@@ -436,12 +437,12 @@ export const Contact = () => {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Headquarters Card */}
-            <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm space-y-6">
+            <div className="p-8 rounded-tile bg-surface space-y-6">
               <div>
-                <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+                <span className="text-xs text-accent font-semibold block">
                   Our Office
                 </span>
-                <h3 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
+                <h3 className="text-2xl font-semibold tracking-tight text-fg mt-0.5">
                   {company.companyName}
                 </h3>
                 <p className="text-xs font-mono text-accent font-semibold mt-1">
@@ -553,7 +554,7 @@ export const Contact = () => {
 
               {/* Social Links */}
               <div className="pt-4 border-t border-line/60 dark:border-line">
-                <span className="text-[11px] uppercase tracking-luxury text-muted font-medium block mb-3">
+                <span className="text-[12px] text-muted font-medium block mb-3">
                   Follow Us:
                 </span>
                 <div className="flex items-center space-x-2.5">
@@ -583,8 +584,8 @@ export const Contact = () => {
             </div>
 
             {/* Precision Joinery Center */}
-            <div className="p-6 rounded-3xl bg-sunken/40 dark:bg-surface border border-line text-xs text-muted space-y-2">
-              <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+            <div className="p-6 rounded-tile bg-sunken/40 dark:bg-surface text-xs text-muted space-y-2">
+              <span className="text-[12px] text-accent font-semibold block">
                 Our Workshop
               </span>
               <h4 className="text-sm font-semibold text-fg">
@@ -599,18 +600,18 @@ export const Contact = () => {
       </section>
 
       {/* GOOGLE MAPS INTEGRATION SECTION */}
-      <section id="studio-location" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div className="rounded-3xl overflow-hidden bg-surface border border-line shadow-luxury">
+      <section id="studio-location" className="site-container scroll-mt-24">
+        <div className="rounded-tile overflow-hidden bg-surface">
           {/* Map Top Header Bar */}
           <div className="p-4 sm:p-6 bg-stone-50 dark:bg-stone-900 border-b border-line/60 dark:border-line flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                <span className="text-xs text-accent font-semibold">
                   Find Us
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-fg mt-0.5">
+              <h3 className="text-lg font-semibold text-fg mt-0.5">
                 Symmetry Office &bull; {company.officeAddress}
               </h3>
             </div>
@@ -667,8 +668,8 @@ export const Contact = () => {
             />
 
             {/* On-Map Floating Overlay Card */}
-            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-surface/95 dark:bg-canvas/95 backdrop-blur-md border border-stone-200/80 dark:border-stone-800/80 shadow-xl text-xs space-y-1.5 hidden sm:block pointer-events-none">
-              <div className="flex items-center gap-1.5 text-accent font-semibold text-[11px] uppercase tracking-luxury">
+            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-surface/95 dark:bg-canvas/95 backdrop-blur-md border-stone-200/80 dark:border-stone-800/80 text-xs space-y-1.5 hidden sm:block pointer-events-none">
+              <div className="flex items-center gap-1.5 text-accent font-semibold text-[12px]">
                 <Navigation className="w-3.5 h-3.5" />
                 <span>Getting Here</span>
               </div>
@@ -683,22 +684,22 @@ export const Contact = () => {
       </section>
 
       {/* FINAL CALL TO ACTION SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-16 rounded-3xl bg-fg dark:bg-surface text-white border border-stone-800 shadow-2xl relative overflow-hidden text-center">
+      <section className="site-container">
+        <div className="p-8 sm:p-16 rounded-tile bg-fg dark:bg-surface text-white relative overflow-hidden text-center">
           {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto space-y-6">
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+            <span className="text-xs text-accent font-semibold block">
               Visit Our Studio
             </span>
 
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight leading-tight">
               Start Your Design Journey
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
               See real stone slabs, Italian finishes and lighting samples in person, and talk through your ideas with our designers.
             </p>
 

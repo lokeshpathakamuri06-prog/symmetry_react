@@ -133,7 +133,7 @@ const ShopView = ({ products, shopCategories }) => {
     stockFilter !== 'all';
 
   return (
-    <div className="pb-20 sm:pb-32 space-y-12 sm:space-y-16 overflow-hidden">
+    <div className="pb-20 sm:pb-32 space-y-12 sm:space-y-16 overflow-x-clip">
       <SeoMeta
         title="Furniture Shop — Symmetry Interiors"
         description="Browse handcrafted luxury furniture: bouclé sofas, Nero Marquina marble dining tables, travertine coffee tables, and Murano chandeliers by Symmetry Interiors."
@@ -146,8 +146,9 @@ const ShopView = ({ products, shopCategories }) => {
         title="Curated Furniture"
         highlight="& Decor."
         subtitle="Every piece is made to order in our own workshop, from Italian travertine, seasoned European hardwoods and natural leathers."
-        image={heroImage('/images/hero/hero-shop.jpeg')}
-        imageAlt="Symmetry Interiors furniture showroom"
+        image={heroImage('/images/hero/stock-shop.jpeg')}
+        imageAlt="A living room furnished with curated pieces"
+        navCta={{ label: 'View bag', to: '/cart' }}
         stats={[
           { value: '12', label: 'Curated Categories', sub: 'From Sofas to Objets' },
           { value: '100%', label: 'Natural Materials', sub: 'Stone, Solid Wood & Leather' },
@@ -159,7 +160,7 @@ const ShopView = ({ products, shopCategories }) => {
       {/* =========================================================================
           SECTION 2 & 3: SEARCH & HORIZONTAL CATEGORY NAVIGATION
           ========================================================================= */}
-      <section id="shop-navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 scroll-mt-28">
+      <section id="shop-navigation" className="site-container space-y-6 scroll-mt-28">
         {/* Search Bar & Mobile Trigger Row */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           {/* Real-time Search Input */}
@@ -189,7 +190,7 @@ const ShopView = ({ products, shopCategories }) => {
           {/* Mobile Filter Button (Triggers Drawer on small screens) */}
           <button
             onClick={() => setDrawerOpen(true)}
-            className="lg:hidden px-5 py-3 rounded-full bg-surface text-xs uppercase tracking-luxury text-fg flex items-center justify-center gap-2 shadow-apple dark:shadow-apple-dark cursor-pointer"
+            className="lg:hidden px-5 py-3 rounded-full bg-surface text-xs text-fg flex items-center justify-center gap-2 cursor-pointer"
           >
             <SlidersHorizontal className="w-4 h-4 text-accent" />
             <span>Filters &amp; Sort</span>
@@ -204,7 +205,7 @@ const ShopView = ({ products, shopCategories }) => {
           <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
             <button
               onClick={() => handleCategorySelect('all')}
-              className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-4 py-2.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
                 selectedCategory === 'all'
                   ? 'bg-fg text-canvas shadow-md'
                   : 'bg-surface text-muted shadow-xs hover:bg-[#E5ECEC]/50'
@@ -221,7 +222,7 @@ const ShopView = ({ products, shopCategories }) => {
                 <button
                   key={cat.id}
                   onClick={() => handleCategorySelect(cat.slug)}
-                  className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
+                  className={`shrink-0 px-4 py-2.5 rounded-full text-xs font-medium transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                     isActive
                       ? 'bg-fg text-canvas shadow-md font-semibold'
                       : 'bg-surface text-muted shadow-xs hover:bg-sunken/50 dark:hover:bg-sunken'
@@ -239,19 +240,19 @@ const ShopView = ({ products, shopCategories }) => {
       {/* =========================================================================
           SECTION 4, 5, 6, 7: FILTER SIDEBAR (DESKTOP) + SORT DROPDOWN + PRODUCT GRID
           ========================================================================= */}
-      <section ref={gridTopRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section ref={gridTopRef} className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* DESKTOP FILTER SIDEBAR */}
-          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-3xl bg-surface shadow-apple dark:shadow-apple-dark">
+          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-tile bg-surface">
             <div className="flex items-center justify-between pb-4">
-              <h3 className="font-bold tracking-tight text-xl text-fg flex items-center gap-2">
+              <h3 className="font-semibold tracking-tight text-xl text-fg flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-accent" />
                 <span>Filters</span>
               </h3>
               {isFiltered && (
                 <button
                   onClick={handleReset}
-                  className="text-[11px] uppercase tracking-luxury text-accent hover:underline flex items-center gap-1 cursor-pointer"
+                  className="text-[12px] text-accent hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -261,13 +262,13 @@ const ShopView = ({ products, shopCategories }) => {
 
             {/* Categories List */}
             <div>
-              <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+              <h4 className="text-xs text-accent font-semibold mb-3">
                 Categories
               </h4>
               <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
                 <button
                   onClick={() => handleCategorySelect('all')}
-                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
+                  className={`w-full text-left px-3 py-1.5 rounded-lg text-xs flex items-center justify-between transition-colors cursor-pointer ${
                     selectedCategory === 'all'
                       ? 'bg-fg text-canvas font-semibold'
                       : 'text-muted hover:bg-sunken/50 dark:hover:bg-sunken'
@@ -285,7 +286,7 @@ const ShopView = ({ products, shopCategories }) => {
                     <button
                       key={cat.id}
                       onClick={() => handleCategorySelect(cat.slug)}
-                      className={`w-full text-left px-3 py-1.5 rounded-lg text-xs uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
+                      className={`w-full text-left px-3 py-1.5 rounded-lg text-xs flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
                           ? 'bg-fg text-canvas font-semibold'
                           : 'text-muted hover:bg-sunken/50 dark:hover:bg-sunken'
@@ -301,7 +302,7 @@ const ShopView = ({ products, shopCategories }) => {
 
             {/* Stock Status Availability Filter */}
             <div className="pt-5 border-t border-line/70 dark:border-line">
-              <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+              <h4 className="text-xs text-accent font-semibold mb-3">
                 Availability
               </h4>
               <div className="space-y-1.5">
@@ -334,7 +335,7 @@ const ShopView = ({ products, shopCategories }) => {
             {/* Price Range Slider */}
             <div className="pt-5 border-t border-line/70 dark:border-line">
               <div className="flex items-center justify-between mb-2">
-                <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                <h4 className="text-xs text-accent font-semibold">
                   Max Price
                 </h4>
                 <span className="text-xs font-mono font-medium text-fg">
@@ -363,7 +364,7 @@ const ShopView = ({ products, shopCategories }) => {
           {/* MAIN PRODUCT GRID & CONTROLS */}
           <div className="lg:col-span-9 space-y-8">
             {/* Top Toolbar: Showing Count & Sort Dropdown */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface border border-line shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface">
               <div className="text-xs text-muted">
                 Showing <span className="font-semibold text-fg">{filteredProducts.length}</span> pieces
                 {selectedCategory !== 'all' && (
@@ -375,7 +376,7 @@ const ShopView = ({ products, shopCategories }) => {
 
               {/* Sort Dropdown */}
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-luxury text-subtle hidden sm:inline">
+                <span className="text-xs text-subtle hidden sm:inline">
                   Sort:
                 </span>
                 <div className="relative">
@@ -411,12 +412,12 @@ const ShopView = ({ products, shopCategories }) => {
 
             {/* EMPTY STATE */}
             {filteredProducts.length === 0 && (
-              <div className="py-24 text-center rounded-3xl bg-surface border border-line p-8">
+              <div className="py-24 text-center rounded-tile bg-surface p-8">
                 <Search className="w-10 h-10 text-accent mx-auto mb-3 opacity-60" />
-                <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-fg">
+                <h3 className="font-semibold tracking-tight text-2xl sm:text-3xl text-fg">
                   No Matching Pieces
                 </h3>
-                <p className="text-xs sm:text-sm text-muted mt-2 mb-6 max-w-md mx-auto font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted mt-2 mb-6 max-w-md mx-auto leading-relaxed">
                   Try a different search word, a higher price limit or another category.
                 </p>
                 <button
@@ -445,7 +446,7 @@ const ShopView = ({ products, shopCategories }) => {
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     aria-label="Previous Page"
-                    className="p-2.5 rounded-full border border-line bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-accent transition-colors cursor-pointer"
+                    className="p-2.5 rounded-full bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -470,7 +471,7 @@ const ShopView = ({ products, shopCategories }) => {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     aria-label="Next Page"
-                    className="p-2.5 rounded-full border border-line bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-accent transition-colors cursor-pointer"
+                    className="p-2.5 rounded-full bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>

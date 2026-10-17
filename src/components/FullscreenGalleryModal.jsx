@@ -62,7 +62,7 @@ export default function FullscreenGalleryModal({
         {/* Top Header Bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-stone-800 bg-stone-950/70">
           <div>
-            <h3 className="text-sm font-medium tracking-wide text-stone-300">
+            <h3 className="text-sm font-semibold tracking-wide text-stone-300">
               {productName}
             </h3>
             <p className="text-xs text-stone-500 font-mono">

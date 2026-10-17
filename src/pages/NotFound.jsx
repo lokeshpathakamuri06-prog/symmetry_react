@@ -16,15 +16,15 @@ export const NotFound = () => {
           404
         </span>
 
-        <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+        <span className="text-xs text-accent font-semibold block">
           Page Not Found
         </span>
 
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg">
           We Couldn’t Find That Page.
         </h1>
 
-        <p className="text-sm text-muted leading-relaxed font-light">
+        <p className="text-sm text-muted leading-relaxed">
           The link may be old or the page may have moved. Try one of these instead.
         </p>
 

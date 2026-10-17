@@ -356,6 +356,38 @@ _Last updated: 2026-10-17 (Careers page rebuild with file uploads; Motion plan P
   - The download URL without login returns 401. Phone layout has no horizontal scroll. Dark mode checked. Lint: 53 warnings (unchanged); build passes.
 - **Not done / needed before publishing:** deploy (OPERATIONS § Deploy, migration 0005 first); fill in the careers email and HR phone; replace the sample Team Voices; there is **no email notification** for new applications (no email service in the backend; needs SMTP or an email-provider account); add the `application_files` volume to backups.
 
+### 2026-10-17: New Apple-style website design (frontend only, in preview)
+**Why:** requested: a new modern Apple-theme look for the whole public site, with new animations, new hero images on every page and no overlay on the Home slides, without changing the content. Choices made with the client: free stock photos for now, Home slides as photos only, full new look plus motion, preview URL.
+- **Design system** (`index.css`, `tailwind.config.js`): Apple palette (light grey page `#f5f5f7`, white tiles, near-black text; black in dark mode), bands `.band-white` / `.band-dark`, one section rhythm (`.section`), 28 px borderless tiles (`.card-apple`, `.tile-media` photo zoom), Apple pill buttons and "Learn more >" links, segmented filter control, bigger display type. A class-name script moved ~400 old one-off classes (all-caps tracked labels, outlined cards with shadows, light weights) onto the system across all public pages.
+- **Header:** thin 48 px frosted bar with small centred links; slides away when scrolling down, returns on scroll up; Services opens a full-width flyout that blurs the page. Cart count pops when it changes.
+- **Page bar** (`LocalNav`): every inner page has a sticky bar with the page name and one action (Book a consultation; Careers: Apply now; Contact: Schedule a Consultation; Shop: View bag). It moves up when the header hides.
+- **Page hero** (`PageHero`): big centred headline, then a clean photo with no overlay that starts as a rounded inset and widens to full screen as you scroll; figures count up.
+- **Home:** full-screen photo slideshow with no overlay or text, with dots and a pause button (6 s per photo). The headline and buttons moved to the section below, where the words rise in one after another. The About paragraph brightens word by word as you scroll. The collection and sourcing coverflows and the category marquee are now swipeable Apple-style galleries (`CardGallery`); testimonials are a gallery of cards; the closing call to action is a black band.
+- **Cards:** product (Apple Store style: badge as coloured text, Details button + Quick view link), project, journal, team, testimonial and service cards are borderless tiles without photo overlays. The 3D tilt / glare wrapper became plain CSS.
+- **Footer:** Apple-style small type, newsletter in a white band above it.
+- **New hero photos** (Unsplash licence): About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers and the Careers call to action (`public/images/hero/stock-*`). The Home slideshow still uses the client's HAJ photos from Admin → Hero Banners.
+- **Fixed on the way:** `no-scrollbar` was used but never defined (added); the "Furniture & Objects" heading showed a literal `&amp;`; `heroImage()` ignored the build base path, so local photos were missing on the `/preview/` build.
+- **Removed:** `CoverflowCollections`, `CoverflowSourcing`, `CategoryCircleMarquee` (replaced by galleries).
+- **Verified:** build passes; lint 50 warnings, 0 errors (was 53). Headless Chromium on the local build and on the preview: 14 pages at 1440 px (light and dark) and 390 px, no console errors, no horizontal scroll; every hero photo loads on the preview.
+- **Preview:** https://169-58-13-62.sslip.io/preview/ (forms there write to the real database). Not committed and not deployed.
+- **Still to check:** real devices (iPhone Safari, Android, Mac trackpad); the client's view on brand teal vs Apple blue; whether to replace the Home slideshow photos (they are the client's own project photos in Admin → Hero Banners).
+
+### 2026-10-17: New Apple-style look for the whole public site (frontend only)
+**Why:** requested: a new, modern Apple-theme website without changing the content, new animations, new hero images on every page, and no overlay on the Home hero slides. Choices made with the user: free stock photos for now, Home slides as photos only, full new look plus motion, preview on the `/preview/` URL.
+- **Theme:** Apple palette (light grey page `#F5F5F7`, white tiles, near-black text; black in dark mode); sections alternate grey / white (`.band-white`) / black (`.band-dark`) bands; one rhythm (`.section`); larger semibold headlines; 17 px body text; 28 px tile corners with no borders; pill buttons (filled + outlined); segmented filters. Brand teal (light) and sand gold (dark) kept as the accent.
+- **Header:** thin 48 px frosted bar with small centred links; hides when you scroll down, returns when you scroll up; Services flyout blurs the page behind it; cart badge pops.
+- **Page bar** (`LocalNav`): every main inner page has a sticky bar with the page name and one action (Book a consultation; Apply now on Careers; Schedule a Consultation on Contact; View bag on Shop).
+- **Page heroes:** big centred headline, then a clean photo (no overlay) that starts as a rounded card and widens to the full screen as you scroll; figures count up.
+- **New hero photos** (free Unsplash licence, placeholders like the other stock images): `public/images/hero/stock-{about,services,projects,sourcing,shop,journal,contact,careers,careers-cta}.jpeg` + WebP copies. The old page photos are kept in the folder but no longer used.
+- **Home:** full-screen slideshow photos with no text and no overlay, plus a pause/play control; the headline and buttons moved to the section below (words rise in one by one); the story paragraph brightens word by word as you scroll; coverflow carousels and the category marquee replaced by swipeable Apple-style galleries (`CardGallery`: collections, categories, sourcing, testimonials); closing call to action is a black band.
+- **Cards:** product, project, journal, team, testimonial and service cards redrawn (photo first, words below, no overlays or badge clutter; same information and actions). The 3D tilt/glare card wrapper is now pure CSS.
+- **Footer:** Apple-style small-print footer with the newsletter in a white band above; all company details and links kept.
+- **All other page sections** moved onto the same system by a class-name pass (no all-caps tracked labels, no light/serif type, no outlined/shadowed panels, one container width).
+- Removed: `CoverflowCollections`, `CoverflowSourcing`, `CategoryCircleMarquee` (replaced). Fixed: `no-scrollbar` was never defined; "Furniture &amp; Objects" showed a literal `&amp;`.
+- **Verified:** build passes; lint 0 errors, 50 warnings (was 53); headless Chromium on the preview: 14 pages at 1440 and 390 px, no console errors, no horizontal scroll; screenshots checked in light and dark.
+- **Preview:** https://169-58-13-62.sslip.io/preview/ (copied into the running web container; forms there write to the real database). **Not deployed, not committed.**
+- The Home slideshow still shows the client's own HAJ project photos from Admin → Hero Banners (now without the dark overlay); swap them there if other photos are wanted.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

@@ -100,26 +100,24 @@ export const DynamicScrollShowcase = () => {
       ========================================================================= */}
       <section ref={containerRef} className="hidden md:block relative h-[240vh] sm:h-[260vh]">
         {/* Pinned Sticky Viewport Frame */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-4 sm:px-6 lg:px-8 bg-black text-[#F5F5F7] border-y border-white/10">
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-4 sm:px-6 lg:px-8 bg-black text-[#F5F5F7]">
           {/* Ambient Dark Luxury Glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[800px] bg-[radial-gradient(closest-side,rgba(54,101,107,0.16),transparent)] pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(54,101,107,0.08)_1px,transparent_1px)] [background-size:28px_28px] opacity-30 pointer-events-none" />
 
           {/* Section Header */}
           <m.div
             style={shouldReduceMotion ? {} : { y: titleY, opacity: titleOpacity }}
             className="relative z-20 text-center max-w-3xl mx-auto pt-4 shrink-0"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs sm:text-sm uppercase tracking-luxury text-[#D9C59A] font-medium mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs sm:text-sm tracking-normal text-[#D9C59A] font-medium mb-3">
               <Sparkles className="w-3.5 h-3.5 text-accent" />
               <span>Inside Our Work</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-normal tracking-tight text-white leading-tight">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
               Curated Living, Expanded.
             </h2>
 
-            <p className="mt-2 text-sm sm:text-base text-[#A1A1A6] font-light leading-relaxed max-w-lg mx-auto">
+            <p className="mt-2 text-sm sm:text-base text-[#A1A1A6] leading-relaxed max-w-lg mx-auto">
               Keep scrolling to step inside one of our homes.
             </p>
           </m.div>
@@ -150,8 +148,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">01 &bull; Portals</span>
-                  <span className="text-xs font-serif leading-tight">Roman Travertine</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">01 &bull; Portals</span>
+                  <span className="text-[13px] font-semibold leading-tight">Roman Travertine</span>
                 </div>
               </m.div>
 
@@ -166,8 +164,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">02 &bull; Monoliths</span>
-                  <span className="text-xs font-serif leading-tight">Fluted Cavern Stone</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">02 &bull; Monoliths</span>
+                  <span className="text-[13px] font-semibold leading-tight">Fluted Cavern Stone</span>
                 </div>
               </m.div>
 
@@ -182,8 +180,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">03 &bull; Ergonomics</span>
-                  <span className="text-xs font-serif leading-tight">Cognac Saddle Leather</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">03 &bull; Ergonomics</span>
+                  <span className="text-[13px] font-semibold leading-tight">Cognac Saddle Leather</span>
                 </div>
               </m.div>
             </m.div>
@@ -209,7 +207,7 @@ export const DynamicScrollShowcase = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
 
               <div className="absolute top-5 left-5 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-md flex items-center gap-1.5">
+                <span className="px-3 py-1 rounded-full text-xs tracking-normal font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-md flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                   Featured Project
                 </span>
@@ -217,10 +215,10 @@ export const DynamicScrollShowcase = () => {
 
               <div className="absolute bottom-6 inset-x-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
-                  <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#D9C59A] font-semibold block mb-1">
+                  <span className="text-xs sm:text-sm tracking-normal text-[#D9C59A] font-semibold block mb-1">
                     Private Residence &bull; 8,500 Sq.Ft.
                   </span>
-                  <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal leading-tight">
+                  <h3 className="text-2xl sm:text-3xl text-white font-semibold tracking-tight leading-tight">
                     The Obsidian Sky Villa
                   </h3>
                 </div>
@@ -259,8 +257,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">04 &bull; Quarries</span>
-                  <span className="text-xs font-serif leading-tight">Verona Bookmatch</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">04 &bull; Quarries</span>
+                  <span className="text-[13px] font-semibold leading-tight">Verona Bookmatch</span>
                 </div>
               </m.div>
 
@@ -275,8 +273,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">05 &bull; Luminaires</span>
-                  <span className="text-xs font-serif leading-tight">Mouth-Blown Murano</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">05 &bull; Luminaires</span>
+                  <span className="text-[13px] font-semibold leading-tight">Mouth-Blown Murano</span>
                 </div>
               </m.div>
 
@@ -291,8 +289,8 @@ export const DynamicScrollShowcase = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 p-3 flex flex-col justify-between text-white">
-                  <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-medium">06 &bull; Landscape</span>
-                  <span className="text-xs font-serif leading-tight">Kiln-Dried Hardwood</span>
+                  <span className="text-[10px] tracking-normal text-[#D9C59A] font-medium">06 &bull; Landscape</span>
+                  <span className="text-[13px] font-semibold leading-tight">Kiln-Dried Hardwood</span>
                 </div>
               </m.div>
             </m.div>
@@ -308,7 +306,7 @@ export const DynamicScrollShowcase = () => {
               <span>Materials from this home</span>
             </div>
 
-            <div className="flex items-center gap-4 font-light">
+            <div className="flex items-center gap-4">
               <span className="hidden sm:inline">Keep scrolling</span>
               <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
                 <m.div
@@ -328,16 +326,16 @@ export const DynamicScrollShowcase = () => {
         <div className="max-w-xl mx-auto space-y-8">
           {/* Mobile Header */}
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs uppercase tracking-luxury text-[#D9C59A] font-medium mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs tracking-normal text-[#D9C59A] font-medium mb-3">
               <Sparkles className="w-3.5 h-3.5 text-accent" />
               <span>Inside Our Work</span>
             </div>
 
-            <h2 className="text-3xl font-serif font-normal tracking-tight text-white leading-tight">
+            <h2 className="text-3xl font-semibold tracking-tight text-white leading-tight">
               Curated Living, Expanded.
             </h2>
 
-            <p className="mt-2 text-xs text-[#A1A1A6] font-light leading-relaxed">
+            <p className="mt-2 text-xs text-[#A1A1A6] leading-relaxed">
               A closer look at one of our homes.
             </p>
           </div>
@@ -352,7 +350,7 @@ export const DynamicScrollShowcase = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
 
             <div className="absolute top-3 left-3">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-luxury font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-normal font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                 Featured Project
               </span>
@@ -360,17 +358,17 @@ export const DynamicScrollShowcase = () => {
 
             <div className="absolute bottom-4 inset-x-4 flex items-end justify-between gap-2">
               <div>
-                <span className="text-[10px] uppercase tracking-luxury text-[#D9C59A] font-semibold block">
+                <span className="text-[10px] tracking-normal text-[#D9C59A] font-semibold block">
                   Private Residence &bull; 8,500 Sq.Ft.
                 </span>
-                <h3 className="font-serif text-lg text-white font-normal leading-tight mt-0.5">
+                <h3 className="font-semibold text-lg text-white font-semibold leading-tight mt-0.5">
                   The Obsidian Sky Villa
                 </h3>
               </div>
 
               <Link
                 to="/projects"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#1D1D1F] text-[10px] uppercase tracking-luxury font-semibold shadow-md"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#1D1D1F] text-[10px] tracking-normal font-semibold shadow-md"
               >
                 <span>Details</span>
                 <ArrowUpRight className="w-3 h-3" />
@@ -380,7 +378,7 @@ export const DynamicScrollShowcase = () => {
 
           {/* 6 Mobile Satellite Cards Grid with Alternating Scroll Reveal */}
           <div className="space-y-3 pt-2">
-            <span className="text-xs uppercase tracking-luxury text-[#D9C59A] font-semibold block text-center mb-2">
+            <span className="text-xs tracking-normal text-[#D9C59A] font-semibold block text-center mb-2">
               Materials
             </span>
 
@@ -398,10 +396,10 @@ export const DynamicScrollShowcase = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-2.5 flex flex-col justify-between text-white">
-                      <span className="text-[9px] uppercase tracking-luxury text-[#D9C59A] font-medium">
+                      <span className="text-[9px] tracking-normal text-[#D9C59A] font-medium">
                         {card.category}
                       </span>
-                      <span className="text-[11px] font-serif leading-tight">
+                      <span className="text-[11px] font-semibold leading-tight">
                         {card.title}
                       </span>
                     </div>

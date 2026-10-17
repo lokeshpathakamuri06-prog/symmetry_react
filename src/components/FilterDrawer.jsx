@@ -44,7 +44,7 @@ export const FilterDrawer = ({
             {/* Header */}
             <div className="flex items-center justify-between pb-5">
               <div>
-                <h3 className="text-xl font-medium text-fg">
+                <h3 className="text-xl font-semibold text-fg">
                   Filters
                 </h3>
                 <p className="text-xs text-muted">
@@ -64,13 +64,13 @@ export const FilterDrawer = ({
             <div className="flex-1 overflow-y-auto py-4 space-y-6 pr-1">
               {/* Categories */}
               <div className="pb-6 border-b border-line/60 dark:border-line">
-                <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                <h4 className="text-xs text-accent font-semibold mb-3">
                   Categories ({categories.length})
                 </h4>
                 <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                   <button
                     onClick={() => onSelectCategory('all')}
-                    className={`w-full text-left px-3.5 py-2 rounded-xl text-xs uppercase tracking-wider transition-colors flex items-center justify-between cursor-pointer ${
+                    className={`w-full text-left px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center justify-between cursor-pointer ${
                       selectedCategory === 'all'
                         ? 'bg-fg text-canvas font-semibold'
                         : 'hover:bg-sunken/60 dark:hover:bg-sunken text-muted'
@@ -82,7 +82,7 @@ export const FilterDrawer = ({
                     <button
                       key={cat.id}
                       onClick={() => onSelectCategory(cat.slug)}
-                      className={`w-full text-left px-3.5 py-2 rounded-xl text-xs uppercase tracking-wider transition-colors flex items-center justify-between cursor-pointer ${
+                      className={`w-full text-left px-3.5 py-2 rounded-xl text-xs transition-colors flex items-center justify-between cursor-pointer ${
                         selectedCategory === cat.slug
                           ? 'bg-fg text-canvas font-semibold'
                           : 'hover:bg-sunken/60 dark:hover:bg-sunken text-muted'
@@ -100,7 +100,7 @@ export const FilterDrawer = ({
               {/* Stock Status Filter */}
               {onSelectStockFilter && (
                 <div className="pb-6 border-b border-line/60 dark:border-line">
-                  <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                  <h4 className="text-xs text-accent font-semibold mb-3">
                     Availability
                   </h4>
                   <div className="grid grid-cols-3 gap-2">
@@ -129,7 +129,7 @@ export const FilterDrawer = ({
               {maxPrice && onPriceChange && (
                 <div className="pb-6 border-b border-line/60 dark:border-line">
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                    <h4 className="text-xs text-accent font-semibold">
                       Max Price
                     </h4>
                     <span className="text-xs font-mono font-medium text-fg">
@@ -154,7 +154,7 @@ export const FilterDrawer = ({
 
               {/* Sort Options */}
               <div>
-                <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
+                <h4 className="text-xs text-accent font-semibold mb-3">
                   Sort By
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
@@ -184,14 +184,14 @@ export const FilterDrawer = ({
             <div className="pt-4 border-t border-line/60 dark:border-line flex items-center gap-3">
               <button
                 onClick={onReset}
-                className="flex-1 py-3 rounded-full border border-line text-xs uppercase tracking-luxury text-muted hover:border-accent flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-3 rounded-full border border-line text-xs text-muted hover:border-accent flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 Reset
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 py-3 rounded-full bg-fg text-canvas text-xs uppercase tracking-luxury font-medium hover:bg-accent transition-colors cursor-pointer"
+                className="flex-1 py-3 rounded-full bg-fg text-canvas text-xs font-medium hover:bg-accent transition-colors cursor-pointer"
               >
                 Apply Filters
               </button>

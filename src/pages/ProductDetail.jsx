@@ -123,7 +123,7 @@ const ProductDetailView = ({ products }) => {
       />
 
       {/* Breadcrumb Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <Breadcrumb
           items={[
             { label: 'Shop', to: '/shop' },
@@ -134,12 +134,12 @@ const ProductDetailView = ({ products }) => {
       </div>
 
       {/* Main Product Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* LEFT: Interactive Gallery & Fullscreen Trigger */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="relative group aspect-[4/3] rounded-3xl overflow-hidden bg-sunken border border-line shadow-sm">
+            <div className="relative group aspect-[4/3] rounded-tile overflow-hidden bg-sunken">
               <SmartImage sizes="(min-width: 1024px) 50vw, 100vw" priority
                 src={product.images[selectedImage] || product.images[0]}
                 alt={product.name}
@@ -223,17 +223,17 @@ const ProductDetailView = ({ products }) => {
             {/* Header / Category & Badges */}
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                <span className="text-xs text-accent font-semibold">
                   {product.collection || product.category}
                 </span>
                 {product.badge && (
-                  <span className="px-3 py-0.5 rounded-full text-[10px] uppercase tracking-luxury font-medium bg-black/10 dark:bg-white/10 text-fg">
+                  <span className="px-3 py-0.5 rounded-full text-[12px] font-medium bg-black/10 dark:bg-white/10 text-fg">
                     {product.badge}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg leading-tight mt-2">
+              <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg leading-tight mt-2">
                 {product.name}
               </h1>
 
@@ -258,7 +258,7 @@ const ProductDetailView = ({ products }) => {
             </div>
 
             {/* Pricing Section */}
-            <div className="p-5 rounded-2xl bg-sunken/50 dark:bg-surface border border-line">
+            <div className="p-5 rounded-2xl bg-sunken/50 dark:bg-surface">
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-bold tracking-tight text-fg">
                   ₹{product.price.toLocaleString('en-IN')}
@@ -283,7 +283,7 @@ const ProductDetailView = ({ products }) => {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-muted leading-relaxed font-light">
+            <p className="text-sm text-muted leading-relaxed">
               {product.description}
             </p>
 
@@ -291,7 +291,7 @@ const ProductDetailView = ({ products }) => {
             {product.colors && product.colors.length > 0 && (
               <div className="space-y-2.5 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex justify-between text-xs">
-                  <span className="uppercase tracking-luxury text-muted font-medium">
+                  <span className="text-muted font-medium">
                     Colour:
                   </span>
                   <span className="font-semibold text-fg">
@@ -332,7 +332,7 @@ const ProductDetailView = ({ products }) => {
             {product.finishes && product.finishes.length > 0 && (
               <div className="space-y-2.5 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex justify-between text-xs">
-                  <span className="uppercase tracking-luxury text-muted font-medium">
+                  <span className="text-muted font-medium">
                     Finish:
                   </span>
                   <span className="font-semibold text-fg">
@@ -364,7 +364,7 @@ const ProductDetailView = ({ products }) => {
               {/* Row 1: Quantity Selector + Add to Cart */}
               <div className="flex items-center gap-3">
                 {/* Quantity */}
-                <div className="flex items-center border border-line rounded-full overflow-hidden bg-surface dark:bg-canvas">
+                <div className="flex items-center rounded-full overflow-hidden bg-surface dark:bg-canvas">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -434,7 +434,7 @@ const ProductDetailView = ({ products }) => {
                     </div>
                     <Link
                       to="/cart"
-                      className="underline uppercase tracking-wider font-bold text-emerald-900 dark:text-emerald-200 ml-3"
+                      className="underline font-bold text-emerald-900 dark:text-emerald-200 ml-3"
                     >
                       View Cart &rarr;
                     </Link>
@@ -459,43 +459,43 @@ const ProductDetailView = ({ products }) => {
       </section>
 
       {/* Specifications & Dimensions Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Architectural Specs */}
-          <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm">
-            <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-2">
+          <div className="p-8 rounded-tile bg-surface">
+            <div className="flex items-center space-x-2 text-xs text-accent font-semibold mb-2">
               <Ruler className="w-4 h-4" />
               <span>Specifications</span>
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-fg mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight text-fg mb-6">
               Dimensions &amp; Materials
             </h2>
 
             <div className="space-y-4 text-xs text-muted">
               <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
-                <span className="uppercase tracking-wider font-medium">Overall Dimensions</span>
+                <span className="font-medium">Overall Dimensions</span>
                 <span className="font-semibold text-fg text-right">
                   {product.dimensions || 'Customizable to space'}
                 </span>
               </div>
 
               <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
-                <span className="uppercase tracking-wider font-medium">Materials</span>
+                <span className="font-medium">Materials</span>
                 <span className="font-semibold text-fg text-right">
                   {product.materials?.join(', ') || 'Solid Hardwood, Brass Hardware'}
                 </span>
               </div>
 
               <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
-                <span className="uppercase tracking-wider font-medium">Stock Status</span>
+                <span className="font-medium">Stock Status</span>
                 <span className="font-semibold text-emerald-600 dark:text-emerald-400 text-right">
                   {product.stockStatus || 'In Stock'}
                 </span>
               </div>
 
               <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
-                <span className="uppercase tracking-wider font-medium">Assembly</span>
+                <span className="font-medium">Assembly</span>
                 <span className="font-semibold text-fg text-right">
                   Fully Assembled On-Site
                 </span>
@@ -505,7 +505,7 @@ const ProductDetailView = ({ products }) => {
             {/* Construction Highlights list */}
             {product.details && product.details.length > 0 && (
               <div className="mt-6 pt-4 border-t border-line/50 dark:border-line">
-                <h4 className="text-xs uppercase tracking-luxury text-fg font-semibold mb-3">
+                <h4 className="text-xs text-fg font-semibold mb-3">
                   Craftsmanship Highlights
                 </h4>
                 <ul className="space-y-2 text-xs text-muted">
@@ -521,10 +521,10 @@ const ProductDetailView = ({ products }) => {
           </div>
 
           {/* Care Instructions Accordion */}
-          <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm flex flex-col justify-between">
+          <div className="p-8 rounded-tile bg-surface flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-accent font-semibold">
+                <div className="flex items-center space-x-2 text-xs text-accent font-semibold">
                   <Sparkles className="w-4 h-4" />
                   <span>Looking After It</span>
                 </div>
@@ -538,7 +538,7 @@ const ProductDetailView = ({ products }) => {
                 </button>
               </div>
 
-              <h2 className="text-2xl font-serif text-fg mb-6">
+              <h2 className="text-2xl text-fg mb-6">
                 Care Instructions
               </h2>
 
@@ -595,19 +595,19 @@ const ProductDetailView = ({ products }) => {
 
       {/* Related Products Section */}
       {relatedProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="site-container">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs text-accent font-semibold">
                 Goes Well With
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-fg mt-1">
+              <h2 className="text-2xl sm:text-3xl text-fg mt-1">
                 You May Also Like
               </h2>
             </div>
             <Link
               to="/shop"
-              className="text-xs uppercase tracking-luxury text-accent flex items-center gap-1.5 hover:underline font-semibold"
+              className="text-xs text-accent flex items-center gap-1.5 hover:underline font-semibold"
             >
               <span>See All Furniture</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -649,14 +649,14 @@ const ProductDetailView = ({ products }) => {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden p-6 sm:p-8"
+              className="relative w-full max-w-lg bg-white dark:bg-stone-900 rounded-tile shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden p-6 sm:p-8"
             >
               <div className="flex items-start justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
                 <div>
-                  <span className="text-[10px] uppercase tracking-luxury text-accent font-bold">
+                  <span className="text-[12px] text-accent font-bold">
                     Made to Measure
                   </span>
-                  <h3 className="text-xl font-serif text-stone-900 dark:text-white mt-0.5">
+                  <h3 className="text-xl text-stone-900 dark:text-white mt-0.5">
                     Request Customization
                   </h3>
                   <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
@@ -677,7 +677,7 @@ const ProductDetailView = ({ products }) => {
                   <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <Check className="w-7 h-7" />
                   </div>
-                  <h4 className="font-serif text-xl font-bold text-stone-900 dark:text-white mb-1">
+                  <h4 className="text-xl font-bold text-stone-900 dark:text-white mb-1">
                     Request Sent
                   </h4>
                   <p className="text-xs text-stone-600 dark:text-stone-300 max-w-sm mx-auto">
@@ -757,7 +757,7 @@ const ProductDetailView = ({ products }) => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-black dark:bg-white text-on-accent dark:text-stone-900 font-semibold uppercase tracking-luxury transition hover:bg-accent dark:hover:bg-accent dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full py-3.5 rounded-full bg-black dark:bg-white text-on-accent dark:text-stone-900 font-semibold transition hover:bg-accent dark:hover:bg-accent dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Send Request</span>

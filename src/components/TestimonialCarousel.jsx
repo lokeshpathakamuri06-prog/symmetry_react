@@ -38,7 +38,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative p-8 sm:p-14 lg:p-20 rounded-3xl bg-surface border border-line shadow-luxury overflow-hidden">
+      <div className="relative p-8 sm:p-14 lg:p-20 rounded-tile bg-surface overflow-hidden">
         <Quote className="w-16 h-16 sm:w-24 sm:h-24 text-accent/10 absolute -top-4 -right-4 pointer-events-none" />
 
         <AnimatePresence mode="wait">
@@ -58,7 +58,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
             </div>
 
             {/* Quote */}
-            <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-fg font-normal leading-relaxed italic mb-8">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-fg font-normal leading-relaxed italic mb-8">
               &ldquo;{current.quote}&rdquo;
             </p>
 
@@ -75,7 +75,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
                 <h4 className="text-lg sm:text-xl font-medium text-fg">
                   {current.author}
                 </h4>
-                <p className="text-xs sm:text-sm text-accent uppercase tracking-luxury font-medium">
+                <p className="text-xs sm:text-sm text-accent font-medium">
                   {current.role} &bull; {current.project}
                 </p>
                 <p className="text-xs sm:text-sm text-muted mt-0.5">

@@ -12,7 +12,7 @@ export const CategoryCard = ({ category }) => {
       {...reveal()}
       className="h-full"
     >
-      <AppleCardWrapper className="group relative aspect-[4/5] rounded-3xl overflow-hidden block bg-sunken">
+      <AppleCardWrapper className="group relative aspect-[4/5] rounded-tile overflow-hidden block bg-sunken">
         <Link to={`/shop?category=${category.slug}`} className="block w-full h-full relative">
           <SmartImage sizes="(min-width: 1024px) 25vw, 50vw"
             src={category.image}
@@ -29,13 +29,13 @@ export const CategoryCard = ({ category }) => {
 
           {/* Top Pill Badge */}
           <div className="absolute top-5 left-5 z-20">
-            <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-luxury text-[#F4F7F6] bg-black/40 backdrop-blur-md font-semibold shadow-sm">
+            <span className="px-3 py-1 rounded-full text-[12px] text-[#F4F7F6] bg-black/40 backdrop-blur-md font-semibold shadow-sm">
               {category.productCount ? `${category.productCount} ${category.productCount === 1 ? 'Piece' : 'Pieces'}` : 'Curated Collection'}
             </span>
           </div>
 
           <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end z-20">
-            <span className="text-[10px] uppercase tracking-luxury text-[#BCA575] font-semibold mb-1.5">
+            <span className="text-[12px] text-[#BCA575] font-semibold mb-1.5">
               Category
             </span>
             <div className="flex items-center justify-between gap-3">

@@ -87,7 +87,7 @@ export default function RazorpayModalPlaceholder({
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-stone-900 dark:text-white mb-1">
+                <h3 className="text-2xl font-semibold text-stone-900 dark:text-white mb-1">
                   Test Authorization Simulated!
                 </h3>
                 <p className="text-sm text-stone-600 dark:text-stone-300 mb-6">
@@ -122,14 +122,14 @@ export default function RazorpayModalPlaceholder({
                 <div className="bg-stone-50 dark:bg-stone-800/50 rounded-xl p-4 border border-stone-200 dark:border-stone-700/60 mb-6">
                   <div className="flex items-start justify-between pb-3 border-b border-stone-200 dark:border-stone-700/60">
                     <div>
-                      <h4 className="font-serif font-semibold text-stone-900 dark:text-white">
+                      <h4 className="font-semibold text-stone-900 dark:text-white">
                         {product.name}
                       </h4>
                       <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
                         Qty: {quantity} {selectedFinish ? `• Finish: ${selectedFinish}` : ''} {selectedColor ? `• Tone: ${selectedColor}` : ''}
                       </p>
                     </div>
-                    <span className="font-serif font-semibold text-stone-900 dark:text-white">
+                    <span className="font-semibold text-stone-900 dark:text-white">
                       ₹{subtotal.toLocaleString('en-IN')}
                     </span>
                   </div>
@@ -151,7 +151,7 @@ export default function RazorpayModalPlaceholder({
                 </div>
 
                 {/* Simulated Payment Methods */}
-                <label className="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">
+                <label className="block text-xs font-semibold text-stone-500 mb-2">
                   Select Simulated Gateway Method
                 </label>
                 <div className="grid grid-cols-2 gap-2 mb-6">

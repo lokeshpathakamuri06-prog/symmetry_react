@@ -1,6 +1,6 @@
 # Next Steps
 
-_Last updated: 2026-10-10 (Steps 0–1 done, Step 2 started)_. Work top to bottom; each step lists what "done" means. Architecture details are in [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md).
+_Last updated: 2026-10-17 (redesign in preview)_. Work top to bottom; each step lists what "done" means. Architecture details are in [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md).
 
 ## Step 0: Save the work (do first, ~15 min)
 - [x] Commit the frontend changes in `symmetry_react` (on branch `develop`).
@@ -75,9 +75,9 @@ Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
 - [x] Phase 1: motion tokens, `reveal()`/`<Reveal>`/`<CountUp>`, lazy motion engine; 60 reveals converted (2026-10-17)
 - [x] Phase 2: Lenis as the only scroll owner; native touch scrolling; modal scroll lock; Back keeps the scroll position (2026-10-17)
 - [x] Phase 3: page-change fade (2026-10-17)
-- [ ] Phase 4: signature scroll moments on each page
-- [ ] Phase 5: micro-interactions (header, menu, buttons, cards, modals, forms)
-- [ ] Phase 6: visual polish (spacing, type, colour check)
+- [~] Phase 4: signature scroll moments: Home done; all pages got the new page hero (photo widens on scroll), sticky page bar and galleries (2026-10-17, redesign)
+- [x] Phase 5: micro-interactions: header hides on scroll, flyout menu, button press, card lift, gallery buttons, cart badge (2026-10-17, redesign)
+- [x] Phase 6: visual polish: new Apple-style design system on every public page (2026-10-17, redesign, in preview)
 - [ ] Phase 7: performance and accessibility guardrails
 - [ ] Phase 8: QA on real devices; preview; deploy
 
@@ -87,4 +87,4 @@ Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
 - Buy a domain, then change the hostname in the Caddyfile.
 - Razorpay online payments (currently order requests only).
 - Move Services, Sourcing and About content into the DB so the client can edit them.
-- Resume file upload on Careers (currently a link).
+- ~~Resume file upload on Careers~~ (done 2026-10-17).

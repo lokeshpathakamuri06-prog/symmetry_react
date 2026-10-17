@@ -104,7 +104,7 @@ export const FlippingCollections = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-line/70 dark:border-line">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-          <span className="text-xs uppercase tracking-luxury text-fg font-medium">
+          <span className="text-xs text-fg font-medium">
             Sequential 3D Reveal &bull; Flip to Inspect Craft
           </span>
         </div>
@@ -113,7 +113,7 @@ export const FlippingCollections = () => {
           {/* Active Card Indicator */}
           <div className="hidden md:flex items-center gap-1.5 text-xs text-muted">
             <span>Active Reveal:</span>
-            <strong className="text-accent font-serif uppercase tracking-wider">
+            <strong className="text-accent">
               {activeFlippedIndex >= 0 && activeFlippedIndex < collections.length
                 ? collections[activeFlippedIndex].name
                 : activeFlippedIndex === -2
@@ -126,7 +126,7 @@ export const FlippingCollections = () => {
           <button
             onClick={() => setAutoPlay((prev) => !prev)}
             aria-label={autoPlay ? 'Pause automatic flip' : 'Resume automatic flip'}
-            className="px-3.5 py-1.5 rounded-full border border-line text-xs uppercase tracking-luxury text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-1.5 rounded-full border border-line text-xs text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
           >
             {autoPlay ? (
               <>
@@ -145,7 +145,7 @@ export const FlippingCollections = () => {
           <button
             onClick={flipAllCards}
             aria-label="Flip all cards"
-            className="px-3.5 py-1.5 rounded-full bg-sunken/60 dark:bg-sunken border border-line text-xs uppercase tracking-luxury text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-1.5 rounded-full bg-sunken/60 dark:bg-sunken border border-line text-xs text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
           >
             <RotateCw className="w-3 h-3 text-[#36656B]" />
             <span>{activeFlippedIndex === -2 ? 'Reset Front' : 'Flip All'}</span>
@@ -166,12 +166,12 @@ export const FlippingCollections = () => {
             >
               {/* Inner 3D Container */}
               <div
-                className={`relative w-full h-full rounded-3xl transition-transform duration-700 [transform-style:preserve-3d] shadow-luxury ${
+                className={`relative w-full h-full rounded-tile transition-transform duration-700 [transform-style:preserve-3d] shadow-luxury ${
                   isFlipped ? '[transform:rotateY(180deg)]' : ''
                 }`}
               >
                 {/* ================= FRONT FACE ================= */}
-                <div className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-sunken [backface-visibility:hidden] border border-line">
+                <div className="absolute inset-0 w-full h-full rounded-tile overflow-hidden bg-sunken [backface-visibility:hidden]">
                   <img
                     src={col.frontImage}
                     alt={col.name}
@@ -183,28 +183,28 @@ export const FlippingCollections = () => {
 
                   {/* Front Top Badge */}
                   <div className="absolute top-5 inset-x-5 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-luxury font-medium bg-[#131E20]/80 backdrop-blur-md text-white border border-white/15">
+                    <span className="px-3 py-1 rounded-full text-[12px] font-medium bg-[#131E20]/80 backdrop-blur-md text-white border border-white/15">
                       Collection 0{index + 1}
                     </span>
-                    <span className="text-[10px] uppercase tracking-luxury text-[#BCA575] font-semibold bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                    <span className="text-[12px] text-[#BCA575] font-semibold bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
                       {col.itemCount}
                     </span>
                   </div>
 
                   {/* Front Bottom Content */}
                   <div className="absolute bottom-5 inset-x-5 text-white">
-                    <span className="text-xs uppercase tracking-luxury text-[#BCA575] font-semibold block mb-1">
+                    <span className="text-xs text-[#BCA575] font-semibold block mb-1">
                       {col.tagline}
                     </span>
                     <div className="flex items-center justify-between">
-                      <h3 className="text-3xl sm:text-4xl font-serif font-normal">
+                      <h3 className="text-3xl sm:text-4xl font-semibold">
                         {col.name}
                       </h3>
                       <div className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white group-hover:bg-[#BCA575] group-hover:text-[#07121C] transition-colors">
                         <RotateCw className="w-4 h-4" />
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center gap-2 text-[10px] text-white/70 uppercase tracking-luxury">
+                    <div className="mt-3 flex items-center gap-2 text-[12px] text-white/70">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#BCA575]" />
                       <span>Click to flip &amp; inspect craft</span>
                     </div>
@@ -212,15 +212,15 @@ export const FlippingCollections = () => {
                 </div>
 
                 {/* ================= BACK FACE ================= */}
-                <div className="absolute inset-0 w-full h-full rounded-3xl p-7 sm:p-8 bg-[#0D1C29] text-[#F5F1E8] border border-[#BCA575]/40 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-between shadow-2xl">
+                <div className="absolute inset-0 w-full h-full rounded-tile p-7 sm:p-8 bg-[#0D1C29] text-[#F5F1E8] border border-[#BCA575]/40 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-between shadow-2xl">
                   {/* Back Top Header */}
                   <div>
                     <div className="flex items-center justify-between pb-4 border-b border-white/10">
                       <div>
-                        <span className="text-[10px] uppercase tracking-luxury text-[#BCA575] font-semibold block">
+                        <span className="text-[12px] text-[#BCA575] font-semibold block">
                           Architectural Curation
                         </span>
-                        <h4 className="text-2xl font-serif text-white mt-0.5">
+                        <h4 className="text-2xl text-white mt-0.5">
                           {col.name} Collection
                         </h4>
                       </div>
@@ -230,13 +230,13 @@ export const FlippingCollections = () => {
                     </div>
 
                     {/* Narrative */}
-                    <p className="text-xs sm:text-sm text-[#AEB7BE] leading-relaxed font-light mt-5">
+                    <p className="text-xs sm:text-sm text-[#AEB7BE] leading-relaxed mt-5">
                       {col.narrative}
                     </p>
 
                     {/* Materiality Palette */}
                     <div className="mt-5 space-y-2">
-                      <span className="text-[10px] uppercase tracking-luxury text-white/80 font-semibold block">
+                      <span className="text-[12px] text-white/80 font-semibold block">
                         Materiality Palette
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -253,11 +253,11 @@ export const FlippingCollections = () => {
 
                     {/* Signature Pieces */}
                     <div className="mt-4 pt-3 border-t border-white/10 text-xs">
-                      <span className="text-[10px] uppercase tracking-luxury text-[#BCA575] font-semibold block mb-1">
+                      <span className="text-[12px] text-[#BCA575] font-semibold block mb-1">
                         Signature Benchmark Pieces:
                       </span>
                       <p
-                        className="text-[#F5F1E8]/90 font-serif text-sm italic"
+                        className="text-[#F5F1E8]/90 text-sm italic"
                         dangerouslySetInnerHTML={{ __html: col.signaturePieces }}
                       />
                     </div>
@@ -265,13 +265,13 @@ export const FlippingCollections = () => {
 
                   {/* Back Bottom CTA Link */}
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-luxury text-[#AEB7BE]">
+                    <span className="text-[12px] text-[#AEB7BE]">
                       Click to flip back
                     </span>
                     <Link
                       to={`/shop?category=${col.slug}`}
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-2 text-xs uppercase tracking-luxury font-medium px-4 py-2 rounded-full bg-[#BCA575] text-[#07121C] hover:bg-white transition-colors shadow-md"
+                      className="inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full bg-[#BCA575] text-[#07121C] hover:bg-white transition-colors shadow-md"
                     >
                       <span>Explore {col.name}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />

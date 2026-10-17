@@ -51,17 +51,17 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3, ease }}
           data-lenis-prevent
-          className="fixed inset-0 z-[1100] bg-canvas/95 dark:bg-canvas/95 backdrop-blur-2xl text-fg flex flex-col overflow-y-auto"
+          className="fixed inset-0 z-[1100] bg-canvas/[0.97] backdrop-blur-2xl text-fg flex flex-col overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
         >
           {/* Top bar */}
-          <div className="site-container h-16 flex items-center justify-between shrink-0">
+          <div className="site-container h-12 flex items-center justify-between shrink-0">
             <Link to="/" onClick={onClose} className="flex items-center gap-2.5">
-              <img src={logoImg} alt="Symmetry Interiors" className="h-8 w-auto object-contain dark:hidden" />
-              <img src={logoDarkImg} alt="Symmetry Interiors" className="h-8 w-auto object-contain hidden dark:block" />
-              <span className="text-[13px] font-semibold tracking-[0.2em] uppercase">SYMMETRY</span>
+              <img src={logoImg} alt="Symmetry Interiors" className="h-6 w-auto object-contain dark:hidden" />
+              <img src={logoDarkImg} alt="Symmetry Interiors" className="h-6 w-auto object-contain hidden dark:block" />
+              <span className="wordmark text-[12px]">SYMMETRY</span>
             </Link>
             <div className="flex items-center gap-1">
               <ThemeToggle />
@@ -88,13 +88,13 @@ export const MobileMenu = ({ isOpen, onClose }) => {
                 <m.li
                   key={item.to}
                   variants={{ closed: { opacity: 0, y: -8 }, open: { opacity: 1, y: 0, transition: { duration: 0.35, ease } } }}
-                  className="border-b border-line/60 dark:border-line"
+                  className=""
                 >
                   <div className="flex items-center justify-between">
                     <Link
                       to={item.to}
                       onClick={onClose}
-                      className={`flex-1 py-3.5 text-[26px] sm:text-[30px] font-semibold tracking-tight transition-colors ${
+                      className={`flex-1 py-2 text-[28px] sm:text-[32px] font-semibold tracking-tight transition-colors ${
                         active ? 'text-accent' : 'text-fg hover:text-accent'
                       }`}
                     >

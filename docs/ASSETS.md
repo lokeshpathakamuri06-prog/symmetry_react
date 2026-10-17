@@ -1,12 +1,13 @@
 # Assets Inventory
 
-_Last updated: 2026-10-13._ Paths are relative to `symmetry_react/`. Everything here will eventually move to Cloudinary, except logos, icons and the PDF, which stay with the site.
+_Last updated: 2026-10-17._ Paths are relative to `symmetry_react/`. Everything here will eventually move to Cloudinary, except logos, icons and the PDF, which stay with the site.
 
 ## Summary
 | Asset group | Location | Count / size | Status |
 |---|---|---|---|
 | Product photos (client, LC series) | Cloudinary `symmetry/products/LC00xx(-n)` (originals also still in `public/drive_products/`) | 158 files, 21 MB | ✅ All 158 in the Media Library; 7 products use them. Delete the local folder once the client confirms |
-| Page hero images | `public/images/hero/*.jpeg` + WebP copies (`-1280.webp`, `-2048.webp`) | 11 banners (unused ones deleted 2026-10-11) | ✅ Used; served as WebP |
+| Page hero images | `public/images/hero/*.jpeg` + WebP copies (`-1280.webp`, `-2048.webp`) | 11 banners (unused ones deleted 2026-10-11) | HAJ slides still used (Home fallback, Why section); the 8 page banners were replaced on 2026-10-17 and are unused until the redesign is approved |
+| Stock page heroes (temporary) | `public/images/hero/stock-*.jpeg` + WebP | 9 Unsplash photos (About, Services, Projects, Sourcing, Shop, Journal, Contact, Careers, Careers CTA) | ❌ Temporary: replace with client photos (Admin → Page Banners, or new files here) |
 | Home about image | `public/images/home/home-about.jpeg` + WebP copies | 1 | ✅ Used; served as WebP |
 | Placeholder stock photos | Unsplash URLs in code | **61 unique** URLs | ❌ Must be replaced with client photos |
 | Product catalogue | `public/Symmetry-Interiors-Catalog.pdf` | 4.6 MB | ✅ Download link in header/footer |

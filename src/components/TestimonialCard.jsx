@@ -12,38 +12,40 @@ export const TestimonialCard = ({ testimonial }) => {
       {...reveal()}
       className="h-full"
     >
-      <AppleCardWrapper className="p-8 sm:p-10 rounded-3xl bg-surface flex flex-col justify-between relative h-full">
-        <Quote className="w-8 h-8 text-accent/20 absolute top-6 right-6" />
+      <AppleCardWrapper className="p-8 sm:p-10 flex flex-col justify-between h-full">
+        <Quote className="w-8 h-8 text-accent/25 absolute top-7 right-7" />
 
         <div>
           {/* 5-star rating */}
           <div className="flex items-center gap-1 mb-6 text-accent">
-            {[...Array(testimonial.rating)].map((_, i) => (
+            {[...Array(testimonial.rating || 5)].map((_, i) => (
               <Star key={i} className="w-4 h-4 fill-current" />
             ))}
           </div>
 
           {/* Quote */}
-          <p className="text-lg sm:text-xl text-fg font-normal leading-relaxed italic mb-8">
+          <p className="text-[19px] sm:text-[21px] text-fg font-semibold tracking-tight leading-snug mb-8">
             &ldquo;{testimonial.quote}&rdquo;
           </p>
         </div>
 
         {/* Author Details */}
-        <div className="flex items-center gap-3 pt-6">
-          <SmartImage sizes="96px"
-            src={testimonial.avatar}
-            alt={testimonial.author}
-            className="w-11 h-11 rounded-full object-cover shadow-sm"
-          />
+        <div className="flex items-center gap-3 pt-6 border-t border-line/60 dark:border-line">
+          {testimonial.avatar && (
+            <SmartImage sizes="96px"
+              src={testimonial.avatar}
+              alt={testimonial.author}
+              className="w-11 h-11 rounded-full object-cover"
+            />
+          )}
           <div>
-            <h4 className="text-sm font-medium text-fg">
+            <h4 className="text-[15px] font-semibold text-fg">
               {testimonial.author}
             </h4>
-            <p className="text-xs text-accent">
+            <p className="text-[13px] text-accent">
               {testimonial.role} &bull; {testimonial.project}
             </p>
-            <p className="text-[11px] text-muted">
+            <p className="text-[12px] text-muted">
               {testimonial.location}
             </p>
           </div>

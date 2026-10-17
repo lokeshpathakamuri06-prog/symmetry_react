@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Pause, Play } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
-import { scrollToTarget } from '../lib/scroll';
-import { ease, enter } from '../lib/motion';
-import { useBanners, useSiteText } from '../context/PublicContentContext';
+import { ease } from '../lib/motion';
+import { useBanners } from '../context/PublicContentContext';
 import { heroImage } from '../lib/staticImages';
 import { cloudinaryUrl, isCloudinary, srcSet } from '../lib/images';
 
 // Slideshow photos come from admin "Hero Banners" (active + published, in admin order).
-// The headline and buttons come from Page Content > Home. These local photos are only a fallback.
+// The photos are shown clean (no overlay, no text on them); the headline and buttons from
+// Page Content > Home sit in the section below (HomeIntro). These local photos are only a fallback.
 const FALLBACK_SLIDES = [
   { id: 'hero-1', title: 'HAJ0025 Architecture', image: '/images/hero/hero-haj-slide-1.jpeg' },
   { id: 'hero-2', title: 'HAJ0026 Interior', image: '/images/hero/hero-haj-slide-2.jpeg' },
@@ -23,88 +24,72 @@ const slideImage = (src) => {
 };
 
 export const Hero = () => {
-  const text = useSiteText('home');
   // Banners with a page set (Admin → Page Banners) belong to other pages
   const banners = useBanners().items.filter((b) => b.image && !b.badge);
   const slides = banners.length ? banners : FALLBACK_SLIDES;
   const [slideIndex, setSlideIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
   const currentImageIndex = slideIndex % slides.length;
   const slide = slides[currentImageIndex];
 
-  const scrollToSection = (id) => scrollToTarget(document.getElementById(id));
-
-  // Auto-advance hero background images every 5 seconds
+  // Next photo every 6 seconds, until the visitor pauses
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSlideIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-
+    if (!playing || slides.length < 2) return undefined;
+    const timer = setInterval(() => setSlideIndex((prev) => (prev + 1) % slides.length), 6000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [playing, slides.length]);
 
   return (
-    <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-black overflow-hidden select-none">
-      {/* Slideshow photos (admin Hero Banners) */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* initial={false}: the first photo is on screen at once (it is the page's main image);
-            later slides cross-fade in with a slow settle from a slight zoom */}
-        <AnimatePresence mode="popLayout" initial={false}>
-          <m.img
-            key={slide.id}
-            {...slideImage(slide.image)}
-            fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
-            alt={slide.title}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.2, ease: ease.apple }, scale: { duration: 6, ease: ease.out } }}
-            className="w-full h-full object-cover object-center absolute inset-0"
-          />
-        </AnimatePresence>
-        {/* Directional scrims: darken only where the text sits, so the photo stays bright and true.
-            Phones: the copy spans the width, so shade from the bottom. Desktop: shade from the left. */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent sm:from-black/45 sm:via-black/5" />
-        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
-        {/* Light shade under the transparent navigation bar */}
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/35 to-transparent" />
-      </div>
+    <section
+      className="relative h-[100svh] min-h-[560px] w-full bg-sunken overflow-hidden select-none"
+      aria-roledescription="carousel"
+      aria-label="Our spaces"
+    >
+      {/* initial={false}: the first photo is on screen at once (it is the page's main image);
+          later photos cross-fade in and settle slowly from a slight zoom */}
+      <AnimatePresence mode="popLayout" initial={false}>
+        <m.img
+          key={slide.id}
+          {...slideImage(slide.image)}
+          fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
+          alt={slide.title}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 1.2, ease: ease.apple }, scale: { duration: 7, ease: ease.out } }}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      </AnimatePresence>
 
-      {/* Copy */}
-      <div className="relative z-10 h-full site-container flex flex-col justify-end pb-24 sm:pb-28">
-        <div className="max-w-3xl">
-          <m.p {...enter({ variant: 'fadeIn' })} className="text-[13px] sm:text-[14px] font-semibold tracking-[0.14em] uppercase text-white/90 mb-4 [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
-            Symmetry Interiors
-          </m.p>
-          <h1 className="text-display-xl text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.25)]">
-            {text.heroTitle} <span className="text-[#D9C59A]">{text.heroTitleHighlight}</span>
-          </h1>
-          <m.p {...enter({ order: 1 })} className="mt-5 text-[18px] sm:text-[21px] text-white/90 leading-[1.5] max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]">
-            {text.heroSubtitle}
-          </m.p>
-          <m.div {...enter({ order: 2 })} className="mt-8 flex flex-wrap items-center gap-3">
-            <button type="button" onClick={() => scrollToSection('projects-section')} className="btn-light cursor-pointer">
-              {text.heroPrimaryCta}
-            </button>
-            <button type="button" onClick={() => scrollToSection('about-section')} className="btn-glass cursor-pointer">
-              {text.heroSecondaryCta}
-            </button>
-          </m.div>
-        </div>
-
-        {/* Slide indicators */}
-        <div className="absolute bottom-8 right-5 sm:right-8 lg:right-10 flex items-center gap-2 rounded-full bg-black/25 backdrop-blur-md px-3 py-2">
-          {slides.map((img, idx) => (
+      {/* Dots and pause, in one small glass pill */}
+      {slides.length > 1 && (
+        <div className="absolute bottom-6 sm:bottom-8 inset-x-0 flex justify-center z-10">
+          <div className="flex items-center gap-1 rounded-full bg-black/30 backdrop-blur-xl pl-3 pr-1 py-1">
+            {slides.map((img, idx) => (
+              <button
+                key={img.id}
+                onClick={() => setSlideIndex(idx)}
+                aria-label={`Show photo ${idx + 1} of ${slides.length}`}
+                aria-current={currentImageIndex === idx ? 'true' : undefined}
+                className="h-6 px-1 flex items-center cursor-pointer"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-all duration-500 ease-apple ${
+                    currentImageIndex === idx ? 'w-6 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'
+                  }`}
+                />
+              </button>
+            ))}
             <button
-              key={img.id}
-              onClick={() => setSlideIndex(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                currentImageIndex === idx ? 'w-6 bg-white' : 'w-1.5 bg-white/45 hover:bg-white/70'
-              }`}
-            />
-          ))}
+              onClick={() => setPlaying((p) => !p)}
+              aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
+              className="ml-1 w-7 h-7 rounded-full flex items-center justify-center text-white hover:bg-white/15 transition-colors cursor-pointer"
+            >
+              {playing ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current" />}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

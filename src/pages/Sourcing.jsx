@@ -23,7 +23,7 @@ export const Sourcing = () => {
   };
 
   return (
-    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-28 overflow-hidden">
+    <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-28 overflow-x-clip">
       <SeoMeta
         title="Global Sourcing &amp; Provenance — Italy, China, Malaysia, Vietnam, Bali | Symmetry Interiors"
         description="Explore Symmetry Interiors' 5 global sourcing alliances: quarry-direct Italian marble &amp; leather, precision CNC joinery in China, plantation teak in Malaysia, handwoven cane in Vietnam, and volcanic stone in Bali."
@@ -36,21 +36,21 @@ export const Sourcing = () => {
         title="Craftsmanship"
         highlight="Without Borders"
         subtitle="Twenty-five years of direct extraction rights at Italian stone quarries and generational contracts with master craft guilds across China, Malaysia, Vietnam, and Bali."
-        image={heroImage('/images/hero/hero-sourcing.jpeg')}
-        imageAlt="Symmetry Interiors Global Sourcing"
+        image={heroImage('/images/hero/stock-sourcing.jpeg')}
+        imageAlt="A container ship being loaded at a port"
         stats={sourcingStats}
       />
 
       {/* =========================================================================
           SECTION 2: QUICK-JUMP ORIGIN NAVIGATION PILL BAR
           ========================================================================= */}
-      <section id="origins-nav" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-surface via-surface to-surface dark:via-canvas border border-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <section id="origins-nav" className="site-container scroll-mt-28">
+        <div className="p-6 sm:p-8 rounded-tile bg-gradient-to-r from-surface via-surface to-surface dark:via-canvas border border-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+            <span className="text-xs text-accent font-semibold block mb-1">
               International Procurement Network
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
               Direct Origin Hubs
             </h2>
           </div>
@@ -60,7 +60,7 @@ export const Sourcing = () => {
               <button
                 key={country.id}
                 onClick={() => scrollToAnchor(country.anchorId)}
-                className="px-4 py-2.5 rounded-full text-[14px] tracking-[-0.01em] font-medium bg-surface dark:bg-canvas text-fg border border-line hover:border-accent hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 cursor-pointer group"
+                className="px-4 py-2.5 rounded-full text-[14px] tracking-[-0.01em] font-medium bg-surface dark:bg-canvas text-fg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 cursor-pointer group"
               >
                 <span>{country.flag}</span>
                 <span className="font-mono text-[10px] text-accent">{country.chapter}.</span>
@@ -80,7 +80,7 @@ export const Sourcing = () => {
           4. Vietnam
           5. Bali
           ========================================================================= */}
-      <div className="space-y-20 sm:space-y-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="space-y-20 sm:space-y-32 site-container">
         {sourcingCountries.map((country, idx) => {
           const isEven = idx % 2 === 1;
 
@@ -92,7 +92,7 @@ export const Sourcing = () => {
             >
               <m.div
                 {...reveal()}
-                className="rounded-3xl sm:rounded-[44px] bg-gradient-to-b from-surface via-surface to-surface dark:via-canvas border border-line hover:border-accent/50 p-6 sm:p-10 lg:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] relative overflow-hidden transition-all duration-500"
+                className="rounded-tile sm:rounded-[44px] bg-gradient-to-b from-surface via-surface to-surface dark:via-canvas border border-line hover:border-accent/50 p-6 sm:p-10 lg:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] relative overflow-hidden transition-all duration-500"
               >
                 {/* Subtle ambient decorative radial glow */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
@@ -102,7 +102,7 @@ export const Sourcing = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-2xl sm:text-3xl">{country.flag}</span>
                     <div>
-                      <span className="text-[11px] sm:text-xs uppercase tracking-luxury font-semibold text-accent block">
+                      <span className="text-[12px] sm:text-xs font-semibold text-accent block">
                         {country.chapter} &bull; {country.name}
                       </span>
                       <span className="text-xs font-mono text-subtle">
@@ -127,7 +127,7 @@ export const Sourcing = () => {
                   {/* Visuals Column: 3-Image Showcase (Hero + 2 Detail Insets) */}
                   <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-2' : ''}`}>
                     {/* Primary Large Image Frame */}
-                    <div className="relative aspect-[16/11] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken border border-line/70 dark:border-line shadow-lg group">
+                    <div className="relative aspect-[16/11] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
                       <img loading="lazy" decoding="async"
                         src={country.galleryImages[0].url}
                         alt={`${country.name} procurement showcase`}
@@ -138,7 +138,7 @@ export const Sourcing = () => {
 
                       {/* Floating Provenance Badge */}
                       <div className="absolute top-4 left-4 z-20">
-                        <span className="px-3.5 py-1.5 rounded-full text-[11px] font-sans uppercase tracking-luxury font-medium bg-fg/85 dark:bg-canvas/90 text-[#F5F1E8] backdrop-blur-md border border-white/15 shadow-md">
+                        <span className="px-3.5 py-1.5 rounded-full text-[12px] font-sans font-medium bg-fg/85 dark:bg-canvas/90 text-[#F5F1E8] backdrop-blur-md border border-white/15 shadow-md">
                           {country.region}
                         </span>
                       </div>
@@ -154,7 +154,7 @@ export const Sourcing = () => {
                       {country.galleryImages.slice(1, 3).map((img, imgIdx) => (
                         <div
                           key={imgIdx}
-                          className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-sunken border border-line/70 dark:border-line shadow-sm group cursor-pointer"
+                          className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-sunken group cursor-pointer"
                         >
                           <img loading="lazy" decoding="async"
                             src={img.url}
@@ -163,7 +163,7 @@ export const Sourcing = () => {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
                           <div className="absolute bottom-2.5 left-2.5 right-2.5 z-10">
-                            <p className="text-[10px] sm:text-[11px] text-white font-light leading-snug line-clamp-2">
+                            <p className="text-[10px] sm:text-[11px] text-white leading-snug line-clamp-2">
                               {img.caption}
                             </p>
                           </div>
@@ -172,7 +172,7 @@ export const Sourcing = () => {
                     </div>
 
                     {/* Direct Sourcing Verification Banner */}
-                    <div className="p-4 rounded-xl sm:rounded-2xl bg-canvas border border-line/60 dark:border-line flex items-center justify-between text-xs">
+                    <div className="p-4 rounded-xl sm:rounded-2xl bg-canvas flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2 text-fg">
                         <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
                         <span className="font-medium">Direct Sourcing Alliance:</span>
@@ -188,16 +188,16 @@ export const Sourcing = () => {
                   <div className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1' : ''}`}>
                     {/* Header */}
                     <div>
-                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-fg leading-tight">
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-fg leading-tight">
                         {country.name}
                       </h3>
-                      <p className="text-xs sm:text-sm font-sans uppercase tracking-luxury text-accent font-semibold mt-1.5">
+                      <p className="text-xs sm:text-sm font-sans text-accent font-semibold mt-1.5">
                         {country.tagline}
                       </p>
                     </div>
 
                     {/* Brief Description */}
-                    <div className="space-y-3 text-sm sm:text-base text-muted font-light leading-relaxed">
+                    <div className="space-y-3 text-sm sm:text-base text-muted leading-relaxed">
                       <p>{country.description}</p>
                     </div>
 
@@ -205,7 +205,7 @@ export const Sourcing = () => {
                     <div className="pt-2">
                       <div className="flex items-center gap-2 mb-3 pb-2 border-b border-line/60 dark:border-line">
                         <Sparkles className="w-4 h-4 text-accent" />
-                        <h4 className="text-xs uppercase tracking-luxury font-semibold text-fg">
+                        <h4 className="text-xs font-semibold text-fg">
                           What We Source Here
                         </h4>
                       </div>
@@ -214,12 +214,12 @@ export const Sourcing = () => {
                         {country.productsSourced.map((product, pIdx) => (
                           <div
                             key={pIdx}
-                            className="p-3.5 rounded-2xl bg-surface dark:bg-canvas border border-line/70 dark:border-line shadow-sm flex items-start gap-3.5 text-xs sm:text-sm text-fg hover:border-accent/60 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
+                            className="p-3.5 rounded-2xl bg-surface dark:bg-canvas flex items-start gap-3.5 text-xs sm:text-sm text-fg hover:-translate-y-0.5 transition-all duration-300 group"
                           >
                             <div className="w-5 h-5 rounded-full bg-accent/15 text-accent flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-accent group-hover:text-on-accent transition-colors">
                               <span className="font-mono text-[10px] font-bold">0{pIdx + 1}</span>
                             </div>
-                            <span className="font-light leading-snug">{product}</span>
+                            <span className="leading-snug">{product}</span>
                           </div>
                         ))}
                       </div>
@@ -229,7 +229,7 @@ export const Sourcing = () => {
                     <div className="pt-2">
                       <div className="flex items-center gap-2 mb-3 pb-2 border-b border-line/60 dark:border-line">
                         <Award className="w-4 h-4 text-accent" />
-                        <h4 className="text-xs uppercase tracking-luxury font-semibold text-fg">
+                        <h4 className="text-xs font-semibold text-fg">
                           Craftsmanship Highlights &amp; Technical Standards
                         </h4>
                       </div>
@@ -238,7 +238,7 @@ export const Sourcing = () => {
                         {country.craftsmanshipHighlights.map((highlight, hIdx) => (
                           <li
                             key={hIdx}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm text-muted font-light leading-relaxed"
+                            className="flex items-start gap-2.5 text-xs sm:text-sm text-muted leading-relaxed"
                           >
                             <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                             <span>{highlight}</span>
@@ -276,27 +276,27 @@ export const Sourcing = () => {
         {/* Ambient decorative backdrop glows */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="site-container relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
             <m.div
               {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
-              <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs sm:text-sm text-accent font-semibold">
                 Five-Stage Sourcing Pipeline
               </span>
             </m.div>
 
             <m.h2
               {...reveal({ order: 1 })}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-fg leading-tight tracking-tight"
             >
               The End-to-End Procurement Journey
             </m.h2>
 
             <m.p
               {...reveal({ order: 2 })}
-              className="mt-4 text-xs sm:text-sm md:text-base text-muted font-light max-w-2xl mx-auto leading-relaxed"
+              className="mt-4 text-xs sm:text-sm md:text-base text-muted max-w-2xl mx-auto leading-relaxed"
             >
               Every stone slab, hardwood piece and Murano chandelier is checked at the source before it is packed and shipped.
             </m.p>
@@ -308,7 +308,7 @@ export const Sourcing = () => {
             <div className="grid grid-cols-5 gap-6 text-center relative z-10">
               {sourcingProcess.map((step, idx) => (
                 <div key={idx} className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-surface border-2 border-accent flex items-center justify-center text-xs font-mono font-bold text-accent shadow-md">
+                  <div className="w-12 h-12 rounded-full bg-surface border-2 flex items-center justify-center text-xs font-mono font-bold text-accent">
                     {step.step}
                   </div>
                 </div>
@@ -337,7 +337,7 @@ export const Sourcing = () => {
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Phase Tag & Glowing Icon Pod */}
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-sunken/60 dark:bg-sunken border border-line/60 dark:border-line text-accent font-semibold group-hover:bg-accent group-hover:text-on-accent transition-colors duration-300">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-mono bg-sunken/60 dark:bg-sunken border border-line/60 dark:border-line text-accent font-semibold group-hover:bg-accent group-hover:text-on-accent transition-colors duration-300">
                         PHASE {step.step}
                       </span>
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-canvas to-sunken dark:from-sunken dark:to-canvas border border-line flex items-center justify-center text-accent shadow-sm group-hover:scale-115 group-hover:rotate-6 group-hover:border-accent transition-all duration-500">
@@ -347,23 +347,23 @@ export const Sourcing = () => {
 
                     {/* Step Title & Tagline */}
                     <div>
-                      <h3 className="font-bold tracking-tight text-2xl text-fg leading-snug group-hover:text-accent transition-colors duration-300">
+                      <h3 className="font-semibold tracking-tight text-2xl text-fg leading-snug group-hover:text-accent transition-colors duration-300">
                         {step.name}
                       </h3>
-                      <p className="text-[11px] font-sans uppercase tracking-luxury text-accent font-semibold mt-1">
+                      <p className="text-[12px] font-sans text-accent font-semibold mt-1">
                         {step.tagline}
                       </p>
                     </div>
 
                     {/* Narrative Description */}
-                    <p className="text-xs text-muted font-light leading-relaxed">
+                    <p className="text-xs text-muted leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
 
                   {/* Deliverables / Milestones Dossier Vault */}
                   <div className="relative z-10 mt-6 pt-5 border-t border-line/60 dark:border-line/80">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-subtle flex items-center gap-1.5 mb-2.5">
+                    <span className="text-[12px] font-mono text-subtle flex items-center gap-1.5 mb-2.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-accent" />
                       Stage Milestones
                     </span>

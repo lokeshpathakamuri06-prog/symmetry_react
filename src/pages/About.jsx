@@ -38,7 +38,7 @@ export const About = () => {
     : teamMembers.filter((m) => m.department === selectedDept);
 
   return (
-    <div className="pb-0 space-y-16 sm:space-y-24 overflow-hidden">
+    <div className="pb-0 space-y-16 sm:space-y-24 overflow-x-clip">
       <SeoMeta
         title="About Symmetry Interiors — Creating Spaces With Character"
         description="Discover Symmetry Interiors: 25+ years of legacy, proprietary 25,000 sq.ft. high-precision joinery, direct quarry sourcing across Italy and Asia, and turnkey architectural execution."
@@ -50,15 +50,15 @@ export const About = () => {
         eyebrow="About Symmetry"
         title={text.heroTitle}
         highlight={text.heroTitleHighlight}
-        image={heroImage('/images/hero/hero-about.jpeg')}
-        imageAlt="Symmetry Interiors studio lounge"
+        image={heroImage('/images/hero/stock-about.jpeg')}
+        imageAlt="A modern house with large windows among trees"
         stats={heroStats}
       />
 
       {/* =========================================================================
           SECTION 2: COMPANY STORY
           ========================================================================= */}
-      <section id="story-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="story-section" className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Narrative Column */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
@@ -66,21 +66,21 @@ export const About = () => {
               {...reveal()}
               className="flex items-center gap-3"
             >
-              <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs sm:text-sm text-accent font-semibold">
                 Our Story
               </span>
             </m.div>
 
             <m.h2
               {...reveal({ order: 1 })}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-[1.15] tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-fg leading-[1.15] tracking-tight"
             >
               {text.storyTitle}
             </m.h2>
 
             <m.div
               {...reveal({ order: 2 })}
-              className="space-y-4 text-base sm:text-lg text-muted font-light leading-relaxed"
+              className="space-y-4 text-base sm:text-lg text-muted leading-relaxed"
             >
               <p className="font-normal text-fg">
                 {text.storyParagraph1}
@@ -98,9 +98,9 @@ export const About = () => {
             {/* Brand Message & Company Details Card */}
             <m.div
               {...reveal({ order: 3 })}
-              className="p-6 sm:p-8 rounded-2xl bg-sunken/40 dark:bg-surface border-l-4 border-accent border-y border-r border-line space-y-3"
+              className="p-6 sm:p-8 rounded-2xl bg-sunken/40 dark:bg-surface border-l-4 border-y border-r space-y-3"
             >
-              <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+              <span className="text-xs text-accent font-semibold block">
                 Brand Message
               </span>
               <p className="font-bold text-xl sm:text-2xl text-fg">
@@ -124,7 +124,7 @@ export const About = () => {
           <div className="lg:col-span-6 grid grid-cols-12 gap-4 sm:gap-6">
             <m.div
               {...reveal()}
-              className="col-span-7 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg"
+              className="col-span-7 aspect-[3/4] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken"
             >
               <img loading="lazy" decoding="async"
                 src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80"
@@ -137,7 +137,7 @@ export const About = () => {
               {...reveal({ order: 1 })}
               className="col-span-5 space-y-4 sm:space-y-6 pt-8 sm:pt-12"
             >
-              <div className="aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg">
+              <div className="aspect-[4/5] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken">
                 <img loading="lazy" decoding="async"
                   src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80"
                   alt="Bespoke timber joinery atelier"
@@ -145,9 +145,9 @@ export const About = () => {
                 />
               </div>
 
-              <div className="p-5 rounded-2xl bg-surface border border-line text-center">
+              <div className="p-5 rounded-2xl bg-surface text-center">
                 <p className="font-bold text-3xl text-accent">100%</p>
-                <p className="text-[11px] uppercase tracking-luxury text-fg font-medium mt-1">
+                <p className="text-[12px] text-fg font-medium mt-1">
                   In-House Execution
                 </p>
                 <p className="text-[10px] text-muted mt-0.5">
@@ -163,28 +163,28 @@ export const About = () => {
           SECTION 3: LEGACY & EXPERIENCE (VISUAL TIMELINE)
           ========================================================================= */}
       <section id="legacy-section" className="bg-sunken/40 dark:bg-surface/60 py-20 sm:py-32 border-y border-line/70 dark:border-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           {/* Section Heading */}
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
             <m.div
               {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
-              <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs sm:text-sm text-accent font-semibold">
                 Our History
               </span>
             </m.div>
 
             <m.h2
               {...reveal({ order: 1 })}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-fg leading-tight tracking-tight"
             >
               25 Years in the Making
             </m.h2>
 
             <m.p
               {...reveal({ order: 2 })}
-              className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
+              className="mt-4 text-base sm:text-lg text-muted leading-relaxed"
             >
               How a small design studio grew into one of South Asia’s leading turnkey interior companies.
             </m.p>
@@ -213,9 +213,9 @@ export const About = () => {
                         isEven ? 'lg:order-1' : 'lg:order-2 lg:col-start-8'
                       }`}
                     >
-                      <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-surface border border-line shadow-sm hover:shadow-md transition-shadow">
+                      <div className="p-6 sm:p-8 rounded-2xl sm:rounded-tile bg-surface transition-shadow">
                         <div className={`flex items-center gap-3 mb-3 ${isEven ? 'lg:justify-end' : 'justify-start'}`}>
-                          <span className="px-3 py-1 rounded-full text-[10px] sm:text-[11px] uppercase tracking-luxury font-medium bg-accent/10 dark:bg-accent/15 text-accent">
+                          <span className="px-3 py-1 rounded-full text-[12px] sm:text-[11px] font-medium bg-accent/10 dark:bg-accent/15 text-accent">
                             {item.phase}
                           </span>
                           <span className="text-xs font-mono text-subtle flex items-center gap-1">
@@ -224,13 +224,13 @@ export const About = () => {
                           </span>
                         </div>
 
-                        <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-fg mb-1">
+                        <h3 className="font-semibold tracking-tight text-2xl sm:text-3xl text-fg mb-1">
                           {item.title}
                         </h3>
-                        <p className="text-xs uppercase tracking-luxury text-accent font-medium mb-3">
+                        <p className="text-xs text-accent font-medium mb-3">
                           {item.subtitle}
                         </p>
-                        <p className="text-xs sm:text-sm text-muted font-light leading-relaxed mb-4">
+                        <p className="text-xs sm:text-sm text-muted leading-relaxed mb-4">
                           {item.desc}
                         </p>
 
@@ -256,7 +256,7 @@ export const About = () => {
                         isEven ? 'lg:order-3 lg:col-start-8' : 'lg:order-1'
                       }`}
                     >
-                      <div className="relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-md group">
+                      <div className="relative aspect-[16/10] rounded-2xl sm:rounded-tile overflow-hidden bg-sunken group">
                         <img loading="lazy" decoding="async"
                           src={item.image}
                           alt={item.title}
@@ -279,7 +279,7 @@ export const About = () => {
       {/* =========================================================================
           SECTION 4: 25+ YEARS OF GLOBAL SOURCING
           ========================================================================= */}
-      <section id="sourcing-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="sourcing-section" className="site-container">
         <div className="space-y-12 sm:space-y-16">
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -288,14 +288,14 @@ export const About = () => {
                 {...reveal()}
                 className="flex items-center gap-3 mb-3"
               >
-                <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+                <span className="text-xs sm:text-sm text-accent font-semibold">
                   25+ Years of Global Sourcing
                 </span>
               </m.div>
 
               <m.h2
                 {...reveal({ order: 1 })}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-fg leading-tight tracking-tight max-w-2xl"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-fg leading-tight tracking-tight max-w-2xl"
               >
                 25+ Years of Global Sourcing Mastery
               </m.h2>
@@ -303,7 +303,7 @@ export const About = () => {
 
             <m.p
               {...reveal({ order: 2 })}
-              className="text-sm sm:text-base text-muted font-light max-w-xl leading-relaxed"
+              className="text-sm sm:text-base text-muted max-w-xl leading-relaxed"
             >
               Direct quarry extractions, multi-generational weaving guilds, and European hardware leaders. We eliminate trading brokers to ensure immaculate material purity.
             </m.p>
@@ -315,7 +315,7 @@ export const About = () => {
               <m.div
                 {...reveal({ order: idx })}
                 key={hub.id}
-                className="group rounded-2xl sm:rounded-3xl bg-surface border border-line overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between"
+                className="group rounded-2xl sm:rounded-tile bg-surface overflow-hidden transition-all duration-500 flex flex-col justify-between"
               >
                 {/* Hub Header Image */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
@@ -333,7 +333,7 @@ export const About = () => {
                   </div>
 
                   <div className="absolute bottom-3 left-4 text-[#F5F1E8]">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#BCA575]">
+                    <span className="text-[12px] font-mono text-[#BCA575]">
                       {hub.city}
                     </span>
                   </div>
@@ -342,10 +342,10 @@ export const About = () => {
                 {/* Hub Description */}
                 <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+                    <span className="text-xs text-accent font-semibold block mb-1">
                       {hub.tag}
                     </span>
-                    <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
                       {hub.desc}
                     </p>
                   </div>
@@ -359,7 +359,7 @@ export const About = () => {
                       {hub.materials.map((mat, i) => (
                         <span
                           key={i}
-                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-canvas text-fg border border-line/50"
+                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-canvas text-fg"
                         >
                           {mat}
                         </span>
@@ -378,16 +378,16 @@ export const About = () => {
               return (
                 <div
                   key={i}
-                  className="p-6 sm:p-8 rounded-2xl bg-sunken/40 dark:bg-surface border border-line flex items-start gap-4"
+                  className="p-6 sm:p-8 rounded-2xl bg-sunken/40 dark:bg-surface flex items-start gap-4"
                 >
                   <div className="w-12 h-12 rounded-xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center shrink-0">
                     <IconComp className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-fg">
+                    <h3 className="font-semibold text-lg text-fg">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-[13px] text-muted font-light leading-relaxed mt-1">
+                    <p className="text-xs sm:text-[13px] text-muted leading-relaxed mt-1">
                       {item.desc}
                     </p>
                   </div>
@@ -401,29 +401,29 @@ export const About = () => {
       {/* =========================================================================
           SECTION 5: MISSION & VISION (EDITORIAL DUAL SPREAD)
           ========================================================================= */}
-      <section id="mission-vision-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="mission-vision-section" className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Mission Card */}
           <m.div
             {...reveal()}
-            className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-surface border border-line shadow-sm flex flex-col justify-between relative overflow-hidden"
+            className="p-8 sm:p-12 lg:p-16 rounded-tile bg-surface flex flex-col justify-between relative overflow-hidden"
           >
             <div className="relative z-10 space-y-6">
               <div className="flex items-center gap-3">
-                <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                <span className="text-xs text-accent font-semibold">
                   Our Mission
                 </span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-fg">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-fg">
                 {missionData.title}
               </h2>
 
-              <p className="text-lg sm:text-xl font-serif italic text-accent leading-snug">
+              <p className="text-lg sm:text-xl italic text-accent leading-snug">
                 “{missionData.lead}”
               </p>
 
-              <p className="text-sm sm:text-base text-muted font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-muted leading-relaxed">
                 {missionData.statement}
               </p>
 
@@ -435,10 +435,10 @@ export const About = () => {
                       <Check className="w-3 h-3" />
                     </div>
                     <div>
-                      <h3 className="text-xs uppercase tracking-luxury font-medium text-fg">
+                      <h3 className="text-xs font-semibold text-fg">
                         {pillar.title}
                       </h3>
-                      <p className="text-xs text-muted font-light mt-0.5">
+                      <p className="text-xs text-muted mt-0.5">
                         {pillar.desc}
                       </p>
                     </div>
@@ -451,7 +451,7 @@ export const About = () => {
           {/* Vision Card */}
           <m.div
             {...reveal()}
-            className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-fg dark:bg-canvas text-[#F5F1E8] border border-[#333] dark:border-line shadow-xl flex flex-col justify-between relative overflow-hidden"
+            className="p-8 sm:p-12 lg:p-16 rounded-tile bg-fg dark:bg-canvas text-[#F5F1E8] flex flex-col justify-between relative overflow-hidden"
           >
             {/* Ambient gold glow */}
             <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
@@ -459,20 +459,20 @@ export const About = () => {
             <div className="relative z-10 space-y-6">
               <div className="flex items-center gap-3">
                 <span className="w-6 h-px bg-[#BCA575]" />
-                <span className="text-xs uppercase tracking-luxury text-[#BCA575] font-semibold">
+                <span className="text-xs text-[#BCA575] font-semibold">
                   Our Vision
                 </span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#F5F1E8] font-normal">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl text-[#F5F1E8] font-semibold">
                 {visionData.title}
               </h2>
 
-              <p className="text-lg sm:text-xl font-serif italic text-[#BCA575] leading-snug">
+              <p className="text-lg sm:text-xl italic text-[#BCA575] leading-snug">
                 “{visionData.lead}”
               </p>
 
-              <p className="text-sm sm:text-base text-[#AEB7BE] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-[#AEB7BE] leading-relaxed">
                 {visionData.statement}
               </p>
 
@@ -481,7 +481,7 @@ export const About = () => {
                 {visionData.commitments.map((item, i) => (
                   <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
                     <p className="text-xs font-mono text-[#BCA575]">{item.value}</p>
-                    <p className="text-[11px] uppercase tracking-luxury text-[#AEB7BE] mt-1 font-medium">
+                    <p className="text-[12px] text-[#AEB7BE] mt-1 font-medium">
                       {item.label}
                     </p>
                   </div>
@@ -495,7 +495,7 @@ export const About = () => {
       {/* =========================================================================
           SECTION 6: OUR TEAM (REUSABLE TEAM CARD COMPONENTS)
           ========================================================================= */}
-      <section id="team-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="team-section" className="site-container">
         <div className="space-y-12">
           {/* Header & Filter Controls */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -504,14 +504,14 @@ export const About = () => {
                 {...reveal()}
                 className="flex items-center gap-3 mb-3"
               >
-                <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+                <span className="text-xs sm:text-sm text-accent font-semibold">
                   Our Team
                 </span>
               </m.div>
 
               <m.h2
                 {...reveal({ order: 1 })}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-fg font-normal leading-tight tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-fg font-semibold leading-tight tracking-tight"
               >
                 Our Leadership &amp; Mastercraft
               </m.h2>
@@ -523,7 +523,7 @@ export const About = () => {
                 <button
                   key={dept}
                   onClick={() => setSelectedDept(dept)}
-                  className={`px-4 py-2 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer ${
+                  className={`px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
                     selectedDept === dept
                       ? 'bg-fg text-canvas shadow-sm'
                       : 'bg-surface text-muted border border-line hover:border-accent'
@@ -545,10 +545,10 @@ export const About = () => {
           </div>
 
           {/* Join Our Team CTA */}
-          <div className="mt-4 p-8 sm:p-10 rounded-3xl bg-fg dark:bg-surface border border-fg dark:border-line flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="mt-4 p-8 sm:p-10 rounded-tile bg-fg dark:bg-surface border-fg flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <span className="text-xs uppercase tracking-luxury text-[#A7C3C6] dark:text-accent font-semibold">Careers</span>
-              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">Join Our Team</h3>
+              <span className="text-xs text-[#A7C3C6] dark:text-accent font-semibold">Careers</span>
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white mt-1">Join Our Team</h3>
               <p className="text-sm text-white/70 mt-2 max-w-xl">
                 We&apos;re looking for designers, site engineers and visualisers who care about craft. Explore our open roles in Hyderabad.
               </p>
@@ -566,7 +566,7 @@ export const About = () => {
       {/* =========================================================================
           SECTION 7: WHY CHOOSE SYMMETRY
           ========================================================================= */}
-      <section id="why-choose-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="why-choose-section" className="site-container">
         <div className="space-y-16">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto">
@@ -574,21 +574,21 @@ export const About = () => {
               {...reveal()}
               className="flex items-center justify-center gap-3 mb-3"
             >
-              <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
+              <span className="text-xs sm:text-sm text-accent font-semibold">
                 Why Choose Symmetry
               </span>
             </m.div>
 
             <m.h2
               {...reveal({ order: 1 })}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-fg font-normal leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-fg font-semibold leading-tight tracking-tight"
             >
               Why Choose Symmetry
             </m.h2>
 
             <m.p
               {...reveal({ order: 2 })}
-              className="mt-4 text-base sm:text-lg text-muted font-light leading-relaxed"
+              className="mt-4 text-base sm:text-lg text-muted leading-relaxed"
             >
               How working with one team that designs, sources and builds compares with a typical contractor.
             </m.p>
@@ -602,28 +602,28 @@ export const About = () => {
                 <m.div
                   {...reveal({ order: idx })}
                   key={item.number}
-                  className="p-8 rounded-2xl sm:rounded-3xl bg-surface border border-line shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                  className="p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
                       <div className="w-12 h-12 rounded-2xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center">
                         <IconComponent className="w-6 h-6" />
                       </div>
-                      <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-md bg-canvas text-accent border border-line/50">
+                      <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-md bg-canvas text-accent">
                         {item.stat}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-xl sm:text-2xl text-fg font-normal mb-2">
+                    <h3 className="text-xl sm:text-2xl text-fg font-semibold mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
 
                   <div className="pt-6 mt-6 border-t border-sunken dark:border-line flex items-center justify-between">
-                    <span className="text-[11px] uppercase tracking-luxury text-accent font-medium">
+                    <span className="text-[12px] text-accent font-medium">
                       Guaranteed In Contract
                     </span>
                     <span className="text-xs font-mono text-subtle">

@@ -60,18 +60,18 @@ export const OrderSuccess = () => {
         <Breadcrumb items={[{ label: 'Order Confirmation' }]} />
 
         {/* Success Header Banner */}
-        <div className="mt-8 p-8 sm:p-12 rounded-3xl bg-surface border border-line text-center shadow-luxury">
+        <div className="mt-8 p-8 sm:p-12 rounded-tile bg-surface text-center">
           <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/20">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
-          <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+          <span className="text-xs text-accent font-semibold block mb-1">
             Order Reference
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg">
             Order Successfully Confirmed
           </h1>
-          <p className="text-sm text-muted max-w-lg mx-auto mt-2 font-light">
+          <p className="text-sm text-muted max-w-lg mx-auto mt-2">
             Thank you, {order.customer?.fullName}. Your order reference is <strong className="font-mono text-fg">{order.orderId}</strong>. A formal signed proforma has been transmitted to {order.customer?.email}.
           </p>
 
@@ -90,31 +90,31 @@ export const OrderSuccess = () => {
         </div>
 
         {/* Timeline / Production Status */}
-        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-sunken/40 dark:bg-surface border border-line space-y-6">
-          <h3 className="text-lg font-bold text-fg">
+        <div className="mt-8 p-6 sm:p-8 rounded-tile bg-sunken/40 dark:bg-surface space-y-6">
+          <h3 className="text-lg font-semibold text-fg">
             What Happens Next
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-accent">
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas">
               <span className="text-accent font-semibold block mb-1">Step 01 &bull; Complete</span>
               <p className="font-medium text-fg">Order Confirmed</p>
               <p className="text-[10px] text-muted mt-0.5">Materials reserved</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas">
               <span className="text-muted font-semibold block mb-1">Step 02 &bull; Queued</span>
               <p className="font-medium text-fg">Making Your Piece</p>
               <p className="text-[10px] text-muted mt-0.5">Machined and hand-finished</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas">
               <span className="text-muted font-semibold block mb-1">Step 03</span>
               <p className="font-medium text-fg">Quality Inspection</p>
               <p className="text-[10px] text-muted mt-0.5">Strength and finish checks</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas">
               <span className="text-muted font-semibold block mb-1">Step 04</span>
               <p className="font-medium text-fg">White Glove Delivery</p>
               <p className="text-[10px] text-muted mt-0.5">On-site assembly in Hyderabad</p>
@@ -123,8 +123,8 @@ export const OrderSuccess = () => {
         </div>
 
         {/* Itemized Breakdown */}
-        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6">
-          <h3 className="text-lg font-bold text-fg pb-3 border-b border-line/50 dark:border-line">
+        <div className="mt-8 p-6 sm:p-8 rounded-tile bg-surface space-y-6">
+          <h3 className="text-lg font-semibold text-fg pb-3 border-b border-line/50 dark:border-line">
             Order Details
           </h3>
 
@@ -173,7 +173,7 @@ export const OrderSuccess = () => {
               </span>
             </div>
             <div className="pt-3 border-t border-line/70 dark:border-line flex justify-between items-baseline">
-              <span className="text-sm font-semibold uppercase tracking-luxury text-fg">
+              <span className="text-sm font-semibold text-fg">
                 Total Amount
               </span>
               <span className="text-2xl font-medium text-fg">
@@ -184,9 +184,9 @@ export const OrderSuccess = () => {
         </div>
 
         {/* Site Details Card */}
-        <div className="mt-8 p-6 rounded-3xl bg-surface border border-line grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-muted">
+        <div className="mt-8 p-6 rounded-tile bg-surface grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-muted">
           <div>
-            <h4 className="uppercase tracking-luxury text-fg font-semibold mb-1">
+            <h4 className="text-fg font-semibold mb-1">
               Delivery Address
             </h4>
             <p className="leading-relaxed">
@@ -195,7 +195,7 @@ export const OrderSuccess = () => {
             </p>
           </div>
           <div>
-            <h4 className="uppercase tracking-luxury text-fg font-semibold mb-1">
+            <h4 className="text-fg font-semibold mb-1">
               Your Contact Details
             </h4>
             <p className="leading-relaxed">

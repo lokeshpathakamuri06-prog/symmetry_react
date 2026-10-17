@@ -120,7 +120,7 @@ export const FloatingActionStack = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="pointer-events-auto mb-48 sm:mb-40 sm:mr-14 w-full max-w-sm rounded-card bg-surface p-6 shadow-2xl border border-line/70 dark:border-line text-fg"
+              className="pointer-events-auto mb-48 sm:mb-40 sm:mr-14 w-full max-w-sm rounded-card bg-surface p-6 text-fg"
             >
               <div className="flex items-start justify-between pb-3 border-b border-line/60 dark:border-line">
                 <div>
@@ -188,7 +188,7 @@ export const FloatingActionStack = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-4xl bg-surface rounded-panel shadow-2xl border border-line/70 dark:border-line overflow-hidden z-10 my-8"
+              className="relative w-full max-w-4xl bg-surface rounded-panel overflow-hidden z-10 my-8"
             >
               {/* Modal Close Button */}
               <button
@@ -202,7 +202,7 @@ export const FloatingActionStack = () => {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
                 {/* Left Side: Catalog Visual Cover Box */}
                 <div className="md:col-span-5 relative group">
-                  <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-canvas dark:bg-sunken border border-line shadow-xl relative">
+                  <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-canvas dark:bg-sunken relative">
                     <img loading="lazy" decoding="async"
                       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=85"
                       alt="Symmetry Interiors Official Catalog"
@@ -211,20 +211,20 @@ export const FloatingActionStack = () => {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-between p-6">
                       <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/20">
+                        <span className="px-3 py-1 rounded-full text-[12px] font-mono font-semibold bg-white/20 backdrop-blur-md text-white border border-white/20">
                           Official PDF
                         </span>
                         <Sparkles className="w-4 h-4 text-[#BCA575]" />
                       </div>
 
                       <div className="space-y-1.5 text-white">
-                        <p className="text-[10px] uppercase font-mono tracking-luxury text-[#BCA575]">
+                        <p className="text-[12px] font-mono text-[#BCA575]">
                           Symmetry Interiors &amp; Building Solutions
                         </p>
                         <h4 className="text-2xl font-semibold tracking-tight leading-tight">
                           Where Vision Meets Craftsmanship
                         </h4>
-                        <p className="text-xs text-white/80 font-light">
+                        <p className="text-xs text-white/80">
                           25+ Years Sourcing &amp; Turnkey Execution
                         </p>
                       </div>
