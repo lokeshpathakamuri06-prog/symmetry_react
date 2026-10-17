@@ -52,36 +52,36 @@ export const OrderSuccess = () => {
   return (
     <div className="pt-28 pb-24 space-y-12">
       <SeoMeta
-        title="Order Confirmation &amp; Commission Reference"
-        description="Your bespoke interior commission has been confirmed by Symmetry Interiors &amp; Building Solutions Pvt. Ltd."
+        title="Order Confirmation"
+        description="Your order with Symmetry Interiors & Building Solutions Pvt. Ltd. is confirmed."
       />
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb items={[{ label: 'Order Confirmation' }]} />
 
         {/* Success Header Banner */}
-        <div className="mt-8 p-8 sm:p-12 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-center shadow-luxury">
+        <div className="mt-8 p-8 sm:p-12 rounded-3xl bg-surface border border-line text-center shadow-luxury">
           <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/20">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
-          <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
-            Commission Reference
+          <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+            Order Reference
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">
             Order Successfully Confirmed
           </h1>
-          <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] max-w-lg mx-auto mt-2 font-light">
-            Thank you, {order.customer?.fullName}. Your bespoke commission has been assigned reference <strong className="font-mono text-[#131E20] dark:text-[#F5F1E8]">{order.orderId}</strong>. A formal signed proforma has been transmitted to {order.customer?.email}.
+          <p className="text-sm text-muted max-w-lg mx-auto mt-2 font-light">
+            Thank you, {order.customer?.fullName}. Your order reference is <strong className="font-mono text-fg">{order.orderId}</strong>. A formal signed proforma has been transmitted to {order.customer?.email}.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={handlePrint}
-              className="px-5 py-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] flex items-center gap-2"
+              className="px-5 py-2.5 rounded-full border border-line text-[14px] tracking-[-0.01em] text-fg hover:border-accent flex items-center gap-2"
             >
-              <Printer className="w-3.5 h-3.5 text-[#36656B]" />
-              <span>Print Archival Copy</span>
+              <Printer className="w-3.5 h-3.5 text-accent" />
+              <span>Print</span>
             </button>
             <Button to="/shop" variant="primary" size="sm" showArrow>
               Continue Exploring
@@ -90,47 +90,47 @@ export const OrderSuccess = () => {
         </div>
 
         {/* Timeline / Production Status */}
-        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6">
-          <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
-            Execution &amp; Delivery Progress
+        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-sunken/40 dark:bg-surface border border-line space-y-6">
+          <h3 className="text-lg font-bold text-fg">
+            What Happens Next
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-white dark:bg-[#07121C] border border-[#36656B]">
-              <span className="text-[#36656B] font-semibold block mb-1">Step 01 &bull; Complete</span>
-              <p className="font-medium text-[#131E20] dark:text-[#F5F1E8]">Order Confirmed</p>
-              <p className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE] mt-0.5">Material block reserved</p>
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-accent">
+              <span className="text-accent font-semibold block mb-1">Step 01 &bull; Complete</span>
+              <p className="font-medium text-fg">Order Confirmed</p>
+              <p className="text-[10px] text-muted mt-0.5">Materials reserved</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447]">
-              <span className="text-[#4F6467] dark:text-[#AEB7BE] font-semibold block mb-1">Step 02 &bull; Queued</span>
-              <p className="font-medium text-[#131E20] dark:text-[#F5F1E8]">Atelier Fabrication</p>
-              <p className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE] mt-0.5">5-axis CNC &amp; hand-tailoring</p>
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+              <span className="text-muted font-semibold block mb-1">Step 02 &bull; Queued</span>
+              <p className="font-medium text-fg">Making Your Piece</p>
+              <p className="text-[10px] text-muted mt-0.5">Machined and hand-finished</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447]">
-              <span className="text-[#4F6467] dark:text-[#AEB7BE] font-semibold block mb-1">Step 03</span>
-              <p className="font-medium text-[#131E20] dark:text-[#F5F1E8]">Quality Inspection</p>
-              <p className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE] mt-0.5">Hydraulic &amp; finish testing</p>
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+              <span className="text-muted font-semibold block mb-1">Step 03</span>
+              <p className="font-medium text-fg">Quality Inspection</p>
+              <p className="text-[10px] text-muted mt-0.5">Strength and finish checks</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447]">
-              <span className="text-[#4F6467] dark:text-[#AEB7BE] font-semibold block mb-1">Step 04</span>
-              <p className="font-medium text-[#131E20] dark:text-[#F5F1E8]">White Glove Delivery</p>
-              <p className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE] mt-0.5">On-site assembly in Hyderabad</p>
+            <div className="p-4 rounded-xl bg-surface dark:bg-canvas border border-line">
+              <span className="text-muted font-semibold block mb-1">Step 04</span>
+              <p className="font-medium text-fg">White Glove Delivery</p>
+              <p className="text-[10px] text-muted mt-0.5">On-site assembly in Hyderabad</p>
             </div>
           </div>
         </div>
 
         {/* Itemized Breakdown */}
-        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6">
-          <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
-            Itemized Commission Schedule
+        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6">
+          <h3 className="text-lg font-bold text-fg pb-3 border-b border-line/50 dark:border-line">
+            Order Details
           </h3>
 
           <div className="space-y-4">
             {order.items?.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between gap-4 text-xs pb-3 border-b border-[#D1DCDE]/30 dark:border-[#1E3447]">
+              <div key={idx} className="flex items-center justify-between gap-4 text-xs pb-3 border-b border-line/30 dark:border-line">
                 <div className="flex items-center gap-3">
                   <SmartImage sizes="96px"
                     src={item.images ? item.images[0] : item.image}
@@ -138,45 +138,45 @@ export const OrderSuccess = () => {
                     className="w-14 h-14 rounded-lg object-cover bg-[#E5ECEC]"
                   />
                   <div>
-                    <h4 className="font-medium text-[#131E20] dark:text-[#F5F1E8] text-sm">
+                    <h4 className="font-medium text-fg text-sm">
                       {item.name}
                     </h4>
-                    <p className="text-[#4F6467] dark:text-[#AEB7BE]">
+                    <p className="text-muted">
                       Finish: {item.selectedFinish} &bull; Qty: {item.quantity}
                     </p>
                   </div>
                 </div>
-                <span className="font-medium text-[#131E20] dark:text-[#F5F1E8] text-sm">
+                <span className="font-medium text-fg text-sm">
                   ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="space-y-2 text-xs text-[#4F6467] dark:text-[#AEB7BE] pt-2">
+          <div className="space-y-2 text-xs text-muted pt-2">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">
+              <span className="font-medium text-fg">
                 ₹{order.subtotal?.toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between">
               <span>18% GST</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">
+              <span className="font-medium text-fg">
                 ₹{order.tax?.toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between">
               <span>White-Glove Delivery</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">
+              <span className="font-medium text-fg">
                 {order.shipping === 0 ? 'Complimentary' : `₹${order.shipping}`}
               </span>
             </div>
-            <div className="pt-3 border-t border-[#D1DCDE]/70 dark:border-[#1E3447] flex justify-between items-baseline">
-              <span className="text-sm font-semibold uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8]">
+            <div className="pt-3 border-t border-line/70 dark:border-line flex justify-between items-baseline">
+              <span className="text-sm font-semibold uppercase tracking-luxury text-fg">
                 Total Amount
               </span>
-              <span className="text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8]">
+              <span className="text-2xl font-medium text-fg">
                 ₹{order.totalAmount?.toLocaleString('en-IN')}
               </span>
             </div>
@@ -184,10 +184,10 @@ export const OrderSuccess = () => {
         </div>
 
         {/* Site Details Card */}
-        <div className="mt-8 p-6 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+        <div className="mt-8 p-6 rounded-3xl bg-surface border border-line grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-muted">
           <div>
-            <h4 className="uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-semibold mb-1">
-              Designated Delivery Site
+            <h4 className="uppercase tracking-luxury text-fg font-semibold mb-1">
+              Delivery Address
             </h4>
             <p className="leading-relaxed">
               {order.customer?.address}<br />
@@ -195,8 +195,8 @@ export const OrderSuccess = () => {
             </p>
           </div>
           <div>
-            <h4 className="uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-semibold mb-1">
-              Client Concierge Contact
+            <h4 className="uppercase tracking-luxury text-fg font-semibold mb-1">
+              Your Contact Details
             </h4>
             <p className="leading-relaxed">
               {order.customer?.fullName}<br />

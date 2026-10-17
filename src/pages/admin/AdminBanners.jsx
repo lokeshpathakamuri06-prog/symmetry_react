@@ -4,11 +4,13 @@ import ResourceManager from '../../components/admin/ResourceManager';
 const config = {
   resource: 'banners',
   title: 'Hero Banners',
-  subtitle: 'Photos for the Home page slideshow. The headline and buttons are in Page Content → Home.',
+  subtitle: 'Photos for the Home page slideshow. The headline and buttons are in Page Content → Home. Banners for the other pages are in Page Banners.',
   singular: 'Banner',
   plural: 'Banners',
   sortable: true,
-  newRecord: () => ({ status: 'draft', active: true }),
+  // Banners with a page set in "badge" belong to Page Banners
+  listFilter: (b) => !b.badge,
+  newRecord: () => ({ status: 'draft', active: true, badge: null }),
   row: { thumb: (b) => b.image, primary: (b) => b.title, secondary: (b) => (b.active ? 'In slideshow' : 'Hidden') },
   sections: [
     { title: 'Slide', fields: [

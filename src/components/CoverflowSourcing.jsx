@@ -25,7 +25,7 @@ export const CoverflowSourcing = () => {
       country: 'China',
       region: 'Foshan & Greater Bay Area',
       title: 'Precision 5-Axis CNC Joinery',
-      subtitle: 'State-of-the-art extruded architectural bronzes & acoustic structural millwork.',
+      subtitle: 'Precision metalwork, bronze details and sound-absorbing panels.',
       image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
       link: '/sourcing',
       coords: '23.0215° N, 113.1214° E',
@@ -61,7 +61,7 @@ export const CoverflowSourcing = () => {
       country: 'Bali',
       region: 'Gianyar & Ubud',
       title: 'Volcanic Basalt & Root Sculptures',
-      subtitle: 'Monolithic riverstone basins and raw organic timber root statement artifacts.',
+      subtitle: 'Solid river-stone basins and sculptural timber pieces.',
       image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80',
       link: '/sourcing',
       coords: '8.5069° S, 115.2625° E',
@@ -94,21 +94,21 @@ export const CoverflowSourcing = () => {
 
   return (
     <section
-      className="relative py-6 sm:py-8 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#E5ECEC]/40 dark:bg-[#0D1C29]/60 border-y border-[#D1DCDE]/70 dark:border-[#1E3447]"
+      className="relative py-6 sm:py-8 px-4 sm:px-6 lg:px-8 overflow-hidden bg-sunken/40 dark:bg-surface/60 border-y border-line/70 dark:border-line"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Center Heading & Narrative */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2.5">
-            Global Procurement Network
+          <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold block mb-2.5">
+            Global Sourcing
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
-            Sourced Directly from Master Ateliers
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-fg tracking-tight leading-tight">
+            Sourced Directly from the Makers
           </h2>
-          <p className="mt-3 text-base sm:text-lg md:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-xl mx-auto">
-            We eliminate trading intermediaries by forging direct agreements with quarries, foundries, and artisans across five key international regions.
+          <p className="mt-3 text-base sm:text-lg md:text-xl text-muted font-light leading-relaxed max-w-xl mx-auto">
+            We buy directly from quarries, workshops and craftspeople in five countries, with no traders in between.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export const CoverflowSourcing = () => {
           <button
             onClick={handlePrev}
             aria-label="Previous hub"
-            className="absolute left-2 sm:left-6 md:left-10 z-40 w-12 h-12 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] shadow-xl border border-[#D1DCDE]/70 dark:border-[#1E3447] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+            className="absolute left-2 sm:left-6 md:left-10 z-40 w-12 h-12 rounded-full bg-surface/95 text-fg shadow-xl border border-line/70 dark:border-line flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -127,7 +127,7 @@ export const CoverflowSourcing = () => {
           <button
             onClick={handleNext}
             aria-label="Next hub"
-            className="absolute right-2 sm:right-6 md:right-10 z-40 w-12 h-12 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] shadow-xl border border-[#D1DCDE]/70 dark:border-[#1E3447] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+            className="absolute right-2 sm:right-6 md:right-10 z-40 w-12 h-12 rounded-full bg-surface/95 text-fg shadow-xl border border-line/70 dark:border-line flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -201,7 +201,7 @@ export const CoverflowSourcing = () => {
         </div>
 
         {/* Center Pagination Numbers with Active Indicator */}
-        <div className="mt-8 sm:mt-12 pt-6 border-t border-[#D1DCDE]/50 dark:border-[#1E3447] flex items-center justify-center gap-6 sm:gap-8 font-mono text-sm sm:text-base">
+        <div className="mt-8 sm:mt-12 pt-6 border-t border-line/50 dark:border-line flex items-center justify-center gap-6 sm:gap-8 font-mono text-sm sm:text-base">
           {items.map((item, idx) => {
             const isActive = activeIndex === idx;
             return (
@@ -210,15 +210,15 @@ export const CoverflowSourcing = () => {
                 onClick={() => setActiveIndex(idx)}
                 className={`relative py-2 transition-colors cursor-pointer ${
                   isActive
-                    ? 'text-[#131E20] dark:text-[#F5F1E8] font-bold'
-                    : 'text-[#4F6467]/60 dark:text-[#AEB7BE]/60 hover:text-[#131E20]'
+                    ? 'text-fg font-bold'
+                    : 'text-muted/60 hover:text-[#1D1D1F]'
                 }`}
               >
                 <span>{item.id}</span>
                 {isActive && (
                   <motion.span
                     layoutId="activeSourcingCoverflowDot"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#131E20] dark:bg-[#BCA575] rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-fg dark:bg-accent rounded-full"
                   />
                 )}
               </button>
@@ -229,7 +229,7 @@ export const CoverflowSourcing = () => {
         {/* Global Sourcing CTA Button */}
         <div className="mt-10 text-center">
           <Button to="/sourcing" variant="primary" size="md" showArrow>
-            Learn About Our Sourcing Protocols
+            How We Source
           </Button>
         </div>
       </div>

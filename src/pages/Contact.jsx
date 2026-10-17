@@ -20,6 +20,7 @@ import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/
 import Honeypot from '../components/Honeypot';
 import { submitInquiry, formErrorMessage } from '../services/publicApi';
 import { heroImage } from '../lib/staticImages';
+import PageHero from '../components/PageHero';
 
 // Social links helper icons
 const InstagramIcon = () => (
@@ -47,7 +48,7 @@ const PROJECT_TYPES = [
   'High-Rise Penthouse Sanctuary',
   'Commercial & Corporate HQ',
   'Boutique Hospitality & Resort',
-  'Bespoke Furniture Curation',
+  'Custom Furniture',
   'Global Sourcing & Procurement'
 ];
 
@@ -175,41 +176,35 @@ export const Contact = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 sm:pb-28 space-y-12 sm:space-y-16 overflow-hidden">
+    <div className="pb-20 sm:pb-28 space-y-16 sm:space-y-24 overflow-hidden">
       <SeoMeta
         title="Let's Create Something Exceptional | Contact Symmetry Interiors"
-        description="Connect with our architectural directors and luxury furniture curators. Schedule a private consultation at our Jubilee Hills Pavilion in Hyderabad."
+        description="Talk to our interior designers and furniture team. Book a consultation at our studio in Hyderabad."
       />
 
-      {/* Clean, Simple Architectural Hero Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden h-[260px] sm:h-[340px] flex items-center justify-center text-center shadow-xl border border-[#D1DCDE] dark:border-[#1E3447] group">
-          {/* Background Image */}
-          <img
-            {...heroImage('/images/hero/hero-contact.jpeg')}
-            alt="Symmetry Consultation Atelier"
-            className="absolute inset-0 w-full h-full object-cover object-center scale-100 transition-transform duration-1000 ease-out group-hover:scale-105"
-          />
-
-          {/* Banner Content */}
-          <div className="relative z-10 max-w-3xl px-6 py-8 space-y-3 sm:space-y-4">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl text-white font-bold leading-tight tracking-tight drop-shadow-md">
-              {contactText.heroTitle} <span className="text-[#BCA575] font-bold">{contactText.heroTitleHighlight}</span>
-            </h1>
-
-            <p className="text-xs sm:text-sm text-white/90 font-normal max-w-xl mx-auto leading-relaxed drop-shadow-sm">
-              {contactText.heroSubtitle}
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        page="contact"
+        breadcrumb={[{ label: 'Contact' }]}
+        eyebrow="Contact"
+        title={contactText.heroTitle}
+        highlight={contactText.heroTitleHighlight}
+        subtitle={contactText.heroSubtitle}
+        image={heroImage('/images/hero/hero-contact.jpeg')}
+        imageAlt="Symmetry Consultation Atelier"
+        actions={
+          <>
+            <a href="#inquiry-form" className="btn-primary">Schedule a Consultation</a>
+            <a href="#studio-location" className="link-apple px-3">Visit the studio</a>
+          </>
+        }
+      />
 
       {/* Main Grid: Contact Form + Direct Channels */}
       <section id="inquiry-form" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* LEFT 7 COLS: Interactive Contact Form */}
-          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-luxury">
+          <div className="lg:col-span-7 p-8 sm:p-12 rounded-3xl bg-surface border border-line shadow-luxury">
             <AnimatePresence mode="wait">
               {submitted ? (
                 /* SUCCESS SUBMISSION MESSAGE */
@@ -225,31 +220,31 @@ export const Contact = () => {
                   </div>
 
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
+                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
                       Inquiry Logged &bull; Reference #{inquiryId}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
-                      Brief Successfully Transmitted
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg mt-1">
+                      Thank You, We Have Your Request
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] max-w-md mx-auto leading-relaxed font-light">
-                    Thank you, <strong className="text-[#131E20] dark:text-white font-medium">{formData.name}</strong>. Your project parameters for <em className="text-[#36656B]">{formData.projectType}</em> have been routed directly to our lead partner. A senior client advisor will contact you within <strong>24 business hours</strong> with initial scheduling options.
+                  <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed font-light">
+                    Thank you, <strong className="text-[#1D1D1F] dark:text-white font-medium">{formData.name}</strong>. Your request for <em className="text-accent">{formData.projectType}</em> has reached our design team. Someone will contact you within <strong>24 business hours</strong> with initial scheduling options.
                   </p>
 
                   <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <button
                       type="button"
                       onClick={resetForm}
-                      className="px-6 py-3 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] transition"
+                      className="px-6 py-3 rounded-full border border-line text-[14px] tracking-[-0.01em] text-fg hover:border-accent transition"
                     >
-                      Submit Another Project
+                      Send Another Request
                     </button>
                     <a
                       href={whatsappHref(company.whatsappNumber, 'Hello, I just submitted a design inquiry on your website.')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] text-xs uppercase tracking-luxury font-medium hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition flex items-center gap-2"
+                      className="px-6 py-3 rounded-full bg-fg text-canvas text-[14px] tracking-[-0.01em] font-medium hover:bg-accent transition flex items-center gap-2"
                     >
                       <MessageCircle className="w-4 h-4 text-emerald-400" />
                       <span>Follow-up on WhatsApp</span>
@@ -260,21 +255,21 @@ export const Contact = () => {
                 /* CONTACT FORM */
                 <form key="form" onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                      Architectural Discovery
+                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+                      Tell Us About Your Project
                     </span>
-                    <h2 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                    <h2 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
                       Schedule a Consultation
                     </h2>
-                    <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-1 font-light">
-                      Please share your contact coordinates and preliminary space requirements.
+                    <p className="text-xs text-muted mt-1 font-light">
+                      Share your details and what you have in mind. We reply within one working day.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Name */}
                     <div className="sm:col-span-2">
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                         Full Name *
                       </label>
                       <input
@@ -283,11 +278,11 @@ export const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="e.g. Vikramaditya Rao or Ar. Ananya Roy"
-                        className={`w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
                           errors.name
                             ? 'border-red-500 ring-1 ring-red-500'
-                            : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                        } text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                            : 'border-line'
+                        } text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                       />
                       {errors.name && (
                         <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -299,7 +294,7 @@ export const Contact = () => {
 
                     {/* Email */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                         Email Address *
                       </label>
                       <input
@@ -308,11 +303,11 @@ export const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="name@domain.com"
-                        className={`w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
                           errors.email
                             ? 'border-red-500 ring-1 ring-red-500'
-                            : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                        } text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                            : 'border-line'
+                        } text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                       />
                       {errors.email && (
                         <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -324,7 +319,7 @@ export const Contact = () => {
 
                     {/* Phone */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                         Phone Number *
                       </label>
                       <input
@@ -333,11 +328,11 @@ export const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+91 98765 43210"
-                        className={`w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border ${
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
                           errors.phone
                             ? 'border-red-500 ring-1 ring-red-500'
-                            : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                        } text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                            : 'border-line'
+                        } text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                       />
                       {errors.phone && (
                         <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -349,14 +344,14 @@ export const Contact = () => {
 
                     {/* Project Type */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
-                        Project Typology *
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                        Project Type *
                       </label>
                       <select
                         name="projectType"
                         value={formData.projectType}
                         onChange={handleChange}
-                        className="w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                        className="w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border border-line text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
                       >
                         {PROJECT_TYPES.map((type) => (
                           <option key={type} value={type}>
@@ -368,14 +363,14 @@ export const Contact = () => {
 
                     {/* Budget Range */}
                     <div>
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
-                        Estimated Budget Range *
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                        Budget Range *
                       </label>
                       <select
                         name="budgetRange"
                         value={formData.budgetRange}
                         onChange={handleChange}
-                        className="w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                        className="w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border border-line text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
                       >
                         {BUDGET_RANGES.map((range) => (
                           <option key={range} value={range}>
@@ -387,20 +382,20 @@ export const Contact = () => {
 
                     {/* Message */}
                     <div className="sm:col-span-2">
-                      <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
-                        Project Brief &amp; Vision *
+                      <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                        About Your Project *
                       </label>
                       <textarea
                         name="message"
                         rows={4}
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="Describe your site location, architectural stage (e.g. bare shell, under construction, or existing renovation), expected handover date, or specific material aspirations..."
-                        className={`w-full text-xs px-4 py-3.5 rounded-2xl bg-[#F4F7F6]/50 dark:bg-[#07121C] border ${
+                        placeholder="Where is the property, what stage is it at (bare shell, under construction, renovation), when do you need it ready, and any styles or materials you like..."
+                        className={`w-full text-[15px] px-4 py-3.5 rounded-2xl bg-canvas/50 dark:bg-canvas border ${
                           errors.message
                             ? 'border-red-500 ring-1 ring-red-500'
-                            : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                        } text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                            : 'border-line'
+                        } text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                       />
                       {errors.message && (
                         <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -421,15 +416,15 @@ export const Contact = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 px-6 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-all duration-300 text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer disabled:opacity-75"
+                    className="w-full py-4 px-6 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer disabled:opacity-75"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>{loading ? 'Transmitting Brief...' : 'Request Architectural Discovery'}</span>
+                    <span>{loading ? 'Sending...' : 'Send Request'}</span>
                   </button>
 
                   <div className="flex items-center justify-center space-x-2 text-[11px] text-stone-500 dark:text-stone-400">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#36656B]" />
-                    <span>All client project briefings are conducted under strict non-disclosure covenants.</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-accent" />
+                    <span>Your details are kept private and never shared.</span>
                   </div>
                 </form>
               )}
@@ -440,28 +435,28 @@ export const Contact = () => {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Headquarters Card */}
-            <div className="p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm space-y-6">
+            <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm space-y-6">
               <div>
-                <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                  Company Headquarters &amp; Studio
+                <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+                  Our Office
                 </span>
-                <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                <h3 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
                   {company.companyName}
                 </h3>
-                <p className="text-xs font-mono text-[#36656B] dark:text-[#BCA575] font-semibold mt-1">
+                <p className="text-xs font-mono text-accent font-semibold mt-1">
                   {company.cin && `CIN: ${company.cin}`}
                 </p>
               </div>
 
-              <div className="space-y-4 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+              <div className="space-y-4 text-xs text-muted">
                 {/* Main Office Address */}
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
+                    <strong className="text-fg block mb-0.5 font-medium">
                       Main Office Address:
                     </strong>
-                    <span className="leading-relaxed font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                    <span className="leading-relaxed font-medium text-fg">
                       {company.officeAddress}
                     </span>
                   </div>
@@ -469,9 +464,9 @@ export const Contact = () => {
 
                 {/* Registered Office Address */}
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
+                    <strong className="text-fg block mb-0.5 font-medium">
                       Registered Office:
                     </strong>
                     <span className="leading-relaxed">
@@ -482,19 +477,19 @@ export const Contact = () => {
 
                 {/* Phone */}
                 <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <Phone className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
-                      Direct Concierge Lines:
+                    <strong className="text-fg block mb-0.5 font-medium">
+                      Phone:
                     </strong>
                     <p className="font-mono">
-                      <a href={telHref(company.phonePrimary)} className="hover:text-[#36656B] transition">
+                      <a href={telHref(company.phonePrimary)} className="hover:text-accent transition">
                         {company.phonePrimary}
-                      </a> (VIP Appointments)
+                      </a> (Appointments)
                     </p>
                     {company.phoneSecondary && (
                       <p className="font-mono">
-                        <a href={telHref(company.phoneSecondary)} className="hover:text-[#36656B] transition">
+                        <a href={telHref(company.phoneSecondary)} className="hover:text-accent transition">
                           {company.phoneSecondary}
                         </a> (Studio Reception)
                       </p>
@@ -504,19 +499,19 @@ export const Contact = () => {
 
                 {/* Email */}
                 <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <Mail className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
-                      Electronic Mail:
+                    <strong className="text-fg block mb-0.5 font-medium">
+                      Email:
                     </strong>
                     <p>
-                      <a href={mailHref(company.email)} className="hover:text-[#36656B] transition">
+                      <a href={mailHref(company.email)} className="hover:text-accent transition">
                         {company.email}
                       </a>
                     </p>
                     {company.emailProjects && (
                       <p>
-                        <a href={mailHref(company.emailProjects)} className="hover:text-[#36656B] transition">
+                        <a href={mailHref(company.emailProjects)} className="hover:text-accent transition">
                           {company.emailProjects}
                         </a>
                       </p>
@@ -534,7 +529,7 @@ export const Contact = () => {
                   >
                     <div className="flex items-center gap-2.5">
                       <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <span className="font-medium text-xs">Direct WhatsApp Advisory</span>
+                      <span className="font-medium text-xs">Chat on WhatsApp</span>
                     </div>
                     <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">
                       {company.whatsappNumber} &rarr;
@@ -544,21 +539,21 @@ export const Contact = () => {
 
                 {/* Gallery Hours */}
                 <div className="flex items-start gap-3 pt-2">
-                  <Clock className="w-4 h-4 text-[#36656B] shrink-0 mt-0.5" />
+                  <Clock className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#131E20] dark:text-[#F5F1E8] block mb-0.5 font-medium">
-                      Pavilion Visiting Hours:
+                    <strong className="text-fg block mb-0.5 font-medium">
+                      Visiting Hours:
                     </strong>
                     <p>{company.hours}</p>
-                    <p>Sunday: By Prior VIP Appointment</p>
+                    <p>Sunday: By appointment</p>
                   </div>
                 </div>
               </div>
 
               {/* Social Links */}
-              <div className="pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <span className="text-[11px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-medium block mb-3">
-                  Connect on Architectural Socials:
+              <div className="pt-4 border-t border-line/60 dark:border-line">
+                <span className="text-[11px] uppercase tracking-luxury text-muted font-medium block mb-3">
+                  Follow Us:
                 </span>
                 <div className="flex items-center space-x-2.5">
                   {[
@@ -574,7 +569,7 @@ export const Contact = () => {
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] hover:text-[#36656B] dark:hover:text-[#BCA575] transition"
+                        className="p-2.5 rounded-full border border-line text-fg hover:border-accent hover:text-accent transition"
                         title={s.label}
                         aria-label={s.label}
                       >
@@ -587,15 +582,15 @@ export const Contact = () => {
             </div>
 
             {/* Precision Joinery Center */}
-            <div className="p-6 rounded-3xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-xs text-[#4F6467] dark:text-[#AEB7BE] space-y-2">
-              <span className="text-[10px] uppercase tracking-luxury text-[#36656B] font-semibold block">
-                Manufacturing Atelier
+            <div className="p-6 rounded-3xl bg-sunken/40 dark:bg-surface border border-line text-xs text-muted space-y-2">
+              <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                Our Workshop
               </span>
-              <h4 className="text-sm font-semibold text-[#131E20] dark:text-[#F5F1E8]">
-                25,000 Sq.Ft. Precision Millwork Facility
+              <h4 className="text-sm font-semibold text-fg">
+                25,000 Sq.Ft. Furniture Workshop
               </h4>
               <p className="leading-relaxed">
-                Hardware Park, Shamshabad, Hyderabad. Site tours arranged for registered estate clients and interior architects.
+                Hardware Park, Shamshabad, Hyderabad. Workshop visits can be arranged for clients and architects.
               </p>
             </div>
           </div>
@@ -604,17 +599,17 @@ export const Contact = () => {
 
       {/* GOOGLE MAPS INTEGRATION SECTION */}
       <section id="studio-location" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div className="rounded-3xl overflow-hidden bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-luxury">
+        <div className="rounded-3xl overflow-hidden bg-surface border border-line shadow-luxury">
           {/* Map Top Header Bar */}
-          <div className="p-4 sm:p-6 bg-stone-50 dark:bg-stone-900 border-b border-[#D1DCDE]/60 dark:border-[#1E3447] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="p-4 sm:p-6 bg-stone-50 dark:bg-stone-900 border-b border-line/60 dark:border-line flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-                  Interactive Google Map &bull; Live Navigation
+                <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                  Find Us
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+              <h3 className="text-lg font-bold text-fg mt-0.5">
                 Symmetry Office &bull; {company.officeAddress}
               </h3>
             </div>
@@ -650,7 +645,7 @@ export const Contact = () => {
                 href={mapsHref(company.mapQuery)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3.5 py-1.5 rounded-xl bg-[#36656B] hover:bg-[#254B50] text-white font-medium flex items-center gap-1.5 transition text-xs shadow-sm"
+                className="px-3.5 py-1.5 rounded-xl bg-accent hover:bg-accent-hover text-on-accent font-medium flex items-center gap-1.5 transition text-xs shadow-sm"
               >
                 <span>Open in Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -671,15 +666,15 @@ export const Contact = () => {
             />
 
             {/* On-Map Floating Overlay Card */}
-            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md border border-stone-200/80 dark:border-stone-800/80 shadow-xl text-xs space-y-1.5 hidden sm:block pointer-events-none">
-              <div className="flex items-center gap-1.5 text-[#36656B] dark:text-[#BCA575] font-semibold text-[11px] uppercase tracking-luxury">
+            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-surface/95 dark:bg-canvas/95 backdrop-blur-md border border-stone-200/80 dark:border-stone-800/80 shadow-xl text-xs space-y-1.5 hidden sm:block pointer-events-none">
+              <div className="flex items-center gap-1.5 text-accent font-semibold text-[11px] uppercase tracking-luxury">
                 <Navigation className="w-3.5 h-3.5" />
-                <span>Travel Accessibility</span>
+                <span>Getting Here</span>
               </div>
               <p className="text-stone-600 dark:text-stone-300 leading-snug text-[11px]">
                 &bull; 15 mins from Financial District &amp; HITEC City<br />
                 &bull; 35 mins from Rajiv Gandhi International Airport (RGIA)<br />
-                &bull; Dedicated valet parking at pavilion entrance
+                &bull; Parking available at the building
               </p>
             </div>
           </div>
@@ -688,14 +683,14 @@ export const Contact = () => {
 
       {/* FINAL CALL TO ACTION SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-16 rounded-3xl bg-[#131E20] dark:bg-[#0D1C29] text-white border border-stone-800 shadow-2xl relative overflow-hidden text-center">
+        <div className="p-8 sm:p-16 rounded-3xl bg-fg dark:bg-surface text-white border border-stone-800 shadow-2xl relative overflow-hidden text-center">
           {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#36656B]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#36656B]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative max-w-2xl mx-auto space-y-6">
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] font-semibold block">
-              Architectural Inception
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block">
+              Visit Our Studio
             </span>
 
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
@@ -703,7 +698,7 @@ export const Contact = () => {
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
-              Step into our Jubilee Hills Pavilion for a private exploration of raw geological stone slabs, imported Italian joinery samples, and bespoke lighting choreographies.
+              See real stone slabs, Italian finishes and lighting samples in person, and talk through your ideas with our designers.
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -713,15 +708,15 @@ export const Contact = () => {
                   e.preventDefault();
                   window.scrollTo({ top: 400, behavior: 'smooth' });
                 }}
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-stone-900 hover:bg-[#36656B] hover:text-white transition text-xs uppercase tracking-luxury font-medium shadow-luxury cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-stone-900 hover:bg-accent hover:text-on-accent transition text-[14px] tracking-[-0.01em] font-medium shadow-luxury cursor-pointer"
               >
-                Book Pavilion Consultation
+                Book a Studio Visit
               </a>
               <a
                 href={whatsappHref(company.whatsappNumber, 'Hello, I would like to start my design journey with Symmetry Interiors.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 rounded-full border border-stone-700 hover:border-[#36656B] text-white transition text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 rounded-full border border-stone-700 hover:border-accent text-white transition text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 <span>Start on WhatsApp</span>

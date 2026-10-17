@@ -184,7 +184,7 @@ export const Checkout = () => {
     <div className="pt-28 pb-24 space-y-12 min-h-[80vh]">
       <SeoMeta
         title="Secure Checkout | Symmetry Luxury Interiors"
-        description="Finalize your bespoke interior commission with verified white-glove site delivery coordination and secure payment authorization."
+        description="Complete your Symmetry Interiors order: delivery details and secure payment."
       />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -197,16 +197,16 @@ export const Checkout = () => {
         />
 
         {/* Page Title */}
-        <div className="mt-8 mb-10 border-b border-[#D1DCDE]/60 dark:border-[#1E3447] pb-6">
-          <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold flex items-center gap-2">
+        <div className="mt-8 mb-10 border-b border-line/60 dark:border-line pb-6">
+          <span className="text-xs uppercase tracking-luxury text-accent font-semibold flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Atelier Acquisition Step 02</span>
+            <span>Step 2 of 2</span>
           </span>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-1">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-fg leading-tight mt-1">
             Delivery Address &amp; Payment
           </h1>
-          <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] mt-2 font-light">
-            All commissions include comprehensive architectural insurance, transit tracking, and complimentary inside placement.
+          <p className="text-xs sm:text-sm text-muted mt-2 font-light">
+            Every order includes transit insurance, delivery tracking and free placement in your home.
           </p>
         </div>
 
@@ -217,19 +217,19 @@ export const Checkout = () => {
           <div className="lg:col-span-8 space-y-8">
             
             {/* 1. Customer Information */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-5 shadow-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">1</span>
+            <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-5 shadow-sm">
+              <div className="flex items-center justify-between pb-3 border-b border-line/60 dark:border-line">
+                <h2 className="text-xl font-bold tracking-tight text-fg flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">1</span>
                   <span>Customer Information</span>
                 </h2>
-                <span className="text-[11px] text-stone-500">* Required for dispatch communication</span>
+                <span className="text-[11px] text-stone-500">* Needed to arrange delivery</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Full Name */}
                 <div className="sm:col-span-2">
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     Full Name *
                   </label>
                   <input
@@ -238,11 +238,11 @@ export const Checkout = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="e.g. Rajiv Menon or Ar. Shalini Rao"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.fullName
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.fullName && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -254,7 +254,7 @@ export const Checkout = () => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     Email Address (For Invoices &amp; Tracking) *
                   </label>
                   <input
@@ -263,11 +263,11 @@ export const Checkout = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="client@luxuryestate.in"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.email
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.email && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -279,7 +279,7 @@ export const Checkout = () => {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     Phone Number (Site Delivery WhatsApp) *
                   </label>
                   <input
@@ -288,11 +288,11 @@ export const Checkout = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+91 98765 43210"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.phone
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.phone && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -305,10 +305,10 @@ export const Checkout = () => {
             </div>
 
             {/* 2. Shipping Address */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-5 shadow-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">2</span>
+            <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-5 shadow-sm">
+              <div className="flex items-center justify-between pb-3 border-b border-line/60 dark:border-line">
+                <h2 className="text-xl font-bold tracking-tight text-fg flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">2</span>
                   <span>Shipping &amp; Site Address</span>
                 </h2>
                 <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
@@ -320,8 +320,8 @@ export const Checkout = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Street Address */}
                 <div className="sm:col-span-2">
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
-                    Street Address, Villa, or Penthouse Unit *
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                    Street Address / House or Flat Number *
                   </label>
                   <input
                     type="text"
@@ -329,11 +329,11 @@ export const Checkout = () => {
                     value={formData.address}
                     onChange={handleChange}
                     placeholder="e.g. Villa 24, Road No. 36, Jubilee Hills"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.address
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.address && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -345,7 +345,7 @@ export const Checkout = () => {
 
                 {/* City */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     City *
                   </label>
                   <input
@@ -354,11 +354,11 @@ export const Checkout = () => {
                     value={formData.city}
                     onChange={handleChange}
                     placeholder="e.g. Hyderabad, Bengaluru, Mumbai"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.city
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.city && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -370,7 +370,7 @@ export const Checkout = () => {
 
                 {/* State */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     State / Region *
                   </label>
                   <input
@@ -379,11 +379,11 @@ export const Checkout = () => {
                     value={formData.state}
                     onChange={handleChange}
                     placeholder="e.g. Telangana, Karnataka, Maharashtra"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.state
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.state && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -395,7 +395,7 @@ export const Checkout = () => {
 
                 {/* Country */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     Country *
                   </label>
                   <input
@@ -404,11 +404,11 @@ export const Checkout = () => {
                     value={formData.country}
                     onChange={handleChange}
                     placeholder="India"
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.country
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.country && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -420,7 +420,7 @@ export const Checkout = () => {
 
                 {/* PIN Code */}
                 <div>
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
                     PIN Code (Postal Code) *
                   </label>
                   <input
@@ -430,11 +430,11 @@ export const Checkout = () => {
                     onChange={handleChange}
                     placeholder="500033"
                     maxLength={6}
-                    className={`w-full px-4 py-3 rounded-2xl text-xs border ${
+                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
                       errors.pincode
                         ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447]'
-                    } bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]`}
+                        : 'border-line'
+                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
                   />
                   {errors.pincode && (
                     <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
@@ -446,8 +446,8 @@ export const Checkout = () => {
 
                 {/* Access Notes */}
                 <div className="sm:col-span-2">
-                  <label className="block text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mb-1.5 font-medium">
-                    Site Access Instructions (Optional)
+                  <label className="block text-xs uppercase tracking-luxury text-muted mb-1.5 font-medium">
+                    Delivery Instructions (Optional)
                   </label>
                   <input
                     type="text"
@@ -455,18 +455,18 @@ export const Checkout = () => {
                     value={formData.accessNotes}
                     onChange={handleChange}
                     placeholder="e.g. Service lift available, floor 12, gate security code required"
-                    className="w-full px-4 py-3 rounded-2xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-[#F4F7F6]/50 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                    className="w-full px-4 py-3 rounded-2xl text-[15px] border border-line bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
                   />
                 </div>
               </div>
             </div>
 
             {/* 3. Payment Method UI */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
-                <h2 className="text-xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#36656B]/20 text-[#36656B] font-mono text-xs flex items-center justify-center font-bold">3</span>
-                  <span>Payment Authorization</span>
+            <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-line/60 dark:border-line">
+                <h2 className="text-xl font-bold tracking-tight text-fg flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">3</span>
+                  <span>Payment</span>
                 </h2>
 
                 {/* Razorpay Integration Placeholder Staging Banner */}
@@ -486,7 +486,7 @@ export const Checkout = () => {
                   { id: 'card', label: 'Cards', icon: CreditCard, desc: 'Visa, Master, Amex' },
                   { id: 'netbanking', label: 'Net Banking', icon: Landmark, desc: 'Top Indian Banks' },
                   { id: 'wallet', label: 'Wallets', icon: Wallet, desc: 'Paytm, Amazon Pay' },
-                  { id: 'cod', label: 'Concierge COD', icon: Banknote, desc: 'Pay on Arrival' },
+                  { id: 'cod', label: 'Pay on Delivery', icon: Banknote, desc: 'Pay when it arrives' },
                 ].map((m) => {
                   const Icon = m.icon;
                   const isSelected = formData.paymentMethod === m.id;
@@ -497,13 +497,13 @@ export const Checkout = () => {
                       onClick={() => setFormData({ ...formData, paymentMethod: m.id })}
                       className={`p-3.5 rounded-2xl border text-left transition flex flex-col justify-between ${
                         isSelected
-                          ? 'border-[#36656B] bg-[#36656B]/10 ring-1 ring-[#36656B] text-[#131E20] dark:text-white'
-                          : 'border-[#D1DCDE] dark:border-[#1E3447] text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                          ? 'border-accent bg-accent/10 ring-1 ring-accent text-[#1D1D1F] dark:text-white'
+                          : 'border-line text-stone-600 dark:text-stone-400 hover:border-stone-400'
                       }`}
                     >
                       <div className="flex items-center justify-between w-full mb-2">
-                        <Icon className={`w-4 h-4 ${isSelected ? 'text-[#36656B]' : 'text-stone-400'}`} />
-                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#36656B]" />}
+                        <Icon className={`w-4 h-4 ${isSelected ? 'text-accent' : 'text-stone-400'}`} />
+                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-accent" />}
                       </div>
                       <div>
                         <div className="text-xs font-semibold">{m.label}</div>
@@ -515,13 +515,13 @@ export const Checkout = () => {
               </div>
 
               {/* Dynamic Payment Tab Sub-views */}
-              <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/40 border border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/40 border border-line/60 dark:border-line">
                 {/* 1. UPI */}
                 {formData.paymentMethod === 'upi' && (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs font-medium text-stone-700 dark:text-stone-300">
-                      <span>Instant UPI Authorization (Zero Gateway Surcharge)</span>
-                      <span className="text-[#36656B] font-semibold">Simulated Gateway</span>
+                      <span>Pay by UPI (no extra charge)</span>
+                      <span className="text-accent font-semibold">Simulated Gateway</span>
                     </div>
 
                     <div>
@@ -534,7 +534,7 @@ export const Checkout = () => {
                         value={formData.upiId}
                         onChange={handleChange}
                         placeholder="e.g. yourname@okhdfcbank or 9876543210@paytm"
-                        className="w-full px-4 py-2.5 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:ring-1 focus:ring-[#36656B]"
+                        className="w-full px-4 py-2.5 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
                       />
                       {errors.upiId && (
                         <p className="text-[11px] text-red-500 mt-1">{errors.upiId}</p>
@@ -566,7 +566,7 @@ export const Checkout = () => {
                         value={formData.cardName}
                         onChange={handleChange}
                         placeholder="e.g. RAJIV MENON"
-                        className="w-full px-3.5 py-2 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] uppercase"
+                        className="w-full px-3.5 py-2 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas uppercase"
                       />
                     </div>
 
@@ -579,7 +579,7 @@ export const Checkout = () => {
                         onChange={handleChange}
                         placeholder="4532 •••• •••• 8892"
                         maxLength={19}
-                        className="w-full px-3.5 py-2 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] font-mono"
+                        className="w-full px-3.5 py-2 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas font-mono"
                       />
                     </div>
 
@@ -593,7 +593,7 @@ export const Checkout = () => {
                           onChange={handleChange}
                           placeholder="MM / YY"
                           maxLength={5}
-                          className="w-full px-3.5 py-2 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] font-mono text-center"
+                          className="w-full px-3.5 py-2 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas font-mono text-center"
                         />
                       </div>
                       <div>
@@ -605,7 +605,7 @@ export const Checkout = () => {
                           onChange={handleChange}
                           placeholder="•••"
                           maxLength={4}
-                          className="w-full px-3.5 py-2 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#07121C] font-mono text-center"
+                          className="w-full px-3.5 py-2 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas font-mono text-center"
                         />
                       </div>
                     </div>
@@ -616,7 +616,7 @@ export const Checkout = () => {
                 {formData.paymentMethod === 'netbanking' && (
                   <div className="space-y-3">
                     <div className="text-xs font-medium text-stone-700 dark:text-stone-300">
-                      Select Primary Banking Institution
+                      Choose Your Bank
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {[
@@ -633,8 +633,8 @@ export const Checkout = () => {
                           onClick={() => setFormData({ ...formData, selectedBank: bank.id })}
                           className={`p-2.5 rounded-xl border text-xs text-left transition ${
                             formData.selectedBank === bank.id
-                              ? 'border-[#36656B] bg-[#36656B]/15 font-semibold text-[#131E20] dark:text-white'
-                              : 'border-[#D1DCDE] dark:border-[#1E3447] text-stone-600 dark:text-stone-400'
+                              ? 'border-accent bg-accent/15 font-semibold text-[#1D1D1F] dark:text-white'
+                              : 'border-line text-stone-600 dark:text-stone-400'
                           }`}
                         >
                           {bank.name}
@@ -662,8 +662,8 @@ export const Checkout = () => {
                           onClick={() => setFormData({ ...formData, selectedWallet: wallet.id })}
                           className={`p-2.5 rounded-xl border text-xs text-center transition ${
                             formData.selectedWallet === wallet.id
-                              ? 'border-[#36656B] bg-[#36656B]/15 font-semibold text-[#131E20] dark:text-white'
-                              : 'border-[#D1DCDE] dark:border-[#1E3447] text-stone-600 dark:text-stone-400'
+                              ? 'border-accent bg-accent/15 font-semibold text-[#1D1D1F] dark:text-white'
+                              : 'border-line text-stone-600 dark:text-stone-400'
                           }`}
                         >
                           {wallet.name}
@@ -677,11 +677,11 @@ export const Checkout = () => {
                 {formData.paymentMethod === 'cod' && (
                   <div className="space-y-2 text-xs text-stone-600 dark:text-stone-300">
                     <div className="font-semibold text-stone-900 dark:text-white flex items-center gap-1.5">
-                      <Banknote className="w-4 h-4 text-[#36656B]" />
-                      <span>White-Glove Concierge Pay On Delivery</span>
+                      <Banknote className="w-4 h-4 text-accent" />
+                      <span>Pay on Delivery</span>
                     </div>
                     <p className="leading-relaxed">
-                      For orders above ₹1,00,000, our delivery officer will carry a wireless card POS terminal and official receipt book. You may inspect the unboxed piece inside your premises prior to final approval.
+                      For orders above ₹1,00,000 our delivery team brings a card machine and receipt book. You can unbox and inspect your piece at home before you pay.
                     </p>
                   </div>
                 )}
@@ -691,25 +691,25 @@ export const Checkout = () => {
               <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 text-[11px] text-amber-900 dark:text-amber-200 flex items-start gap-2">
                 <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Developer Notice:</strong> Razorpay integration is currently staged in sandbox mode. Clicking <em>Complete Purchase</em> will simulate an authorized gateway token and immediately generate an official commission proforma without charging your real card.
+                  <strong>Developer Notice:</strong> Razorpay integration is currently staged in sandbox mode. Clicking <em>Complete Purchase</em> will simulate a payment and create your order without charging your card.
                 </span>
               </div>
             </div>
           </div>
 
           {/* RIGHT 4 COLS: Order Summary (Sticky) & Complete Purchase CTA */}
-          <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6 shadow-sm sticky top-28">
+          <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6 shadow-sm sticky top-28">
             <div>
-              <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                Review &amp; Authorize
+              <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                Review & Pay
               </span>
-              <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+              <h3 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
                 Order Summary
               </h3>
             </div>
 
             {/* Selected Items Micro-List */}
-            <div className="space-y-3 max-h-64 overflow-y-auto pr-1 pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
+            <div className="space-y-3 max-h-64 overflow-y-auto pr-1 pb-3 border-b border-line/60 dark:border-line">
               {cartItems.map((item) => (
                 <div key={item.cartKey} className="flex items-center gap-3 text-xs">
                   <SmartImage sizes="96px"
@@ -718,14 +718,14 @@ export const Checkout = () => {
                     className="w-12 h-12 rounded-lg object-cover bg-stone-100 shrink-0 border border-stone-200 dark:border-stone-800"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-[#131E20] dark:text-[#F5F1E8] truncate">
+                    <div className="font-bold text-fg truncate">
                       {item.name}
                     </div>
-                    <div className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE]">
+                    <div className="text-[10px] text-muted">
                       Qty: {item.quantity} {item.selectedFinish ? `• ${item.selectedFinish}` : ''}
                     </div>
                   </div>
-                  <div className="font-mono font-medium text-[#131E20] dark:text-[#F5F1E8] text-right">
+                  <div className="font-mono font-medium text-fg text-right">
                     ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                   </div>
                 </div>
@@ -733,24 +733,24 @@ export const Checkout = () => {
             </div>
 
             {/* Financials Breakdown */}
-            <div className="space-y-3 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+            <div className="space-y-3 text-xs text-muted">
               <div className="flex justify-between items-center">
                 <span>Subtotal ({cartItems.reduce((a, b) => a + b.quantity, 0)} items)</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] font-mono">
+                <span className="font-semibold text-fg font-mono">
                   ₹{subtotal.toLocaleString('en-IN')}
                 </span>
               </div>
 
               <div className="flex justify-between items-center">
                 <span>Standard GST (18%)</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] font-mono">
+                <span className="font-semibold text-fg font-mono">
                   ₹{tax.toLocaleString('en-IN')}
                 </span>
               </div>
 
               <div className="flex justify-between items-center">
-                <span>White-Glove Architectural Transit</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                <span>Delivery & Installation</span>
+                <span className="font-semibold text-fg">
                   {shipping === 0 ? (
                     <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
                       Complimentary
@@ -761,16 +761,16 @@ export const Checkout = () => {
                 </span>
               </div>
 
-              <div className="pt-4 border-t border-[#D1DCDE]/80 dark:border-[#1E3447] flex justify-between items-baseline">
+              <div className="pt-4 border-t border-line/80 dark:border-line flex justify-between items-baseline">
                 <div>
-                  <span className="text-xs font-semibold uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] block">
+                  <span className="text-xs font-semibold uppercase tracking-luxury text-fg block">
                     Total Payable
                   </span>
-                  <span className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE]">
-                    (Inclusive of all taxes &amp; logistics)
+                  <span className="text-[10px] text-muted">
+                    (Includes all taxes and delivery)
                   </span>
                 </div>
-                <span className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
                   ₹{totalAmount.toLocaleString('en-IN')}
                 </span>
               </div>
@@ -783,30 +783,30 @@ export const Checkout = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-all duration-300 text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer disabled:opacity-70"
+                className="w-full py-4 px-6 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer disabled:opacity-70"
               >
                 <Lock className="w-3.5 h-3.5" />
-                <span>{loading ? 'Authorizing Commission...' : 'Complete Purchase'}</span>
+                <span>{loading ? 'Placing Order...' : 'Complete Purchase'}</span>
                 {!loading && <ArrowRight className="w-4 h-4 ml-1" />}
               </button>
 
               <Link
                 to="/cart"
-                className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-[#36656B] dark:hover:border-[#BCA575] text-[#131E20] dark:text-[#F5F1E8] text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 transition"
+                className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent text-fg text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 transition"
               >
                 <span>Return to Shopping Bag</span>
               </Link>
             </div>
 
             {/* Guarantees */}
-            <div className="pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447] text-[11px] text-[#4F6467] dark:text-[#AEB7BE] space-y-2">
+            <div className="pt-4 border-t border-line/60 dark:border-line text-[11px] text-muted space-y-2">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#36656B]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-accent" />
                 <span>256-bit encrypted checkout via Razorpay Gateway</span>
               </div>
               <div className="flex items-center gap-2">
-                <Truck className="w-3.5 h-3.5 text-[#36656B]" />
-                <span>Complimentary white-glove inside placement across India</span>
+                <Truck className="w-3.5 h-3.5 text-accent" />
+                <span>Free delivery and placement across India</span>
               </div>
             </div>
           </div>

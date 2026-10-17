@@ -3,7 +3,7 @@ import { Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
-export const ThemeToggle = ({ className = '' }) => {
+export const ThemeToggle = ({ className = '', onPhoto = false }) => {
   const { theme, toggleTheme, isDark } = useTheme();
 
   return (
@@ -11,21 +11,17 @@ export const ThemeToggle = ({ className = '' }) => {
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
       title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-      className={`relative p-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] hover:border-[#36656B] dark:hover:border-[#BCA575] transition-all duration-300 ${className}`}
+      className={`relative w-9 h-9 inline-flex items-center justify-center rounded-full transition-colors ${onPhoto ? 'text-white/90 hover:text-white hover:bg-white/15' : 'text-fg/80 hover:text-fg hover:bg-fg/[0.06]'} ${className}`}
     >
-      <motion.div
+      <motion.span
         key={theme}
-        initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
+        initial={{ rotate: -60, opacity: 0, scale: 0.8 }}
         animate={{ rotate: 0, opacity: 1, scale: 1 }}
-        exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
-        transition={{ duration: 0.25 }}
+        transition={{ duration: 0.3, ease: [0.28, 0.11, 0.32, 1] }}
+        className="inline-flex"
       >
-        {isDark ? (
-          <Sun className="w-4 h-4 text-[#BCA575]" />
-        ) : (
-          <Moon className="w-4 h-4 text-[#36656B]" />
-        )}
-      </motion.div>
+        {isDark ? <Sun className="w-[18px] h-[18px]" strokeWidth={1.8} /> : <Moon className="w-[18px] h-[18px]" strokeWidth={1.8} />}
+      </motion.span>
     </button>
   );
 };

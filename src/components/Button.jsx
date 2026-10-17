@@ -17,26 +17,22 @@ export const Button = ({
   ...rest
 }) => {
   const sizeClasses = {
-    sm: 'text-xs px-4 py-2 tracking-widest',
-    md: 'text-xs sm:text-sm px-6 py-3.5 tracking-luxury',
-    lg: 'text-sm sm:text-base px-8 py-4 tracking-luxury font-medium',
+    sm: 'text-[13px] px-4 py-2',
+    md: 'text-[15px] px-6 py-3',
+    lg: 'text-[16px] px-7 py-3.5',
   };
 
   const variantClasses = {
-    primary:
-      'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] border border-transparent shadow-sm',
-    accent:
-      'bg-[#36656B] dark:bg-[#BCA575] text-[#FFFFFF] dark:text-[#07121C] hover:bg-[#254B50] dark:hover:bg-[#A7C3C6] border border-transparent shadow-md',
-    secondary:
-      'bg-transparent text-[#131E20] dark:text-[#F5F1E8] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] dark:hover:border-[#BCA575] hover:text-[#36656B] dark:hover:text-[#BCA575]',
-    outline:
-      'bg-transparent text-[#131E20] dark:text-[#F5F1E8] border border-[#131E20] dark:border-[#F5F1E8] hover:bg-[#131E20] hover:text-[#F4F7F6] dark:hover:bg-[#F5F1E8] dark:hover:text-[#07121C]',
-    ghost:
-      'bg-transparent text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575]',
+    primary: 'bg-accent text-on-accent hover:bg-accent-hover border border-transparent',
+    accent: 'bg-accent text-on-accent hover:bg-accent-hover border border-transparent',
+    dark: 'bg-fg text-canvas hover:opacity-85 border border-transparent',
+    secondary: 'bg-transparent text-fg border border-fg/20 hover:border-fg/50 hover:bg-fg/[0.04]',
+    outline: 'bg-transparent text-fg border border-fg/20 hover:border-fg/50 hover:bg-fg/[0.04]',
+    ghost: 'bg-transparent text-accent hover:underline underline-offset-4',
   };
 
   const baseClasses =
-    'inline-flex items-center justify-center gap-2.5 uppercase font-sans transition-all duration-300 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed group text-center';
+    'inline-flex items-center justify-center gap-2 font-medium tracking-[-0.01em] font-sans transition-all duration-300 ease-apple rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed group text-center whitespace-nowrap';
 
   const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;
 

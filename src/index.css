@@ -3,28 +3,55 @@
 @tailwind utilities;
 
 @layer base {
+  /* =======================================================================
+     WEBSITE THEME: one palette for every public page.
+     Light: warm gallery white. Dark: near-black. Accent: brand teal / sand gold.
+     Values are RGB channels so Tailwind opacity modifiers (bg-accent/10) work.
+     ======================================================================= */
   :root {
-    --bg-primary: #F4F7F6;
-    --bg-surface: #FFFFFF;
-    --bg-secondary: #E5ECEC;
-    --text-primary: #131E20;
-    --text-secondary: #4F6467;
-    --accent: #36656B;
-    --border-color: #D1DCDE;
+    --c-canvas: 248 247 244;
+    --c-surface: 255 255 255;
+    --c-sunken: 240 238 233;
+    --c-fg: 29 29 31;
+    --c-muted: 96 96 101;
+    --c-subtle: 128 128 133;
+    --c-line: 226 223 217;
+    --c-accent: 54 101 107;
+    --c-accent-hover: 38 76 81;
+    --c-on-accent: 255 255 255;
+    --c-glass: 248 247 244;
+
+    /* Legacy names still read by a few components */
+    --bg-primary: rgb(var(--c-canvas));
+    --bg-surface: rgb(var(--c-surface));
+    --bg-secondary: rgb(var(--c-sunken));
+    --text-primary: rgb(var(--c-fg));
+    --text-secondary: rgb(var(--c-muted));
+    --accent: rgb(var(--c-accent));
+    --border-color: rgb(var(--c-line));
+    color-scheme: light;
   }
 
   .dark {
-    --bg-primary: #07121C;
-    --bg-surface: #0D1C29;
-    --bg-secondary: #132838;
-    --text-primary: #F5F1E8;
-    --text-secondary: #AEB7BE;
-    --accent: #BCA575;
-    --border-color: #1E3447;
+    --c-canvas: 10 10 11;
+    --c-surface: 24 24 26;
+    --c-sunken: 33 33 36;
+    --c-fg: 245 245 247;
+    --c-muted: 166 166 171;
+    --c-subtle: 128 128 133;
+    --c-line: 50 50 54;
+    --c-accent: 201 176 128;
+    --c-accent-hover: 218 196 154;
+    --c-on-accent: 10 10 11;
+    --c-glass: 22 22 24;
+    color-scheme: dark;
   }
 
   html {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html.lenis, html.lenis body {
@@ -44,17 +71,103 @@
   }
 
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: rgb(var(--c-canvas));
+    color: rgb(var(--c-fg));
     overflow-x: hidden;
-    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     font-weight: 400;
+    letter-spacing: -0.006em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    font-weight: 620;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+
+  ::selection {
+    background: rgb(var(--c-accent) / 0.22);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* =========================================================================
+   WEBSITE DESIGN SYSTEM: shared building blocks used on every public page
+   ========================================================================= */
+@layer components {
+  /* Page width + side gutters */
+  .site-container {
+    @apply w-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Small label above a headline ("Collector pieces") */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-semibold uppercase tracking-luxury text-accent;
+  }
+
+  /* Frosted glass, as in Apple's navigation bar */
+  .glass {
+    background: rgb(var(--c-glass) / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  /* Cards: white on light, raised grey on dark, soft shadow, large radius */
+  .card-apple {
+    @apply bg-surface rounded-card border border-line/60 dark:border-line shadow-card transition-[transform,box-shadow] duration-500 ease-apple;
+  }
+  .card-apple-hover:hover {
+    @apply -translate-y-1 shadow-card-hover;
+  }
+
+  /* Pill buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium tracking-[-0.01em] transition-all duration-300 ease-apple disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-on-accent hover:bg-accent-hover;
+  }
+  .btn-dark {
+    @apply btn bg-fg text-canvas hover:opacity-85;
+  }
+  .btn-secondary {
+    @apply btn border border-fg/20 text-fg hover:border-fg/50 hover:bg-fg/[0.04];
+  }
+  .btn-light {
+    @apply btn bg-white/95 text-[#1D1D1F] hover:bg-white;
+  }
+  .btn-glass {
+    @apply btn bg-white/15 text-white border border-white/30 backdrop-blur-md hover:bg-white/25;
+  }
+
+  /* "Learn more >" text link */
+  .link-apple {
+    @apply inline-flex items-center gap-1 text-[15px] font-medium text-accent hover:underline underline-offset-4;
+  }
+
+  /* Form fields */
+  .field {
+    @apply w-full rounded-xl bg-surface border border-line px-4 py-3 text-[15px] text-fg placeholder:text-subtle transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/15;
+  }
+
+  /* Gentle top-to-bottom scrim that keeps white text readable on photos */
+  .photo-scrim {
+    background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.08) 32%, rgba(0,0,0,0.12) 55%, rgba(0,0,0,0.62) 100%);
   }
 }
 
@@ -65,16 +178,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(54, 101, 107, 0.05);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(54, 101, 107, 0.35);
-  border-radius: 4px;
+  background: rgb(var(--c-fg) / 0.18);
+  border-radius: 8px;
+  border: 2px solid rgb(var(--c-canvas));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(54, 101, 107, 0.65);
+  background: rgb(var(--c-fg) / 0.32);
 }
 
 /* Apple-style Glassmorphism & Soft Ambient Shadow Classes */
@@ -180,7 +294,7 @@
 }
 
 .site-opener-line-revealing {
-  animation: siteOpenerTextReveal 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: siteOpenerTextReveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .site-opener-edge-revealing {

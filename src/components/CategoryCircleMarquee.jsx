@@ -23,14 +23,14 @@ export const CategoryCircleMarquee = () => {
   return (
     <div className="relative w-full overflow-hidden py-4 group/marquee">
       {/* Soft edge gradient masks for luxury fade-in / fade-out */}
-      <div className="absolute left-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-r from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-l from-[#F4F7F6] dark:from-[#07121C] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-r from-canvas to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 inset-y-0 w-12 sm:w-24 bg-gradient-to-l from-canvas to-transparent z-10 pointer-events-none" />
 
       {/* Manual Scroll Buttons for quick exploration */}
       <button
         onClick={handleScrollLeft}
         aria-label="Scroll left"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-surface/95 backdrop-blur-md border border-line text-fg shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-accent hover:text-on-accent dark:hover:text-canvas"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -38,7 +38,7 @@ export const CategoryCircleMarquee = () => {
       <button
         onClick={handleScrollRight}
         aria-label="Scroll right"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-surface/95 backdrop-blur-md border border-line text-fg shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-accent hover:text-on-accent dark:hover:text-canvas"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
@@ -53,7 +53,7 @@ export const CategoryCircleMarquee = () => {
               className="group/item flex flex-col items-center text-center shrink-0 w-44 sm:w-52 transition-transform duration-300 hover:-translate-y-1.5"
             >
               {/* Circular Image Container */}
-              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1.5 border border-[#D1DCDE] dark:border-[#1E3447] group-hover/item:border-[#36656B] dark:group-hover/item:border-[#BCA575] bg-white dark:bg-[#0D1C29] shadow-sm group-hover/item:shadow-luxury transition-all duration-400 mb-3">
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1.5 border border-line group-hover/item:border-accent bg-surface shadow-sm group-hover/item:shadow-luxury transition-all duration-400 mb-3">
                 <div className="w-full h-full rounded-full overflow-hidden">
                   <SmartImage sizes="160px"
                     src={cat.image}
@@ -67,21 +67,21 @@ export const CategoryCircleMarquee = () => {
                 </div>
 
                 {/* Pill Badge with Item Count */}
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-white dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-[10px] sm:text-xs uppercase tracking-luxury font-medium text-[#36656B] dark:text-[#BCA575] shadow-xs whitespace-nowrap">
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-surface dark:bg-canvas border border-line text-[10px] sm:text-xs uppercase tracking-luxury font-medium text-accent shadow-xs whitespace-nowrap">
                   {cat.productCount} {cat.productCount === 1 ? 'Piece' : 'Pieces'}
                 </div>
               </div>
 
               {/* Title & Short Description */}
-              <h3 className="text-base sm:text-lg font-serif text-[#131E20] dark:text-[#F5F1E8] group-hover/item:text-[#36656B] dark:group-hover/item:text-[#BCA575] transition-colors leading-snug">
+              <h3 className="text-base sm:text-lg font-serif text-fg group-hover/item:text-accent transition-colors leading-snug">
                 {cat.name}
               </h3>
 
-              <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] mt-1 font-light leading-relaxed line-clamp-2 max-w-[190px]">
+              <p className="text-xs sm:text-sm text-muted mt-1 font-light leading-relaxed line-clamp-2 max-w-[190px]">
                 {cat.description}
               </p>
 
-              <span className="mt-1.5 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold opacity-0 group-hover/item:opacity-100 transition-opacity flex items-center gap-1">
+              <span className="mt-1.5 text-xs uppercase tracking-luxury text-accent font-semibold opacity-0 group-hover/item:opacity-100 transition-opacity flex items-center gap-1">
                 <span>Explore</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </span>

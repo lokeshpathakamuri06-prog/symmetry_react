@@ -22,7 +22,8 @@ const slideImage = (src) => {
 
 export const Hero = () => {
   const text = useSiteText('home');
-  const banners = useBanners().items.filter((b) => b.image);
+  // Banners with a page set (Admin → Page Banners) belong to other pages
+  const banners = useBanners().items.filter((b) => b.image && !b.badge);
   const slides = banners.length ? banners : FALLBACK_SLIDES;
   const [slideIndex, setSlideIndex] = useState(0);
   const currentImageIndex = slideIndex % slides.length;
@@ -46,10 +47,8 @@ export const Hero = () => {
   }, [slides.length]);
 
   return (
-    <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-[#07121C] overflow-hidden flex flex-col justify-between select-none">
-      {/* =========================================================================
-          1. FULL-BLEED HERO BACKGROUND IMAGE SLIDESHOW LAYER (admin Hero Banners)
-          ========================================================================= */}
+    <section className="relative h-[100svh] min-h-[640px] sm:min-h-[720px] w-full bg-black overflow-hidden select-none">
+      {/* Slideshow photos (admin Hero Banners) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.img
@@ -57,65 +56,57 @@ export const Hero = () => {
             {...slideImage(slide.image)}
             fetchPriority={currentImageIndex === 0 ? 'high' : undefined}
             alt={slide.title}
-            initial={{ opacity: 0, scale: 1.05 }}
+            initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.6, ease: [0.28, 0.11, 0.32, 1] }}
             className="w-full h-full object-cover object-center absolute inset-0"
           />
         </AnimatePresence>
-
-        {/* Ambient Dark Luxury Gradient Vignette Overlay for High Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#07121C]/90 via-[#07121C]/45 to-[#07121C]/60" />
+        {/* Directional scrims: darken only where the text sits, so the photo stays bright and true.
+            Phones: the copy spans the width, so shade from the bottom. Desktop: shade from the left. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent sm:from-black/45 sm:via-black/5" />
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
+        {/* Light shade under the transparent navigation bar */}
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/35 to-transparent" />
       </div>
 
-      {/* Hero Main Copy Layer */}
-      <div className="relative z-10 pt-24 sm:pt-28 px-6 sm:px-12 flex flex-col justify-center items-center h-full max-w-[1632px] mx-auto w-full text-center">
-        {/* Center Hero Copy Block */}
+      {/* Copy */}
+      <div className="relative z-10 h-full site-container flex flex-col justify-end pb-24 sm:pb-28">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          className="max-w-4xl mx-auto px-4"
+          transition={{ duration: 1.1, delay: 0.2, ease: [0.28, 0.11, 0.32, 1] }}
+          className="max-w-3xl"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl text-white leading-[1.08] tracking-tight font-bold mb-4 sm:mb-6 drop-shadow-md">
-            {text.heroTitle} <span className="text-[#BCA575] font-bold">{text.heroTitleHighlight}</span>
+          <p className="text-[13px] sm:text-[14px] font-semibold tracking-[0.14em] uppercase text-white/90 mb-4 [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
+            Symmetry Interiors
+          </p>
+          <h1 className="text-display-xl text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.25)]">
+            {text.heroTitle} <span className="text-[#D9C59A]">{text.heroTitleHighlight}</span>
           </h1>
-          <p className="text-base sm:text-xl text-white/90 font-normal leading-relaxed max-w-2xl mx-auto mb-8 drop-shadow-sm">
+          <p className="mt-5 text-[18px] sm:text-[21px] text-white/90 leading-[1.5] max-w-2xl [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]">
             {text.heroSubtitle}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => scrollToSection('projects-section')}
-              className="px-8 py-3.5 rounded-full bg-white text-[#131E20] hover:bg-[#36656B] hover:text-white transition-all duration-300 text-xs uppercase tracking-luxury font-semibold shadow-lg cursor-pointer"
-            >
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <button type="button" onClick={() => scrollToSection('projects-section')} className="btn-light cursor-pointer">
               {text.heroPrimaryCta}
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('about-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="px-8 py-3.5 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 transition-all duration-300 text-xs uppercase tracking-luxury font-semibold cursor-pointer shadow-md"
-            >
+            <button type="button" onClick={() => scrollToSection('about-section')} className="btn-glass cursor-pointer">
               {text.heroSecondaryCta}
             </button>
           </div>
         </motion.div>
 
-        {/* Slide Indicator Dots */}
-        <div className="absolute bottom-8 flex items-center justify-center gap-2">
+        {/* Slide indicators */}
+        <div className="absolute bottom-8 right-5 sm:right-8 lg:right-10 flex items-center gap-2 rounded-full bg-black/25 backdrop-blur-md px-3 py-2">
           {slides.map((img, idx) => (
             <button
               key={img.id}
               onClick={() => setSlideIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
               className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                currentImageIndex === idx
-                  ? 'w-8 bg-[#BCA575]'
-                  : 'w-2 bg-white/40 hover:bg-white/70'
+                currentImageIndex === idx ? 'w-6 bg-white' : 'w-1.5 bg-white/45 hover:bg-white/70'
               }`}
             />
           ))}

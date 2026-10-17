@@ -101,19 +101,19 @@ export const FlippingCollections = () => {
   return (
     <div className="space-y-8">
       {/* Top Bar with Dynamic Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D1DCDE]/70 dark:border-[#1E3447]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-line/70 dark:border-line">
         <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[#36656B] dark:bg-[#BCA575] animate-ping" />
-          <span className="text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-medium">
+          <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
+          <span className="text-xs uppercase tracking-luxury text-fg font-medium">
             Sequential 3D Reveal &bull; Flip to Inspect Craft
           </span>
         </div>
 
         <div className="flex items-center gap-3 self-start sm:self-auto">
           {/* Active Card Indicator */}
-          <div className="hidden md:flex items-center gap-1.5 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+          <div className="hidden md:flex items-center gap-1.5 text-xs text-muted">
             <span>Active Reveal:</span>
-            <strong className="text-[#36656B] dark:text-[#BCA575] font-serif uppercase tracking-wider">
+            <strong className="text-accent font-serif uppercase tracking-wider">
               {activeFlippedIndex >= 0 && activeFlippedIndex < collections.length
                 ? collections[activeFlippedIndex].name
                 : activeFlippedIndex === -2
@@ -126,7 +126,7 @@ export const FlippingCollections = () => {
           <button
             onClick={() => setAutoPlay((prev) => !prev)}
             aria-label={autoPlay ? 'Pause automatic flip' : 'Resume automatic flip'}
-            className="px-3.5 py-1.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-1.5 rounded-full border border-line text-xs uppercase tracking-luxury text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
           >
             {autoPlay ? (
               <>
@@ -145,7 +145,7 @@ export const FlippingCollections = () => {
           <button
             onClick={flipAllCards}
             aria-label="Flip all cards"
-            className="px-3.5 py-1.5 rounded-full bg-[#E5ECEC]/60 dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-1.5 rounded-full bg-sunken/60 dark:bg-sunken border border-line text-xs uppercase tracking-luxury text-fg hover:border-[#36656B] flex items-center gap-1.5 transition-colors"
           >
             <RotateCw className="w-3 h-3 text-[#36656B]" />
             <span>{activeFlippedIndex === -2 ? 'Reset Front' : 'Flip All'}</span>
@@ -171,7 +171,7 @@ export const FlippingCollections = () => {
                 }`}
               >
                 {/* ================= FRONT FACE ================= */}
-                <div className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] [backface-visibility:hidden] border border-[#D1DCDE] dark:border-[#1E3447]">
+                <div className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-sunken [backface-visibility:hidden] border border-line">
                   <img
                     src={col.frontImage}
                     alt={col.name}

@@ -10,25 +10,23 @@ export const FinalCta = ({ className = '' }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="rounded-3xl bg-[#E5ECEC]/30 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] p-8 sm:p-12 lg:p-16 text-center shadow-sm"
+        className="rounded-3xl bg-sunken/30 dark:bg-surface border border-line p-8 sm:p-12 lg:p-16 text-center shadow-sm"
       >
         <div className="max-w-2xl mx-auto space-y-5">
           {/* Eyebrow */}
           <div className="flex items-center justify-center gap-3">
-            <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold text-center">
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold text-center">
               25+ Years of Expertise &bull; Global Sourcing &bull; Bespoke Interiors &bull; End-to-End Execution
             </span>
-            <span className="w-8 h-px bg-[#36656B] dark:bg-[#BCA575]" />
           </div>
 
           {/* Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-fg tracking-tight leading-tight">
             Your Space. Our Expertise.
           </h2>
 
           {/* Description */}
-          <p className="text-sm sm:text-base text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-muted font-light leading-relaxed max-w-xl mx-auto">
             From globally sourced furniture to complete interior execution, we create spaces designed around your vision.
           </p>
 
@@ -43,8 +41,8 @@ export const FinalCta = ({ className = '' }) => {
           </div>
 
           {/* Subtle Atelier Detail */}
-          <p className="pt-4 text-xs text-[#6B8083] dark:text-[#8E9CA8] font-light">
-            Design Atelier: Road No. 36, Jubilee Hills, Hyderabad &bull; By Appointment
+          <p className="pt-4 text-xs text-subtle font-light">
+            Studio visits in Hyderabad by appointment
           </p>
         </div>
       </motion.div>

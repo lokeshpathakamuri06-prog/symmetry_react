@@ -22,9 +22,9 @@ export const CatalogFloatingWidget = () => {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#131E20]/95 dark:bg-[#07121C]/95 backdrop-blur-md text-white dark:text-[#F5F1E8] border border-white/20 dark:border-[#BCA575]/40 text-xs font-semibold uppercase tracking-luxury shadow-lg whitespace-nowrap pointer-events-none"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-fg/95 dark:bg-canvas/95 backdrop-blur-md text-surface dark:text-fg border border-surface/20 dark:border-accent/40 text-xs font-semibold uppercase tracking-luxury shadow-lg whitespace-nowrap pointer-events-none"
             >
-              <FileText className="w-3.5 h-3.5 text-[#36656B] dark:text-[#BCA575]" />
+              <FileText className="w-3.5 h-3.5 text-accent" />
               <span>Download Catalog PDF</span>
             </motion.div>
           )}
@@ -39,17 +39,17 @@ export const CatalogFloatingWidget = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           onClick={() => setModalOpen(true)}
-          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#36656B] via-[#2A4F54] to-[#131E20] dark:from-[#BCA575] dark:via-[#A8905E] dark:to-[#07121C] text-white dark:text-[#07121C] shadow-[0_12px_30px_rgba(54,101,107,0.45)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.8)] border-2 border-white/30 dark:border-[#BCA575]/50 flex items-center justify-center cursor-pointer transition-all duration-300 group"
+          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-accent via-[#2A4F54] to-fg dark:via-accent-hover dark:to-canvas text-on-accent dark:text-canvas shadow-[0_12px_30px_rgba(54,101,107,0.45)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.8)] border-2 border-surface/30 dark:border-accent/50 flex items-center justify-center cursor-pointer transition-all duration-300 group"
           title="Download Official Corporate Catalog PDF"
           aria-label="Download Official Corporate Catalog PDF"
         >
           {/* Animated Gold Ring Pulse */}
-          <span className="absolute -inset-1 rounded-full bg-[#36656B]/40 dark:bg-[#BCA575]/40 animate-ping opacity-60 pointer-events-none" />
+          <span className="absolute -inset-1 rounded-full bg-accent/40 animate-ping opacity-60 pointer-events-none" />
 
           {/* Center Icon Box */}
           <div className="relative z-10 flex flex-col items-center justify-center">
-            <FileText className="w-6 h-6 text-white dark:text-[#07121C] group-hover:scale-110 transition-transform" />
-            <span className="text-[9px] font-bold font-mono uppercase tracking-tighter text-amber-300 dark:text-[#07121C] leading-none mt-0.5">
+            <FileText className="w-6 h-6 text-on-accent dark:text-canvas group-hover:scale-[1.05] transition-transform" />
+            <span className="text-[9px] font-bold font-mono uppercase tracking-tighter text-amber-300 dark:text-canvas leading-none mt-0.5">
               PDF
             </span>
           </div>
@@ -82,12 +82,12 @@ export const CatalogFloatingWidget = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-4xl bg-white dark:bg-[#0D1C29] rounded-3xl shadow-apple-dark dark:shadow-apple-dark overflow-hidden z-10 my-8"
+              className="relative w-full max-w-4xl bg-surface rounded-3xl shadow-apple-dark dark:shadow-apple-dark overflow-hidden z-10 my-8"
             >
               {/* Modal Close Button */}
               <button
                 onClick={() => setModalOpen(false)}
-                className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors z-20 cursor-pointer"
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full bg-canvas dark:bg-sunken text-fg hover:text-accent transition-colors z-20 cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -129,28 +129,28 @@ export const CatalogFloatingWidget = () => {
                 {/* Right Side: Catalog Description & Download Actions */}
                 <div className="md:col-span-7 space-y-5">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
+                    <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
                       Official Corporate Presentation
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight">
+                    <h3 className="text-2xl sm:text-3xl font-serif text-fg font-normal leading-tight">
                       Symmetry Interiors &amp; Building Solutions Catalog
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-muted leading-relaxed font-light">
                     Explore our comprehensive 11-page corporate dossier showcasing 25+ years of international furniture sourcing, bespoke joinery manufacturing, and turnkey interiors for luxury hotels, commercial spaces, healthcare facilities, and private estates.
                   </p>
 
                   {/* Highlights List */}
-                  <div className="space-y-2 pt-2 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+                  <div className="space-y-2 pt-2 border-t border-line/60 dark:border-line">
                     {[
                       'Global Procurement (Italy, China, Malaysia, Vietnam)',
                       'Signature Offerings: Sofas, Beds, Wardrobes & Dining',
                       'Turnkey Hospitality, Residential & Healthcare Solutions',
                       'Clientele: Courtyard Marriott, Ginger, Yashoda Hospitals',
                     ].map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-[#131E20] dark:text-[#F5F1E8]">
-                        <CheckCircle2 className="w-4 h-4 text-[#36656B] dark:text-[#BCA575] shrink-0" />
+                      <div key={idx} className="flex items-center gap-2 text-xs text-fg">
+                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -161,7 +161,7 @@ export const CatalogFloatingWidget = () => {
                     <a
                       href={pdfUrl}
                       download="Symmetry-Interiors-Catalog.pdf"
-                      className="flex-1 py-3.5 px-6 rounded-2xl bg-[#36656B] dark:bg-[#BCA575] text-white dark:text-[#07121C] font-semibold text-xs sm:text-sm uppercase tracking-luxury hover:bg-[#284c50] dark:hover:bg-[#d4be8d] transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="flex-1 py-3.5 px-6 rounded-2xl bg-accent text-on-accent dark:text-canvas font-semibold text-xs sm:text-sm uppercase tracking-luxury hover:bg-[#284c50] dark:hover:bg-[#d4be8d] transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
                     >
                       <Download className="w-4 h-4" />
                       <span>Download Catalog (PDF)</span>
@@ -171,14 +171,14 @@ export const CatalogFloatingWidget = () => {
                       href={pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="py-3.5 px-5 rounded-2xl border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] dark:hover:border-[#BCA575] text-xs font-semibold uppercase tracking-luxury transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="py-3.5 px-5 rounded-2xl border border-line text-fg hover:border-accent text-xs font-semibold uppercase tracking-luxury transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
                     >
                       <span>View Online</span>
-                      <ExternalLink className="w-4 h-4 text-[#36656B] dark:text-[#BCA575]" />
+                      <ExternalLink className="w-4 h-4 text-accent" />
                     </a>
                   </div>
 
-                  <p className="text-[11px] text-[#6B8083] dark:text-[#8E9CA8] font-mono text-center sm:text-left">
+                  <p className="text-[11px] text-subtle font-mono text-center sm:text-left">
                     Direct PDF Download &bull; High Resolution Document &bull; 4.7 MB
                   </p>
                 </div>

@@ -19,7 +19,8 @@ import {
   LogOut,
   ChevronLeft,
   Briefcase,
-  UserCheck
+  UserCheck,
+  PanelTop
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -67,6 +68,7 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
       title: 'Content & Portfolio',
       items: [
         { label: 'Hero Banners', path: '/admin/banners', icon: Sliders },
+        { label: 'Page Banners', path: '/admin/page-banners', icon: PanelTop },
         { label: 'Interior Projects', path: '/admin/projects', icon: FolderKanban },
         { label: 'Journal Articles', path: '/admin/blogs', icon: BookOpen },
         { label: 'Testimonials', path: '/admin/testimonials', icon: Quote },

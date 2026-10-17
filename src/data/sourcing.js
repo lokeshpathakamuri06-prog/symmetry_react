@@ -17,9 +17,9 @@ export const sourcingCountries = [
     region: 'Milan, Verona & Carrara',
     coordinates: '45.4642° N, 9.1900° E',
     mapCoords: { x: 50.5, y: 31 }, // % on stylized map
-    tagline: 'Quarry-Direct Marbles & Haute Leather Ateliers',
+    tagline: 'Marble Straight from the Quarry & Fine Italian Leather',
     description:
-      'Our twenty-five-year direct alliance with century-old quarries in Verona and Carrara gives Symmetry patrons direct access to the vein face before extraction. In the Brianza district north of Milan, multi-generational furniture ateliers tailor bespoke full-grain aniline and saddle hides, hand-stretched over precision steel frames.',
+      'Our twenty-five-year direct alliance with century-old quarries in Verona and Carrara gives Symmetry clients direct access to the vein face before extraction. In the Brianza district north of Milan, multi-generational furniture ateliers tailor bespoke full-grain aniline and saddle hides, hand-stretched over precision steel frames.',
     largeImage: 'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1600&q=85',
     galleryImages: [
       {
@@ -60,13 +60,13 @@ export const sourcingCountries = [
     region: 'Foshan & Greater Bay Area',
     coordinates: '23.0215° N, 113.1214° E',
     mapCoords: { x: 79, y: 44 },
-    tagline: 'Precision 5-Axis CNC Joinery & Architectural Bronzes',
+    tagline: 'Precision CNC Joinery & Bronze Metalwork',
     description:
       'Foshan and Shenzhen stand at the global apex of computerized architectural engineering. Symmetry partners with aerospace-grade metal fabricators and curved glass foundries capable of executing sub-millimeter tolerances on large-scale architectural doors, titanium PVD finishes, and curved structural acoustic partitions.',
-    largeImage: 'https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&w=1600&q=85',
+    largeImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85',
     galleryImages: [
       {
-        url: 'https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&w=1600&q=85',
+        url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85',
         caption: 'Shenzhen Architectural Metal & Curved Glass Hub',
       },
       {
@@ -189,7 +189,7 @@ export const sourcingCountries = [
     region: 'Gianyar & Ubud',
     coordinates: '8.5069° S, 115.2625° E',
     mapCoords: { x: 81.5, y: 64 },
-    tagline: 'Monolithic Volcanic Stone, Teak Roots & Biophilic Sculptures',
+    tagline: 'Volcanic Stone, Teak Roots & Natural Sculptures',
     description:
       'Nestled in the volcanic hills of Gianyar and Ubud, Balinese stonecutters carve monolithic volcanic basalt and river boulders into sculptural washbasins and soaking tubs. We source reclaimed century-old teak root formations and hand-troweled lime plaster urns that introduce raw natural soul into contemporary minimalist architecture.',
     largeImage: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=85',
@@ -230,7 +230,7 @@ export const sourcingProcess = [
   {
     step: '01',
     name: 'Discover',
-    tagline: 'Architectural Curation & Material Profiling',
+    tagline: 'Choosing the Right Materials',
     desc: 'Translating design intent into precise engineering drawings, tactile moodboards, and material specifications calibrated to client lifestyle and climate.',
     deliverables: ['3D Material Mood Trays', 'Dimensional Tolerances', 'Origin Feasibility Matrix'],
     icon: Compass,
@@ -238,7 +238,7 @@ export const sourcingProcess = [
   {
     step: '02',
     name: 'Select',
-    tagline: 'Quarry Inspection & Direct Atelier Allocation',
+    tagline: 'Visiting Quarries & Workshops',
     desc: 'Our sourcing directors travel to Verona quarries, Brianza workshops, and Balinese stone ateliers to hand-inspect raw blocks and commission custom prototypes.',
     deliverables: ['Quarry Slab Vein Approval', 'Prototype Rub-Count Vetting', 'Direct Factory Booking'],
     icon: Gem,
@@ -246,7 +246,7 @@ export const sourcingProcess = [
   {
     step: '03',
     name: 'Quality Check',
-    tagline: 'Multi-Point Forensic Testing at Source',
+    tagline: 'Quality Checks Before Shipping',
     desc: 'Conducting non-destructive ultrasound stone testing, timber moisture verification (8–10% EMC), and laser alignment audits before crating at the origin atelier.',
     deliverables: ['Moisture Equilibrium Audit', 'Laser Reveal Calibration', 'Certificate of Provenance'],
     icon: ShieldCheck,
@@ -255,8 +255,8 @@ export const sourcingProcess = [
     step: '04',
     name: 'Logistics',
     tagline: 'Sealed Climate-Controlled Freight & Customs Clearance',
-    desc: 'Delicate veneers and stones travel in moisture-stabilized sea containers with GPS shock and temperature telemetry. Licensed expeditors manage port clearance.',
-    deliverables: ['Climate-Sealed Maritime Box', 'GPS Shock Telemetry', 'Port Duty Documentation'],
+    desc: 'Delicate veneers and stones travel in moisture-stabilized sea containers with GPS tracking and shock and temperature sensors. Licensed expeditors manage port clearance.',
+    deliverables: ['Climate-Sealed Maritime Box', 'GPS Tracking', 'Port Duty Documentation'],
     icon: Truck,
   },
   {

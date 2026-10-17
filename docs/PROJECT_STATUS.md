@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-13 (Step 7a: Home slideshow and collections from admin)_
+_Last updated: 2026-10-14 (Website redesign: Apple-style design system on every page)_
 
 ## Summary
 | Area | State |
@@ -269,6 +269,29 @@ _Last updated: 2026-10-13 (Step 7a: Home slideshow and collections from admin)_
 - **Verified** (headless browser, desktop 1440 px and phone 390 px): slideshow photos load from Cloudinary (1600 px desktop, 800 px phone), 3 dots, same headline; carousel shows "01 — LIVING" … "06 — OUTDOOR" with the same links; screenshots match the previous look; no console errors.
 - **Problem found and fixed:** the first deploy crashed Home (`useBanners()` returns `{ items }`, not a list). Found by the browser check within minutes and fixed.
 
+### 2026-10-14: Website redesign (frontend only)
+**Why:** requested a modern interior-design website with an Apple feel, the same theme on every page. Backend, API and database untouched.
+- **Theme tokens:** `src/index.css` defines the palette once (light: warm gallery white, charcoal text, brand teal; dark: near-black, sand gold). Tailwind names: `canvas`, `surface`, `sunken`, `fg`, `muted`, `subtle`, `line`, `accent`, `accent-hover`, `on-accent`. A script converted ~1,500 hard-coded `[#hex] dark:[#hex]` pairs; only pairs that already had a dark value were converted, so text on photos keeps its fixed colour.
+- **Design system** (`src/index.css`, `tailwind.config.js`): `site-container`, `eyebrow`, `glass`, `card-apple`, `btn-primary` / `btn-dark` / `btn-secondary` / `btn-light` / `btn-glass`, `link-apple`, `field`; fluid `text-display-xl/lg/md`; softer shadows; restrained letter-spacing; `font-mono` now renders Inter with tabular figures.
+- **New/rewritten components:** Header (glass bar, sentence-case links, Services mega-menu, "Book a consultation"), MobileMenu (full-screen), Footer + Newsletter, `PageHero` (new), SectionHeading, Button, ThemeToggle, Home Hero, ProductCard, ProjectCard, BlogCard, AppleCardWrapper (no 3D tilt), FloatingActionStack (one glass pill; folds into one button on phones), Breadcrumb.
+- **Pages:** About, Services, Projects, Sourcing, Shop, Journal, Contact and Careers now open with `PageHero` (same headline, photo and stats). All-caps buttons became sentence-case pills (script, ~30 buttons); form fields use 15 px text; decorative dashes beside labels removed; navy overlays and the dark showcase recoloured to neutral black.
+- **Fixed:** the China photo on Sourcing was a dead Unsplash link (404 before this work); replaced with a working image already used on Home.
+- **Verified** (dev server against the live API, headless Chromium): 14 pages in light and dark at 1440 px and 390 px, plus search, quick view, mobile menu and mega-menu: no console errors, no horizontal scroll. Every sentence, stat and image of the live pages is still present (text compared page by page). Build passes; lint shows no new warnings (56 existing). Admin login unchanged.
+- **Not deployed yet**; not committed.
+- **Preview:** https://169-58-13-62.sslip.io/preview/ (path on the live hostname, added because some networks did not open the new subdomain; built with `vite build --base=/preview/`, `BrowserRouter` now reads `BASE_URL`, which is `/` for the normal build) and https://preview.169-58-13-62.sslip.io (Caddy site block and `/srv-preview` copied into the running web container only; it disappears on the next `docker compose up -d --build`). `noindex`. Forms on it write to the real database.
+
+### 2026-10-14: Shorter intro, simpler wording, editable page banners (frontend only)
+- **Intro** (`SiteOpener.jsx`): once per browser session (`sessionStorage`), ~1.5 s instead of ~2.9 s, fades instead of sliding, skipped with reduced motion; the wrong "Road No. 36, Jubilee Hills" line removed.
+- **Wording:** ~200 formal phrases in code text rewritten in plain English (atelier, commission, monograph, telemetry, pavilion, "Architectural…"), including all buttons, form labels, cart/checkout/order screens, the 6-step process on Services and the Sourcing/About labels. "Jubilee Hills Pavilion" references now say "our Hyderabad studio" (the office is in Ameerpet). Database content is unchanged.
+- **Page Banners** (Admin → Content & Portfolio → Page Banners): one banner per page (About, Services, Projects, Global Sourcing, Shop, Journal, Contact, Careers) with headline, highlighted words, text and photo. Stored as `banners` records with the page key in `badge`; Hero Banners now lists only banners without a page; the Home slideshow ignores page banners. A page without a published banner keeps its standard opening.
+- **⚠ Deploy order:** do not publish a page banner before this frontend is live: the old live code shows every banner in the Home slideshow.
+- **Verified:** with simulated API responses (no database writes): About uses a banner's headline, text and photo; Services keeps its standard opening; the Home slideshow still has 3 slides; both admin screens list the right banners; the page dropdown offers the 8 pages; the intro plays once (~1.8 s measured, including test polling). All pages on the preview: no errors in light/desktop and dark/phone. Build passes; no new lint warnings.
+
+### 2026-10-14: Home hero overlay
+- The flat dark film over the slideshow made the bright interiors look grey, and white text sat on light walls. Now: shade only where the text is (from the left on desktop, from the bottom on phones) plus a light shade under the navigation; soft text shadows on the copy.
+- On Home, the navigation bar is transparent with white text and the light logo while it sits on the photo; it turns into the frosted bar on scroll or when the Services menu opens.
+- Verified on the dev server (light, dark, phone, all 3 slides, scrolled) and on the refreshed preview; no errors, no new lint warnings.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
@@ -285,4 +308,4 @@ _Last updated: 2026-10-13 (Step 7a: Home slideshow and collections from admin)_
 | 13 | **Phone numbers need confirming:** the site used +91 98765 43210 (a common placeholder) in most places and +91 99634 99635 in the mobile menu and floating WhatsApp. Now: phone = 98765…, WhatsApp = 99634… | Client sets the real numbers in Admin → Page Content → Company & Contact |
 | 12 | `FlippingCollections` (unused component) calls an undefined `setUserInteracted`; it would crash if used | Delete the component or fix it when it's needed |
 | 11 | ~~One large JS bundle for every page~~ | ✅ Fixed 2026-10-11: per-page loading, first-load JS 188 KB, no admin code for visitors |
-| 14 | Home's intro animation delays the headline by about 2–3 s on phones (the main remaining LCP cost) | Client decision: keep, shorten, or show it only on the first visit |
+| 14 | ~~Home's intro animation delays the headline by about 2–3 s~~ | ✅ 2026-10-14: ~1.5 s, once per session (in preview; deploy pending) |

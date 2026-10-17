@@ -40,6 +40,7 @@ const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminPageContent = lazy(() => import('./pages/admin/AdminPageContent'));
 const AdminBanners = lazy(() => import('./pages/admin/AdminBanners'));
+const AdminPageBanners = lazy(() => import('./pages/admin/AdminPageBanners'));
 const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminCategories = lazy(() => import('./pages/admin/AdminCategories'));
 const AdminCollections = lazy(() => import('./pages/admin/AdminCollections'));
@@ -115,7 +116,7 @@ const StorefrontShell = ({ children }) => {
 
   return (
     <SmoothScroll>
-      <div className="min-h-screen flex flex-col bg-[#F4F7F6] dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] transition-colors duration-300 relative selection:bg-[#36656B]/20 selection:text-[#36656B]">
+      <div className="min-h-screen flex flex-col bg-canvas text-fg transition-colors duration-300 relative">
         <ScrollProgressBar />
         <ScrollToTop />
         <Header />
@@ -139,7 +140,7 @@ export const App = () => {
         <SearchProvider>
             <PublicContentProvider>
             <AdminAuthProvider>
-              <BrowserRouter>
+              <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
                 <StorefrontOpener />
                 <PrefetchPublicPages />
                 <StorefrontShell>
@@ -169,6 +170,7 @@ export const App = () => {
                     <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
                     <Route path="/admin/content" element={<AdminProtectedRoute><AdminPageContent /></AdminProtectedRoute>} />
                     <Route path="/admin/banners" element={<AdminProtectedRoute><AdminBanners /></AdminProtectedRoute>} />
+                    <Route path="/admin/page-banners" element={<AdminProtectedRoute><AdminPageBanners /></AdminProtectedRoute>} />
                     <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
                     <Route path="/admin/categories" element={<AdminProtectedRoute><AdminCategories /></AdminProtectedRoute>} />
                     <Route path="/admin/collections" element={<AdminProtectedRoute><AdminCollections /></AdminProtectedRoute>} />

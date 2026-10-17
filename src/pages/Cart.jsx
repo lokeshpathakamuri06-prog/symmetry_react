@@ -68,19 +68,19 @@ export const Cart = () => {
         />
 
         {/* Page Title & Count */}
-        <div className="mt-8 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#D1DCDE]/60 dark:border-[#1E3447] pb-6">
+        <div className="mt-8 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-line/60 dark:border-line pb-6">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold flex items-center gap-2">
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Architectural Curation</span>
+              <span>Shopping Bag</span>
             </span>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-1">
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-fg leading-tight mt-1">
               Your Curated Bag
             </h1>
           </div>
 
           {cartItems.length > 0 && (
-            <div className="flex items-center space-x-4 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+            <div className="flex items-center space-x-4 text-xs text-muted">
               <span>
                 {cartItems.reduce((acc, item) => acc + item.quantity, 0)} {cartItems.reduce((acc, item) => acc + item.quantity, 0) === 1 ? 'Piece' : 'Pieces'} Selected
               </span>
@@ -106,7 +106,7 @@ export const Cart = () => {
               className="mb-6 p-4 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-stone-300 dark:border-stone-800 text-xs text-stone-700 dark:text-stone-300 flex items-center justify-between shadow-sm"
             >
               <div className="flex items-center space-x-2">
-                <RotateCcw className="w-4 h-4 text-[#36656B]" />
+                <RotateCcw className="w-4 h-4 text-accent" />
                 <span>{removedNotification}</span>
               </div>
             </motion.div>
@@ -119,22 +119,22 @@ export const Cart = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="py-16 sm:py-24 px-6 sm:px-12 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-center max-w-3xl mx-auto shadow-sm"
+            className="py-16 sm:py-24 px-6 sm:px-12 rounded-3xl bg-surface border border-line text-center max-w-3xl mx-auto shadow-sm"
           >
-            <div className="w-20 h-20 rounded-full bg-[#E5ECEC]/60 dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] flex items-center justify-center mx-auto mb-6 text-[#36656B]">
+            <div className="w-20 h-20 rounded-full bg-sunken/60 dark:bg-sunken border border-line flex items-center justify-center mx-auto mb-6 text-accent">
               <ShoppingBag className="w-9 h-9 stroke-[1.25]" />
             </div>
 
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-              Atelier Bag Unoccupied
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              Nothing Here Yet
             </span>
 
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-2 mb-4">
-              Your Architectural Curation is Empty
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg mt-2 mb-4">
+              Your Bag is Empty
             </h2>
 
-            <p className="text-sm sm:text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed max-w-lg mx-auto font-light mb-8">
-              Explore our handcrafted collections sourced across Milan, Verona, Bali, and Kyoto. Each piece is meticulously built with authentic natural travertine, solid timber, and Italian upholstery.
+            <p className="text-sm sm:text-base text-muted leading-relaxed max-w-lg mx-auto font-light mb-8">
+              Browse our handcrafted furniture, made with natural stone, solid wood and Italian fabrics.
             </p>
 
             {/* Quick Category Shortcut Pills */}
@@ -149,7 +149,7 @@ export const Cart = () => {
                 <Link
                   key={cat.label}
                   to={cat.link}
-                  className="px-4 py-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] bg-[#F4F7F6]/50 dark:bg-[#07121C]/50 text-xs text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] transition-colors"
+                  className="px-4 py-2 rounded-full border border-line bg-canvas/50 text-xs text-fg hover:border-accent transition-colors"
                 >
                   {cat.label}
                 </Link>
@@ -158,7 +158,7 @@ export const Cart = () => {
 
             <Link
               to="/shop"
-              className="inline-flex items-center gap-3 py-4 px-8 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-all duration-300 text-xs uppercase tracking-luxury font-medium shadow-luxury"
+              className="inline-flex items-center gap-3 py-4 px-8 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium shadow-luxury"
             >
               <span>Explore Furniture Collections</span>
               <ArrowRight className="w-4 h-4" />
@@ -181,13 +181,13 @@ export const Cart = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.25 }}
-                      className="p-5 sm:p-7 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative group"
+                      className="p-5 sm:p-7 rounded-3xl bg-surface border border-line shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative group"
                     >
                       {/* Product Thumbnail & Details */}
                       <div className="flex items-center gap-5 w-full sm:w-auto">
                         <Link
                           to={`/shop/${item.id}`}
-                          className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shrink-0 block relative group/img"
+                          className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sunken border border-line shrink-0 block relative group/img"
                         >
                           <SmartImage sizes="96px"
                             src={itemImage}
@@ -197,22 +197,22 @@ export const Cart = () => {
                         </Link>
 
                         <div className="space-y-1 flex-1">
-                          <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                            {item.category || item.collection || 'Bespoke Atelier'}
+                          <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                            {item.category || item.collection || 'Symmetry Interiors'}
                           </span>
                           
                           <Link
                             to={`/shop/${item.id}`}
-                            className="text-base sm:text-lg font-bold text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] transition-colors leading-snug block"
+                            className="text-base sm:text-lg font-bold text-fg hover:text-accent transition-colors leading-snug block"
                           >
                             {item.name}
                           </Link>
 
                           {/* Selected Finish / Fabric */}
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#4F6467] dark:text-[#AEB7BE] pt-1">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted pt-1">
                             {item.selectedFinish && (
                               <span className="inline-flex items-center gap-1">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                                 <span>Finish: <strong>{item.selectedFinish}</strong></span>
                               </span>
                             )}
@@ -226,11 +226,11 @@ export const Cart = () => {
 
                           {/* Mobile Unit Price */}
                           <div className="sm:hidden pt-2">
-                            <span className="text-sm font-bold text-[#131E20] dark:text-[#F5F1E8]">
+                            <span className="text-sm font-bold text-fg">
                               ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                             </span>
                             {item.quantity > 1 && (
-                              <span className="text-xs text-[#4F6467] dark:text-[#AEB7BE] ml-2">
+                              <span className="text-xs text-muted ml-2">
                                 (₹{item.price.toLocaleString('en-IN')} each)
                               </span>
                             )}
@@ -239,25 +239,25 @@ export const Cart = () => {
                       </div>
 
                       {/* Quantity Controls & Line Total */}
-                      <div className="flex items-center justify-between sm:justify-end gap-5 sm:gap-8 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-[#D1DCDE]/60 dark:border-[#1E3447]">
+                      <div className="flex items-center justify-between sm:justify-end gap-5 sm:gap-8 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-line/60 dark:border-line">
                         {/* Quantity Controller Pill */}
-                        <div className="flex items-center border border-[#D1DCDE] dark:border-[#1E3447] rounded-full overflow-hidden bg-[#F4F7F6] dark:bg-[#07121C]">
+                        <div className="flex items-center border border-line rounded-full overflow-hidden bg-canvas">
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.cartKey, -1)}
-                            className="p-2 sm:px-3.5 sm:py-2 text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC] dark:hover:bg-[#132838] transition disabled:opacity-40"
+                            className="p-2 sm:px-3.5 sm:py-2 text-fg hover:bg-sunken transition disabled:opacity-40"
                             title="Decrease quantity"
                             aria-label="Decrease quantity"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="px-3 sm:px-4 py-1.5 text-xs font-mono font-bold text-[#131E20] dark:text-[#F5F1E8] min-w-[2rem] text-center">
+                          <span className="px-3 sm:px-4 py-1.5 text-xs font-mono font-bold text-fg min-w-[2rem] text-center">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.cartKey, 1)}
-                            className="p-2 sm:px-3.5 sm:py-2 text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC] dark:hover:bg-[#132838] transition"
+                            className="p-2 sm:px-3.5 sm:py-2 text-fg hover:bg-sunken transition"
                             title="Increase quantity"
                             aria-label="Increase quantity"
                           >
@@ -267,11 +267,11 @@ export const Cart = () => {
 
                         {/* Desktop Line Total */}
                         <div className="hidden sm:block text-right min-w-[120px]">
-                          <div className="text-base sm:text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
+                          <div className="text-base sm:text-lg font-bold text-fg">
                             ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                           </div>
                           {item.quantity > 1 && (
-                            <div className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
+                            <div className="text-[11px] text-muted">
                               ₹{item.price.toLocaleString('en-IN')} / unit
                             </div>
                           )}
@@ -297,49 +297,49 @@ export const Cart = () => {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <Link
                   to="/shop"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-luxury font-medium text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-luxury font-medium text-fg hover:text-accent transition"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Continue Exploring Furniture</span>
                 </Link>
 
-                <div className="text-xs text-[#4F6467] dark:text-[#AEB7BE] flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-[#36656B]" />
-                  <span>Pieces reserved for 60 minutes</span>
+                <div className="text-xs text-muted flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-accent" />
+                  <span>Items are held for 60 minutes</span>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Order Summary Panel (4 Cols Sticky) */}
-            <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-6 shadow-sm sticky top-28">
+            <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-surface border border-line space-y-6 shadow-sm sticky top-28">
               <div>
-                <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
-                  Atelier Valuation
+                <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
+                  Your Order
                 </span>
-                <h3 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-0.5">
+                <h3 className="text-2xl font-bold tracking-tight text-fg mt-0.5">
                   Order Summary
                 </h3>
               </div>
 
               {/* Breakdown */}
-              <div className="space-y-3.5 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+              <div className="space-y-3.5 text-xs text-muted">
                 <div className="flex justify-between items-center">
                   <span>Subtotal</span>
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] font-mono">
+                  <span className="font-semibold text-fg font-mono">
                     ₹{subtotal.toLocaleString('en-IN')}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
                   <span>Standard GST (18%)</span>
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] font-mono">
+                  <span className="font-semibold text-fg font-mono">
                     ₹{tax.toLocaleString('en-IN')}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span>White-Glove Architectural Delivery</span>
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  <span>Delivery & Installation</span>
+                  <span className="font-semibold text-fg">
                     {shipping === 0 ? (
                       <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
                         Complimentary
@@ -352,30 +352,30 @@ export const Cart = () => {
 
                 {couponApplied && (
                   <div className="flex justify-between items-center text-emerald-600 dark:text-emerald-400 font-medium">
-                    <span>Architectural Privilege (10%)</span>
+                    <span>Trade Discount (10%)</span>
                     <span>-₹{discount.toLocaleString('en-IN')}</span>
                   </div>
                 )}
 
-                <div className="pt-4 border-t border-[#D1DCDE]/80 dark:border-[#1E3447] flex justify-between items-baseline">
+                <div className="pt-4 border-t border-line/80 dark:border-line flex justify-between items-baseline">
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] block">
-                      Total Investment
+                    <span className="text-xs font-semibold uppercase tracking-luxury text-fg block">
+                      Total
                     </span>
-                    <span className="text-[10px] text-[#4F6467] dark:text-[#AEB7BE]">
-                      (Incl. white-glove setup & transit insurance)
+                    <span className="text-[10px] text-muted">
+                      (Includes installation and transit insurance)
                     </span>
                   </div>
-                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
                     ₹{finalTotal.toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>
 
               {/* Coupon / Privilege Code Input */}
-              <form onSubmit={handleApplyCoupon} className="pt-2 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <form onSubmit={handleApplyCoupon} className="pt-2 border-t border-line/60 dark:border-line">
                 <label className="block text-[11px] font-medium text-stone-600 dark:text-stone-300 mb-1.5">
-                  Architect / Designer Privilege Code
+                  Architect or Designer Discount Code
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -384,12 +384,12 @@ export const Cart = () => {
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="e.g. ARCHITECT or SYMMETRY10"
                     disabled={couponApplied}
-                    className="flex-1 px-3.5 py-2 rounded-xl text-xs border border-[#D1DCDE] dark:border-[#1E3447] bg-[#F4F7F6]/50 dark:bg-[#07121C]/50 text-[#131E20] dark:text-[#F5F1E8] uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-[#36656B] disabled:opacity-60"
+                    className="flex-1 px-3.5 py-2 rounded-xl text-xs border border-line bg-canvas/50 text-fg uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60"
                   />
                   <button
                     type="submit"
                     disabled={couponApplied || !couponCode.trim()}
-                    className="px-4 py-2 rounded-xl bg-stone-900 dark:bg-white text-white dark:text-stone-900 text-xs font-semibold uppercase tracking-wider hover:bg-[#36656B] dark:hover:bg-[#36656B] dark:hover:text-white transition disabled:opacity-40"
+                    className="px-4 py-2 rounded-full bg-stone-900 dark:bg-white text-on-accent dark:text-stone-900 text-[14px] font-medium tracking-[-0.01em] hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition disabled:opacity-40"
                   >
                     Apply
                   </button>
@@ -397,7 +397,7 @@ export const Cart = () => {
                 {couponApplied && (
                   <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Privilege discount verified & applied.</span>
+                    <span>Discount applied.</span>
                   </p>
                 )}
               </form>
@@ -406,7 +406,7 @@ export const Cart = () => {
               <div className="space-y-3 pt-2">
                 <Link
                   to="/checkout"
-                  className="w-full py-4 px-6 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-all duration-300 text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 shadow-luxury"
+                  className="w-full py-4 px-6 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 shadow-luxury"
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>Proceed to Checkout</span>
@@ -415,21 +415,21 @@ export const Cart = () => {
 
                 <Link
                   to="/shop"
-                  className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-[#36656B] dark:hover:border-[#BCA575] text-[#131E20] dark:text-[#F5F1E8] text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 transition"
+                  className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent text-fg text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 transition"
                 >
                   <span>Continue Shopping</span>
                 </Link>
               </div>
 
               {/* Atelier Guarantees */}
-              <div className="pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447] text-[11px] text-[#4F6467] dark:text-[#AEB7BE] space-y-2.5">
+              <div className="pt-4 border-t border-line/60 dark:border-line text-[11px] text-muted space-y-2.5">
                 <div className="flex items-center gap-2.5">
-                  <Truck className="w-4 h-4 text-[#36656B] shrink-0" />
-                  <span>Complimentary inside-placement across India</span>
+                  <Truck className="w-4 h-4 text-accent shrink-0" />
+                  <span>Free delivery and placement across India</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <ShieldCheck className="w-4 h-4 text-[#36656B] shrink-0" />
-                  <span>10-Year structural frame guarantee & authenticity seal</span>
+                  <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
+                  <span>10-year frame warranty and certificate of authenticity</span>
                 </div>
               </div>
             </div>

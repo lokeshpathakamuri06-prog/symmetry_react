@@ -14,19 +14,19 @@ export const TestimonialCard = ({ testimonial }) => {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
-      <AppleCardWrapper className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#0D1C29] flex flex-col justify-between relative h-full">
-        <Quote className="w-8 h-8 text-[#36656B]/20 dark:text-[#BCA575]/20 absolute top-6 right-6" />
+      <AppleCardWrapper className="p-8 sm:p-10 rounded-3xl bg-surface flex flex-col justify-between relative h-full">
+        <Quote className="w-8 h-8 text-accent/20 absolute top-6 right-6" />
 
         <div>
           {/* 5-star rating */}
-          <div className="flex items-center gap-1 mb-6 text-[#36656B] dark:text-[#BCA575]">
+          <div className="flex items-center gap-1 mb-6 text-accent">
             {[...Array(testimonial.rating)].map((_, i) => (
               <Star key={i} className="w-4 h-4 fill-current" />
             ))}
           </div>
 
           {/* Quote */}
-          <p className="text-lg sm:text-xl text-[#131E20] dark:text-[#F5F1E8] font-normal leading-relaxed italic mb-8">
+          <p className="text-lg sm:text-xl text-fg font-normal leading-relaxed italic mb-8">
             &ldquo;{testimonial.quote}&rdquo;
           </p>
         </div>
@@ -39,13 +39,13 @@ export const TestimonialCard = ({ testimonial }) => {
             className="w-11 h-11 rounded-full object-cover shadow-sm"
           />
           <div>
-            <h4 className="text-sm font-medium text-[#131E20] dark:text-[#F5F1E8]">
+            <h4 className="text-sm font-medium text-fg">
               {testimonial.author}
             </h4>
-            <p className="text-xs text-[#36656B] dark:text-[#BCA575]">
+            <p className="text-xs text-accent">
               {testimonial.role} &bull; {testimonial.project}
             </p>
-            <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
+            <p className="text-[11px] text-muted">
               {testimonial.location}
             </p>
           </div>

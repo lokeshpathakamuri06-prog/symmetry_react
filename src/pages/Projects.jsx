@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Layers, 
@@ -12,6 +11,7 @@ import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
 import { heroImage } from '../lib/staticImages';
+import PageHero from '../components/PageHero';
 
 // Curated architectural project walkthrough video streams
 const PROJECT_VIDEOS = [
@@ -88,95 +88,26 @@ const ProjectsView = ({ projects }) => {
   return (
     <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-hidden">
       <SeoMeta
-        title="Architectural Projects &amp; Commissions — Symmetry Interiors"
-        description="Explore curated architectural masterworks by Symmetry Interiors: private residential estates, executive commercial headquarters, and boutique hospitality pavilions."
+        title="Projects — Symmetry Interiors"
+        description="Homes, offices, hotels and hospitals designed and delivered by Symmetry Interiors."
       />
 
-      {/* =========================================================================
-          SECTION 1: ARCHITECTURAL CINEMATIC HERO WITH VIDEO BACKGROUND
-          ========================================================================= */}
-      <section className="relative h-[100svh] min-h-[680px] sm:min-h-[760px] w-full bg-black overflow-hidden flex flex-col justify-between select-none">
-        {/* Full-Bleed Video Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            {...heroImage('/images/hero/hero-projects.jpeg')}
-            alt="Symmetry Interiors Architectural Projects"
-            className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
-          />
-        </div>
-
-        {/* Top Header Spacing with Breadcrumbs */}
-        <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-12 max-w-[1632px] mx-auto w-full flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-2.5 text-xs uppercase tracking-luxury"
-          >
-            <Link to="/" className="text-white/80 hover:text-white transition-colors">
-              Home
-            </Link>
-            <span className="text-white/40">/</span>
-            <span className="text-[#BCA575] font-semibold">Turnkey Projects</span>
-          </motion.div>
-        </div>
-
-        {/* Center Viewport Editorial Headline */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 lg:px-12 text-center space-y-5 my-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-[1.08] tracking-tight drop-shadow-md"
-          >
-            Spaces We’ve <span className="text-[#BCA575] font-bold">Brought to Life</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-sm sm:text-base lg:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
-          >
-            Explore our residential, hospitality, commercial, healthcare, and bespoke interior projects delivered with singular turnkey accountability.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Elevated Portfolio Stats Strip Floating Directly Below Hero */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-30">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6"
-        >
-          {[
-            { value: '450+', label: 'Commissions Handed Over', sub: 'Zero Contractual Delay' },
-            { value: '3', label: 'Core Typologies', sub: 'Residential, Commercial, Hospitality' },
-            { value: '25k', label: 'Sq.Ft. Fabrication Campus', sub: 'In-House Joinery & Stone' },
-            { value: '100%', label: 'Turnkey Handover Record', sub: 'Single-Point Engineering' },
-          ].map((st, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -6, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              className="p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-xl border border-[#D1DCDE] dark:border-[#1E3447] shadow-lg text-center group hover:border-[#36656B]/60 dark:hover:border-[#BCA575]/60 hover:shadow-xl transition-all duration-300"
-            >
-              <p className="font-bold text-2xl sm:text-4xl text-[#36656B] dark:text-[#BCA575] group-hover:scale-105 transition-transform duration-300">
-                {st.value}
-              </p>
-              <p className="text-xs font-sans uppercase tracking-luxury font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-1">
-                {st.label}
-              </p>
-              <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE] font-light mt-0.5 hidden sm:block">
-                {st.sub}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+      <PageHero
+        page="projects"
+        breadcrumb={[{ label: 'Turnkey Projects' }]}
+        eyebrow="Turnkey Projects"
+        title="Spaces We’ve"
+        highlight="Brought to Life"
+        subtitle="Homes, offices, hotels and healthcare spaces we have designed and delivered from start to finish."
+        image={heroImage('/images/hero/hero-projects.jpeg')}
+        imageAlt="Symmetry Interiors Architectural Projects"
+        stats={[
+          { value: '450+', label: 'Projects Delivered', sub: 'On Time' },
+          { value: '3', label: 'Project Types', sub: 'Homes, Offices, Hospitality' },
+          { value: '25k', label: 'Sq.Ft. Workshop', sub: 'Our Own Joinery & Stone' },
+          { value: '100%', label: 'Turnkey Delivery', sub: 'One Team, Start to Finish' },
+        ]}
+      />
 
       {/* =========================================================================
           SECTION 2: FEATURED PROJECT SPOTLIGHT
@@ -189,14 +120,14 @@ const ProjectsView = ({ projects }) => {
             viewport={{ once: true, margin: '-60px' }}
             whileHover={{ y: -4 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="group rounded-3xl sm:rounded-[40px] bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B]/60 dark:hover:border-[#BCA575]/60 p-6 sm:p-10 lg:p-14 overflow-hidden shadow-luxury hover:shadow-2xl transition-all duration-500 relative"
+            className="group rounded-3xl sm:rounded-[40px] bg-sunken/40 dark:bg-surface border border-line hover:border-accent/60 p-6 sm:p-10 lg:p-14 overflow-hidden shadow-luxury hover:shadow-2xl transition-all duration-500 relative"
           >
             {/* Ambient golden radial glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#36656B]/10 dark:bg-[#BCA575]/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none group-hover:scale-[1.05] transition-transform duration-700" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
               {/* Featured Visual */}
-              <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-lg">
+              <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-sunken shadow-lg">
                 <SmartImage sizes="100vw" priority
                   src={featuredProject.heroImage}
                   alt={featuredProject.title}
@@ -206,8 +137,8 @@ const ProjectsView = ({ projects }) => {
 
                 {/* Floating Tag */}
                 <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3.5 py-1.5 rounded-full text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/85 text-[#BCA575] backdrop-blur-md border border-[#BCA575]/30 shadow-md">
-                    Featured Commission
+                  <span className="px-3.5 py-1.5 rounded-full text-[11px] font-sans uppercase tracking-luxury font-medium bg-fg/85 dark:bg-canvas/85 text-[#BCA575] backdrop-blur-md border border-[#BCA575]/30 shadow-md">
+                    Featured Project
                   </span>
                 </div>
 
@@ -223,34 +154,34 @@ const ProjectsView = ({ projects }) => {
               {/* Featured Narrative */}
               <div className="lg:col-span-5 space-y-5">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs uppercase tracking-luxury font-semibold text-[#36656B] dark:text-[#BCA575]">
+                  <span className="text-xs uppercase tracking-luxury font-semibold text-accent">
                     {featuredProject.typology} Architecture
                   </span>
-                  <span className="text-xs font-mono text-[#6B8083] dark:text-[#8E9CA8]">
+                  <span className="text-xs font-mono text-subtle">
                     • {featuredProject.completionYear}
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-fg leading-tight group-hover:text-accent transition-colors duration-300">
                   {featuredProject.title}
                 </h2>
 
-                <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted font-light leading-relaxed">
                   {featuredProject.summary}
                 </p>
 
                 {/* Stats Grid with Interactive Tiles */}
                 {featuredProject.stats && (
-                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#D1DCDE] dark:border-[#1E3447]">
+                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-line">
                     {featuredProject.stats.slice(0, 4).map((st, sIdx) => (
                       <div
                         key={sIdx}
-                        className="p-2 rounded-xl bg-white/60 dark:bg-[#07121C]/60 border border-[#D1DCDE]/50 dark:border-[#1E3447]/50 hover:scale-102 transition-transform"
+                        className="p-2 rounded-xl bg-surface/60 dark:bg-canvas/60 border border-line/50 hover:scale-102 transition-transform"
                       >
-                        <p className="text-xs font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                        <p className="text-xs font-semibold text-fg">
                           {st.value}
                         </p>
-                        <p className="text-[10px] uppercase font-sans tracking-wider text-[#6B8083] dark:text-[#8E9CA8]">
+                        <p className="text-[10px] uppercase font-sans tracking-wider text-subtle">
                           {st.label}
                         </p>
                       </div>
@@ -261,14 +192,14 @@ const ProjectsView = ({ projects }) => {
                 {/* Materials palette */}
                 {featuredProject.materialsPalette && (
                   <div className="pt-2">
-                    <span className="text-[10px] uppercase font-mono text-[#6B8083] dark:text-[#8E9CA8] block mb-2">
+                    <span className="text-[10px] uppercase font-mono text-subtle block mb-2">
                       Materials Palette:
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {featuredProject.materialsPalette.slice(0, 4).map((mat, mIdx) => (
                         <span
                           key={mIdx}
-                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] border border-[#D1DCDE]/60 dark:border-[#1E3447] hover:scale-105 hover:bg-[#36656B]/15 hover:text-[#36656B] dark:hover:text-[#BCA575] transition-all cursor-default"
+                          className="px-2.5 py-1 rounded-md text-[10px] font-sans bg-surface dark:bg-canvas text-fg border border-line/60 dark:border-line hover:scale-105 hover:bg-accent/15 hover:text-accent transition-all cursor-default"
                         >
                           {mat}
                         </span>
@@ -284,7 +215,7 @@ const ProjectsView = ({ projects }) => {
                     size="md"
                     showArrow
                   >
-                    Explore Featured Commission
+                    View This Project
                   </Button>
                 </div>
               </div>
@@ -297,13 +228,13 @@ const ProjectsView = ({ projects }) => {
           SECTION 3: PROJECT FILTERS (ALL, RESIDENTIAL, COMMERCIAL, HOSPITALITY)
           ========================================================================= */}
       <section id="browse-projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-[#D1DCDE] dark:border-[#1E3447] pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-line pb-6">
           <div>
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
-              Curated Commissions
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1">
+              All Projects
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
-              Browse by Typology
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
+              Browse by Type
             </h2>
           </div>
 
@@ -319,8 +250,8 @@ const ProjectsView = ({ projects }) => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`relative px-5 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                     isActive
-                      ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md ring-1 ring-[#36656B]'
-                      : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] dark:hover:border-[#BCA575]'
+                      ? 'bg-fg text-canvas shadow-md ring-1 ring-accent'
+                      : 'bg-surface text-muted border border-line hover:border-accent'
                   }`}
                 >
                   <span>{cat}</span>
@@ -328,7 +259,7 @@ const ProjectsView = ({ projects }) => {
                     className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
                       isActive
                         ? 'bg-white/20 dark:bg-black/20 text-white dark:text-black'
-                        : 'bg-[#E5ECEC] dark:bg-[#132838] text-[#4F6467] dark:text-[#AEB7BE]'
+                        : 'bg-sunken text-muted'
                     }`}
                   >
                     {count}
@@ -364,19 +295,19 @@ const ProjectsView = ({ projects }) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-24 text-center rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm"
+            className="py-24 text-center rounded-3xl bg-surface border border-line shadow-sm"
           >
-            <Layers className="w-10 h-10 text-[#36656B] dark:text-[#BCA575] mx-auto mb-3 opacity-60 animate-pulse" />
-            <h3 className="font-bold tracking-tight text-2xl text-[#131E20] dark:text-[#F5F1E8]">
+            <Layers className="w-10 h-10 text-accent mx-auto mb-3 opacity-60 animate-pulse" />
+            <h3 className="font-bold tracking-tight text-2xl text-fg">
               No Projects in This Category
             </h3>
-            <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-2 max-w-sm mx-auto font-light">
-              We are currently preparing documentation for upcoming commissions in this typology.
+            <p className="text-xs text-muted mt-2 max-w-sm mx-auto font-light">
+              New projects in this category are coming soon.
             </p>
             <div className="mt-5">
               <button
                 onClick={() => setSelectedCategory('All')}
-                className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] hover:underline font-medium cursor-pointer"
+                className="text-xs uppercase tracking-luxury text-accent hover:underline font-medium cursor-pointer"
               >
                 Reset Filter to All
               </button>

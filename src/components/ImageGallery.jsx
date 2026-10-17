@@ -28,7 +28,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
           <div
             key={idx}
             onClick={() => openLightbox(idx)}
-            className={`group relative overflow-hidden rounded-2xl bg-[#E5ECEC] dark:bg-[#132838] cursor-pointer ${
+            className={`group relative overflow-hidden rounded-2xl bg-sunken cursor-pointer ${
               idx === 0 ? 'md:col-span-2 aspect-[16/10]' : 'aspect-square'
             }`}
           >
@@ -39,7 +39,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md flex items-center justify-center text-[#131E20] dark:text-white shadow-lg">
+              <div className="w-12 h-12 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md flex items-center justify-center text-[#1D1D1F] dark:text-white shadow-lg">
                 <Maximize2 className="w-5 h-5" />
               </div>
             </div>
@@ -55,7 +55,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
-            className="fixed inset-0 z-50 bg-[#07121C]/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
           >
             <button
               onClick={closeLightbox}

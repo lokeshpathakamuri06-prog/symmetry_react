@@ -28,52 +28,49 @@ export const Newsletter = ({ className = '' }) => {
   };
 
   return (
-    <div className={`p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark ${className}`}>
-      <div className="max-w-xl">
-        <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2">
-          The Symmetry Journal
-        </span>
-        <h3 className="text-2xl sm:text-3xl font-medium text-[#131E20] dark:text-[#F5F1E8] mb-3">
-          Curated Design Dispatches
-        </h3>
-        <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed mb-6 font-normal">
-          Receive our quarterly monographs exploring architectural case studies, rare Italian stones, and vanguard interior trends.
-        </p>
+    <div className={`relative overflow-hidden rounded-panel bg-surface border border-line/60 dark:border-line p-8 sm:p-12 ${className}`}>
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div>
+          <span className="eyebrow mb-3">The Symmetry Journal</span>
+          <h3 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-tight text-fg">
+            Design Ideas, Four Times a Year
+          </h3>
+          <p className="mt-3 text-[16px] text-muted leading-relaxed">
+            Our newsletter shares recent projects, beautiful materials and new interior trends.
+          </p>
+        </div>
 
-        {submitted ? (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 text-base text-[#36656B] dark:text-[#BCA575] font-medium"
-          >
-            <CheckCircle2 className="w-5 h-5" />
-            <span>Thank you for subscribing. Welcome to the Symmetry circle.</span>
-          </motion.div>
-        ) : (
-          <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3">
-            <Honeypot value={website} onChange={setWebsite} />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your private email..."
-              required
-              className="flex-1 px-4 py-3.5 rounded-full bg-[#F4F7F6] dark:bg-[#07121C] text-base text-[#131E20] dark:text-[#F5F1E8] placeholder-[#4F6467]/60 focus:outline-none transition-colors"
-            />
-            <button
-              type="submit"
-              disabled={sending}
-              className="disabled:opacity-60 px-6 py-3.5 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-colors text-sm uppercase tracking-luxury font-medium flex items-center justify-center gap-2 group shrink-0"
+        <div>
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 text-[16px] text-accent font-medium"
             >
-              <span>Subscribe</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
-          </form>
-        )}
-        {error && <p role="alert" className="mt-3 text-sm text-red-500">{error}</p>}
-        <p className="text-xs text-[#4F6467]/70 dark:text-[#AEB7BE]/70 mt-3">
-          We honor discretion. Unsubscribe at any time.
-        </p>
+              <CheckCircle2 className="w-5 h-5" />
+              <span>Thank you for subscribing. Welcome to the Symmetry circle.</span>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row gap-3">
+              <Honeypot value={website} onChange={setWebsite} />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                required
+                aria-label="Email address"
+                className="field flex-1 !rounded-full !bg-canvas px-5"
+              />
+              <button type="submit" disabled={sending} className="btn-dark group shrink-0">
+                <span>Subscribe</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </form>
+          )}
+          {error && <p role="alert" className="mt-3 text-sm text-red-500">{error}</p>}
+          <p className="text-[12.5px] text-subtle mt-3 sm:pl-5">No spam. Unsubscribe at any time.</p>
+        </div>
       </div>
     </div>
   );

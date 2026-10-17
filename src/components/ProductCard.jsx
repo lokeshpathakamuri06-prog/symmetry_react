@@ -116,64 +116,50 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
       transition={{ duration: 0.5, delay: staggerDelay, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
-      <AppleCardWrapper className="group relative flex flex-col h-full bg-[#FCFAF6] dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
-      {/* =========================================================================
-          YOO INTERIOR SIGNATURE SHUTTER REVEAL IMAGE CONTAINER
-      ========================================================================= */}
-      <div className="relative aspect-square overflow-hidden bg-[#F3EFE6] dark:bg-[#132838]">
-        {/* Shutter Clip-Path Wipe Layer with pre-trigger viewport margin for tablet/mobile */}
+      <AppleCardWrapper className="group relative flex flex-col h-full bg-surface overflow-hidden">
+      {/* Image */}
+      <div className="relative aspect-square overflow-hidden bg-sunken">
         <motion.div
           initial={{ opacity: 0, scale: 1.05 }}
           whileInView={{ opacity: 1, scale: 1.0 }}
           viewport={{ once: true, margin: '50px 0px' }}
-          transition={{
-            duration: 0.75,
-            ease: [0.22, 1, 0.36, 1],
-            delay: staggerDelay,
-          }}
+          transition={{ duration: 0.9, ease: [0.28, 0.11, 0.32, 1], delay: staggerDelay }}
           className="w-full h-full relative"
         >
-          {/* Image with smooth zoom on hover */}
           <Link to={`/shop/${product.id}`} className="block w-full h-full overflow-hidden">
             <SmartImage sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
               src={imgSrc}
               alt={product.name}
               onError={() => setImgSrc(FALLBACK_IMAGE)}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+              className="w-full h-full object-cover transition-transform duration-[900ms] ease-apple group-hover:scale-[1.04]"
             />
           </Link>
         </motion.div>
 
-        {/* NEW / BESTSELLER Luxury Pill Badge (Top-Left) */}
-        <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 pointer-events-none z-10">
-          <span
-            className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-luxury font-medium shadow-sm backdrop-blur-xs flex items-center gap-1.5 ${badgeConfig.bg} ${badgeConfig.text}`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
+        {/* Badge */}
+        <div className="absolute top-3 left-3 pointer-events-none z-10">
+          <span className="glass inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10.5px] font-semibold uppercase tracking-luxury text-fg">
+            <span className={`w-1.5 h-1.5 rounded-full ${badgeConfig.bg}`} />
             {badgeConfig.label}
           </span>
         </div>
 
-        {/* Wishlist Frosted Button (Top-Right) */}
+        {/* Wishlist */}
         <button
           onClick={toggleWishlist}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#07121C]/85 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-sm z-10 cursor-pointer"
+          className="glass absolute top-3 right-3 w-9 h-9 rounded-full text-fg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-10 cursor-pointer"
         >
-          <Heart
-            className={`w-4 h-4 transition-all duration-300 ${
-              isWishlisted ? 'fill-[#C06C52] text-[#C06C52] scale-110' : 'text-current'
-            }`}
-          />
+          <Heart className={`w-4 h-4 transition-colors duration-300 ${isWishlisted ? 'fill-[#C06C52] text-[#C06C52]' : 'text-current'}`} />
         </button>
 
-        {/* Desktop Image Hover Floating Quick-Add / Quick-View Strip */}
-        <div className="absolute bottom-3 inset-x-3 hidden sm:flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
+        {/* Hover actions (desktop) */}
+        <div className="absolute bottom-3 inset-x-3 hidden sm:flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-apple z-10">
           <button
             onClick={handleQuickAdd}
             aria-label="Quick add to bag"
-            className="flex-1 py-2.5 px-3 rounded-xl bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] text-xs sm:text-sm font-medium tracking-wider uppercase transition-colors shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+            className="glass flex-1 h-10 px-3 rounded-full text-fg hover:bg-fg hover:text-canvas text-[13px] font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             {added ? (
               <>
@@ -187,99 +173,77 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
               </>
             )}
           </button>
-
           <button
             onClick={handleQuickViewClick}
             aria-label="Quick View specification"
             title="Quick View"
-            className="p-2.5 rounded-xl bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] shadow-md transition-colors cursor-pointer"
+            className="glass w-10 h-10 rounded-full text-fg hover:bg-fg hover:text-canvas transition-colors flex items-center justify-center cursor-pointer"
           >
             <Eye className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* =========================================================================
-          LINE-MASK MOTION TEXT: CATEGORY, SERIF NAME, RATING & PRICING
-      ========================================================================= */}
-      <div className="p-3.5 sm:p-5 flex flex-col flex-1">
-        {/* Category Line */}
-        <div className="mb-1">
-          <span className="text-[11px] sm:text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block truncate">
-            {product.categoryName ? product.categoryName.toUpperCase() : product.category ? product.category.toUpperCase() : product.collection || 'INTERIORS'}
+      {/* Details */}
+      <div className="p-4 sm:p-5 flex flex-col flex-1">
+        <span className="text-[12px] font-medium text-accent truncate mb-1">
+          {product.categoryName || product.category || product.collection || 'Interiors'}
+        </span>
+
+        <Link to={`/shop/${product.id}`} className="block mb-2">
+          <h3 className="text-[16px] sm:text-[18px] font-semibold tracking-tight text-fg leading-snug line-clamp-1">
+            {product.name}
+          </h3>
+        </Link>
+
+        <div className="flex items-center gap-2 mb-1 text-[12.5px] text-muted">
+          <span className="inline-flex items-center gap-1 text-fg">
+            <Star className="w-3 h-3 fill-current" />
+            {product.rating ? product.rating.toFixed(1) : '4.9'}
           </span>
-        </div>
-
-        {/* Product Name */}
-        <div className="mb-2">
-          <Link to={`/shop/${product.id}`} className="block">
-            <h3 className="text-base sm:text-lg md:text-xl font-medium text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors leading-snug line-clamp-1">
-              {product.name}
-            </h3>
-          </Link>
-        </div>
-
-        {/* Rating & Review Row */}
-        <div className="flex items-center gap-2 mb-2">
-          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#4A5D4E] text-white text-[11px] font-semibold tracking-wide shadow-2xs">
-            <span>{product.rating ? product.rating.toFixed(1) : '4.9'}</span>
-            <Star className="w-2.5 h-2.5 fill-white text-white" />
-          </div>
-
-          <span className="text-[11px] sm:text-xs text-[#4F6467] dark:text-[#AEB7BE] font-light">
-            ({product.reviewCount || 18})
-          </span>
-
-          {/* Stock Status Badge */}
-          <span className={`ml-auto inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-medium ${
+          <span>({product.reviewCount || 18})</span>
+          <span className={`ml-auto inline-flex items-center gap-1.5 ${
             product.inStock !== false && product.stockStatus !== 'Made to Order'
-              ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/10'
-              : 'text-amber-700 dark:text-amber-300 bg-amber-500/10'
+              ? 'text-emerald-700 dark:text-emerald-400'
+              : 'text-amber-700 dark:text-amber-400'
           }`}>
             <span className={`w-1.5 h-1.5 rounded-full ${
-              product.inStock !== false && product.stockStatus !== 'Made to Order'
-                ? 'bg-emerald-500 animate-pulse'
-                : 'bg-amber-500'
+              product.inStock !== false && product.stockStatus !== 'Made to Order' ? 'bg-emerald-500' : 'bg-amber-500'
             }`} />
-            <span>{product.stockStatus || (product.inStock !== false ? 'In Stock' : 'Made to Order')}</span>
+            {product.stockStatus || (product.inStock !== false ? 'In Stock' : 'Made to Order')}
           </span>
         </div>
 
-        {/* Price & Discount Section */}
         <div className="mt-auto pt-3">
-          <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2 mb-3">
-            <span className="text-base sm:text-lg md:text-2xl font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-4">
+            <span className="text-[18px] sm:text-[20px] font-semibold tracking-tight text-fg">
               ₹{product.price.toLocaleString('en-IN')}
             </span>
-
             {product.originalPrice && (
-              <span className="text-xs sm:text-sm text-[#6B8083] dark:text-[#7D8A95] line-through font-light">
+              <span className="text-[13px] text-subtle line-through">
                 ₹{product.originalPrice.toLocaleString('en-IN')}
               </span>
             )}
-
             {discountPercent && discountPercent > 0 && (
-              <span className="text-[10px] sm:text-xs font-semibold text-[#C06C52] bg-[#C06C52]/10 px-2 py-0.5 rounded-full whitespace-nowrap">
-                {discountPercent}% OFF
+              <span className="text-[12px] font-medium text-[#B4583E] dark:text-[#E08B70]">
+                {discountPercent}% off
               </span>
             )}
           </div>
 
-          {/* Quick View & View Details Action Buttons */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleQuickViewClick}
               aria-label="Quick View specifications"
-              className="py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl bg-[#E5ECEC]/50 dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] text-[11px] sm:text-xs md:text-sm font-medium tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              className="h-10 rounded-full border border-fg/15 text-fg hover:border-fg/40 text-[13px] font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <Eye className="w-3.5 h-3.5 text-[#4A5D4E] dark:text-[#7E9683]" />
+              <Eye className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Quick</span> View
             </button>
-
             <Link
               to={`/shop/${product.id}`}
               aria-label="View Details"
-              className="py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] hover:text-white text-[11px] sm:text-xs md:text-sm font-medium tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm group/btn"
+              className="h-10 rounded-full bg-fg text-canvas hover:opacity-85 text-[13px] font-medium transition-opacity flex items-center justify-center gap-1 cursor-pointer group/btn"
             >
               <span>Details</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />

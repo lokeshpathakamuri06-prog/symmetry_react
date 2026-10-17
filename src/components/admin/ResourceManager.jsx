@@ -125,9 +125,14 @@ export const ResourceManager = ({ config }) => {
   const load = useCallback(() => {
     setError('');
     api.list({ status: filter, q })
-      .then((r) => setData({ items: r.items, counts: r.counts }))
+      // config.listFilter lets two screens share one resource (Hero Banners vs Page Banners);
+      // server counts would include both, so they are hidden in that case
+      .then((r) => setData({
+        items: config.listFilter ? r.items.filter(config.listFilter) : r.items,
+        counts: config.listFilter ? null : r.counts,
+      }))
       .catch((err) => setError(err.message));
-  }, [api, filter, q]);
+  }, [api, filter, q, config.listFilter]);
 
   useEffect(() => {
     const t = setTimeout(load, q ? 250 : 0);
@@ -186,7 +191,7 @@ export const ResourceManager = ({ config }) => {
                 onClick={() => setFilter(value)}
                 className={`px-3.5 py-1.5 rounded-lg text-[12px] font-medium whitespace-nowrap transition-all ${filter === value ? 'bg-adm-surface text-adm-fg shadow-sm' : 'text-adm-muted hover:text-adm-fg'}`}
               >
-                {label} <span className="text-adm-muted">({value === 'active' ? total : counts[value] || 0})</span>
+                {label} {data.counts && <span className="text-adm-muted">({value === 'active' ? total : counts[value] || 0})</span>}
               </button>
             ))}
           </div>

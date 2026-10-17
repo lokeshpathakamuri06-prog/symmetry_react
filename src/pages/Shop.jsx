@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { 
   SlidersHorizontal, 
   Search, 
@@ -20,6 +20,7 @@ import QuickViewModal from '../components/QuickViewModal';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import { heroImage } from '../lib/staticImages';
+import PageHero from '../components/PageHero';
 
 // Loads published content, then renders the page exactly as before
 export const Shop = () => {
@@ -135,96 +136,26 @@ const ShopView = ({ products, shopCategories }) => {
   return (
     <div className="pb-20 sm:pb-32 space-y-12 sm:space-y-16 overflow-hidden">
       <SeoMeta
-        title="Furniture Shop &amp; Architectural Objects — Symmetry Interiors"
+        title="Furniture Shop — Symmetry Interiors"
         description="Browse handcrafted luxury furniture: bouclé sofas, Nero Marquina marble dining tables, travertine coffee tables, and Murano chandeliers by Symmetry Interiors."
       />
 
-      {/* =========================================================================
-          SECTION 1: ARCHITECTURAL CINEMATIC HERO FOR SHOP
-          ========================================================================= */}
-      <section className="relative h-[100svh] min-h-[680px] sm:min-h-[760px] w-full bg-black overflow-hidden flex flex-col justify-between select-none">
-        {/* Full-bleed background hero image with luxury vignette */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            {...heroImage('/images/hero/hero-shop.jpeg')}
-            alt="Symmetry Interiors Curated Furniture &amp; Architectural Objects"
-            className="w-full h-full object-cover object-center scale-[1.03] transition-transform duration-1000 ease-out"
-          />
-        </div>
-
-        {/* Top Header Spacing with Breadcrumbs */}
-        <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-12 max-w-[1632px] mx-auto w-full flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-2.5 text-xs uppercase tracking-luxury"
-          >
-            <Link to="/" className="text-white/80 hover:text-white transition-colors">
-              Home
-            </Link>
-            <span className="text-white/40">/</span>
-            <span className="text-[#BCA575] font-semibold">Furniture Collection</span>
-          </motion.div>
-        </div>
-
-        {/* Center Viewport Editorial Headline */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 lg:px-12 text-center space-y-5 my-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl text-white font-bold leading-[1.08] tracking-tight drop-shadow-md"
-          >
-            Curated Furniture <br />
-            <span className="text-[#BCA575] font-bold">
-              &amp; Architectural Objects.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-sm sm:text-base lg:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto drop-shadow-sm"
-          >
-            Every piece is built to order from monolithic Italian travertine, kiln-dried European hardwoods, and tactile vegetable-tanned leathers in our dedicated fabrication atelier.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Elevated Metrics Strip Floating Directly Below Hero */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-30">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
-        >
-          {[
-            { value: '12', label: 'Curated Categories', sub: 'From Sofas to Objets' },
-            { value: '100%', label: 'Solid Authentic Materials', sub: 'Travertine, Hardwoods & Leather' },
-            { value: '0.5mm', label: 'CNC Laser Tolerances', sub: 'German 5-Axis Precision' },
-            { value: '10-Yr', label: 'Structural Warranty', sub: 'Comprehensive Atelier Guarantee' },
-          ].map((m, idx) => (
-            <div
-              key={idx}
-              className="p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-[#0D1C29]/90 backdrop-blur-xl border border-[#D1DCDE] dark:border-[#1E3447] shadow-lg text-center group hover:border-[#36656B]/60 transition-colors"
-            >
-              <p className="font-bold text-2xl sm:text-3xl text-[#36656B] dark:text-[#BCA575] group-hover:scale-105 transition-transform duration-300">
-                {m.value}
-              </p>
-              <p className="text-xs uppercase tracking-luxury font-semibold text-[#131E20] dark:text-[#F5F1E8] mt-1">
-                {m.label}
-              </p>
-              <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE] font-light mt-0.5 hidden sm:block">
-                {m.sub}
-              </p>
-            </div>
-          ))}
-        </motion.div>
-      </section>
+      <PageHero
+        page="shop"
+        breadcrumb={[{ label: 'Furniture Collection' }]}
+        eyebrow="Furniture Collection"
+        title="Curated Furniture"
+        highlight="& Decor."
+        subtitle="Every piece is made to order in our own workshop, from Italian travertine, seasoned European hardwoods and natural leathers."
+        image={heroImage('/images/hero/hero-shop.jpeg')}
+        imageAlt="Symmetry Interiors furniture showroom"
+        stats={[
+          { value: '12', label: 'Curated Categories', sub: 'From Sofas to Objets' },
+          { value: '100%', label: 'Natural Materials', sub: 'Stone, Solid Wood & Leather' },
+          { value: '0.5mm', label: 'Precision Finish', sub: 'German CNC Machines' },
+          { value: '10-Yr', label: 'Structural Warranty', sub: 'On Every Frame' },
+        ]}
+      />
 
       {/* =========================================================================
           SECTION 2 & 3: SEARCH & HORIZONTAL CATEGORY NAVIGATION
@@ -234,7 +165,7 @@ const ShopView = ({ products, shopCategories }) => {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           {/* Real-time Search Input */}
           <div className="relative flex-1 max-w-xl">
-            <Search className="w-4 h-4 text-[#36656B] dark:text-[#BCA575] absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-accent absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
@@ -243,12 +174,12 @@ const ShopView = ({ products, shopCategories }) => {
                 setCurrentPage(1);
               }}
               placeholder="Search by piece name, materials (travertine, bouclé, walnut)..."
-              className="w-full pl-10 pr-10 py-3 rounded-full bg-white dark:bg-[#0D1C29] text-xs sm:text-sm text-[#131E20] dark:text-[#F5F1E8] placeholder:text-[#6B8083] dark:placeholder:text-[#8E9CA8] focus:outline-none shadow-apple dark:shadow-apple-dark transition-colors"
+              className="w-full pl-10 pr-10 py-3 rounded-full bg-surface text-xs sm:text-sm text-fg placeholder:text-subtle focus:outline-none shadow-apple dark:shadow-apple-dark transition-colors"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#6B8083] hover:text-[#131E20] dark:hover:text-white"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#6B8083] hover:text-[#1D1D1F] dark:hover:text-white"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -259,12 +190,12 @@ const ShopView = ({ products, shopCategories }) => {
           {/* Mobile Filter Button (Triggers Drawer on small screens) */}
           <button
             onClick={() => setDrawerOpen(true)}
-            className="lg:hidden px-5 py-3 rounded-full bg-white dark:bg-[#0D1C29] text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center gap-2 shadow-apple dark:shadow-apple-dark cursor-pointer"
+            className="lg:hidden px-5 py-3 rounded-full bg-surface text-xs uppercase tracking-luxury text-fg flex items-center justify-center gap-2 shadow-apple dark:shadow-apple-dark cursor-pointer"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#36656B]" />
+            <SlidersHorizontal className="w-4 h-4 text-accent" />
             <span>Filters &amp; Sort</span>
             {isFiltered && (
-              <span className="w-2 h-2 rounded-full bg-[#36656B] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             )}
           </button>
         </div>
@@ -276,8 +207,8 @@ const ShopView = ({ products, shopCategories }) => {
               onClick={() => handleCategorySelect('all')}
               className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 cursor-pointer ${
                 selectedCategory === 'all'
-                  ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md'
-                  : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] shadow-xs hover:bg-[#E5ECEC]/50'
+                  ? 'bg-fg text-canvas shadow-md'
+                  : 'bg-surface text-muted shadow-xs hover:bg-[#E5ECEC]/50'
               }`}
             >
               <span>All Pieces ({products.length})</span>
@@ -293,8 +224,8 @@ const ShopView = ({ products, shopCategories }) => {
                   onClick={() => handleCategorySelect(cat.slug)}
                   className={`shrink-0 px-4 py-2.5 rounded-full text-xs uppercase tracking-luxury font-medium transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                     isActive
-                      ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-md font-semibold'
-                      : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] shadow-xs hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838]'
+                      ? 'bg-fg text-canvas shadow-md font-semibold'
+                      : 'bg-surface text-muted shadow-xs hover:bg-sunken/50 dark:hover:bg-sunken'
                   }`}
                 >
                   <span>{cat.name}</span>
@@ -312,16 +243,16 @@ const ShopView = ({ products, shopCategories }) => {
       <section ref={gridTopRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* DESKTOP FILTER SIDEBAR */}
-          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-3xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark">
+          <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6 p-6 rounded-3xl bg-surface shadow-apple dark:shadow-apple-dark">
             <div className="flex items-center justify-between pb-4">
-              <h3 className="font-bold tracking-tight text-xl text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-[#36656B] dark:text-[#BCA575]" />
-                <span>Refine Catalog</span>
+              <h3 className="font-bold tracking-tight text-xl text-fg flex items-center gap-2">
+                <Sliders className="w-4 h-4 text-accent" />
+                <span>Filters</span>
               </h3>
               {isFiltered && (
                 <button
                   onClick={handleReset}
-                  className="text-[11px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] hover:underline flex items-center gap-1 cursor-pointer"
+                  className="text-[11px] uppercase tracking-luxury text-accent hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -331,7 +262,7 @@ const ShopView = ({ products, shopCategories }) => {
 
             {/* Categories List */}
             <div>
-              <h4 className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-3">
+              <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
                 Categories
               </h4>
               <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
@@ -339,8 +270,8 @@ const ShopView = ({ products, shopCategories }) => {
                   onClick={() => handleCategorySelect('all')}
                   className={`w-full text-left px-3 py-1.5 rounded-lg text-xs uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
                     selectedCategory === 'all'
-                      ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] font-semibold'
-                      : 'text-[#4F6467] dark:text-[#AEB7BE] hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838]'
+                      ? 'bg-fg text-canvas font-semibold'
+                      : 'text-muted hover:bg-sunken/50 dark:hover:bg-sunken'
                   }`}
                 >
                   <span>All Pieces</span>
@@ -357,8 +288,8 @@ const ShopView = ({ products, shopCategories }) => {
                       onClick={() => handleCategorySelect(cat.slug)}
                       className={`w-full text-left px-3 py-1.5 rounded-lg text-xs uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
-                          ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] font-semibold'
-                          : 'text-[#4F6467] dark:text-[#AEB7BE] hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838]'
+                          ? 'bg-fg text-canvas font-semibold'
+                          : 'text-muted hover:bg-sunken/50 dark:hover:bg-sunken'
                       }`}
                     >
                       <span className="truncate pr-2">{cat.name}</span>
@@ -370,8 +301,8 @@ const ShopView = ({ products, shopCategories }) => {
             </div>
 
             {/* Stock Status Availability Filter */}
-            <div className="pt-5 border-t border-[#D1DCDE]/70 dark:border-[#1E3447]">
-              <h4 className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-3">
+            <div className="pt-5 border-t border-line/70 dark:border-line">
+              <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
                 Availability
               </h4>
               <div className="space-y-1.5">
@@ -388,13 +319,13 @@ const ShopView = ({ products, shopCategories }) => {
                     }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
                       stockFilter === item.val
-                        ? 'bg-[#36656B]/15 text-[#131E20] dark:text-[#F5F1E8] font-medium border border-[#36656B]/30'
-                        : 'text-[#4F6467] dark:text-[#AEB7BE] hover:bg-[#E5ECEC]/40 dark:hover:bg-[#132838]'
+                        ? 'bg-accent/15 text-fg font-medium border border-accent/30'
+                        : 'text-muted hover:bg-sunken/40 dark:hover:bg-sunken'
                     }`}
                   >
                     <span>{item.label}</span>
                     {stockFilter === item.val && (
-                      <Check className="w-3.5 h-3.5 text-[#36656B] dark:text-[#BCA575]" />
+                      <Check className="w-3.5 h-3.5 text-accent" />
                     )}
                   </button>
                 ))}
@@ -402,12 +333,12 @@ const ShopView = ({ products, shopCategories }) => {
             </div>
 
             {/* Price Range Slider */}
-            <div className="pt-5 border-t border-[#D1DCDE]/70 dark:border-[#1E3447]">
+            <div className="pt-5 border-t border-line/70 dark:border-line">
               <div className="flex items-center justify-between mb-2">
-                <h4 className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+                <h4 className="text-xs uppercase tracking-luxury text-accent font-semibold">
                   Max Price
                 </h4>
-                <span className="text-xs font-mono font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="text-xs font-mono font-medium text-fg">
                   ₹{priceRange.toLocaleString('en-IN')}
                 </span>
               </div>
@@ -423,7 +354,7 @@ const ShopView = ({ products, shopCategories }) => {
                 }}
                 className="w-full accent-[#36656B] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] font-mono text-[#6B8083] dark:text-[#8E9CA8] mt-1.5">
+              <div className="flex justify-between text-[10px] font-mono text-subtle mt-1.5">
                 <span>₹50,000</span>
                 <span>₹5,00,000</span>
               </div>
@@ -433,11 +364,11 @@ const ShopView = ({ products, shopCategories }) => {
           {/* MAIN PRODUCT GRID & CONTROLS */}
           <div className="lg:col-span-9 space-y-8">
             {/* Top Toolbar: Showing Count & Sort Dropdown */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm">
-              <div className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-                Showing <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">{filteredProducts.length}</span> collector pieces
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-surface border border-line shadow-sm">
+              <div className="text-xs text-muted">
+                Showing <span className="font-semibold text-fg">{filteredProducts.length}</span> pieces
                 {selectedCategory !== 'all' && (
-                  <span className="ml-1 text-[#36656B] dark:text-[#BCA575]">
+                  <span className="ml-1 text-accent">
                     in {shopCategories.find((c) => c.slug === selectedCategory)?.name || selectedCategory}
                   </span>
                 )}
@@ -445,22 +376,22 @@ const ShopView = ({ products, shopCategories }) => {
 
               {/* Sort Dropdown */}
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-luxury text-[#6B8083] dark:text-[#8E9CA8] hidden sm:inline">
+                <span className="text-xs uppercase tracking-luxury text-subtle hidden sm:inline">
                   Sort:
                 </span>
                 <div className="relative">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none pl-3.5 pr-8 py-2 rounded-xl bg-[#F4F7F6] dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] text-xs font-sans text-[#131E20] dark:text-[#F5F1E8] focus:outline-none focus:border-[#36656B] cursor-pointer"
+                    className="appearance-none pl-3.5 pr-8 py-2 rounded-xl bg-canvas border border-line text-xs font-sans text-fg focus:outline-none focus:border-accent cursor-pointer"
                   >
-                    <option value="featured">Curated First</option>
+                    <option value="featured">Recommended</option>
                     <option value="price-asc">Price: Low to High</option>
                     <option value="price-desc">Price: High to Low</option>
                     <option value="rating">Rating: High to Low</option>
                     <option value="name-asc">Alphabetical (A-Z)</option>
                   </select>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#36656B] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-3.5 h-3.5 text-accent absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -481,17 +412,17 @@ const ShopView = ({ products, shopCategories }) => {
 
             {/* EMPTY STATE */}
             {filteredProducts.length === 0 && (
-              <div className="py-24 text-center rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] p-8">
-                <Search className="w-10 h-10 text-[#36656B] dark:text-[#BCA575] mx-auto mb-3 opacity-60" />
-                <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-[#131E20] dark:text-[#F5F1E8]">
-                  No Pieces Match Your Search
+              <div className="py-24 text-center rounded-3xl bg-surface border border-line p-8">
+                <Search className="w-10 h-10 text-accent mx-auto mb-3 opacity-60" />
+                <h3 className="font-bold tracking-tight text-2xl sm:text-3xl text-fg">
+                  No Matching Pieces
                 </h3>
-                <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] mt-2 mb-6 max-w-md mx-auto font-light leading-relaxed">
-                  Try clearing your search keyword, adjusting your price ceiling, or switching to another category.
+                <p className="text-xs sm:text-sm text-muted mt-2 mb-6 max-w-md mx-auto font-light leading-relaxed">
+                  Try a different search word, a higher price limit or another category.
                 </p>
                 <button
                   onClick={handleReset}
-                  className="px-6 py-3 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-white dark:text-[#07121C] text-xs uppercase tracking-luxury font-medium cursor-pointer shadow-md hover:bg-[#36656B] transition-colors"
+                  className="px-6 py-3 rounded-full bg-fg text-on-accent dark:text-canvas text-[14px] tracking-[-0.01em] font-medium cursor-pointer shadow-md hover:bg-accent transition-colors"
                 >
                   Reset All Filters
                 </button>
@@ -502,10 +433,10 @@ const ShopView = ({ products, shopCategories }) => {
                 SECTION 8: PAGINATION
                 ========================================================================= */}
             {totalPages > 1 && (
-              <div className="pt-8 border-t border-[#D1DCDE] dark:border-[#1E3447] flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-                  Page <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">{currentPage}</span> of{' '}
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">{totalPages}</span> ({filteredProducts.length} total pieces)
+              <div className="pt-8 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-xs text-muted">
+                  Page <span className="font-semibold text-fg">{currentPage}</span> of{' '}
+                  <span className="font-semibold text-fg">{totalPages}</span> ({filteredProducts.length} total pieces)
                 </p>
 
                 {/* Page Controls */}
@@ -515,7 +446,7 @@ const ShopView = ({ products, shopCategories }) => {
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     aria-label="Previous Page"
-                    className="p-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#0D1C29] text-[#131E20] dark:text-[#F5F1E8] disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#36656B] transition-colors cursor-pointer"
+                    className="p-2.5 rounded-full border border-line bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-accent transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -527,8 +458,8 @@ const ShopView = ({ products, shopCategories }) => {
                       onClick={() => handlePageChange(pageNum)}
                       className={`w-9 h-9 rounded-full text-xs font-mono font-medium transition-all cursor-pointer ${
                         currentPage === pageNum
-                          ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] shadow-sm ring-1 ring-[#36656B]'
-                          : 'bg-white dark:bg-[#0D1C29] text-[#4F6467] dark:text-[#AEB7BE] border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B]'
+                          ? 'bg-fg text-canvas shadow-sm ring-1 ring-accent'
+                          : 'bg-surface text-muted border border-line hover:border-accent'
                       }`}
                     >
                       {pageNum}
@@ -540,7 +471,7 @@ const ShopView = ({ products, shopCategories }) => {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     aria-label="Next Page"
-                    className="p-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#0D1C29] text-[#131E20] dark:text-[#F5F1E8] disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#36656B] transition-colors cursor-pointer"
+                    className="p-2.5 rounded-full border border-line bg-surface text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-accent transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>

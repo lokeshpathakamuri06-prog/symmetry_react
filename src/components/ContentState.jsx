@@ -5,7 +5,7 @@ import { RefreshCw, WifiOff } from 'lucide-react';
 // variant: 'grid' (listing pages), 'detail' (single item pages) or 'inline' (sections inside a page)
 
 const Block = ({ className = '' }) => (
-  <div className={`rounded-2xl bg-[#E5ECEC]/70 dark:bg-[#132838] animate-pulse ${className}`} />
+  <div className={`rounded-2xl bg-sunken/70 dark:bg-sunken animate-pulse ${className}`} />
 );
 
 const Skeleton = ({ variant }) => {
@@ -45,15 +45,15 @@ export const ContentState = ({ status, retry, variant = 'grid', className = '' }
     return (
       <div className={wrapper}>
         <div role="alert" className="max-w-md mx-auto text-center py-16 space-y-4">
-          <div className="w-14 h-14 rounded-full bg-[#36656B]/10 dark:bg-[#BCA575]/10 text-[#36656B] dark:text-[#BCA575] flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 rounded-full bg-accent/10 text-accent flex items-center justify-center mx-auto">
             <WifiOff className="w-6 h-6" />
           </div>
-          <h2 className="text-xl font-semibold text-[#131E20] dark:text-[#F5F1E8]">We couldn&apos;t load this page</h2>
-          <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE]">Please check your connection and try again.</p>
+          <h2 className="text-xl font-semibold text-fg">We couldn&apos;t load this page</h2>
+          <p className="text-sm text-muted">Please check your connection and try again.</p>
           <button
             type="button"
             onClick={() => retry()}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#36656B] dark:bg-[#BCA575] text-white dark:text-[#07121C] text-xs uppercase tracking-luxury font-semibold hover:bg-[#254B50] dark:hover:bg-[#A88C5B] transition"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-on-accent dark:text-canvas text-[14px] tracking-[-0.01em] font-medium hover:bg-accent-hover transition"
           >
             <RefreshCw className="w-4 h-4" /> Retry
           </button>

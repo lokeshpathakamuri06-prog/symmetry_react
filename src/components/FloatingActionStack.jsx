@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2, MessageSquare, Send } from 'lucide-react';
+import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2, MessageSquare, Send, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSiteText } from '../context/PublicContentContext';
 import { whatsappHref } from '../lib/contact';
@@ -38,6 +38,8 @@ export const FloatingActionStack = () => {
   const [whatsappMessage, setWhatsappMessage] = useState('');
 
   const [hoveredButton, setHoveredButton] = useState(null);
+  // Phones: the three actions fold into one button so they never cover the page
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const pdfUrl = '/Symmetry-Interiors-Catalog.pdf';
 
@@ -52,112 +54,56 @@ export const FloatingActionStack = () => {
 
   return (
     <>
-      {/* =========================================================================
-          RIGHT SIDE BOTTOM CIRCULAR FLOATING STACK
-      ========================================================================= */}
-      <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex flex-col items-end gap-3">
-        {/* 1. INSTAGRAM CIRCLE BUTTON */}
-        <div className="relative flex items-center gap-2">
-          <AnimatePresence>
-            {hoveredButton === 'instagram' && (
-              <motion.div
-                initial={{ opacity: 0, x: 10, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 10, scale: 0.95 }}
-                transition={{ duration: 0.18 }}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#131E20]/90 dark:bg-[#07121C]/90 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-luxury shadow-md whitespace-nowrap pointer-events-none"
-              >
-                <span>Instagram</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <motion.a
-            href={company.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.12 }}
-            whileTap={{ scale: 0.92 }}
-            onMouseEnter={() => setHoveredButton('instagram')}
-            onMouseLeave={() => setHoveredButton(null)}
-            className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-lg border-2 border-white/40 flex items-center justify-center cursor-pointer transition-all duration-300"
-            title="Follow Symmetry Interiors on Instagram"
-            aria-label="Instagram Page"
+      {/* Floating quick actions: one quiet glass pill, bottom right */}
+      <div className="fixed bottom-5 right-4 md:bottom-8 md:right-6 z-40">
+        <div className="glass flex flex-col items-center gap-1 p-1.5 rounded-full border border-line/70 dark:border-line shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+          <div className={`${mobileOpen ? 'flex' : 'hidden'} sm:flex flex-col items-center gap-1`}>
+          {[
+            { id: 'instagram', label: 'Instagram', href: company.instagram, icon: <InstagramIcon className="w-[18px] h-[18px]" />, tint: 'hover:text-[#DC2743]' },
+            { id: 'whatsapp', label: 'Chat on WhatsApp', onClick: () => setWhatsappModalOpen((prev) => !prev), icon: <WhatsAppIcon className="w-5 h-5" />, tint: 'text-[#1FAF55] dark:text-[#25D366]' },
+            { id: 'catalog', label: 'Download Catalog PDF', onClick: () => setCatalogModalOpen(true), icon: <FileText className="w-[18px] h-[18px]" strokeWidth={1.8} />, tint: 'hover:text-accent' },
+          ].map((b) => {
+            const Tag = b.href ? 'a' : 'button';
+            return (
+              <div key={b.id} className="relative flex items-center">
+                <AnimatePresence>
+                  {hoveredButton === b.id && (
+                    <motion.span
+                      initial={{ opacity: 0, x: 6 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 6 }}
+                      transition={{ duration: 0.18 }}
+                      className="hidden sm:block absolute right-full mr-3 px-3 py-1.5 rounded-full bg-fg text-canvas text-[12px] font-medium whitespace-nowrap pointer-events-none"
+                    >
+                      {b.label}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                <Tag
+                  {...(b.href
+                    ? { href: b.href, target: '_blank', rel: 'noopener noreferrer' }
+                    : { type: 'button', onClick: b.onClick })}
+                  onMouseEnter={() => setHoveredButton(b.id)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                  className={`w-11 h-11 rounded-full flex items-center justify-center text-fg/80 hover:bg-fg/[0.07] transition-colors cursor-pointer ${b.tint}`}
+                  title={b.label}
+                  aria-label={b.label}
+                >
+                  {b.icon}
+                </Tag>
+              </div>
+            );
+          })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="sm:hidden w-11 h-11 rounded-full flex items-center justify-center text-fg/80 hover:bg-fg/[0.07] transition-colors"
+            aria-label={mobileOpen ? 'Close quick actions' : 'Open quick actions'}
+            aria-expanded={mobileOpen}
           >
-            <InstagramIcon className="w-5 h-5 text-white" />
-          </motion.a>
-        </div>
-
-        {/* 2. WHATSAPP CIRCLE BUTTON */}
-        <div className="relative flex items-center gap-2">
-          <AnimatePresence>
-            {hoveredButton === 'whatsapp' && (
-              <motion.div
-                initial={{ opacity: 0, x: 10, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 10, scale: 0.95 }}
-                transition={{ duration: 0.18 }}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#131E20]/90 dark:bg-[#07121C]/90 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-luxury shadow-md whitespace-nowrap pointer-events-none"
-              >
-                <span>WhatsApp Concierge</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <motion.button
-            whileHover={{ scale: 1.12 }}
-            whileTap={{ scale: 0.92 }}
-            onMouseEnter={() => setHoveredButton('whatsapp')}
-            onMouseLeave={() => setHoveredButton(null)}
-            onClick={() => setWhatsappModalOpen((prev) => !prev)}
-            className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#25D366] text-white shadow-lg border-2 border-white/40 flex items-center justify-center cursor-pointer transition-all duration-300"
-            title="WhatsApp VIP Concierge"
-            aria-label="WhatsApp VIP Concierge"
-          >
-            <WhatsAppIcon className="w-6 h-6 text-white" />
-          </motion.button>
-        </div>
-
-        {/* 3. CATALOG PDF CIRCLE BUTTON */}
-        <div className="relative flex items-center gap-2">
-          <AnimatePresence>
-            {hoveredButton === 'catalog' && (
-              <motion.div
-                initial={{ opacity: 0, x: 10, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 10, scale: 0.95 }}
-                transition={{ duration: 0.18 }}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#131E20]/90 dark:bg-[#07121C]/90 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-luxury shadow-md whitespace-nowrap pointer-events-none"
-              >
-                <span>Download Catalog PDF</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <motion.button
-            whileHover={{ scale: 1.12 }}
-            whileTap={{ scale: 0.92 }}
-            onMouseEnter={() => setHoveredButton('catalog')}
-            onMouseLeave={() => setHoveredButton(null)}
-            onClick={() => setCatalogModalOpen(true)}
-            className="relative w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#36656B] via-[#2A4F54] to-[#131E20] dark:from-[#BCA575] dark:via-[#A8905E] dark:to-[#07121C] text-white dark:text-[#07121C] shadow-xl border-2 border-white/40 dark:border-[#BCA575]/50 flex items-center justify-center cursor-pointer transition-all duration-300 group"
-            title="Download Corporate Catalog PDF"
-            aria-label="Download Corporate Catalog PDF"
-          >
-            {/* Animated Ring Pulse */}
-            <span className="absolute -inset-1 rounded-full bg-[#36656B]/40 dark:bg-[#BCA575]/40 animate-ping opacity-50 pointer-events-none" />
-
-            <div className="relative z-10 flex flex-col items-center justify-center">
-              <FileText className="w-5 h-5 text-white dark:text-[#07121C] group-hover:scale-110 transition-transform" />
-              <span className="text-[8px] font-bold font-mono uppercase tracking-tighter text-amber-300 dark:text-[#07121C] leading-none mt-0.5">
-                PDF
-              </span>
-            </div>
-
-            <div className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-[#C06C52] text-white flex items-center justify-center shadow-md border border-white/60">
-              <Download className="w-2.5 h-2.5" />
-            </div>
-          </motion.button>
+            {mobileOpen ? <X className="w-5 h-5" strokeWidth={1.8} /> : <MessageCircle className="w-5 h-5" strokeWidth={1.8} />}
+          </button>
         </div>
       </div>
 
@@ -172,46 +118,46 @@ export const FloatingActionStack = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="pointer-events-auto mb-20 sm:mb-24 sm:mr-2 w-full max-w-sm rounded-3xl bg-white dark:bg-[#0D1C29] p-6 shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8]"
+              className="pointer-events-auto mb-48 sm:mb-40 sm:mr-14 w-full max-w-sm rounded-card bg-surface p-6 shadow-2xl border border-line/70 dark:border-line text-fg"
             >
-              <div className="flex items-start justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <div className="flex items-start justify-between pb-3 border-b border-line/60 dark:border-line">
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <p className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-                      VIP WhatsApp Concierge
+                    <p className="text-[12px] font-medium text-accent">
+                      WhatsApp
                     </p>
                   </div>
-                  <h4 className="text-base font-serif font-medium mt-0.5">Symmetry Client Advisor</h4>
-                  <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">Direct Sourcing &amp; Project Assistance</p>
+                  <h4 className="text-[17px] font-semibold mt-0.5">Chat with Symmetry</h4>
+                  <p className="text-[11px] text-muted">Usually replies within a few hours</p>
                 </div>
                 <button
                   onClick={() => setWhatsappModalOpen(false)}
-                  className="p-1 text-[#4F6467] hover:text-[#131E20] dark:hover:text-white cursor-pointer"
+                  className="w-8 h-8 inline-flex items-center justify-center rounded-full text-muted hover:text-fg hover:bg-fg/[0.06] cursor-pointer"
                   aria-label="Close concierge"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] my-3 leading-relaxed">
-                Connect directly with our senior architectural advisors regarding turnkey projects, bespoke furniture commissions, or private site visits.
+              <p className="text-[14px] text-muted my-3 leading-relaxed">
+                Ask us about a project, custom furniture or a site visit.
               </p>
 
               <form onSubmit={handleSendWhatsapp} className="space-y-2.5">
                 <textarea
                   value={whatsappMessage}
                   onChange={(e) => setWhatsappMessage(e.target.value)}
-                  placeholder="Share your requirements or project location..."
+                  placeholder="What can we help you with?"
                   rows={2}
-                  className="w-full text-xs p-3 rounded-xl bg-[#F4F7F6] dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] focus:outline-none focus:border-[#36656B] resize-none"
+                  className="field !text-[14px] resize-none"
                 />
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] text-white font-medium text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#20ba5a] transition-colors shadow-md cursor-pointer"
+                  className="btn w-full bg-[#25D366] text-white hover:bg-[#20ba5a] cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Initiate WhatsApp Chat</span>
+                  <span>Start WhatsApp Chat</span>
                 </button>
               </form>
             </motion.div>
@@ -231,7 +177,7 @@ export const FloatingActionStack = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setCatalogModalOpen(false)}
-              className="fixed inset-0 bg-[#07121C]/85 backdrop-blur-md"
+              className="fixed inset-0 bg-black/50 backdrop-blur-md"
             />
 
             {/* Modal Container */}
@@ -240,12 +186,12 @@ export const FloatingActionStack = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-4xl bg-white dark:bg-[#0D1C29] rounded-3xl shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden z-10 my-8"
+              className="relative w-full max-w-4xl bg-surface rounded-panel shadow-2xl border border-line/70 dark:border-line overflow-hidden z-10 my-8"
             >
               {/* Modal Close Button */}
               <button
                 onClick={() => setCatalogModalOpen(false)}
-                className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors z-20 cursor-pointer"
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 inline-flex items-center justify-center rounded-full bg-sunken text-fg hover:bg-line transition-colors z-20 cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -254,14 +200,14 @@ export const FloatingActionStack = () => {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
                 {/* Left Side: Catalog Visual Cover Box */}
                 <div className="md:col-span-5 relative group">
-                  <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#F4F7F6] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shadow-xl relative">
+                  <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-canvas dark:bg-sunken border border-line shadow-xl relative">
                     <img loading="lazy" decoding="async"
                       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=85"
                       alt="Symmetry Interiors Official Catalog"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#07121C] via-[#07121C]/40 to-transparent flex flex-col justify-between p-6">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-between p-6">
                       <div className="flex items-center justify-between">
                         <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/20">
                           Official PDF
@@ -273,7 +219,7 @@ export const FloatingActionStack = () => {
                         <p className="text-[10px] uppercase font-mono tracking-luxury text-[#BCA575]">
                           Symmetry Interiors &amp; Building Solutions
                         </p>
-                        <h4 className="font-serif text-2xl font-normal leading-tight">
+                        <h4 className="text-2xl font-semibold tracking-tight leading-tight">
                           Where Vision Meets Craftsmanship
                         </h4>
                         <p className="text-xs text-white/80 font-light">
@@ -287,28 +233,28 @@ export const FloatingActionStack = () => {
                 {/* Right Side: Catalog Description & Download Actions */}
                 <div className="md:col-span-7 space-y-5">
                   <div>
-                    <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1">
-                      Official Corporate Presentation
+                    <span className="eyebrow mb-2">
+                      Company Brochure
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] font-normal leading-tight">
+                    <h3 className="text-2xl sm:text-[32px] text-fg font-semibold tracking-tight leading-tight">
                       Symmetry Interiors &amp; Building Solutions Catalog
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
-                    Explore our comprehensive 11-page corporate dossier showcasing 25+ years of international furniture sourcing, bespoke joinery manufacturing, and turnkey interiors for luxury hotels, commercial spaces, healthcare facilities, and private estates.
+                  <p className="text-[15px] text-muted leading-relaxed">
+                    Our 11-page brochure covers 25+ years of international furniture sourcing, bespoke joinery manufacturing, and turnkey interiors for luxury hotels, commercial spaces, healthcare facilities, and private estates.
                   </p>
 
                   {/* Highlights List */}
-                  <div className="space-y-2 pt-2 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+                  <div className="space-y-2 pt-2 border-t border-line/60 dark:border-line">
                     {[
                       'Global Procurement (Italy, China, Malaysia, Vietnam)',
                       'Signature Offerings: Sofas, Beds, Wardrobes & Dining',
                       'Turnkey Hospitality, Residential & Healthcare Solutions',
                       'Clientele: Courtyard Marriott, Ginger, Yashoda Hospitals',
                     ].map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-[#131E20] dark:text-[#F5F1E8]">
-                        <CheckCircle2 className="w-4 h-4 text-[#36656B] dark:text-[#BCA575] shrink-0" />
+                      <div key={idx} className="flex items-center gap-2 text-[14px] text-fg">
+                        <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -319,7 +265,7 @@ export const FloatingActionStack = () => {
                     <a
                       href={pdfUrl}
                       download="Symmetry-Interiors-Catalog.pdf"
-                      className="flex-1 py-3.5 px-6 rounded-2xl bg-[#36656B] dark:bg-[#BCA575] text-white dark:text-[#07121C] font-semibold text-xs sm:text-sm uppercase tracking-luxury hover:bg-[#284c50] dark:hover:bg-[#d4be8d] transition-all shadow-md flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="btn-primary flex-1 cursor-pointer"
                     >
                       <Download className="w-4 h-4" />
                       <span>Download Catalog (PDF)</span>
@@ -329,14 +275,14 @@ export const FloatingActionStack = () => {
                       href={pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="py-3.5 px-5 rounded-2xl border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:border-[#36656B] dark:hover:border-[#BCA575] text-xs font-semibold uppercase tracking-luxury transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
+                      className="btn-secondary cursor-pointer"
                     >
                       <span>View Online</span>
-                      <ExternalLink className="w-4 h-4 text-[#36656B] dark:text-[#BCA575]" />
+                      <ExternalLink className="w-4 h-4 text-accent" />
                     </a>
                   </div>
 
-                  <p className="text-[11px] text-[#6B8083] dark:text-[#8E9CA8] font-mono text-center sm:text-left">
+                  <p className="text-[11px] text-subtle font-mono text-center sm:text-left">
                     Direct PDF Download &bull; High Resolution Document &bull; 4.7 MB
                   </p>
                 </div>

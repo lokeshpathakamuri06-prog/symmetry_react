@@ -97,8 +97,8 @@ const JournalDetailView = ({ blogs }) => {
 
         {/* Header Metadata & Title */}
         <header className="mt-8 space-y-6">
-          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-            <span className="px-3 py-1 rounded-full bg-[#36656B]/10 border border-[#36656B]/20">
+          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-luxury text-accent font-semibold">
+            <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/20">
               {blog.category}
             </span>
             <span>&bull;</span>
@@ -114,22 +114,22 @@ const JournalDetailView = ({ blogs }) => {
           </div>
 
           {/* Large Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-[1.12]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg leading-[1.12]">
             {blog.title}
           </h1>
 
           {/* Author Byline & Social Sharing Toolbar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-5 border-y border-[#D1DCDE]/60 dark:border-[#1E3447] text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-5 border-y border-line/60 dark:border-line text-xs text-muted">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] flex items-center justify-center text-[#36656B] font-serif font-bold text-sm">
+              <div className="w-10 h-10 rounded-full bg-sunken border border-line flex items-center justify-center text-accent font-serif font-bold text-sm">
                 {blog.author.charAt(0)}
               </div>
               <div>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-sm">
+                <span className="font-semibold text-fg block text-sm">
                   {blog.author}
                 </span>
-                <span className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
-                  {blog.authorRole || 'Architectural Contributor'}
+                <span className="text-[11px] text-muted">
+                  {blog.authorRole || 'Symmetry Interiors'}
                 </span>
               </div>
             </div>
@@ -142,7 +142,7 @@ const JournalDetailView = ({ blogs }) => {
               <button
                 type="button"
                 onClick={shareToTwitter}
-                className="p-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] hover:text-[#36656B] transition"
+                className="p-2.5 rounded-full border border-line hover:border-accent hover:text-accent transition"
                 title="Share on X / Twitter"
                 aria-label="Share on Twitter"
               >
@@ -151,7 +151,7 @@ const JournalDetailView = ({ blogs }) => {
               <button
                 type="button"
                 onClick={shareToLinkedIn}
-                className="p-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] hover:text-[#36656B] transition"
+                className="p-2.5 rounded-full border border-line hover:border-accent hover:text-accent transition"
                 title="Share on LinkedIn"
                 aria-label="Share on LinkedIn"
               >
@@ -160,7 +160,7 @@ const JournalDetailView = ({ blogs }) => {
               <button
                 type="button"
                 onClick={shareToWhatsApp}
-                className="p-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] hover:text-[#36656B] transition"
+                className="p-2 rounded-full border border-line hover:border-accent hover:text-accent transition"
                 title="Share on WhatsApp"
                 aria-label="Share on WhatsApp"
               >
@@ -169,7 +169,7 @@ const JournalDetailView = ({ blogs }) => {
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="p-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] hover:text-[#36656B] transition relative"
+                className="p-2 rounded-full border border-line hover:border-accent hover:text-accent transition relative"
                 title="Copy Article Link"
                 aria-label="Copy Link"
               >
@@ -189,13 +189,13 @@ const JournalDetailView = ({ blogs }) => {
               className="mt-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-400 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2"
             >
               <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Article citation link copied to clipboard.</span>
+              <span>Link copied.</span>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Hero Cover Image */}
-        <div className="my-10 aspect-[16/9] sm:aspect-[21/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury border border-[#D1DCDE] dark:border-[#1E3447]">
+        <div className="my-10 aspect-[16/9] sm:aspect-[21/10] rounded-3xl overflow-hidden bg-sunken shadow-luxury border border-line">
           <SmartImage sizes="100vw" priority
             src={blog.coverImage}
             alt={blog.title}
@@ -204,14 +204,14 @@ const JournalDetailView = ({ blogs }) => {
         </div>
 
         {/* Lead Pull-Quote Excerpt */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border-l-4 border-[#36656B] my-10 font-serif text-lg sm:text-2xl italic text-[#131E20] dark:text-[#F5F1E8] leading-relaxed shadow-sm">
+        <div className="p-6 sm:p-10 rounded-3xl bg-sunken/40 dark:bg-surface border-l-4 border-accent my-10 font-serif text-lg sm:text-2xl italic text-fg leading-relaxed shadow-sm">
           &ldquo;{blog.excerpt}&rdquo;
         </div>
 
         {/* Editorial Prose Content */}
-        <div className="space-y-8 text-base sm:text-lg text-[#131E20]/90 dark:text-[#F5F1E8]/90 font-light leading-relaxed tracking-wide">
+        <div className="space-y-8 text-base sm:text-lg text-fg/90 font-light leading-relaxed tracking-wide">
           {blog.content?.map((paragraph, idx) => (
-            <p key={idx} className={idx === 0 ? 'first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:text-[#36656B] first-letter:leading-none' : ''}>
+            <p key={idx} className={idx === 0 ? 'first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:text-accent first-letter:leading-none' : ''}>
               {paragraph}
             </p>
           ))}
@@ -219,16 +219,16 @@ const JournalDetailView = ({ blogs }) => {
 
         {/* Related Architectural Images / Gallery */}
         {blog.relatedImages && blog.relatedImages.length > 0 && (
-          <div className="my-14 space-y-6 pt-10 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
-            <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+          <div className="my-14 space-y-6 pt-10 border-t border-line/60 dark:border-line">
+            <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-accent font-semibold">
               <Camera className="w-4 h-4" />
-              <span>Architectural Plates &amp; Material Documentation</span>
+              <span>Photos & Materials</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {blog.relatedImages.map((img, idx) => (
                 <figure key={idx} className="group space-y-2.5">
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447]">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken border border-line">
                     <SmartImage sizes="(min-width: 768px) 50vw, 100vw"
                       src={img.url}
                       alt={img.caption || `Plate ${idx + 1}`}
@@ -236,7 +236,7 @@ const JournalDetailView = ({ blogs }) => {
                     />
                   </div>
                   {img.caption && (
-                    <figcaption className="text-xs text-[#4F6467] dark:text-[#AEB7BE] italic font-serif leading-snug">
+                    <figcaption className="text-xs text-muted italic font-serif leading-snug">
                       Fig. {idx + 1} &mdash; {img.caption}
                     </figcaption>
                   )}
@@ -248,14 +248,14 @@ const JournalDetailView = ({ blogs }) => {
 
         {/* Tags */}
         {blog.tags && (
-          <div className="pt-8 mt-12 border-t border-[#D1DCDE]/60 dark:border-[#1E3447] flex flex-wrap items-center gap-2">
-            <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mr-2 font-medium">
-              Indexed Under:
+          <div className="pt-8 mt-12 border-t border-line/60 dark:border-line flex flex-wrap items-center gap-2">
+            <span className="text-xs uppercase tracking-luxury text-muted mr-2 font-medium">
+              Topics:
             </span>
             {blog.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-3.5 py-1.5 rounded-full bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8]"
+                className="text-xs px-3.5 py-1.5 rounded-full bg-surface border border-line text-fg"
               >
                 #{tag}
               </span>
@@ -264,20 +264,20 @@ const JournalDetailView = ({ blogs }) => {
         )}
 
         {/* Previous / Next Article Navigation */}
-        <nav aria-label="Previous and Next Articles" className="pt-10 mt-14 border-t border-[#D1DCDE]/60 dark:border-[#1E3447] grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <nav aria-label="Previous and Next Articles" className="pt-10 mt-14 border-t border-line/60 dark:border-line grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Previous Article Card */}
           <Link
             to={`/journal/${prevBlog.id}`}
-            className="p-5 rounded-2xl border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#0D1C29] hover:border-[#36656B] transition group flex flex-col justify-between space-y-2"
+            className="p-5 rounded-2xl border border-line bg-surface hover:border-accent transition group flex flex-col justify-between space-y-2"
           >
-            <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+            <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-luxury text-accent font-semibold">
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span>Previous Monograph</span>
+              <span>Previous Article</span>
             </div>
-            <div className="font-serif text-base text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition line-clamp-2">
+            <div className="font-serif text-base text-fg group-hover:text-accent transition line-clamp-2">
               {prevBlog.title}
             </div>
-            <div className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
+            <div className="text-[11px] text-muted">
               {prevBlog.category} &bull; {prevBlog.readTime}
             </div>
           </Link>
@@ -285,16 +285,16 @@ const JournalDetailView = ({ blogs }) => {
           {/* Next Article Card */}
           <Link
             to={`/journal/${nextBlog.id}`}
-            className="p-5 rounded-2xl border border-[#D1DCDE] dark:border-[#1E3447] bg-white dark:bg-[#0D1C29] hover:border-[#36656B] transition group flex flex-col justify-between space-y-2 sm:text-right"
+            className="p-5 rounded-2xl border border-line bg-surface hover:border-accent transition group flex flex-col justify-between space-y-2 sm:text-right"
           >
-            <div className="flex items-center gap-1.5 sm:justify-end text-[11px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-              <span>Next Monograph</span>
+            <div className="flex items-center gap-1.5 sm:justify-end text-[11px] uppercase tracking-luxury text-accent font-semibold">
+              <span>Next Article</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </div>
-            <div className="font-serif text-base text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition line-clamp-2">
+            <div className="font-serif text-base text-fg group-hover:text-accent transition line-clamp-2">
               {nextBlog.title}
             </div>
-            <div className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE]">
+            <div className="text-[11px] text-muted">
               {nextBlog.category} &bull; {nextBlog.readTime}
             </div>
           </Link>
@@ -303,19 +303,19 @@ const JournalDetailView = ({ blogs }) => {
 
       {/* Related Articles Section */}
       {relatedBlogs.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-line/60 dark:border-line">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-                Curated Reading
+              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                Keep Reading
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-1">
-                Related Monographic Studies
+              <h2 className="text-2xl sm:text-3xl font-serif text-fg mt-1">
+                Related Articles
               </h2>
             </div>
             <Link
               to="/journal"
-              className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] flex items-center gap-1.5 hover:underline font-semibold"
+              className="text-xs uppercase tracking-luxury text-accent flex items-center gap-1.5 hover:underline font-semibold"
             >
               <span>View All Essays</span>
               <ArrowRight className="w-3.5 h-3.5" />

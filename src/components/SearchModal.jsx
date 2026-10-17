@@ -75,7 +75,7 @@ export const SearchModal = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeSearch}
-            className="fixed inset-0 bg-[#07121C]/80 backdrop-blur-md"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md"
           />
 
           <motion.div
@@ -83,30 +83,30 @@ export const SearchModal = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-2xl bg-[#FFFFFF] dark:bg-[#0D1C29] rounded-2xl shadow-apple dark:shadow-apple-dark overflow-hidden z-10"
+            className="relative w-full max-w-2xl bg-surface rounded-2xl shadow-apple dark:shadow-apple-dark overflow-hidden z-10"
           >
             {/* Search Input Bar */}
             <div className="flex items-center px-5 py-4">
-              <Search className="w-5 h-5 text-[#36656B] dark:text-[#BCA575] mr-3 shrink-0" />
+              <Search className="w-5 h-5 text-accent mr-3 shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search furniture, architecture, materials, journals..."
-                className="w-full text-base sm:text-lg bg-transparent text-[#131E20] dark:text-[#F5F1E8] placeholder-[#4F6467]/60 dark:placeholder-[#AEB7BE]/50 focus:outline-none font-sans"
+                placeholder="Search furniture, projects, materials, articles..."
+                className="w-full text-base sm:text-lg bg-transparent text-fg placeholder-muted/60 dark:placeholder-muted/50 focus:outline-none font-sans"
               />
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] hover:text-[#131E20] dark:hover:text-white mr-2"
+                  className="text-xs uppercase tracking-luxury text-muted hover:text-[#1D1D1F] dark:hover:text-white mr-2"
                 >
                   Clear
                 </button>
               )}
               <button
                 onClick={closeSearch}
-                className="p-1 rounded-lg text-[#4F6467] hover:text-[#131E20] dark:hover:text-white"
+                className="p-1 rounded-lg text-[#4F6467] hover:text-[#1D1D1F] dark:hover:text-white"
                 aria-label="Close search"
               >
                 <X className="w-5 h-5" />
@@ -116,9 +116,9 @@ export const SearchModal = () => {
             {/* Content Results Area */}
             <div className="max-h-[60vh] overflow-y-auto p-5 space-y-6">
               {!cleanQuery ? (
-                <div className="py-8 text-center text-[#4F6467] dark:text-[#AEB7BE]">
-                  <p className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] mb-2 font-medium">
-                    Quick Discoveries
+                <div className="py-8 text-center text-muted">
+                  <p className="text-xs uppercase tracking-luxury text-accent mb-2 font-medium">
+                    Popular Searches
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2 mt-4 max-w-md mx-auto">
                     {['Travertine', 'Bouclé Sofa', 'Jubilee Hills', 'Murano Chandelier', 'Turnkey Execution'].map(
@@ -126,21 +126,21 @@ export const SearchModal = () => {
                         <button
                           key={tag}
                           onClick={() => setQuery(tag)}
-                          className="text-xs px-3 py-1.5 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white transition-colors"
+                          className="text-xs px-3 py-1.5 rounded-full bg-canvas dark:bg-sunken text-fg hover:bg-accent hover:text-on-accent transition-colors"
                         >
                           {tag}
                         </button>
                       )
                     )}
                   </div>
-                  <p className="text-xs text-[#4F6467]/70 dark:text-[#AEB7BE]/70 mt-6">
-                    Press <kbd className="px-1.5 py-0.5 rounded bg-[#E5ECEC] dark:bg-[#132838] text-[10px]">ESC</kbd> to close
+                  <p className="text-xs text-muted/70 mt-6">
+                    Press <kbd className="px-1.5 py-0.5 rounded bg-sunken text-[10px]">ESC</kbd> to close
                   </p>
                 </div>
               ) : totalResults === 0 ? (
                 <div className="py-12 text-center">
-                  <p className="font-serif text-xl text-[#131E20] dark:text-[#F5F1E8]">No matches found</p>
-                  <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] mt-1">
+                  <p className="font-serif text-xl text-fg">No matches found</p>
+                  <p className="text-xs text-muted mt-1">
                     No results for &ldquo;{query}&rdquo;. Try searching for &lsquo;sofa&rsquo;, &lsquo;penthouse&rsquo;, or &lsquo;lighting&rsquo;.
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export const SearchModal = () => {
                   {/* Products Section */}
                   {filteredProducts.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
                         <Sparkles className="w-3.5 h-3.5" />
                         Furniture Pieces ({filteredProducts.length})
                       </div>
@@ -158,22 +158,22 @@ export const SearchModal = () => {
                           <div
                             key={p.id}
                             onClick={() => handleSelect(`/shop/${p.id}`)}
-                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
+                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-canvas dark:hover:bg-sunken cursor-pointer transition-colors group"
                           >
                             <SmartImage sizes="64px"
                               src={p.images[0]}
                               alt={p.name}
-                              className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"
+                              className="w-14 h-14 rounded-lg object-cover border border-line"
                             />
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] truncate group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                              <h4 className="text-sm font-medium text-fg truncate group-hover:text-accent transition-colors">
                                 {p.name}
                               </h4>
-                              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                              <p className="text-xs text-muted">
                                 {p.collection} &bull; ₹{p.price.toLocaleString('en-IN')}
                               </p>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-[#36656B] group-hover:translate-x-1 transition-all" />
+                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-accent group-hover:translate-x-1 transition-all" />
                           </div>
                         ))}
                       </div>
@@ -183,31 +183,31 @@ export const SearchModal = () => {
                   {/* Projects Section */}
                   {filteredProjects.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
                         <Layers className="w-3.5 h-3.5" />
-                        Architectural Projects ({filteredProjects.length})
+                        Projects ({filteredProjects.length})
                       </div>
                       <div className="space-y-2">
                         {filteredProjects.map((proj) => (
                           <div
                             key={proj.id}
                             onClick={() => handleSelect(`/projects/${proj.id}`)}
-                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
+                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-canvas dark:hover:bg-sunken cursor-pointer transition-colors group"
                           >
                             <SmartImage sizes="64px"
                               src={proj.heroImage}
                               alt={proj.title}
-                              className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"
+                              className="w-14 h-14 rounded-lg object-cover border border-line"
                             />
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] truncate group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                              <h4 className="text-sm font-medium text-fg truncate group-hover:text-accent transition-colors">
                                 {proj.title}
                               </h4>
-                              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                              <p className="text-xs text-muted">
                                 {proj.typology} &bull; {proj.location}
                               </p>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-[#36656B] group-hover:translate-x-1 transition-all" />
+                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-accent group-hover:translate-x-1 transition-all" />
                           </div>
                         ))}
                       </div>
@@ -217,7 +217,7 @@ export const SearchModal = () => {
                   {/* Blogs Section */}
                   {filteredBlogs.length > 0 && (
                     <div>
-                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-3">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-3">
                         <BookOpen className="w-3.5 h-3.5" />
                         Design Journal ({filteredBlogs.length})
                       </div>
@@ -226,22 +226,22 @@ export const SearchModal = () => {
                           <div
                             key={b.id}
                             onClick={() => handleSelect(`/journal/${b.id}`)}
-                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-[#F4F7F6] dark:hover:bg-[#132838] cursor-pointer transition-colors group"
+                            className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-canvas dark:hover:bg-sunken cursor-pointer transition-colors group"
                           >
                             <SmartImage sizes="64px"
                               src={b.coverImage}
                               alt={b.title}
-                              className="w-14 h-14 rounded-lg object-cover border border-[#D1DCDE] dark:border-[#1E3447]"
+                              className="w-14 h-14 rounded-lg object-cover border border-line"
                             />
                             <div className="flex-1 min-w-0">
-                              <h4 className="text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] truncate group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                              <h4 className="text-sm font-medium text-fg truncate group-hover:text-accent transition-colors">
                                 {b.title}
                               </h4>
-                              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                              <p className="text-xs text-muted">
                                 {b.category} &bull; {b.readTime}
                               </p>
                             </div>
-                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-[#36656B] group-hover:translate-x-1 transition-all" />
+                            <ArrowRight className="w-4 h-4 text-[#4F6467] group-hover:text-accent group-hover:translate-x-1 transition-all" />
                           </div>
                         ))}
                       </div>

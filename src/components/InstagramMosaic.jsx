@@ -49,7 +49,7 @@ export const InstagramMosaic = () => {
     },
     {
       image: '/drive_products/LC0012.jpeg',
-      caption: 'Architectural silhouette inspection at our private salon',
+      caption: 'Checking the shape and finish in our studio',
       tag: '#CollectorFurniture #HyderabadArchitecture',
     },
   ];
@@ -63,14 +63,14 @@ export const InstagramMosaic = () => {
             href={instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-2 hover:opacity-80 transition-opacity group"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold mb-2 hover:opacity-80 transition-opacity group"
           >
-            <InstagramIcon className="w-4 h-4 transition-transform group-hover:scale-110" />
+            <InstagramIcon className="w-4 h-4 transition-transform group-hover:scale-[1.05]" />
             <span>@symmetryinteriors.ltd</span>
             <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
-          <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
-            Visual Journal &amp; Atelier Glimpses
+          <h3 className="text-2xl sm:text-3xl font-serif text-fg">
+            Follow Our Work on Instagram
           </h3>
         </div>
 
@@ -78,7 +78,7 @@ export const InstagramMosaic = () => {
           href={instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-luxury font-medium text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors px-4 py-2 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] hover:border-[#36656B] dark:hover:border-[#BCA575]"
+          className="inline-flex items-center gap-2 text-[14px] sm:text-[15px] tracking-[-0.01em] font-medium text-fg hover:text-accent transition-colors px-4 py-2 rounded-full border border-line hover:border-accent"
         >
           <span>Follow On Instagram</span>
           <ArrowUpRight className="w-4 h-4" />
@@ -97,16 +97,16 @@ export const InstagramMosaic = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: idx * 0.05 }}
-            className="group relative aspect-square rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] block"
+            className="group relative aspect-square rounded-2xl overflow-hidden bg-sunken block"
           >
             <img
               src={post.image}
               alt={post.caption}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             />
             {/* Overlay */}
-            <div className="absolute inset-0 bg-[#07121C]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between text-white">
+            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between text-white">
               <div className="flex justify-end">
                 <InstagramIcon className="w-4 h-4 text-[#BCA575]" />
               </div>

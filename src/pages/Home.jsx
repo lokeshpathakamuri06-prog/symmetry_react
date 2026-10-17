@@ -89,7 +89,7 @@ const HomeView = ({ products, projects, blogs }) => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-6 relative"
           >
-            <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury">
+            <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-sunken shadow-luxury">
               <img
                 {...heroImage('/images/home/home-about.jpeg', '(min-width: 1024px) 50vw, 100vw')}
                 alt="Architectural space planning and interior design"
@@ -98,12 +98,12 @@ const HomeView = ({ products, projects, blogs }) => {
               />
             </div>
             {/* Floating Architectural Badge */}
-            <div className="absolute -bottom-6 -right-6 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark hidden sm:block max-w-[240px]">
-              <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1.5">
-                Heritage &bull; Excellence
+            <div className="absolute -bottom-6 -right-6 p-6 rounded-2xl bg-surface shadow-apple dark:shadow-apple-dark hidden sm:block max-w-[240px]">
+              <span className="text-xs uppercase tracking-luxury text-accent font-semibold block mb-1.5">
+                Made In-House
               </span>
-              <p className="text-xl text-[#131E20] dark:text-[#F5F1E8] font-medium leading-tight">
-                25,000 sq.ft. Dedicated Atelier
+              <p className="text-xl text-fg font-medium leading-tight">
+                25,000 sq.ft. Own Workshop
               </p>
             </div>
           </motion.div>
@@ -116,19 +116,19 @@ const HomeView = ({ products, projects, blogs }) => {
             transition={{ duration: 0.8 }}
             className="lg:col-span-6 space-y-6"
           >
-            <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+            <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold">
               {text.storyKicker}
             </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-fg leading-[1.12] tracking-tight">
               {text.storyTitle}
             </h2>
 
-            <p className="text-lg sm:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
+            <p className="text-lg sm:text-xl text-muted font-light leading-relaxed">
               {text.storyParagraph1}
             </p>
 
-            <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
+            <p className="text-base sm:text-lg text-muted font-light leading-relaxed">
               {text.storyParagraph2}
             </p>
 
@@ -136,8 +136,8 @@ const HomeView = ({ products, projects, blogs }) => {
               <Button to="/about" variant="primary" size="lg" showArrow>
                 Discover Our Story
               </Button>
-              <div className="hidden sm:block pl-6 text-sm text-[#4F6467] dark:text-[#AEB7BE]">
-                <strong className="text-[#131E20] dark:text-[#F5F1E8] block text-base font-medium">
+              <div className="hidden sm:block pl-6 text-sm text-muted">
+                <strong className="text-fg block text-base font-medium">
                   {text.storyBadgeTitle}
                 </strong>
                 <span>{text.storyBadgeText}</span>
@@ -180,7 +180,7 @@ const HomeView = ({ products, projects, blogs }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
           <SectionHeading
-            eyebrow="Collector Pieces"
+            eyebrow="Featured Pieces"
             title={text.productsTitle}
             subtitle={text.productsSubtitle}
           />
@@ -211,20 +211,20 @@ const HomeView = ({ products, projects, blogs }) => {
           <SectionHeading
             eyebrow="Featured Projects"
             title={text.projectsTitle}
-            titleClassName="text-3xl sm:text-4xl lg:text-[2.1rem] xl:text-[2.65rem] 2xl:text-5xl font-bold tracking-tight leading-[1.15] text-[#131E20] dark:text-[#F5F1E8] whitespace-normal lg:whitespace-nowrap"
+            titleClassName="text-3xl sm:text-4xl lg:text-[2.1rem] xl:text-[2.65rem] 2xl:text-5xl font-bold tracking-tight leading-[1.15] text-fg whitespace-normal lg:whitespace-nowrap"
             subtitle={text.projectsSubtitle}
           />
 
           {/* Typology Filter Tabs */}
-          <div className="flex items-center justify-between gap-1 sm:gap-2 p-1.5 rounded-full bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark shrink-0 flex-nowrap w-full sm:w-auto overflow-x-auto no-scrollbar">
+          <div className="flex items-center justify-between gap-1 sm:gap-2 p-1.5 rounded-full bg-surface shadow-apple dark:shadow-apple-dark shrink-0 flex-nowrap w-full sm:w-auto overflow-x-auto no-scrollbar">
             {['All', 'Residential', 'Commercial', 'Hospitality'].map((type) => (
               <button
                 key={type}
                 onClick={() => setProjectFilter(type)}
                 className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm uppercase tracking-luxury font-medium transition-all whitespace-nowrap text-center flex-1 sm:flex-initial ${
                   projectFilter === type
-                    ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] font-semibold'
-                    : 'text-[#4F6467] dark:text-[#AEB7BE] hover:text-[#131E20] dark:hover:text-white'
+                    ? 'bg-fg text-canvas font-semibold'
+                    : 'text-muted hover:text-[#1D1D1F] dark:hover:text-white'
                 }`}
               >
                 {type}
@@ -253,7 +253,7 @@ const HomeView = ({ products, projects, blogs }) => {
               >
                 <Link
                   to={`/projects/${proj.id}`}
-                  className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#E5ECEC] dark:bg-[#132838] mb-4 block shadow-sm group-hover:shadow-luxury-hover transition-all duration-500"
+                  className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-sunken mb-4 block shadow-sm group-hover:shadow-luxury-hover transition-all duration-500"
                 >
                   <SmartImage sizes="(min-width: 1024px) 50vw, 100vw"
                     src={proj.heroImage}
@@ -267,8 +267,8 @@ const HomeView = ({ products, projects, blogs }) => {
 
                   {/* Top Floating Badges */}
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm uppercase tracking-luxury font-medium bg-[#131E20]/85 dark:bg-[#07121C]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                    <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm uppercase tracking-luxury font-medium bg-fg/85 dark:bg-canvas/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                       {proj.typology}
                     </span>
                     {proj.featured && (
@@ -281,46 +281,46 @@ const HomeView = ({ products, projects, blogs }) => {
                   {/* Bottom Left Footprint Badge */}
                   {proj.areaSqFt && (
                     <div className="absolute bottom-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-[#131E20]/80 dark:bg-[#07121C]/80 backdrop-blur-md text-[#E5ECEC] border border-white/10">
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-fg/80 dark:bg-canvas/80 backdrop-blur-md text-[#E5ECEC] border border-white/10">
                         {proj.areaSqFt}
                       </span>
                     </div>
                   )}
 
                   {/* Bottom Right Circular Action Trigger */}
-                  <div className="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center shadow-lg group-hover:bg-[#36656B] group-hover:text-white transition-all duration-300 group-hover:rotate-45">
+                  <div className="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-surface dark:bg-canvas text-fg flex items-center justify-center shadow-lg group-hover:bg-accent group-hover:text-on-accent transition-all duration-300 group-hover:rotate-45">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </Link>
 
                 {/* Metadata: Location & Year */}
-                <div className="flex items-center justify-between text-xs sm:text-sm text-[#36656B] dark:text-[#BCA575] uppercase tracking-luxury font-semibold mb-1.5">
+                <div className="flex items-center justify-between text-xs sm:text-sm text-accent uppercase tracking-luxury font-semibold mb-1.5">
                   <span>{proj.location}</span>
-                  <span className="text-[#4F6467] dark:text-[#AEB7BE] font-normal">{proj.completionYear}</span>
+                  <span className="text-muted font-normal">{proj.completionYear}</span>
                 </div>
 
                 {/* Title */}
-                <Link to={`/projects/${proj.id}`} className="hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors">
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-snug">
+                <Link to={`/projects/${proj.id}`} className="hover:text-accent transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg leading-snug">
                     {proj.title}
                   </h3>
                 </Link>
 
                 {/* Summary */}
-                <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed mt-2.5 line-clamp-2">
+                <p className="text-base sm:text-lg text-muted font-light leading-relaxed mt-2.5 line-clamp-2">
                   {proj.summary}
                 </p>
 
                 {/* Materials Tag Strip */}
                 {proj.materialsPalette && (
-                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-[#D1DCDE]/50 dark:border-[#1E3447]/60">
-                    <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] mr-1">
+                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-line/50 dark:border-line/60">
+                    <span className="text-xs uppercase tracking-luxury text-muted mr-1">
                       Palette:
                     </span>
                     {proj.materialsPalette.slice(0, 3).map((mat, mIdx) => (
                       <span
                         key={mIdx}
-                        className="text-xs sm:text-sm px-3 py-0.5 rounded-full bg-[#E5ECEC]/60 dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] font-light"
+                        className="text-xs sm:text-sm px-3 py-0.5 rounded-full bg-sunken/60 dark:bg-sunken text-fg font-light"
                       >
                         {mat}
                       </span>
@@ -334,7 +334,7 @@ const HomeView = ({ products, projects, blogs }) => {
 
         <div className="text-center mt-8">
           <Button to="/projects" variant="outline" size="md" showArrow>
-            View Complete Architectural Portfolio
+            See All Projects
           </Button>
         </div>
       </section>
@@ -364,7 +364,7 @@ const HomeView = ({ products, projects, blogs }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <SectionHeading
-            eyebrow="The Symmetry Distinction"
+            eyebrow="Why Symmetry"
             title={text.whyTitle}
             subtitle={text.whySubtitle}
             align="center"
@@ -378,15 +378,15 @@ const HomeView = ({ products, projects, blogs }) => {
               icon: Globe,
               kicker: 'PROCUREMENT',
               title: '25+ Years of Global Sourcing',
-              desc: 'Direct, long-standing partnerships with generational stone quarries in Carrara and Verona, and master furniture ateliers across Europe and Asia with zero middleman markups.',
+              desc: 'Long-standing partnerships with stone quarries in Carrara and Verona and furniture makers across Europe and Asia, with no middleman markups.',
               highlight: 'Direct Quarry & Foundry Access',
               benchmark: 'Benchmark 01',
             },
             {
               icon: Compass,
               kicker: 'BESPOKE',
-              title: 'Architectural Tailoring',
-              desc: 'Zero generic templates. Every spatial layout, millwork elevation, and furniture piece is sculpted from scratch to honor your unique architectural proportions and daylight paths.',
+              title: 'Designed Around You',
+              desc: 'No templates. Every layout, cabinet and piece of furniture is designed from scratch for your space, its proportions and its light.',
               highlight: '100% Bespoke Dimensions',
               benchmark: 'Benchmark 02',
             },
@@ -394,7 +394,7 @@ const HomeView = ({ products, projects, blogs }) => {
               icon: Award,
               kicker: 'PRECISION',
               title: 'International Craftsmanship',
-              desc: 'European engineering married with our proprietary 25,000 sq.ft. five-axis CNC joinery facility in Hyderabad, achieving aerospace-level joinery tolerances.',
+              desc: 'European techniques and our own 25,000 sq.ft. CNC workshop in Hyderabad, for joinery that is precise to the millimetre.',
               highlight: '25,000 Sq.Ft. CNC Joinery',
               benchmark: 'Benchmark 03',
             },
@@ -402,23 +402,23 @@ const HomeView = ({ products, projects, blogs }) => {
               icon: Layers,
               kicker: 'TURNKEY',
               title: 'End-to-End Solutions',
-              desc: 'Single-point accountability from civil restructuring, acoustic space planning, and MEP coordination to white-glove site installation and final signoff.',
+              desc: 'One team responsible for everything: civil work, planning, electrical and plumbing, installation and final handover.',
               highlight: 'Single-Point Accountability',
               benchmark: 'Benchmark 04',
             },
             {
               icon: Sparkles,
               kicker: 'PURITY',
-              title: 'Curated Material Authenticity',
-              desc: 'Uncompromising dedication to honest textures: honed Roman travertine, monolithic Nero Marquina, smoked French oak parquet, and raw Belgian linen.',
+              title: 'Real, Honest Materials',
+              desc: 'Natural materials only: honed Roman travertine, Nero Marquina marble, smoked French oak and Belgian linen.',
               highlight: '100% Authentic Origins',
               benchmark: 'Benchmark 05',
             },
             {
               icon: ShieldCheck,
               kicker: 'ASSURANCE',
-              title: 'Private Concierge & 10-Yr Warranty',
-              desc: 'White-glove placement under strict client confidentiality, post-installation surface conditioning, and complete peace of mind with a 10-year structural warranty.',
+              title: 'Personal Service & 10-Year Warranty',
+              desc: 'Careful installation, complete confidentiality, after-care once you move in, and a 10-year structural warranty.',
               highlight: '10-Year Structural Coverage',
               benchmark: 'Benchmark 06',
             },
@@ -433,38 +433,38 @@ const HomeView = ({ products, projects, blogs }) => {
                 transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
                 className="h-full"
               >
-                <AppleCardWrapper className="group relative p-8 sm:p-9 rounded-[32px] bg-white dark:bg-[#0D1C29] flex flex-col justify-between h-full">
+                <AppleCardWrapper className="group relative p-8 sm:p-9 rounded-[32px] bg-surface flex flex-col justify-between h-full">
                   <div>
                     {/* Top Header Row: Apple-like Squircle Icon & Kicker Badge */}
                     <div className="flex items-center justify-between mb-6">
-                      <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#F4F7F6] dark:bg-[#132838] flex items-center justify-center text-[#36656B] dark:text-[#BCA575] shadow-sm group-hover:scale-110 transition-all duration-300">
+                      <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-canvas dark:bg-sunken flex items-center justify-center text-accent shadow-sm group-hover:scale-[1.05] transition-all duration-300">
                         <Icon className="w-6 h-6" />
                       </div>
 
-                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-mono font-medium bg-[#F4F7F6] dark:bg-[#07121C] text-[#36656B] dark:text-[#BCA575]">
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-mono font-medium bg-canvas text-accent">
                         0{idx + 1} &bull; {item.kicker}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-medium text-fg leading-snug group-hover:text-accent transition-colors">
                       {item.title}
                     </h3>
 
                     {/* Narrative Body */}
-                    <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light mt-3.5">
+                    <p className="text-base text-muted leading-relaxed font-light mt-3.5">
                       {item.desc}
                     </p>
                   </div>
 
                   {/* Bottom Apple-style Stat */}
                   <div className="pt-6 mt-6 flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                    <span className="text-xs sm:text-sm font-medium text-fg flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                       {item.highlight}
                     </span>
 
-                    <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-light">
+                    <span className="text-xs uppercase tracking-luxury text-muted font-light">
                       {item.benchmark}
                     </span>
                   </div>
@@ -482,7 +482,7 @@ const HomeView = ({ products, projects, blogs }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <SectionHeading
-            eyebrow="Client Endorsements"
+            eyebrow="What Our Clients Say"
             title={text.testimonialsTitle}
             subtitle={text.testimonialsSubtitle}
             align="center"
@@ -498,7 +498,7 @@ const HomeView = ({ products, projects, blogs }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
           <SectionHeading
-            eyebrow="Editorial Monographs"
+            eyebrow="From the Journal"
             title={text.journalTitle}
             subtitle={text.journalSubtitle}
           />

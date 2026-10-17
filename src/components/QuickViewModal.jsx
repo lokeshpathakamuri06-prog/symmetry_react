@@ -34,7 +34,7 @@ export const QuickViewModal = ({ product, onClose }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-[#07121C]/80 backdrop-blur-md"
+          className="fixed inset-0 bg-black/80 backdrop-blur-md"
         />
 
         {/* Modal Window */}
@@ -43,11 +43,11 @@ export const QuickViewModal = ({ product, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative w-full max-w-4xl bg-white dark:bg-[#0D1C29] rounded-3xl shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] overflow-hidden z-10 my-8"
+          className="relative w-full max-w-4xl bg-surface rounded-3xl shadow-2xl border border-line overflow-hidden z-10 my-8"
         >
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-[#F4F7F6] dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] transition-colors z-20"
+            className="absolute top-5 right-5 p-2 rounded-full bg-canvas dark:bg-sunken text-fg hover:text-accent transition-colors z-20"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -56,7 +56,7 @@ export const QuickViewModal = ({ product, onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 p-6 sm:p-10">
             {/* Gallery Left */}
             <div className="md:col-span-6 space-y-3">
-              <div className="aspect-square rounded-2xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
+              <div className="aspect-square rounded-2xl overflow-hidden bg-sunken">
                 <SmartImage sizes="(min-width: 768px) 50vw, 100vw"
                   src={product.images?.[selectedImage] || product.images?.[0] || product.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80'}
                   alt={product.name}
@@ -74,7 +74,7 @@ export const QuickViewModal = ({ product, onClose }) => {
                       onClick={() => setSelectedImage(idx)}
                       className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
                         selectedImage === idx
-                          ? 'border-[#36656B]'
+                          ? 'border-accent'
                           : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                     >
@@ -95,14 +95,14 @@ export const QuickViewModal = ({ product, onClose }) => {
             {/* Product Details Right */}
             <div className="md:col-span-6 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
+                <span className="text-[10px] uppercase tracking-luxury text-accent font-semibold block">
                   {product.collection} &bull; {product.category?.toUpperCase()}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8]">
+                <h3 className="text-2xl sm:text-3xl font-serif text-fg">
                   {product.name}
                 </h3>
                 <div className="flex items-baseline gap-3">
-                  <span className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="text-xl sm:text-2xl font-medium text-fg">
                     ₹{product.price.toLocaleString('en-IN')}
                   </span>
                   {product.originalPrice && (
@@ -111,15 +111,15 @@ export const QuickViewModal = ({ product, onClose }) => {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light line-clamp-3">
+                <p className="text-xs text-muted leading-relaxed font-light line-clamp-3">
                   {product.description}
                 </p>
 
                 {/* Finishes */}
                 {product.finishes && (
                   <div className="pt-2">
-                    <span className="text-[11px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-medium block mb-2">
-                      Finish Selection: <strong className="text-[#131E20] dark:text-[#F5F1E8]">{selectedFinish}</strong>
+                    <span className="text-[11px] uppercase tracking-luxury text-muted font-medium block mb-2">
+                      Finish: <strong className="text-fg">{selectedFinish}</strong>
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {product.finishes.map((f) => (
@@ -128,8 +128,8 @@ export const QuickViewModal = ({ product, onClose }) => {
                           onClick={() => setSelectedFinish(f)}
                           className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${
                             selectedFinish === f
-                              ? 'border-[#36656B] bg-[#36656B]/10 text-[#131E20] dark:text-[#F5F1E8] font-medium'
-                              : 'border-[#D1DCDE] dark:border-[#1E3447] text-[#4F6467] dark:text-[#AEB7BE]'
+                              ? 'border-accent bg-accent/10 text-fg font-medium'
+                              : 'border-line text-muted'
                           }`}
                         >
                           {f}
@@ -140,28 +140,28 @@ export const QuickViewModal = ({ product, onClose }) => {
                 )}
 
                 {/* Dimensions */}
-                <div className="pt-2 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">Dimensions: </span>
+                <div className="pt-2 text-xs text-muted">
+                  <span className="font-semibold text-fg">Dimensions: </span>
                   <span>{product.dimensions}</span>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="space-y-3 pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <div className="space-y-3 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center border border-[#D1DCDE] dark:border-[#1E3447] rounded-full overflow-hidden bg-[#F4F7F6] dark:bg-[#07121C]">
+                  <div className="flex items-center border border-line rounded-full overflow-hidden bg-canvas">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="px-3 py-2 text-xs text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC]"
+                      className="px-3 py-2 text-xs text-fg hover:bg-[#E5ECEC]"
                     >
                       &minus;
                     </button>
-                    <span className="px-3 py-2 text-xs font-mono font-medium text-[#131E20] dark:text-[#F5F1E8]">
+                    <span className="px-3 py-2 text-xs font-mono font-medium text-fg">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity((q) => q + 1)}
-                      className="px-3 py-2 text-xs text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC]"
+                      className="px-3 py-2 text-xs text-fg hover:bg-[#E5ECEC]"
                     >
                       +
                     </button>
@@ -169,7 +169,7 @@ export const QuickViewModal = ({ product, onClose }) => {
 
                   <button
                     onClick={handleAdd}
-                    className="flex-1 py-3 px-5 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-colors text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2"
+                    className="flex-1 py-3 px-5 rounded-full bg-fg text-canvas hover:bg-accent transition-colors text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
                   >
                     {added ? (
                       <>
@@ -188,9 +188,9 @@ export const QuickViewModal = ({ product, onClose }) => {
                 <Link
                   to={`/shop/${product.id}`}
                   onClick={onClose}
-                  className="w-full py-2.5 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] text-xs uppercase tracking-luxury text-center block text-[#4F6467] dark:text-[#AEB7BE] hover:border-[#36656B]"
+                  className="w-full py-2.5 rounded-full border border-fg/15 text-[14px] font-medium text-center block text-fg hover:border-fg/40 transition-colors"
                 >
-                  View Complete Architectural Specs &rarr;
+                  See Full Details &rarr;
                 </Link>
               </div>
             </div>

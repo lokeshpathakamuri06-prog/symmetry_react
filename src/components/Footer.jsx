@@ -29,87 +29,104 @@ const InstagramIcon = ({ className = 'w-5 h-5' }) => (
   </svg>
 );
 
+const LINK_GROUPS = [
+  {
+    title: 'Services',
+    links: [
+      { label: 'Turnkey Execution', to: '/services' },
+      { label: 'Space Planning', to: '/services' },
+      { label: 'Global Sourcing', to: '/sourcing' },
+      { label: 'Bespoke Millwork', to: '/services' },
+      { label: 'Acoustic & Lighting', to: '/services' },
+    ],
+  },
+  {
+    title: 'Collections',
+    links: [
+      { label: 'Luxury Sofas', to: '/shop?category=luxury-sofas' },
+      { label: 'Dining Furniture', to: '/shop?category=dining-furniture' },
+      { label: 'Bedroom Furniture', to: '/shop?category=bedroom-furniture' },
+      { label: 'Lighting', to: '/shop?category=lighting' },
+      { label: 'Decorative Accessories', to: '/shop?category=decorative-accessories' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Symmetry', to: '/about' },
+      { label: 'Download Catalog PDF', href: '/Symmetry-Interiors-Catalog.pdf', download: true },
+      { label: 'Selected Works', to: '/projects' },
+      { label: 'Design Journal', to: '/journal' },
+      { label: 'Careers', to: '/careers' },
+      { label: 'Showroom Appointments', to: '/contact' },
+      { label: 'Client Bag', to: '/cart' },
+    ],
+  },
+];
+
+const linkClass = 'text-[13.5px] text-muted hover:text-fg transition-colors';
+
 export const Footer = () => {
   const company = useSiteText('company');
   const footer = useSiteText('footer');
   return (
-    <footer className="bg-[#E5ECEC]/40 dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] pt-8 sm:pt-10 pb-12 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section Integrated in Footer */}
-        <div className="mb-16">
-          <Newsletter />
-        </div>
+    <footer className="bg-sunken/60 dark:bg-surface/40 text-fg border-t border-line/70 dark:border-line transition-colors duration-300">
+      <div className="site-container pt-16 sm:pt-20 pb-10">
+        <Newsletter className="mb-16 sm:mb-20" />
 
-        {/* 4 Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-16 border-b border-[#D1DCDE]/70 dark:border-[#1E3447]">
-          {/* Col 1: Brand & Philosophy (2 cols wide on desktop) */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="inline-flex flex-col items-start group" aria-label="Symmetry Interiors Home">
-              <img
-                src={logoImg}
-                alt="Symmetry Logo"
-                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
-              />
-              <img
-                src={logoDarkImg}
-                alt="Symmetry Logo"
-                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
-              />
-              <span className="text-[11px] font-bold tracking-[0.24em] text-[#4B666E] dark:text-[#F5F1E8] uppercase mt-1 leading-none font-sans transition-colors">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12 pb-12 border-b border-line/80 dark:border-line">
+          {/* Brand */}
+          <div className="lg:col-span-5 space-y-5">
+            <Link to="/" className="inline-flex items-center gap-3" aria-label="Symmetry Interiors Home">
+              <img src={logoImg} alt="Symmetry Logo" className="h-10 w-auto object-contain dark:hidden" />
+              <img src={logoDarkImg} alt="Symmetry Logo" className="h-10 w-auto object-contain hidden dark:block" />
+              <span className="text-[13px] font-semibold tracking-[0.2em] text-fg uppercase leading-none">
                 SYMMETRY INTERIORS
               </span>
             </Link>
 
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold text-[#131E20] dark:text-[#F5F1E8]">
-                {company.companyName}
-              </h3>
-              <p className="text-sm font-semibold text-[#36656B] dark:text-[#BCA575]">
-                {footer.tagline}
-              </p>
-              <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
-                {footer.subTagline}
-              </p>
+            <div className="space-y-1.5">
+              <h3 className="text-[17px] font-semibold text-fg">{company.companyName}</h3>
+              <p className="text-[14px] font-medium text-accent">{footer.tagline}</p>
+              <p className="text-[12.5px] text-subtle">{footer.subTagline}</p>
             </div>
 
-            <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed max-w-sm font-normal">
-              {footer.description}
-            </p>
+            <p className="text-[14px] text-muted leading-relaxed max-w-md">{footer.description}</p>
 
-            <div className="pt-2 text-sm text-[#4F6467] dark:text-[#AEB7BE] space-y-3">
+            <div className="space-y-3 text-[13.5px] text-muted">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-[#36656B] shrink-0 mt-0.5" />
-                <div className="space-y-1.5">
+                <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                <div className="space-y-2.5">
                   <div>
-                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Office Address:</span>
-                    <span className="text-xs leading-relaxed block">{company.officeAddress}</span>
+                    <span className="block text-[12px] font-medium text-fg">Office Address</span>
+                    <span className="block leading-relaxed">{company.officeAddress}</span>
                   </div>
-                  <div className="pt-1">
-                    <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] block text-xs uppercase tracking-wider">Registered Office:</span>
-                    <span className="text-xs leading-relaxed block">{company.registeredOffice}</span>
-                    {company.cin && <span className="text-[11px] font-mono text-[#36656B] dark:text-[#BCA575] font-semibold block mt-0.5">CIN: {company.cin}</span>}
+                  <div>
+                    <span className="block text-[12px] font-medium text-fg">Registered Office</span>
+                    <span className="block leading-relaxed">{company.registeredOffice}</span>
+                    {company.cin && <span className="block text-[12px] text-subtle mt-0.5 tabular-nums">CIN: {company.cin}</span>}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-[#36656B] shrink-0" />
-                <a href={telHref(company.phonePrimary)} className="hover:text-[#36656B] transition-colors">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <a href={telHref(company.phonePrimary)} className="hover:text-fg transition-colors">
                   {[company.phonePrimary, company.phoneSecondary].filter(Boolean).join(' / ')}
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-[#36656B] shrink-0" />
-                <a href={mailHref(company.email)} className="hover:text-[#36656B] transition-colors">
+                <Mail className="w-4 h-4 text-accent shrink-0" />
+                <a href={mailHref(company.email)} className="hover:text-fg transition-colors">
                   {company.email}
                 </a>
               </div>
               <div className="flex items-center gap-3">
-                <InstagramIcon className="w-5 h-5 text-[#36656B] shrink-0" />
+                <InstagramIcon className="w-4 h-4 text-accent shrink-0" />
                 <a
                   href={company.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#36656B] transition-colors inline-flex items-center gap-1.5"
+                  className="hover:text-fg transition-colors inline-flex items-center gap-1"
                 >
                   <span>{instagramHandle(company.instagram)}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
@@ -118,133 +135,35 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Col 2: Architecture & Services */}
-          <div>
-            <h4 className="text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-5">
-              Services
-            </h4>
-            <ul className="space-y-3 text-sm sm:text-[15px] text-[#4F6467] dark:text-[#AEB7BE]">
-              <li>
-                <Link to="/services" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Turnkey Execution
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Space Planning
-                </Link>
-              </li>
-              <li>
-                <Link to="/sourcing" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Global Sourcing
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Bespoke Millwork
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Acoustic &amp; Lighting
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: Collections */}
-          <div>
-            <h4 className="text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-5">
-              Collections
-            </h4>
-            <ul className="space-y-3 text-sm sm:text-[15px] text-[#4F6467] dark:text-[#AEB7BE]">
-              <li>
-                <Link to="/shop?category=luxury-sofas" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Luxury Sofas
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop?category=dining-furniture" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Dining Furniture
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop?category=bedroom-furniture" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Bedroom Furniture
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop?category=lighting" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Lighting
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop?category=decorative-accessories" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Decorative Accessories
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Corporate & Press */}
-          <div>
-            <h4 className="text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-5">
-              Company
-            </h4>
-            <ul className="space-y-3 text-sm sm:text-[15px] text-[#4F6467] dark:text-[#AEB7BE]">
-              <li>
-                <Link to="/about" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  About Symmetry
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="/Symmetry-Interiors-Catalog.pdf"
-                  download="Symmetry-Interiors-Catalog.pdf"
-                  className="hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors font-medium flex items-center gap-1.5 text-[#36656B] dark:text-[#BCA575]"
-                >
-                  <FileText className="w-4 h-4" />
-                  <span>Download Catalog PDF</span>
-                </a>
-              </li>
-              <li>
-                <Link to="/projects" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Selected Works
-                </Link>
-              </li>
-              <li>
-                <Link to="/journal" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Design Journal
-                </Link>
-              </li>
-              <li>
-                <Link to="/careers" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Showroom Appointments
-                </Link>
-              </li>
-              <li>
-                <Link to="/cart" className="hover:text-[#131E20] dark:hover:text-white transition-colors">
-                  Client Bag
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Link columns */}
+          {LINK_GROUPS.map((group, i) => (
+            <div key={group.title} className={i === 0 ? 'lg:col-start-7 lg:col-span-2' : 'lg:col-span-2'}>
+              <h4 className="text-[13px] font-semibold text-fg mb-4">{group.title}</h4>
+              <ul className="space-y-2.5">
+                {group.links.map((l) => (
+                  <li key={l.label}>
+                    {l.href ? (
+                      <a href={l.href} download={l.download ? 'Symmetry-Interiors-Catalog.pdf' : undefined} className={`${linkClass} inline-flex items-center gap-1.5 !text-accent font-medium`}>
+                        <FileText className="w-3.5 h-3.5" />
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link to={l.to} className={linkClass}>{l.label}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#4F6467] dark:text-[#AEB7BE] font-normal">
-          <p>
-            &copy; {new Date().getFullYear()} {company.shortName} All rights reserved.
-          </p>
-          <div className="flex items-center space-x-6">
-            <span className="hover:text-[#36656B] cursor-pointer">Discretion &amp; Privacy</span>
-            <span className="hover:text-[#36656B] cursor-pointer">Terms of Engagement</span>
-            <span className="hover:text-[#36656B] cursor-pointer">Architectural Accreditation</span>
+        {/* Legal row */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] text-subtle">
+          <p>&copy; {new Date().getFullYear()} {company.shortName} All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+            <span className="hover:text-fg cursor-pointer transition-colors">Discretion &amp; Privacy</span>
+            <span className="hover:text-fg cursor-pointer transition-colors">Terms of Engagement</span>
+            <span className="hover:text-fg cursor-pointer transition-colors">Certifications</span>
           </div>
         </div>
       </div>

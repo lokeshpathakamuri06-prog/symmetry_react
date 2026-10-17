@@ -27,29 +27,29 @@ export const WhatsAppButton = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="mb-3 w-80 sm:w-96 rounded-2xl bg-white dark:bg-[#0D1C29] p-5 shadow-2xl border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8]"
+            className="mb-3 w-80 sm:w-96 rounded-2xl bg-surface p-5 shadow-2xl border border-line text-fg"
           >
-            <div className="flex items-start justify-between pb-3 border-b border-[#D1DCDE]/60 dark:border-[#1E3447]">
+            <div className="flex items-start justify-between pb-3 border-b border-line/60 dark:border-line">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <p className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+                  <p className="text-xs uppercase tracking-luxury text-accent font-semibold">
                     VIP Concierge
                   </p>
                 </div>
                 <h4 className="text-base font-serif font-medium mt-0.5">Symmetry Client Advisor</h4>
-                <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">Typically responds within 15 minutes</p>
+                <p className="text-xs text-muted">Typically responds within 15 minutes</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 text-[#4F6467] hover:text-[#131E20] dark:hover:text-white"
+                className="p-1 text-[#4F6467] hover:text-[#1D1D1F] dark:hover:text-white"
                 aria-label="Close concierge"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs text-[#4F6467] dark:text-[#AEB7BE] my-3 leading-relaxed">
+            <p className="text-xs text-muted my-3 leading-relaxed">
               Connect directly with our senior architectural consultants regarding turnkey projects, bespoke furniture commissions, or private site visits.
             </p>
 
@@ -59,11 +59,11 @@ export const WhatsAppButton = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Share your requirements or project location..."
                 rows={2}
-                className="w-full text-xs p-2.5 rounded-lg bg-[#F4F7F6] dark:bg-[#07121C] border border-[#D1DCDE] dark:border-[#1E3447] focus:outline-none focus:border-[#36656B] resize-none"
+                className="w-full text-xs p-2.5 rounded-lg bg-canvas border border-line focus:outline-none focus:border-accent resize-none"
               />
               <button
                 type="submit"
-                className="w-full py-2 px-3 rounded-lg bg-[#131E20] dark:bg-[#BCA575] text-[#F4F7F6] dark:text-[#07121C] text-xs font-medium tracking-wider flex items-center justify-center gap-2 hover:bg-[#36656B] dark:hover:bg-[#A7C3C6] transition-colors"
+                className="w-full py-2 px-3 rounded-lg bg-fg dark:bg-accent text-canvas text-xs font-medium tracking-wider flex items-center justify-center gap-2 hover:bg-accent dark:hover:bg-[#A7C3C6] transition-colors"
               >
                 <Send className="w-3.5 h-3.5" />
                 Initiate WhatsApp Chat
@@ -77,10 +77,10 @@ export const WhatsAppButton = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-4 py-3 rounded-full bg-[#131E20] dark:bg-[#BCA575] text-[#F4F7F6] dark:text-[#07121C] shadow-luxury border border-[#36656B]/40 hover:bg-[#36656B] dark:hover:bg-[#A7C3C6] transition-colors group"
+        className="flex items-center gap-2 px-4 py-3 rounded-full bg-fg dark:bg-accent text-canvas shadow-luxury border border-accent/40 hover:bg-accent dark:hover:bg-[#A7C3C6] transition-colors group"
         aria-label="WhatsApp VIP Concierge"
       >
-        <MessageSquare className="w-4 h-4 text-[#36656B] dark:text-[#07121C] group-hover:text-white dark:group-hover:text-[#07121C] transition-colors" />
+        <MessageSquare className="w-4 h-4 text-accent dark:text-canvas group-hover:text-on-accent dark:group-hover:text-canvas transition-colors" />
         <span className="text-xs font-medium tracking-wider hidden sm:inline">Concierge</span>
       </motion.button>
     </div>

@@ -137,7 +137,7 @@ const ProductDetailView = ({ products }) => {
           
           {/* LEFT: Interactive Gallery & Fullscreen Trigger */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="relative group aspect-[4/3] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm">
+            <div className="relative group aspect-[4/3] rounded-3xl overflow-hidden bg-sunken border border-line shadow-sm">
               <SmartImage sizes="(min-width: 1024px) 50vw, 100vw" priority
                 src={product.images[selectedImage] || product.images[0]}
                 alt={product.name}
@@ -200,8 +200,8 @@ const ProductDetailView = ({ products }) => {
                     onClick={() => setSelectedImage(idx)}
                     className={`w-20 sm:w-24 aspect-square rounded-2xl overflow-hidden border-2 transition-all shrink-0 ${
                       selectedImage === idx
-                        ? 'border-[#36656B] dark:border-[#BCA575] ring-2 ring-[#36656B]/30 opacity-100 scale-102'
-                        : 'border-[#D1DCDE] dark:border-[#1E3447] opacity-60 hover:opacity-100'
+                        ? 'border-accent ring-2 ring-accent/30 opacity-100 scale-102'
+                        : 'border-line opacity-60 hover:opacity-100'
                     }`}
                   >
                     <SmartImage sizes="120px"
@@ -221,23 +221,23 @@ const ProductDetailView = ({ products }) => {
             {/* Header / Category & Badges */}
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+                <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
                   {product.collection || product.category}
                 </span>
                 {product.badge && (
-                  <span className="px-3 py-0.5 rounded-full text-[10px] uppercase tracking-luxury font-medium bg-[#131E20]/10 dark:bg-white/10 text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="px-3 py-0.5 rounded-full text-[10px] uppercase tracking-luxury font-medium bg-black/10 dark:bg-white/10 text-fg">
                     {product.badge}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight mt-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg leading-tight mt-2">
                 {product.name}
               </h1>
 
               {/* Rating & Client Reviews */}
               <div className="flex items-center gap-2 mt-2.5">
-                <div className="flex text-[#36656B] dark:text-[#BCA575]">
+                <div className="flex text-accent">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
@@ -249,16 +249,16 @@ const ProductDetailView = ({ products }) => {
                     />
                   ))}
                 </div>
-                <span className="text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                <span className="text-xs text-muted">
                   {product.rating || 4.9} ({product.reviewCount || 18} client evaluations)
                 </span>
               </div>
             </div>
 
             {/* Pricing Section */}
-            <div className="p-5 rounded-2xl bg-[#E5ECEC]/50 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447]">
+            <div className="p-5 rounded-2xl bg-sunken/50 dark:bg-surface border border-line">
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="text-3xl font-bold tracking-tight text-fg">
                   ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 {product.originalPrice && (
@@ -272,27 +272,27 @@ const ProductDetailView = ({ products }) => {
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-[#4F6467] dark:text-[#AEB7BE] mt-2 flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-[#36656B]" />
+              <p className="text-[11px] text-muted mt-2 flex items-center gap-1.5">
+                <Truck className="w-3.5 h-3.5 text-accent" />
                 <span>
-                  Includes white-glove installation & insured architectural transit across India.
+                  Includes installation and insured delivery across India.
                 </span>
               </p>
             </div>
 
             {/* Description */}
-            <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
+            <p className="text-sm text-muted leading-relaxed font-light">
               {product.description}
             </p>
 
             {/* Available Colours / Tones */}
             {product.colors && product.colors.length > 0 && (
-              <div className="space-y-2.5 pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <div className="space-y-2.5 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex justify-between text-xs">
-                  <span className="uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-medium">
-                    Colour Palette / Tone:
+                  <span className="uppercase tracking-luxury text-muted font-medium">
+                    Colour:
                   </span>
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="font-semibold text-fg">
                     {selectedColor}
                   </span>
                 </div>
@@ -306,7 +306,7 @@ const ProductDetailView = ({ products }) => {
                         onClick={() => setSelectedColor(c.name)}
                         className={`group relative flex items-center justify-center p-1 rounded-full transition ${
                           isSelected
-                            ? 'ring-2 ring-[#36656B] dark:ring-[#BCA575]'
+                            ? 'ring-2 ring-accent'
                             : 'hover:scale-105'
                         }`}
                         title={c.name}
@@ -328,12 +328,12 @@ const ProductDetailView = ({ products }) => {
 
             {/* Available Finishes */}
             {product.finishes && product.finishes.length > 0 && (
-              <div className="space-y-2.5 pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+              <div className="space-y-2.5 pt-4 border-t border-line/60 dark:border-line">
                 <div className="flex justify-between text-xs">
-                  <span className="uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] font-medium">
-                    Artisan Finish:
+                  <span className="uppercase tracking-luxury text-muted font-medium">
+                    Finish:
                   </span>
-                  <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8]">
+                  <span className="font-semibold text-fg">
                     {selectedFinish}
                   </span>
                 </div>
@@ -345,8 +345,8 @@ const ProductDetailView = ({ products }) => {
                       onClick={() => setSelectedFinish(finish)}
                       className={`text-xs px-3.5 py-2 rounded-xl border transition-all ${
                         selectedFinish === finish
-                          ? 'border-[#36656B] bg-[#36656B]/15 text-[#131E20] dark:text-[#F5F1E8] font-medium ring-1 ring-[#36656B]'
-                          : 'border-[#D1DCDE] dark:border-[#1E3447] text-[#4F6467] dark:text-[#AEB7BE] hover:border-[#36656B]'
+                          ? 'border-accent bg-accent/15 text-fg font-medium ring-1 ring-accent'
+                          : 'border-line text-muted hover:border-accent'
                       }`}
                     >
                       {finish}
@@ -357,27 +357,27 @@ const ProductDetailView = ({ products }) => {
             )}
 
             {/* Quantity Selector & Primary Actions */}
-            <div className="space-y-3.5 pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447]">
+            <div className="space-y-3.5 pt-4 border-t border-line/60 dark:border-line">
               
               {/* Row 1: Quantity Selector + Add to Cart */}
               <div className="flex items-center gap-3">
                 {/* Quantity */}
-                <div className="flex items-center border border-[#D1DCDE] dark:border-[#1E3447] rounded-full overflow-hidden bg-white dark:bg-[#07121C]">
+                <div className="flex items-center border border-line rounded-full overflow-hidden bg-surface dark:bg-canvas">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="px-4 py-3.5 text-sm text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838] transition"
+                    className="px-4 py-3.5 text-sm text-fg hover:bg-sunken/50 dark:hover:bg-sunken transition"
                     aria-label="Decrease quantity"
                   >
                     &minus;
                   </button>
-                  <span className="px-4 py-3.5 text-xs font-mono font-bold text-[#131E20] dark:text-[#F5F1E8] min-w-[2.5rem] text-center">
+                  <span className="px-4 py-3.5 text-xs font-mono font-bold text-fg min-w-[2.5rem] text-center">
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
-                    className="px-4 py-3.5 text-sm text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC]/50 dark:hover:bg-[#132838] transition"
+                    className="px-4 py-3.5 text-sm text-fg hover:bg-sunken/50 dark:hover:bg-sunken transition"
                     aria-label="Increase quantity"
                   >
                     +
@@ -388,7 +388,7 @@ const ProductDetailView = ({ products }) => {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3.5 px-6 rounded-full bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] hover:bg-[#36656B] dark:hover:bg-[#BCA575] transition-all duration-300 text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer"
+                  className="flex-1 py-3.5 px-6 rounded-full bg-fg text-canvas hover:opacity-85 transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Add To Cart</span>
@@ -399,19 +399,19 @@ const ProductDetailView = ({ products }) => {
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="w-full py-3.5 px-6 rounded-full bg-[#36656B] hover:bg-[#254B50] text-white transition-all duration-300 text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2 shadow-md"
+                className="w-full py-3.5 px-6 rounded-full bg-accent hover:bg-accent-hover text-on-accent transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
-                <span>Buy Now (Instant Checkout)</span>
+                <span>Buy Now</span>
               </button>
 
               {/* Row 3: Request Customization */}
               <button
                 type="button"
                 onClick={() => setIsCustomModalOpen(true)}
-                className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-[#36656B] dark:hover:border-[#BCA575] text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#E5ECEC]/30 dark:hover:bg-[#132838]/40 transition text-xs uppercase tracking-luxury font-medium flex items-center justify-center gap-2"
+                className="w-full py-3 px-6 rounded-full border border-fg/20 hover:border-fg/50 text-fg hover:bg-sunken/30 dark:hover:bg-sunken/40 transition text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
               >
-                <Sliders className="w-3.5 h-3.5 text-[#36656B]" />
+                <Sliders className="w-3.5 h-3.5 text-accent" />
                 <span>Request Custom Dimensions or Fabric</span>
               </button>
 
@@ -442,14 +442,14 @@ const ProductDetailView = ({ products }) => {
             </div>
 
             {/* Value Guarantees */}
-            <div className="pt-4 border-t border-[#D1DCDE]/60 dark:border-[#1E3447] grid grid-cols-2 gap-4 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+            <div className="pt-4 border-t border-line/60 dark:border-line grid grid-cols-2 gap-4 text-xs text-muted">
               <div className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-[#36656B]" />
+                <Truck className="w-4 h-4 text-accent" />
                 <span>Lead Time: {product.leadTime || '4-6 Weeks'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#36656B]" />
-                <span>10-Year Master Frame Guarantee</span>
+                <ShieldCheck className="w-4 h-4 text-accent" />
+                <span>10-Year Frame Warranty</span>
               </div>
             </div>
           </div>
@@ -461,40 +461,40 @@ const ProductDetailView = ({ products }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Architectural Specs */}
-          <div className="p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm">
-            <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold mb-2">
+          <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm">
+            <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-accent font-semibold mb-2">
               <Ruler className="w-4 h-4" />
-              <span>Architectural Specifications</span>
+              <span>Specifications</span>
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mb-6">
+            <h2 className="text-2xl font-bold tracking-tight text-fg mb-6">
               Dimensions &amp; Materials
             </h2>
 
-            <div className="space-y-4 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-              <div className="flex justify-between pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
+            <div className="space-y-4 text-xs text-muted">
+              <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
                 <span className="uppercase tracking-wider font-medium">Overall Dimensions</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] text-right">
+                <span className="font-semibold text-fg text-right">
                   {product.dimensions || 'Customizable to space'}
                 </span>
               </div>
 
-              <div className="flex justify-between pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
-                <span className="uppercase tracking-wider font-medium">Primary Materiality</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] text-right">
+              <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
+                <span className="uppercase tracking-wider font-medium">Materials</span>
+                <span className="font-semibold text-fg text-right">
                   {product.materials?.join(', ') || 'Solid Hardwood, Brass Hardware'}
                 </span>
               </div>
 
-              <div className="flex justify-between pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
+              <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
                 <span className="uppercase tracking-wider font-medium">Stock Status</span>
                 <span className="font-semibold text-emerald-600 dark:text-emerald-400 text-right">
                   {product.stockStatus || 'In Stock'}
                 </span>
               </div>
 
-              <div className="flex justify-between pb-3 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
-                <span className="uppercase tracking-wider font-medium">Assembly / White-Glove</span>
-                <span className="font-semibold text-[#131E20] dark:text-[#F5F1E8] text-right">
+              <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
+                <span className="uppercase tracking-wider font-medium">Assembly</span>
+                <span className="font-semibold text-fg text-right">
                   Fully Assembled On-Site
                 </span>
               </div>
@@ -502,14 +502,14 @@ const ProductDetailView = ({ products }) => {
 
             {/* Construction Highlights list */}
             {product.details && product.details.length > 0 && (
-              <div className="mt-6 pt-4 border-t border-[#D1DCDE]/50 dark:border-[#1E3447]">
-                <h4 className="text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-semibold mb-3">
+              <div className="mt-6 pt-4 border-t border-line/50 dark:border-line">
+                <h4 className="text-xs uppercase tracking-luxury text-fg font-semibold mb-3">
                   Craftsmanship Highlights
                 </h4>
-                <ul className="space-y-2 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
+                <ul className="space-y-2 text-xs text-muted">
                   {product.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B] mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
                       <span className="leading-relaxed">{detail}</span>
                     </li>
                   ))}
@@ -519,12 +519,12 @@ const ProductDetailView = ({ products }) => {
           </div>
 
           {/* Care Instructions Accordion */}
-          <div className="p-8 rounded-3xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] shadow-sm flex flex-col justify-between">
+          <div className="p-8 rounded-3xl bg-surface border border-line shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
+                <div className="flex items-center space-x-2 text-xs uppercase tracking-luxury text-accent font-semibold">
                   <Sparkles className="w-4 h-4" />
-                  <span>Conservation &amp; Longevity</span>
+                  <span>Looking After It</span>
                 </div>
                 <button
                   type="button"
@@ -536,8 +536,8 @@ const ProductDetailView = ({ products }) => {
                 </button>
               </div>
 
-              <h2 className="text-2xl font-serif text-[#131E20] dark:text-[#F5F1E8] mb-6">
-                Care &amp; Preservation Instructions
+              <h2 className="text-2xl font-serif text-fg mb-6">
+                Care Instructions
               </h2>
 
               <AnimatePresence>
@@ -546,7 +546,7 @@ const ProductDetailView = ({ products }) => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="space-y-3.5 text-xs text-[#4F6467] dark:text-[#AEB7BE]"
+                    className="space-y-3.5 text-xs text-muted"
                   >
                     {product.careInstructions && product.careInstructions.length > 0 ? (
                       product.careInstructions.map((instruction, idx) => (
@@ -554,7 +554,7 @@ const ProductDetailView = ({ products }) => {
                           key={idx}
                           className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50"
                         >
-                          <span className="w-5 h-5 rounded-full bg-[#36656B]/20 text-[#36656B] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
                             {idx + 1}
                           </span>
                           <p className="leading-relaxed">{instruction}</p>
@@ -563,15 +563,15 @@ const ProductDetailView = ({ products }) => {
                     ) : (
                       <>
                         <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
-                          <span className="w-5 h-5 rounded-full bg-[#36656B]/20 text-[#36656B] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                          <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
                           <p className="leading-relaxed">Dust regularly with a dry microfibre cloth along the grain.</p>
                         </div>
                         <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
-                          <span className="w-5 h-5 rounded-full bg-[#36656B]/20 text-[#36656B] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                          <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
                           <p className="leading-relaxed">Avoid prolonged exposure to direct sunlight and extreme climatic humidity.</p>
                         </div>
                         <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
-                          <span className="w-5 h-5 rounded-full bg-[#36656B]/20 text-[#36656B] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                          <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
                           <p className="leading-relaxed">Apply natural beeswax conditioning every 12 months for timber longevity.</p>
                         </div>
                       </>
@@ -581,10 +581,10 @@ const ProductDetailView = ({ products }) => {
               </AnimatePresence>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-[#D1DCDE]/50 dark:border-[#1E3447] flex items-center justify-between text-xs">
-              <span className="text-stone-500">Need specific restoration guidance?</span>
-              <Link to="/contact" className="text-[#36656B] dark:text-[#BCA575] font-semibold hover:underline">
-                Contact Atelier Care &rarr;
+            <div className="mt-8 pt-4 border-t border-line/50 dark:border-line flex items-center justify-between text-xs">
+              <span className="text-stone-500">Need help with care or repairs?</span>
+              <Link to="/contact" className="text-accent font-semibold hover:underline">
+                Contact Us &rarr;
               </Link>
             </div>
           </div>
@@ -596,18 +596,18 @@ const ProductDetailView = ({ products }) => {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-                Curated Pairings
+              <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+                Goes Well With
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-[#131E20] dark:text-[#F5F1E8] mt-1">
-                Related Pieces You May Admire
+              <h2 className="text-2xl sm:text-3xl font-serif text-fg mt-1">
+                You May Also Like
               </h2>
             </div>
             <Link
               to="/shop"
-              className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] flex items-center gap-1.5 hover:underline font-semibold"
+              className="text-xs uppercase tracking-luxury text-accent flex items-center gap-1.5 hover:underline font-semibold"
             >
-              <span>Explore Entire Catalog</span>
+              <span>See All Furniture</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -651,14 +651,14 @@ const ProductDetailView = ({ products }) => {
             >
               <div className="flex items-start justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
                 <div>
-                  <span className="text-[10px] uppercase tracking-luxury text-[#36656B] font-bold">
-                    Bespoke Atelier Service
+                  <span className="text-[10px] uppercase tracking-luxury text-accent font-bold">
+                    Made to Measure
                   </span>
                   <h3 className="text-xl font-serif text-stone-900 dark:text-white mt-0.5">
                     Request Customization
                   </h3>
                   <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-                    Customize <strong className="text-stone-700 dark:text-stone-200">{product.name}</strong> to your precise spatial specifications.
+                    Customize <strong className="text-stone-700 dark:text-stone-200">{product.name}</strong> to your exact size and finish.
                   </p>
                 </div>
                 <button
@@ -676,17 +676,17 @@ const ProductDetailView = ({ products }) => {
                     <Check className="w-7 h-7" />
                   </div>
                   <h4 className="font-serif text-xl font-bold text-stone-900 dark:text-white mb-1">
-                    Inquiry Transmitted
+                    Request Sent
                   </h4>
                   <p className="text-xs text-stone-600 dark:text-stone-300 max-w-sm mx-auto">
-                    Our lead furniture architect will contact you within 24 hours with a tailored quotation and preliminary render.
+                    Our furniture team will contact you within 24 hours with a quote and a first drawing.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleCustomSubmit} className="space-y-4 pt-4 text-xs">
                   <div>
                     <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
-                      Your Name / Architectural Firm *
+                      Your Name or Company *
                     </label>
                     <input
                       type="text"
@@ -694,7 +694,7 @@ const ProductDetailView = ({ products }) => {
                       value={customForm.clientName}
                       onChange={(e) => setCustomForm({ ...customForm, clientName: e.target.value })}
                       placeholder="e.g. Ar. Ananya Roy / Design Studio"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
@@ -708,7 +708,7 @@ const ProductDetailView = ({ products }) => {
                       value={customForm.phoneOrEmail}
                       onChange={(e) => setCustomForm({ ...customForm, phoneOrEmail: e.target.value })}
                       placeholder="+91 98765 43210 or studio@architect.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
@@ -722,43 +722,43 @@ const ProductDetailView = ({ products }) => {
                         value={customForm.customDimensions}
                         onChange={(e) => setCustomForm({ ...customForm, customDimensions: e.target.value })}
                         placeholder="e.g. 240cm W x 95cm D"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                       />
                     </div>
                     <div>
                       <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
-                        Finish / Material Request
+                        Finish or Material
                       </label>
                       <input
                         type="text"
                         value={customForm.preferredMaterial}
                         onChange={(e) => setCustomForm({ ...customForm, preferredMaterial: e.target.value })}
                         placeholder="e.g. Nero Marquina, Olive Velvet"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
-                      Project Notes &amp; Special Requirements
+                      Anything Else We Should Know
                     </label>
                     <textarea
                       rows={3}
                       value={customForm.additionalNotes}
                       onChange={(e) => setCustomForm({ ...customForm, additionalNotes: e.target.value })}
-                      placeholder="Specify site floor level, service lift dimensions, or acoustic fabric preferences..."
-                      className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#36656B]"
+                      placeholder="e.g. Which floor, lift size, or fabric preferences..."
+                      className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-[#131E20] dark:bg-white text-white dark:text-stone-900 font-semibold uppercase tracking-luxury transition hover:bg-[#36656B] dark:hover:bg-[#36656B] dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full py-3.5 rounded-full bg-black dark:bg-white text-on-accent dark:text-stone-900 font-semibold uppercase tracking-luxury transition hover:bg-accent dark:hover:bg-accent dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>Submit Bespoke Specification</span>
+                      <span>Send Request</span>
                     </button>
                   </div>
                 </form>

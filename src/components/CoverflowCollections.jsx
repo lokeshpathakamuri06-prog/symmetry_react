@@ -54,13 +54,13 @@ export const CoverflowCollections = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Clean Center Heading & Short Headline Above Cards */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <span className="text-xs sm:text-sm uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block mb-2.5">
+          <span className="text-xs sm:text-sm uppercase tracking-luxury text-accent font-semibold block mb-2.5">
             Our Featured Collection
           </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#131E20] dark:text-[#F5F1E8] tracking-tight leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-fg tracking-tight leading-tight">
             Designs That Inspire Living
           </h2>
-          <p className="mt-3 text-base sm:text-lg md:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed max-w-xl mx-auto">
+          <p className="mt-3 text-base sm:text-lg md:text-xl text-muted font-light leading-relaxed max-w-xl mx-auto">
             Curated furniture pieces for modern spaces, crafted to last.
           </p>
         </div>
@@ -71,7 +71,7 @@ export const CoverflowCollections = () => {
           <button
             onClick={handlePrev}
             aria-label="Previous card"
-            className="absolute left-2 sm:left-6 md:left-10 z-40 w-12 h-12 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] shadow-xl border border-[#D1DCDE]/70 dark:border-[#1E3447] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+            className="absolute left-2 sm:left-6 md:left-10 z-40 w-12 h-12 rounded-full bg-surface/95 text-fg shadow-xl border border-line/70 dark:border-line flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -80,7 +80,7 @@ export const CoverflowCollections = () => {
           <button
             onClick={handleNext}
             aria-label="Next card"
-            className="absolute right-2 sm:right-6 md:right-10 z-40 w-12 h-12 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] shadow-xl border border-[#D1DCDE]/70 dark:border-[#1E3447] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+            className="absolute right-2 sm:right-6 md:right-10 z-40 w-12 h-12 rounded-full bg-surface/95 text-fg shadow-xl border border-line/70 dark:border-line flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -177,7 +177,7 @@ export const CoverflowCollections = () => {
                           setActiveIndex(index);
                         }
                       }}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] text-xs sm:text-sm font-semibold uppercase tracking-luxury shadow-lg hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-surface/95 dark:bg-canvas/95 backdrop-blur-md text-fg text-[14px] sm:text-[15px] font-medium tracking-[-0.01em] shadow-lg hover:bg-accent hover:text-on-accent dark:hover:text-canvas transition-colors"
                     >
                       <span>View Product</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -190,7 +190,7 @@ export const CoverflowCollections = () => {
         </div>
 
         {/* Clean Center Pagination Numbers with Active Indicator */}
-        <div className="mt-8 sm:mt-12 pt-6 border-t border-[#D1DCDE]/50 dark:border-[#1E3447] flex items-center justify-center gap-6 sm:gap-8 font-mono text-sm sm:text-base">
+        <div className="mt-8 sm:mt-12 pt-6 border-t border-line/50 dark:border-line flex items-center justify-center gap-6 sm:gap-8 font-mono text-sm sm:text-base">
           {items.map((item, idx) => {
             const isActive = activeIndex === idx;
             return (
@@ -199,15 +199,15 @@ export const CoverflowCollections = () => {
                 onClick={() => setActiveIndex(idx)}
                 className={`relative py-2 transition-colors cursor-pointer ${
                   isActive
-                    ? 'text-[#131E20] dark:text-[#F5F1E8] font-bold'
-                    : 'text-[#4F6467]/60 dark:text-[#AEB7BE]/60 hover:text-[#131E20]'
+                    ? 'text-fg font-bold'
+                    : 'text-muted/60 hover:text-[#1D1D1F]'
                 }`}
               >
                 <span>{item.number}</span>
                 {isActive && (
                   <motion.span
                     layoutId="activeCoverflowDot"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#131E20] dark:bg-[#BCA575] rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-fg dark:bg-accent rounded-full"
                   />
                 )}
               </button>

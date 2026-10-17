@@ -27,9 +27,9 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className={`h-full ${className}`}
     >
-      <AppleCardWrapper className="group flex flex-col h-full bg-white dark:bg-[#0D1C29] rounded-3xl overflow-hidden">
+      <AppleCardWrapper className="group flex flex-col h-full bg-surface rounded-3xl overflow-hidden">
         {/* Portrait Image Container */}
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
+        <div className="relative aspect-[4/5] overflow-hidden bg-sunken">
           <SmartImage sizes="(min-width: 1024px) 33vw, 100vw"
             src={member.image}
             alt={member.name}
@@ -38,12 +38,12 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
           />
 
           {/* Ambient Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#131E20]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           {/* Experience Pill Overlay on Top */}
           <div className="absolute top-4 left-4 z-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-[#F4F7F6]/90 dark:bg-[#07121C]/90 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md shadow-sm">
-              <Award className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-luxury font-medium bg-canvas/90 text-fg backdrop-blur-md shadow-sm">
+              <Award className="w-3 h-3 text-accent" />
               {member.experience || member.department}
             </span>
           </div>
@@ -56,7 +56,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} LinkedIn Profile`}
-                className="w-9 h-9 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] flex items-center justify-center shadow-md transition-colors"
+                className="w-9 h-9 rounded-full bg-surface/95 text-fg hover:text-accent flex items-center justify-center shadow-md transition-colors"
               >
                 <LinkedInIcon className="w-4 h-4" />
               </a>
@@ -64,7 +64,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
             <a
               href="mailto:contact@symmetryinteriors.com"
               aria-label={`Inquire with ${member.name}`}
-              className="w-9 h-9 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] flex items-center justify-center shadow-md transition-colors"
+              className="w-9 h-9 rounded-full bg-surface/95 text-fg hover:text-accent flex items-center justify-center shadow-md transition-colors"
             >
               <Mail className="w-4 h-4" />
             </a>
@@ -76,28 +76,28 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
           <div>
             {/* Department & Credentials */}
             <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[11px] uppercase tracking-luxury font-medium text-[#36656B] dark:text-[#BCA575]">
+              <span className="text-[11px] uppercase tracking-luxury font-medium text-accent">
                 {member.department}
               </span>
               {member.credentials && (
-                <span className="text-[10px] uppercase font-sans tracking-wider text-[#6B8083] dark:text-[#8E9CA8] truncate max-w-[140px]">
+                <span className="text-[10px] uppercase font-sans tracking-wider text-subtle truncate max-w-[140px]">
                   {member.credentials}
                 </span>
               )}
             </div>
 
             {/* Member Name */}
-            <h3 className="text-2xl sm:text-[26px] font-medium text-[#131E20] dark:text-[#F5F1E8] leading-tight group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors duration-300">
+            <h3 className="text-2xl sm:text-[26px] font-medium text-fg leading-tight group-hover:text-accent transition-colors duration-300">
               {member.name}
             </h3>
 
             {/* Role */}
-            <p className="text-xs sm:text-[13px] font-sans font-medium text-[#4F6467] dark:text-[#AEB7BE] mt-1 mb-3">
+            <p className="text-xs sm:text-[13px] font-sans font-medium text-muted mt-1 mb-3">
               {member.role}
             </p>
 
             {/* Bio Snippet */}
-            <p className="text-xs sm:text-[13px] text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed mb-5">
+            <p className="text-xs sm:text-[13px] text-muted font-light leading-relaxed mb-5">
               {member.bio}
             </p>
           </div>
@@ -108,7 +108,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
               {member.specialties.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 rounded-md text-[10px] font-sans uppercase tracking-wider bg-[#F4F7F6] dark:bg-[#07121C] text-[#4F6467] dark:text-[#AEB7BE]"
+                  className="px-2.5 py-1 rounded-md text-[10px] font-sans uppercase tracking-wider bg-canvas text-muted"
                 >
                   {tag}
                 </span>

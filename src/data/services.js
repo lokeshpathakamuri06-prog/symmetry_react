@@ -13,7 +13,7 @@ export const services = [
     number: '01',
     title: 'Interior Design & Planning',
     subtitle: 'Thoughtful Conceptualization & Spatial Layouts',
-    tagline: 'Transforming Ideas into Functional Architectural Blueprints',
+    tagline: 'Turning Your Ideas into Clear, Workable Plans',
     description:
       'We combine creative design vision with rigorous spatial planning. Our interior designers craft balanced layouts, lighting plans, and material schemes tailored to residential, commercial, hospitality, and healthcare environments.',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
@@ -24,10 +24,10 @@ export const services = [
       { label: 'Scope', value: 'All Typologies' },
     ],
     features: [
-      'Master space planning & spatial choreography',
+      'Space planning and furniture layouts',
       '3D photorealistic renderings and material storyboards',
-      'Architectural lighting layouts and ceiling design',
-      'Color palette, finish, and texture curation',
+      'Lighting plans and ceiling design',
+      'Choosing colours, finishes and textures',
       'Comprehensive GFC working drawings and specifications',
     ],
     ctaText: 'Inquire About Design & Planning',
@@ -40,7 +40,7 @@ export const services = [
     number: '02',
     title: 'Turnkey Interior Solutions',
     subtitle: 'Single-Point Accountability from Concept to Handover',
-    tagline: 'End-to-End Execution Without Subcontractor Friction',
+    tagline: 'One Team from Start to Finish',
     description:
       'Our single-point turnkey delivery manages your entire project under one roof — civil restructuring, electrical, MEP engineering, ceiling, bespoke millwork, global furniture sourcing, and final white-glove styling.',
     image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85',
@@ -93,7 +93,7 @@ export const services = [
     id: 'bespoke-furniture',
     number: '04',
     title: 'Bespoke Furniture',
-    subtitle: 'Tailored Furniture Crafted to Sub-Millimeter Precision',
+    subtitle: 'Made-to-Measure Furniture, Precisely Built',
     tagline: 'Custom Joinery & Artisanal Metalwork Made to Order',
     description:
       'We design and craft custom furniture pieces engineered specifically for your spatial dimensions. Built using high-precision German 5-axis CNC routers, exotic veneers, solid hardwoods, and hand-patinated metals.',
@@ -111,10 +111,10 @@ export const services = [
       'Dust-controlled Italian PU lacquer and matte natural oil finishes',
       'Full structural and mechanism durability guarantee',
     ],
-    ctaText: 'Commission Bespoke Furniture',
+    ctaText: 'Order Custom Furniture',
     ctaLink: '/contact?service=bespoke-furniture',
     accentBadge: 'Custom Fabrication',
-    provenance: 'Atelier Manufacturing',
+    provenance: 'Made in Our Workshop',
   },
   {
     id: 'residential-interiors',
@@ -138,7 +138,7 @@ export const services = [
       'Integrated home cinema, acoustic paneling, and smart lighting',
       'Complete furniture curation and soft furnishing styling',
     ],
-    ctaText: 'Inquire About Residential Scope',
+    ctaText: 'Plan Your Home',
     ctaLink: '/contact?service=residential-interiors',
     accentBadge: 'Private Residences',
     provenance: 'Villas & Penthouses',
@@ -160,12 +160,12 @@ export const services = [
     ],
     features: [
       'Executive boardrooms, reception foyers & corporate workstations',
-      'Boutique hotel guestrooms, spa sanctuaries, and lobbies',
+      'Boutique hotel rooms, spas and lobbies',
       'Restaurant, café, bar, and private dining interiors',
       'High-traffic durable surface materials and stain-resistant upholstery',
       'Acoustic isolation and energy-efficient lighting controls',
     ],
-    ctaText: 'Commission Commercial Project',
+    ctaText: 'Plan Your Commercial Project',
     ctaLink: '/contact?service=hospitality-commercial-interiors',
     accentBadge: 'Corporate & Hospitality',
     provenance: 'Offices, Hotels & Dining',
@@ -192,7 +192,7 @@ export const services = [
       'Ergonomic seating and patient-centric spatial design',
       'Acoustic noise reduction and calming circadian lighting',
     ],
-    ctaText: 'Discuss Institutional Scope',
+    ctaText: 'Plan Your Healthcare Project',
     ctaLink: '/contact?service=healthcare-institutional-interiors',
     accentBadge: 'Healthcare & Institutions',
     provenance: 'Hospitals, Clubs & Clinics',
@@ -202,7 +202,7 @@ export const services = [
     number: '08',
     title: 'Interior Execution',
     subtitle: 'On-Site Contracting, Civil Works & Precision Carpentry',
-    tagline: 'Translating Architectural Drawings into Flawless Physical Structures',
+    tagline: 'Building Exactly What Was Drawn',
     description:
       'Our dedicated execution team manages on-site civil works, gypsum ceiling installation, flooring, wall paneling, and electrical setup with rigorous quality control and safety standards.',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=85',
@@ -222,7 +222,7 @@ export const services = [
     ctaText: 'Inquire About Site Execution',
     ctaLink: '/contact?service=interior-execution',
     accentBadge: 'Site Contracting',
-    provenance: 'Civil & Architectural Contracting',
+    provenance: 'Civil & Interior Contracting',
   },
   {
     id: 'styling-furnishing',
@@ -231,12 +231,12 @@ export const services = [
     subtitle: 'Curated Textiles, Art Placement & Final Touches',
     tagline: 'The Final Layer of Warmth, Texture, and Character',
     description:
-      'The final styling layer transforms a completed space into a living home or active commercial sanctuary. We curate drapery, rugs, decorative lighting, art pieces, and accessories.',
+      'The final layer that turns a finished space into a home or a welcoming business. We choose curtains, rugs, lamps, art and accessories.',
     image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1600&q=85',
     detailImage: 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=800&q=80',
     stats: [
       { label: 'Fabrics', value: 'Imported Linens & Silks' },
-      { label: 'Curation', value: 'Art & Collectibles' },
+      { label: 'Selection', value: 'Art & Collectibles' },
       { label: 'Styling', value: 'Turnkey Readiness' },
     ],
     features: [
@@ -253,60 +253,60 @@ export const services = [
   },
 ];
 
-// The 6-step Architectural Execution Process
+// The 6-step process, from first meeting to handover
 export const processSteps = [
   {
     step: '01',
     name: 'Discover',
-    tagline: 'Forensic Site Scan & Architectural Brief',
+    tagline: 'Site Visit & Your Brief',
     description:
-      'We initiate with high-resolution 3D LiDAR spatial scanning, structural load analysis, solar azimuth tracking, and an in-depth dialogue to map your family lifestyle rituals or enterprise operational demands.',
-    deliverables: ['3D LiDAR Point-Cloud Scan', 'Structural & MEP Feasibility Audit', 'Spatial Lifestyle Matrix'],
+      'We visit and measure your space with a 3D laser scan, check the structure and natural light, and spend time understanding how your family or business will use it.',
+    deliverables: ['3D Scan of Your Space', 'Structure & Services Check', 'Your Requirements Brief'],
     icon: Compass,
   },
   {
     step: '02',
     name: 'Concept',
-    tagline: 'Material Storyboard & Spatial Philosophy',
+    tagline: 'Mood Boards & First Ideas',
     description:
-      'Developing the overarching aesthetic lexicon: monolithic stone selection, raw timber patinas, acoustic shadowlines, and volumetric massing studies presented via tactile mood boards and ray-traced spatial renders.',
-    deliverables: ['Tactile Material Palette Box', 'Volumetric Space Plans', 'Photorealistic Ray-Traced Renders'],
+      'We put together the look and feel: stone, wood, fabrics and lighting, shown on real material boards, layout plans and realistic 3D images.',
+    deliverables: ['Material Sample Box', 'Layout Plans', 'Realistic 3D Images'],
     icon: Lightbulb,
   },
   {
     step: '03',
     name: 'Design',
-    tagline: '0.5mm Engineering Drawings & BIM Coordination',
+    tagline: 'Detailed Drawings',
     description:
-      'Translating poetic concepts into comprehensive architectural millwork blueprints, MEPF coordinated BIM models, structural core-drill diagrams, and circadian lighting schedules with zero site ambiguity.',
-    deliverables: ['Full GFC Working Drawing Sets', 'BIM MEPF Clash Detection', '0.5mm Joinery Production Blueprints'],
+      'We turn the concept into full working drawings for carpentry, electrical, plumbing, air-conditioning and lighting, so nothing is left to guesswork on site.',
+    deliverables: ['Full Working Drawings', 'Coordinated Services Plans', 'Carpentry Production Drawings'],
     icon: Layers,
   },
   {
     step: '04',
     name: 'Source',
-    tagline: 'Direct Quarry Allocations & Global Procurement',
+    tagline: 'Buying Direct from the Makers',
     description:
-      'Our principals travel directly to partner quarries in Carrara, Verona, and Brianza to tag sequential marble blocks and select kiln-dried European hardwoods, shipping under climate-controlled sea containers.',
-    deliverables: ['Quarry Slab Certificates & Block Passports', 'Kiln Moisture Verification Reports', 'Customs Clearance Telemetry'],
+      'Our team visits partner quarries and workshops in Carrara, Verona and Brianza to choose your marble and seasoned hardwoods, then ships them in climate-controlled containers.',
+    deliverables: ['Stone Origin Certificates', 'Wood Moisture Reports', 'Shipping & Customs Updates'],
     icon: Globe2,
   },
   {
     step: '05',
     name: 'Execute',
-    tagline: 'Proprietary Joinery Fabrication & White-Glove Site Delivery',
+    tagline: 'Making & Installing',
     description:
-      'Components are machined on German 5-axis CNC routers inside our 25,000 sq.ft. atelier while civil engineers execute structural framing, concealed HVAC, acoustic isolation, and laser-guided masonry installation on site.',
-    deliverables: ['Weekly Milestone Progress Video Logs', 'Daily Digital Site Telemetry', 'Quality Assurance Checkpoint Sign-Offs'],
+      'Furniture and cabinetry are made on CNC machines in our 25,000 sq.ft. workshop while our site team handles civil work, hidden air-conditioning, soundproofing and installation.',
+    deliverables: ['Weekly Progress Videos', 'Daily Site Updates', 'Quality Check Sign-Offs'],
     icon: Hammer,
   },
   {
     step: '06',
     name: 'Deliver',
-    tagline: 'Flawless Handover, Telemetry Setup & 10-Year Guarantee',
+    tagline: 'Handover & 10-Year Warranty',
     description:
-      'Deep cleaning, art curation, smart home telemetry commissioning, and white-glove handover followed by comprehensive client orientation and issuance of our 10-year master structural frame warranty.',
-    deliverables: ['As-Built Comprehensive Documentation', 'Smart Telemetry Control Credentials', '10-Year Structural Frame Warranty Deed'],
+      'We deep-clean, place the art and accessories, set up smart-home controls, show you how everything works and hand over your 10-year structural warranty.',
+    deliverables: ['Final As-Built Drawings', 'Smart-Home Setup & Logins', '10-Year Warranty Certificate'],
     icon: CheckCircle2,
   },
 ];

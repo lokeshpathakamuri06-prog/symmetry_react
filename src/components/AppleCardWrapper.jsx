@@ -14,9 +14,9 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 export const AppleCardWrapper = ({
   children,
   className = '',
-  maxTilt = 7, // Max tilt angle in degrees
-  glareOpacity = 0.15, // Intensity of light spotlight
-  enableTilt = true,
+  maxTilt = 3, // Max tilt angle in degrees (only when enableTilt)
+  glareOpacity = 0.08, // Intensity of light spotlight
+  enableTilt = false, // Apple-style default: a gentle lift, no 3D tilt
   onClick,
   ...props
 }) => {
@@ -34,7 +34,7 @@ export const AppleCardWrapper = ({
   const rotateY = useSpring(rawY, springConfig);
 
   // Subtle Parallax translation on scale
-  const scale = useSpring(isHovered ? 1.02 : 1.0, springConfig);
+  const scale = useSpring(isHovered ? 1.012 : 1.0, springConfig);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -88,17 +88,15 @@ export const AppleCardWrapper = ({
         transformStyle: 'preserve-3d',
         perspective: 1000,
       }}
-      className={`relative group rounded-3xl transition-shadow duration-500 ease-out will-change-transform ${
-        isHovered
-          ? 'shadow-apple-hover dark:shadow-apple-dark-hover z-20'
-          : 'shadow-apple dark:shadow-apple-dark z-10'
+      className={`relative group rounded-card border border-line/60 dark:border-line transition-shadow duration-500 ease-apple will-change-transform ${
+        isHovered ? 'shadow-card-hover z-20' : 'shadow-card z-10'
       } ${className}`}
       {...props}
     >
 
       {/* Interactive Cursor Spotlight Glare Overlay (Apple Metallic Light Reflectance) */}
       <div
-        className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300 z-30"
+        className="absolute inset-0 rounded-card pointer-events-none transition-opacity duration-300 z-30"
         style={{
           opacity: isHovered ? 1 : 0,
           background: `radial-gradient(600px circle at ${spotlightPos.x}% ${spotlightPos.y}%, rgba(255, 255, 255, ${glareOpacity}), transparent 40%)`,
@@ -106,7 +104,7 @@ export const AppleCardWrapper = ({
       />
 
       {/* Card Content Wrapper */}
-      <div className="relative z-10 h-full w-full rounded-3xl overflow-hidden">
+      <div className="relative z-10 h-full w-full rounded-card overflow-hidden">
         {children}
       </div>
     </motion.div>

@@ -35,7 +35,7 @@ const ProjectDetailView = ({ projects }) => {
   return (
     <div className="pt-28 pb-24 space-y-20 sm:space-y-28">
       <SeoMeta
-        title={`${project.title} | Architectural Case Study`}
+        title={`${project.title} | Project`}
         description={project.summary}
       />
 
@@ -51,45 +51,45 @@ const ProjectDetailView = ({ projects }) => {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-8 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-[#36656B]/15 text-[#36656B] dark:text-[#BCA575]">
+              <span className="px-3 py-1 rounded-full text-xs uppercase tracking-luxury font-medium bg-accent/15 text-accent">
                 {project.typology}
               </span>
-              <span className="text-xs uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE]">
+              <span className="text-xs uppercase tracking-luxury text-muted">
                 {project.location} &bull; {project.completionYear}
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-fg leading-tight">
               {project.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-normal leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-muted font-normal leading-relaxed max-w-2xl">
               {project.summary}
             </p>
           </div>
 
-          <div className="lg:col-span-4 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark space-y-3 text-xs text-[#4F6467] dark:text-[#AEB7BE]">
-            <div className="flex justify-between pb-2 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
-              <span className="uppercase tracking-wider">Client Typology</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">{project.client}</span>
+          <div className="lg:col-span-4 p-6 rounded-2xl bg-surface shadow-apple dark:shadow-apple-dark space-y-3 text-xs text-muted">
+            <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
+              <span className="uppercase tracking-wider">Client</span>
+              <span className="font-medium text-fg">{project.client}</span>
             </div>
-            <div className="flex justify-between pb-2 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
+            <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
               <span className="uppercase tracking-wider">Total Area</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">{project.areaSqFt}</span>
+              <span className="font-medium text-fg">{project.areaSqFt}</span>
             </div>
-            <div className="flex justify-between pb-2 border-b border-[#D1DCDE]/50 dark:border-[#1E3447]">
+            <div className="flex justify-between pb-2 border-b border-line/50 dark:border-line">
               <span className="uppercase tracking-wider">Location</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">{project.location}</span>
+              <span className="font-medium text-fg">{project.location}</span>
             </div>
             <div className="pt-1">
-              <span className="uppercase tracking-wider block mb-1">Execution Scope</span>
-              <span className="font-medium text-[#131E20] dark:text-[#F5F1E8]">{project.scope}</span>
+              <span className="uppercase tracking-wider block mb-1">Scope of Work</span>
+              <span className="font-medium text-fg">{project.scope}</span>
             </div>
           </div>
         </div>
 
         {/* Hero Image */}
-        <div className="mt-12 aspect-[16/9] lg:aspect-[21/9] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838]">
+        <div className="mt-12 aspect-[16/9] lg:aspect-[21/9] rounded-3xl overflow-hidden bg-sunken">
           <SmartImage sizes="100vw" priority
             src={project.heroImage}
             alt={project.title}
@@ -101,13 +101,13 @@ const ProjectDetailView = ({ projects }) => {
       {/* Architectural Metrics Bar */}
       {project.stats && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 rounded-2xl bg-[#E5ECEC]/40 dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="p-8 rounded-2xl bg-sunken/40 dark:bg-surface border border-line grid grid-cols-2 md:grid-cols-4 gap-6">
             {project.stats.map((st, i) => (
               <div key={i} className="space-y-1">
-                <span className="text-[11px] uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold block">
+                <span className="text-[11px] uppercase tracking-luxury text-accent font-semibold block">
                   {st.label}
                 </span>
-                <span className="font-bold text-xl sm:text-2xl text-[#131E20] dark:text-[#F5F1E8]">
+                <span className="font-bold text-xl sm:text-2xl text-fg">
                   {st.value}
                 </span>
               </div>
@@ -120,27 +120,27 @@ const ProjectDetailView = ({ projects }) => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-6">
-            <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-              The Narrative
+            <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+              The Story
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8]">
-              Spatial Concept &amp; Engineering Solutions
+            <h2 className="text-3xl font-bold tracking-tight text-fg">
+              Design & Execution
             </h2>
-            <p className="text-sm text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light">
-              We approach each space as a tailored canvas where site constraints spark custom architectural interventions.
+            <p className="text-sm text-muted leading-relaxed font-light">
+              Every space is different. Here is how we approached this one.
             </p>
 
             {/* Material Palette */}
             {project.materialsPalette && (
-              <div className="pt-6 border-t border-[#D1DCDE]/70 dark:border-[#1E3447]">
-                <h4 className="text-xs uppercase tracking-luxury text-[#131E20] dark:text-[#F5F1E8] font-semibold mb-3">
-                  Materiality Palette
+              <div className="pt-6 border-t border-line/70 dark:border-line">
+                <h4 className="text-xs uppercase tracking-luxury text-fg font-semibold mb-3">
+                  Materials Used
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.materialsPalette.map((mat, i) => (
                     <span
                       key={i}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white dark:bg-[#132838] border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8]"
+                      className="text-xs px-3 py-1.5 rounded-full bg-surface dark:bg-sunken border border-line text-fg"
                     >
                       {mat}
                     </span>
@@ -151,29 +151,29 @@ const ProjectDetailView = ({ projects }) => {
           </div>
 
           <div className="lg:col-span-8 space-y-8">
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
-                01 &bull; Architectural Concept
+            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
+              <h3 className="text-lg font-bold text-accent">
+                01 &bull; The Idea
               </h3>
-              <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
                 {project.concept}
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
-                02 &bull; Structural Challenge
+            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
+              <h3 className="text-lg font-bold text-accent">
+                02 &bull; The Challenge
               </h3>
-              <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
                 {project.challenge}
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0D1C29] border border-[#D1DCDE] dark:border-[#1E3447] space-y-3">
-              <h3 className="text-lg font-bold text-[#36656B] dark:text-[#BCA575]">
-                03 &bull; Execution &amp; Resolution
+            <div className="p-8 rounded-2xl bg-surface border border-line space-y-3">
+              <h3 className="text-lg font-bold text-accent">
+                03 &bull; The Result
               </h3>
-              <p className="text-sm sm:text-base text-[#131E20] dark:text-[#F5F1E8] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-fg font-light leading-relaxed">
                 {project.solution}
               </p>
             </div>
@@ -184,11 +184,11 @@ const ProjectDetailView = ({ projects }) => {
       {/* High Resolution Gallery */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-            Visual Documentation
+          <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+            Gallery
           </span>
-          <h2 className="text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
-            Spaces &amp; Tactile Details
+          <h2 className="text-3xl font-bold tracking-tight text-fg mt-1">
+            Spaces & Details
           </h2>
         </div>
 
@@ -197,19 +197,19 @@ const ProjectDetailView = ({ projects }) => {
 
       {/* Project Navigation (Prev / Next) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="pt-10 border-t border-[#D1DCDE]/70 dark:border-[#1E3447] flex items-center justify-between">
+        <div className="pt-10 border-t border-line/70 dark:border-line flex items-center justify-between">
           <Link
             to={`/projects/${prevProject.id}`}
             className="group flex items-center gap-3 text-left"
           >
-            <div className="w-10 h-10 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] flex items-center justify-center group-hover:border-[#36656B] transition-colors">
-              <ArrowLeft className="w-4 h-4 text-[#36656B]" />
+            <div className="w-10 h-10 rounded-full border border-line flex items-center justify-center group-hover:border-accent transition-colors">
+              <ArrowLeft className="w-4 h-4 text-accent" />
             </div>
             <div>
-              <span className="text-[10px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] block">
-                Previous Case
+              <span className="text-[10px] uppercase tracking-luxury text-muted block">
+                Previous Project
               </span>
-              <span className="text-sm sm:text-base font-semibold text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
+              <span className="text-sm sm:text-base font-semibold text-fg group-hover:text-accent transition-colors">
                 {prevProject.title}
               </span>
             </div>
@@ -220,15 +220,15 @@ const ProjectDetailView = ({ projects }) => {
             className="group flex items-center gap-3 text-right"
           >
             <div>
-              <span className="text-[10px] uppercase tracking-luxury text-[#4F6467] dark:text-[#AEB7BE] block">
-                Next Case
+              <span className="text-[10px] uppercase tracking-luxury text-muted block">
+                Next Project
               </span>
-              <span className="text-sm sm:text-base font-semibold text-[#131E20] dark:text-[#F5F1E8] group-hover:text-[#36656B] transition-colors">
+              <span className="text-sm sm:text-base font-semibold text-fg group-hover:text-accent transition-colors">
                 {nextProject.title}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-full border border-[#D1DCDE] dark:border-[#1E3447] flex items-center justify-center group-hover:border-[#36656B] transition-colors">
-              <ArrowRight className="w-4 h-4 text-[#36656B]" />
+            <div className="w-10 h-10 rounded-full border border-line flex items-center justify-center group-hover:border-accent transition-colors">
+              <ArrowRight className="w-4 h-4 text-accent" />
             </div>
           </Link>
         </div>
@@ -237,11 +237,11 @@ const ProjectDetailView = ({ projects }) => {
       {/* Related Projects */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-10">
-          <span className="text-xs uppercase tracking-luxury text-[#36656B] dark:text-[#BCA575] font-semibold">
-            Further Explorations
+          <span className="text-xs uppercase tracking-luxury text-accent font-semibold">
+            More Projects
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] mt-1">
-            Related Architectural Commissions
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg mt-1">
+            You May Also Like
           </h2>
         </div>
 

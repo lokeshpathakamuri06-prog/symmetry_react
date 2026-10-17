@@ -4,6 +4,13 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-14 | Page banners reuse the existing `banners` table: the page key goes in `badge`, the highlighted words in `cta_text` | Requested with "no backend/API/database changes"; the fields existed and were unused | Migration adding a `placement` column (cleaner; can still be done later) |
+| 2026-10-14 | Intro plays once per browser session, ~1.5 s, never with reduced motion | It delayed every page load by ~3 s (known issue 14) | Remove it; keep it on every load |
+| 2026-10-14 | Wording simplified only in code text; database content (products, projects, journal, Page Content) left to the client | Keeps the database untouched as requested | Rewrite database content too |
+| 2026-10-14 | Website redesign: **Apple-style design system** (warm gallery white / near-black, brand teal and sand-gold accents, Inter, pill buttons, glass navigation) | Requested: modern interior-design site with an Apple feel and the same theme on every page | Keep each page's own look |
+| 2026-10-14 | Colours come from **theme tokens** (`bg-canvas`, `text-fg`, `text-accent`…, values in `src/index.css`) instead of hard-coded hex pairs | One place changes the palette and dark mode for every page; about 1,500 hex classes converted by script | Keep `bg-[#F4F7F6] dark:bg-[#07121C]` pairs |
+| 2026-10-14 | One shared **`PageHero`** for all inner pages: headline on a plain background, then a large rounded photo | Text on busy photos was hard to read; every page now opens the same way | Full-screen photo with text overlay on each page |
+| 2026-10-14 | Desktop menu from **1280 px** (was 1440), sentence-case labels; header button = "Book a consultation" | Shorter labels fit; the old "Sign in" button linked to Contact | Keep the capitals menu at ≥1440 px |
 | 2026-10-13 | Hero Banners = slideshow **photos only**; the headline stays in Page Content | The design has one headline over all photos; no visible change | Per-slide headline and button |
 | 2026-10-13 | Home collections carousel = **Featured** collections with a cover image; new `label` and `link` columns | Reuses the existing Collections screen; links can point anywhere (category, search) | A separate "Home cards" screen |
 | 2026-10-13 | Slideshow falls back to the 3 local photos; the carousel hides when empty | The top of Home is never blank; an empty carousel looks broken | Hide the slideshow too |

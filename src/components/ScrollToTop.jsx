@@ -47,7 +47,7 @@ export const ScrollToTop = () => {
           transition={{ duration: 0.3 }}
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-[230px] right-6 sm:bottom-[240px] sm:right-8 z-40 p-3 sm:p-3.5 rounded-full bg-[#FFFFFF]/80 dark:bg-[#0D1C29]/80 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] hover:border-[#36656B] dark:hover:border-[#BCA575] shadow-luxury transition-all duration-300 group"
+          className="fixed bottom-[230px] right-6 sm:bottom-[240px] sm:right-8 z-40 p-3 sm:p-3.5 rounded-full bg-surface/80 backdrop-blur-md border border-line text-fg hover:text-accent hover:border-accent shadow-luxury transition-all duration-300 group"
         >
           <ArrowUp className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-1" />
         </motion.button>
