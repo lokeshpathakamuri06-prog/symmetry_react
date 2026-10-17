@@ -32,6 +32,14 @@ Both containers use **host networking**. They talk to each other and to Postgres
 
 Migrations are **never** run automatically on container start.
 
+**Careers form with file uploads (2026-10-17, not deployed yet).** Deploy in this order:
+1. Backend: `.venv/bin/pip install -e .` (adds `python-multipart`), then `.venv/bin/alembic upgrade head` (migration **0005**: file and consent columns, additive), then `docker compose up -d --build`. This creates the `application_files` Docker volume, mounted at `/data/uploads`.
+2. Check: `curl -s https://169-58-13-62.sslip.io/api/health` shows `"migration":"0005"`.
+3. Then deploy the frontend. The old JSON endpoint `/api/public/applications` still works, so the order only matters for the new page.
+4. Fill in Admin → Page Content → Company & Contact → *Careers page* (careers email, HR phone), then Publish.
+
+**Applicant files** (resumes, portfolios) live in the `application_files` volume (`/data/uploads/applications/<id>/`). They are personal data: include the volume in backups, for example `docker run --rm -v symmetry_backend_application_files:/d -v /root/backups:/b alpine tar czf /b/application_files-$(date +%F).tgz -C /d .`. Files left behind by a failed request are removed with `docker compose exec api python -m app.cli application-files-cleanup` (add `--dry-run` to list them first). Uploads are limited to 5 MB (resume) and 15 MB (portfolio) by the API.
+
 ## Local development
 ```bash
 # Terminal 1: API with auto-reload (docs at http://127.0.0.1:8000/api/docs)

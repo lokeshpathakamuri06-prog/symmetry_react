@@ -22,7 +22,9 @@ export class ApiError extends Error {
 
 export const api = async (path, { method = 'GET', body, signal } = {}) => {
   const headers = { Accept: 'application/json' };
-  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  // FormData (file uploads) goes as multipart: the browser sets the Content-Type and boundary
+  const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
+  if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
   if (method !== 'GET' && csrfToken) headers['X-CSRF-Token'] = csrfToken;
 
   let response;
@@ -30,7 +32,7 @@ export const api = async (path, { method = 'GET', body, signal } = {}) => {
     response = await fetch(`/api${path}`, {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body === undefined || isForm ? body : JSON.stringify(body),
       credentials: 'same-origin',
       signal,
     });

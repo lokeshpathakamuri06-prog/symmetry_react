@@ -20,6 +20,10 @@ const PAGES = [
         ['whatsappNumber', 'WhatsApp number', 'half', 'used by all WhatsApp buttons'], ['email', 'Main email', 'half'],
         ['emailProjects', 'Projects email', 'half'],
       ] },
+      { title: 'Careers page', fields: [
+        ['careersEmail', 'Careers email', 'half', 'shown on Careers only once filled in'],
+        ['hrPhone', 'HR phone', 'half', 'shown on Careers only once filled in'],
+      ] },
       { title: 'Addresses & map', fields: [
         ['officeAddress', 'Office address', 'full', null, 'textarea'], ['registeredOffice', 'Registered office', 'full', null, 'textarea'],
         ['mapQuery', 'Map search text', 'full', 'what Google Maps should find'],

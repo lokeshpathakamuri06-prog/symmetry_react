@@ -4,6 +4,12 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-17 | Careers resumes and portfolios are uploaded to **our own backend** and stored on the server (Docker volume `application_files`), downloadable only by signed-in admins | Personal data must not be public; no third party needs access; Cloudinary would need a public signing endpoint and serves files from a CDN | Cloudinary private uploads; links to Google Drive only (the old form) |
+| 2026-10-17 | File type decided from the file's first bytes (PDF / OLE .doc / ZIP with `word/document.xml`), random stored names, owner-only permissions, size caps 5 MB / 15 MB | A renamed HTML or executable file is rejected; nothing guessable on disk | Trust the file extension or the browser's content type |
+| 2026-10-17 | New endpoint `/public/career-applications` (multipart) next to the old JSON one | The live site keeps working until the new frontend is deployed | Change the old endpoint |
+| 2026-10-17 | Careers email and HR phone are **new, empty** Page Content fields; the page shows them only when filled in | No confirmed careers address or HR number exists; nothing invented | Show `concierge@` / the main phone; a visible placeholder |
+| 2026-10-17 | Team Voices uses the supplied sample quotes, visibly labelled as samples | Requested; they are not real employee statements yet | Hide the section until real quotes arrive |
+| 2026-10-17 | Applications are saved in the inbox; no email notification yet | The backend has no email service; sending email needs an SMTP or email provider account | Add an email provider now |
 | 2026-10-17 | Scroll-linked values use `useScrollRange()` (ranges padded to 0–1), not bare `useTransform` | Framer Motion runs simple ranges on the browser's native scroll timeline, where a range ending before 1 drifts back to the base value (a fade-in faded out again) | Keep a spring on the progress (adds lag on top of Lenis) |
 | 2026-10-17 | Home hero headline is not split into animated lines | It is the page's LCP element and must paint immediately (Phase 1 rule) | Line-by-line reveal from the plan |
 | 2026-10-17 | Page transitions are enter-only (fade + 12 px rise, ~0.35 s), not a crossfade with an exit | An exit fade keeps the old page visible while the scroll moves to the new position, and makes Back slower | `AnimatePresence mode="wait"` crossfade; View Transitions API (stretch, not done) |

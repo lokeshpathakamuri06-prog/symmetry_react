@@ -52,6 +52,7 @@ All forms: allowed Origin, honeypot `website` (if filled, the API answers succes
 | Method | Path | Body (camelCase) | Response |
 |---|---|---|---|
 | POST | `/public/inquiries` | `name`, `email`, `phone`, `message` (≥10 chars), `service?`, `budget?` | 201 `{reference: "INQ-XXXXXX"}` |
+| POST | `/public/career-applications` | **multipart/form-data** (Careers page): `name`, `email`, `phone`, `position` (`interior-designer`, `architecture-drafting`, `3d-visualization`, `furniture-materials`, `project-coordination`, `marketing-content`, `general`, or `job:<slug>` for an open job), `experienceLevel` (`Fresher / Student`, `0–1 year`, `1–3 years`, `3–5 years`, `5+ years`), `portfolioUrl?`, `message?` (≤ 5,000), `consent` (`true`), files `resume` (PDF/DOC/DOCX ≤ 5 MB, required) and `portfolio?` (PDF ≤ 15 MB) | 201 `{reference, jobTitle}`; 422 names the field (file type is checked from the file's contents, not its name). Files are stored privately (`UPLOAD_DIR`), never served publicly |
 | POST | `/public/applications` | `name`, `email`, `phone`, `jobId?` (a job slug or `general`), `experienceYears?`, `portfolioUrl?`, `resumeUrl?`, `message?` | 201 `{reference, jobTitle}`; 422 `jobId` if the job is closed |
 | POST | `/public/orders` | `customer{fullName, email, phone, address, city, state, country, pincode, accessNotes?}`, `items[{id, quantity 1–20, selectedFinish?, selectedFabric?}]`, `paymentMethod` (`upi\|card\|netbanking\|wallet\|cod`) | 201 `{orderNumber, items, subtotal, tax, shipping, totalAmount, customer, paymentMethod, createdAt}` |
 | POST | `/public/newsletter` | `email` | `{ok: true}` (the same answer whether new or existing) |
@@ -106,6 +107,7 @@ All forms: allowed Origin, honeypot `website` (if filled, the API answers succes
 | GET | `/admin/{inquiries\|applications\|orders}?status=&q=` | `{items, counts, statuses}` (newest first, max 500) |
 | PATCH | `/admin/{kind}/{id}` | `{status?, notes?}`; 422 on an unknown status |
 | DELETE | `/admin/{kind}/{id}` | 204, **permanent** |
+| GET | `/admin/applications/{id}/files/{resume\|portfolio}` | Download an applicant's file (signed-in admin; `attachment`, `Cache-Control: private, no-store`); 404 if there is none. Application records include `resume`/`portfolio` as `{name, size}` and `consentAt`. Deleting an application deletes its files |
 | GET | `/admin/inbox/counts` | `{unreadInquiries, newApplications, pendingOrders, subscribers}` |
 | GET | `/admin/newsletter?format=json\|csv` | List, or a CSV download |
 | POST | `/admin/newsletter/{id}/unsubscribe` | Marks unsubscribed |

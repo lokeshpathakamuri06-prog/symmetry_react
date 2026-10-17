@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-17 (Motion plan: Phases 0–3, Phase 4 Home)_
+_Last updated: 2026-10-17 (Careers page rebuild with file uploads; Motion plan Phases 0–3, Phase 4 Home)_
 
 ## Summary
 | Area | State |
@@ -335,6 +335,26 @@ _Last updated: 2026-10-17 (Motion plan: Phases 0–3, Phase 4 Home)_
 - **Bug fixed, new helper `useScrollRange()`:** Framer Motion runs simple scroll-linked ranges on the browser's scroll timeline, where values outside the range drift back to the base value. The Why heading faded out again, and removing the spring would have done the same to the gallery's button. All 27 scroll-linked ranges now use the helper.
 - **Verified:** zoom-out values measured at 0, 30, 55, 90 and 100 % of the section (heading opacity 0 → 0.83 → 1 → 1); gallery button visible at 95 %; phone and reduced-motion still version; filter glide screenshots. The 16 scroll checks pass in both modes; Home has no errors at 1440 and 390 px. Lint: 53 warnings.
 - 7 other large blur effects remain on other pages; they are for Phase 7.
+
+### 2026-10-17: Careers page rebuilt, with resume uploads (frontend + backend)
+**Why:** requested: a Careers page for students, freshers and interns, with 10 given sections and an application form with resume and portfolio uploads, a review step and honest success messages. The screenshots mentioned in the request did not arrive; the written spec was followed.
+- **Page** (`pages/Careers.jsx`, content in `data/careers.js`), in the requested order: Hero (Explore opportunities / Apply now), Areas of Opportunity (6 cards, each with Apply that preselects the position), What You Can Expect, Programme Structure, Hiring Process (vertical timeline on phones, 5 columns on desktop), Apply (admin job openings kept above the form), General Application (subject-line suggestion with copy; email only if configured), Team Voices (**sample** quotes, labelled), Equal Opportunity & HR contact, final call to action.
+- **Form** (`components/careers/ApplicationForm.jsx`):
+  - Fields: name, email, +91 phone, position (6 areas + General + current openings), experience level, portfolio link, resume (PDF/DOC/DOCX ≤ 5 MB, required), portfolio PDF (≤ 15 MB), about you, consent (required).
+  - Step 1 checks every field, highlights the problems, moves focus to the first one, and keeps what was typed.
+  - Step 2 shows a summary, with Edit or Submit. Success, with a reference number, appears only after the server confirms. A server-side field error returns to the form with the message.
+- **Backend** (`symmetry_backend`, not deployed):
+  - `POST /api/public/career-applications` (multipart, `python-multipart`): origin check, honeypot and per-IP limit, as on the other forms.
+  - Files are checked by content and stored under random names with owner-only permissions in `UPLOAD_DIR` (Docker volume `application_files`).
+  - Admin download: `GET /api/admin/applications/{id}/files/{kind}`. Deleting an application deletes its files.
+  - Migration **0005** (file and consent columns), new optional Page Content fields `careersEmail` and `hrPhone`, and CLI `application-files-cleanup`.
+- **Admin:** Applications shows Resume / Portfolio download links and the consent time. Page Content has a *Careers page* group for the careers email and HR phone.
+- `lib/api.js` now sends `FormData` as multipart.
+- **Verified:**
+  - Backend: 109 tests pass (18 new). They cover file storage and permissions, download headers, auth required, deleting files with the application, renamed HTML / fake DOCX / empty / too-large / wrong-type rejection, every field rule, closed jobs, the honeypot and foreign origins.
+  - Browser, against a second backend on the **test** database (no live data touched), 14 checks pass: section order; hero and card buttons scroll and preselect; empty submit flags 7 fields and focuses the first; a wrong file type is rejected; a bad email keeps the data; the summary shows the details; Edit keeps values and files; a simulated server outage shows an error and no false success; a real submission returned APP-FFD37A, and the row and both files (mode 600) were found.
+  - The download URL without login returns 401. Phone layout has no horizontal scroll. Dark mode checked. Lint: 53 warnings (unchanged); build passes.
+- **Not done / needed before publishing:** deploy (OPERATIONS § Deploy, migration 0005 first); fill in the careers email and HR phone; replace the sample Team Voices; there is **no email notification** for new applications (no email service in the backend; needs SMTP or an email-provider account); add the `application_files` volume to backups.
 
 ## Known issues (open)
 | # | Issue | Fixed by |

@@ -26,7 +26,7 @@ Checked 2026-10-13. Products, projects, journal, categories, team, jobs and test
 | About page | Timeline, mission/vision, philosophy, why-choose, comparison, stats (`data/aboutData.js`) and 2 photos | 14 Unsplash |
 | Services page | 6 services and process steps (`data/services.js`); also the header/mobile menu service list | 18 Unsplash |
 | Sourcing page | Countries, process, stats (`data/sourcing.js`) | 20 Unsplash |
-| Careers page | Perks list (`data/careers.js`) | none |
+| Careers page | Areas, expectations, programme structure, hiring steps and **sample** Team Voices quotes (`data/careers.js`); hero and call-to-action photos | 2 local |
 | Shop, Projects, Journal, Careers | Page headings | none |
 | Catalogue pop-up and floating button | Cover picture | 1 Unsplash |
 | Order Success page | Example order shown without a real order | 1 Unsplash |
@@ -52,6 +52,8 @@ Unsplash URLs are used in:
 | Real product prices | 20 sample products | Current prices are samples (see `Symmetry_Content_Images_Pricing_Audit.md`) |
 | Real project details | 12 sample projects | Names, locations and stats are illustrative |
 | Real testimonials | 3 samples | With client permission |
+| Team Voices quotes | Careers page (3 samples, labelled "sample") | Approved quotes and roles from real team members |
+| Careers email and HR phone | Careers page HR contact | Entered in Admin → Page Content; nothing is shown until then |
 | Alt text / captions | All images | Can be added in the Media Library |
 
 ## Replacing images (before Cloudinary uploads, by link)

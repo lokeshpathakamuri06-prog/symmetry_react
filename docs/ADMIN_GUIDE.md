@@ -186,7 +186,10 @@ On **Contact Enquiries**, click **View newsletter subscribers**. **Export CSV** 
 
 ## 9. Careers
 - **Job Openings:** create roles, set **Open** (accepting applications) and Published. Closed or draft roles disappear from the Careers page after Publish.
-- **Applications:** candidates who applied. Résumés and portfolios are links; click to open them.
+- **Applications:** candidates who applied. Applications from the Careers form carry an uploaded **resume** (PDF or Word) and sometimes a **portfolio PDF**: click **Resume** / **Portfolio** to download them. These files are private: only signed-in admins can download them. Older applications have links instead; click to open them. Each application shows when the candidate agreed to their details being used for recruitment.
+- Deleting an application also deletes its files.
+- **Careers email and HR phone:** Page Content → Company & Contact → *Careers page*. Until you fill them in, the Careers page shows no email or phone for HR (only the office address and a link to the Contact page). Fill them in, Save, then Publish.
+- **Team Voices** on the Careers page shows three **sample** quotes, marked as samples. Send real, approved quotes from team members to your developer to replace them.
 
 ---
 
