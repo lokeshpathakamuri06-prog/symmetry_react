@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { reveal } from '../lib/motion';
 import { ArrowUpRight, Search, X, ChevronLeft, ChevronRight, Sparkles, BookOpen, Clock, MapPin } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
@@ -89,10 +90,7 @@ const JournalView = ({ blogs }) => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      const gridElem = document.getElementById('journal-grid-section');
-      if (gridElem) {
-        gridElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      scrollToTarget(document.getElementById('journal-grid-section'));
     }
   };
 

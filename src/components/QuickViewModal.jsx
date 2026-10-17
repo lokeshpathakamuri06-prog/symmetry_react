@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ShoppingBag, Check } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import { useCart } from '../context/CartContext';
 import SmartImage from './SmartImage';
 
@@ -13,6 +14,7 @@ export const QuickViewModal = ({ product, onClose }) => {
   );
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  useScrollLock(Boolean(product));
 
   if (!product) return null;
 
@@ -27,7 +29,7 @@ export const QuickViewModal = ({ product, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto" data-lenis-prevent>
         {/* Backdrop */}
         <m.div
           initial={{ opacity: 0 }}

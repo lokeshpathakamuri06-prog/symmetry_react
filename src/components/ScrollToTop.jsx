@@ -1,41 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
+import { dur, ease } from '../lib/motion';
 
+/** "Back to top" button, shown after the first screen. Page-change scrolling lives in SmoothScroll. */
 export const ScrollToTop = () => {
-  const { pathname, hash } = useLocation();
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    if (hash) {
-      setTimeout(() => {
-        const id = hash.replace('#', '');
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 150);
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [pathname, hash]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowButton(window.scrollY > 400);
-    };
+    const handleScroll = () => setShowButton(window.scrollY > 400);
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const scrollToTop = () => {
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { duration: 1.2 });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
 
   return (
     <AnimatePresence>
@@ -44,8 +22,8 @@ export const ScrollToTop = () => {
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ duration: 0.3 }}
-          onClick={scrollToTop}
+          transition={{ duration: dur.fast, ease: ease.out }}
+          onClick={() => scrollToTarget(0)}
           aria-label="Scroll to top"
           className="fixed bottom-[230px] right-6 sm:bottom-[240px] sm:right-8 z-40 p-3 sm:p-3.5 rounded-full bg-surface/80 backdrop-blur-md border border-line text-fg hover:text-accent hover:border-accent shadow-luxury transition-all duration-300 group"
         >

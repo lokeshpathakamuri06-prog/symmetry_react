@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { lockScroll, unlockScroll } from '../lib/scroll';
 
 const SEEN_KEY = 'symmetry_intro_seen';
 
@@ -27,27 +28,16 @@ export const SiteOpener = () => {
   const [isRevealing, setIsRevealing] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
-  const unlock = () => {
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    if (window.lenis) {
-      window.lenis.start();
-      window.lenis.resize();
-    }
-  };
-
   const handleClose = useCallback(() => {
     setIsLeaving(true);
     setTimeout(() => {
       setIsActive(false);
-      unlock();
     }, FADE_MS);
   }, []);
 
   useEffect(() => {
     if (!isActive) return undefined;
-    if (window.lenis) window.lenis.stop();
-    document.body.style.overflow = 'hidden';
+    lockScroll();
 
     const startTimer = setTimeout(() => setIsRevealing(true), REVEAL_DELAY);
     const exitTimer = setTimeout(handleClose, HOLD_UNTIL);
@@ -60,10 +50,10 @@ export const SiteOpener = () => {
       clearTimeout(startTimer);
       clearTimeout(exitTimer);
       window.removeEventListener('keydown', handleKeyDown);
-      unlock();
+      unlockScroll();
     };
-    // Runs once for the intro; handleClose is stable
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // Unlocks when the intro finishes (isActive → false); handleClose is stable
+  }, [isActive]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isActive) return null;
 

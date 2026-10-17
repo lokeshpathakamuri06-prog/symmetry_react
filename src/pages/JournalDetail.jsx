@@ -17,6 +17,7 @@ import BlogCard from '../components/BlogCard';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
+import ScrollProgressBar from '../components/ScrollProgressBar';
 
 const XIcon = () => (
   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -80,6 +81,7 @@ const JournalDetailView = ({ blogs }) => {
 
   return (
     <div className="pt-28 pb-28 space-y-16 sm:space-y-24">
+      <ScrollProgressBar />
       <SeoMeta
         title={`${blog.title} | The Symmetry Journal`}
         description={blog.excerpt}

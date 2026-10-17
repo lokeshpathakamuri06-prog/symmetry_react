@@ -1,110 +1,168 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLocation, useNavigationType } from 'react-router-dom';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
+import { scrollToTarget, setLenis } from '../lib/scroll';
 
+const POSITIONS_KEY = 'symmetry_scroll_positions';
+
+// Every fresh page load gets the history key "default", so for those the URL is part of the key.
+// On the first render a saved position is only used if the browser says this is a reload or Back/Forward.
+const entryKey = (location) =>
+  location.key === 'default' ? `default:${location.pathname}${location.search}` : location.key;
+
+const isReturnVisit = () => {
+  const type = performance.getEntriesByType?.('navigation')[0]?.type;
+  return type === 'reload' || type === 'back_forward';
+};
+
+const readPositions = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(POSITIONS_KEY)) || {};
+  } catch {
+    return {};
+  }
+};
+
+/**
+ * Owns page scrolling for the public site:
+ * - Smooths the mouse wheel only (Lenis). Touch keeps the phone's own scrolling, and
+ *   people who ask for reduced motion get plain native scrolling.
+ * - New page → top. Back/Forward → the position you left it at (once the page is tall enough).
+ * - Links to #anchors, on this page or another, glide to the target below the header.
+ * Everything else scrolls through src/lib/scroll.js.
+ */
 export const SmoothScroll = ({ children }) => {
   const location = useLocation();
-  const lenisRef = useRef(null);
+  const navigationType = useNavigationType();
+  const positions = useRef(null);
+  if (positions.current === null) positions.current = readPositions(); // also restores after a reload
+  const currentKey = useRef(entryKey(location));
+  const lastPath = useRef(null);
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll globally
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
+      lerp: 0.1, // each frame covers 10% of the remaining distance: soft, never sluggish
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
-      infinite: false,
+      syncTouch: false, // touch scrolling stays native
       autoRaf: true,
     });
-
-    lenisRef.current = lenis;
+    setLenis(lenis);
     window.lenis = lenis;
 
-    // Global internal anchor link smooth scroll handler
-    const handleAnchorClick = (e) => {
-      const anchor = e.target.closest('a[href*="#"]');
-      if (!anchor) return;
-
-      const href = anchor.getAttribute('href');
-      if (!href || href === '#' || href.startsWith('#!')) return;
-
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const hash = href.slice(hashIndex);
-      if (hash.length <= 1) return;
-
-      const targetPath = href.slice(0, hashIndex);
-      const currentPath = window.location.pathname;
-
-      if (!targetPath || targetPath === currentPath) {
-        try {
-          const targetEl = document.querySelector(hash);
-          if (targetEl) {
-            e.preventDefault();
-            lenis.scrollTo(targetEl, {
-              offset: -90,
-              duration: 1.1,
-            });
-            window.history.pushState(null, '', hash);
-          }
-        } catch {
-          // Ignore invalid selector
-        }
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick, { capture: true });
-
-    // Handle window resize to keep Lenis dimensions synchronized
-    const handleResize = () => {
-      lenis.resize();
-    };
-    window.addEventListener('resize', handleResize);
-
     return () => {
-      document.removeEventListener('click', handleAnchorClick, { capture: true });
-      window.removeEventListener('resize', handleResize);
       lenis.destroy();
+      setLenis(null);
       window.lenis = null;
-      lenisRef.current = null;
     };
   }, []);
 
-  // Handle route and hash changes seamlessly
+  // Remember where each history entry was scrolled to
   useEffect(() => {
-    if (!lenisRef.current) return;
+    let frame = 0;
+    const save = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        positions.current[currentKey.current] = Math.round(window.scrollY);
+      });
+    };
+    const persist = () => {
+      try {
+        // Keep the 50 most recent entries
+        const entries = Object.entries(positions.current).slice(-50);
+        sessionStorage.setItem(POSITIONS_KEY, JSON.stringify(Object.fromEntries(entries)));
+      } catch {
+        // Storage blocked: positions still work until the tab is reloaded
+      }
+    };
+    window.addEventListener('scroll', save, { passive: true });
+    window.addEventListener('pagehide', persist);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', save);
+      window.removeEventListener('pagehide', persist);
+      persist();
+    };
+  }, []);
 
-    if (location.hash) {
-      const timer = setTimeout(() => {
-        try {
-          const target = document.querySelector(location.hash);
-          if (target && lenisRef.current) {
-            lenisRef.current.scrollTo(target, {
-              offset: -90,
-              duration: 1.1,
-            });
+  // Runs before the browser paints the new page, so the old position is never shown on it
+  useLayoutEffect(() => {
+    const key = entryKey(location);
+    currentKey.current = key;
+    const freshLoad = firstRender.current && !isReturnVisit();
+    firstRender.current = false;
+    const saved = freshLoad ? undefined : positions.current[key];
+    const samePage = lastPath.current === location.pathname;
+    lastPath.current = location.pathname;
+
+    // Pages load lazily and fill in from the API: wait until the target exists or the page is tall enough
+    let frame = 0;
+    const started = performance.now();
+    const waitFor = (ready, then) => {
+      const tick = () => {
+        if (ready() || performance.now() - started > 2000) then();
+        else frame = requestAnimationFrame(tick);
+      };
+      tick();
+    };
+
+    if (navigationType === 'POP' && saved != null) {
+      waitFor(
+        () => document.documentElement.scrollHeight - window.innerHeight >= saved,
+        () => scrollToTarget(saved, { immediate: true }),
+      );
+    } else if (location.hash) {
+      if (!samePage) scrollToTarget(0, { immediate: true });
+      waitFor(
+        () => {
+          try {
+            return document.querySelector(location.hash);
+          } catch {
+            return true; // not a valid selector: stop waiting
           }
-        } catch {
-          // Invalid selector
-        }
-      }, 150);
-      return () => clearTimeout(timer);
-    } else {
-      // Instant reset to top on route change
-      lenisRef.current.scrollTo(0, { immediate: true });
+        },
+        () => {
+          try {
+            scrollToTarget(location.hash);
+          } catch {
+            // Invalid selector
+          }
+        },
+      );
+    } else if (!samePage) {
+      // Same page with a new query (Shop filters write to the URL) keeps its position
+      scrollToTarget(0, { immediate: true });
     }
-  }, [location.pathname, location.hash]);
+    return () => cancelAnimationFrame(frame);
+  }, [location.key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scrollTo = (target, options = {}) => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(target, { duration: 1.1, offset: -90, ...options });
-    }
-  };
+  // Same-page anchor links glide instead of jumping
+  useEffect(() => {
+    const onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const anchor = e.target.closest('a[href*="#"]');
+      if (!anchor || anchor.target === '_blank') return;
+      const url = new URL(anchor.href, window.location.href);
+      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
+      if (url.hash.length <= 1) return;
+      let target = null;
+      try {
+        target = document.querySelector(url.hash);
+      } catch {
+        return;
+      }
+      if (!target) return;
+      e.preventDefault();
+      window.history.pushState(window.history.state, '', url.hash);
+      scrollToTarget(target);
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
 
   return <>{children}</>;
 };

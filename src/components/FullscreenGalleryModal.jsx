@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 import SmartImage from './SmartImage';
 
@@ -44,6 +45,7 @@ export default function FullscreenGalleryModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, handleNext, handlePrev]);
 
+  useScrollLock(isOpen && images.length > 0);
   if (!isOpen || images.length === 0) return null;
 
   const currentImage = images[currentIndex];
@@ -54,6 +56,7 @@ export default function FullscreenGalleryModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        data-lenis-prevent
         className="fixed inset-0 z-50 flex flex-col bg-stone-950/95 backdrop-blur-md text-white select-none"
       >
         {/* Top Header Bar */}

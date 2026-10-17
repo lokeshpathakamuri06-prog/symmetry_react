@@ -47,16 +47,9 @@ export const Header = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled((window.scrollY || document.documentElement.scrollTop || 0) > 8);
     handleScroll();
+    // Lenis scrolls the real window, so the native event covers smooth scrolling too
     window.addEventListener('scroll', handleScroll, { passive: true });
-    let lenisHandler = null;
-    if (window.lenis) {
-      lenisHandler = () => handleScroll();
-      window.lenis.on('scroll', lenisHandler);
-    }
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (window.lenis && lenisHandler) window.lenis.off('scroll', lenisHandler);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // At the top of Home the bar sits on the hero photo: transparent with white text
@@ -68,6 +61,7 @@ export const Header = () => {
   return (
     <>
       <header
+        data-site-header
         className={`fixed top-0 left-0 right-0 z-[1000] transition-[background-color,border-color,box-shadow] duration-300 border-b ${overHero ? 'bg-transparent' : 'glass'} ${
           scrolled || servicesOpen
             ? 'border-line/80 dark:border-line shadow-[0_1px_0_rgba(0,0,0,0.02)]'

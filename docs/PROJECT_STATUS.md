@@ -1,6 +1,6 @@
 # Project Status
 
-_Last updated: 2026-10-17 (Motion plan: Phases 0–1)_
+_Last updated: 2026-10-17 (Motion plan: Phases 0–2)_
 
 ## Summary
 | Area | State |
@@ -304,6 +304,24 @@ _Last updated: 2026-10-17 (Motion plan: Phases 0–1)_
 - **Verified** with a production build served locally and the live API, in headless Chromium: 15 pages, with normal and with reduced motion. No console errors. No content left invisible after scrolling (only the card hover-glare layers, which are meant to be hidden). Screenshots match the baseline. Build passes; lint unchanged (56 warnings).
 - **Finding:** LCP did not improve (it is about 4.8 s on Home). The cause is about 4.9 s of style and layout work, not animation; this moved to Phase 7 (details in MOTION_PLAN § Baseline).
 - Not deployed; the preview has not been refreshed yet.
+
+### 2026-10-17: Motion plan, Phase 2: scrolling (frontend only)
+- **`src/lib/scroll.js`:** `scrollToTarget(el | '#id' | px)` glides under the header, or uses the element's own `scroll-mt-*`, and corrects itself if photos above load mid-glide. `useScrollLock(open)` is counted, so stacked popups work, and it stops Lenis.
+- **`SmoothScroll.jsx` rewritten:**
+  - Lenis smooths the mouse wheel only (`lerp: 0.1`); touch scrolling stays native, and Lenis is off for reduced motion.
+  - A new page starts at the top. Back/Forward and reload return to the saved position, waiting until lazy pages and API content are tall enough.
+  - Links to `#anchors` glide, on the same page or from another page.
+  - A Shop filter change (same page, new query) keeps the position.
+- **Popups:** Mobile menu, Search, Filter drawer, Quick view, Fullscreen gallery, Project lightbox, Catalogue popups (2), Payment placeholder and Customisation request now lock the page behind them. They carry `data-lenis-prevent`, so their own lists still scroll. The intro uses the same lock.
+- **Removed:** the duplicate scroll logic in `ScrollToTop` (it keeps its button), the Header's extra Lenis listener, eight direct `scrollIntoView` / `window.scrollTo` calls, and `scroll-smooth` on `<html>`.
+- **Progress bar:** removed site-wide. Journal articles show a 2 px accent reading line.
+- **Verified** (production build, headless Chromium, 16 checks, all passing with normal and with reduced motion):
+  - mouse wheel after the intro; keyboard PageDown, End and Home;
+  - new page at the top; Back and Forward restore, including Back to the first page of a visit; a fresh visit starts at the top; reload keeps the position;
+  - a cross-page `#anchor` lands below the header;
+  - Search and the mobile menu (phone, touch) lock the page, and scrolling resumes after closing;
+  - the reading line appears on articles only.
+- **Also checked:** all 15 pages at 1440 and 390 px: no errors, nothing left hidden. Lint: 53 warnings (was 56).
 
 ## Known issues (open)
 | # | Issue | Fixed by |

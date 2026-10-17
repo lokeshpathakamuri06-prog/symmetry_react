@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import { X, ShieldCheck, CreditCard, Lock, CheckCircle2, AlertCircle, PhoneCall } from 'lucide-react';
 
 /**
@@ -17,6 +18,7 @@ export default function RazorpayModalPlaceholder({
   const [paymentState, setPaymentState] = useState('idle'); // 'idle' | 'processing' | 'success'
   const [selectedMethod, setSelectedMethod] = useState('upi');
 
+  useScrollLock(isOpen && Boolean(product));
   if (!isOpen || !product) return null;
 
   const subtotal = product.price * quantity;
@@ -38,7 +40,7 @@ export default function RazorpayModalPlaceholder({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm" data-lenis-prevent>
         <m.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

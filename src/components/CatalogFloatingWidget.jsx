@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2 } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 
 export const CatalogFloatingWidget = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+  useScrollLock(modalOpen);
 
   const pdfUrl = '/Symmetry-Interiors-Catalog.pdf';
 
@@ -66,7 +68,7 @@ export const CatalogFloatingWidget = () => {
       ========================================================================= */}
       <AnimatePresence>
         {modalOpen && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 overflow-y-auto" data-lenis-prevent>
             {/* Backdrop */}
             <m.div
               initial={{ opacity: 0 }}

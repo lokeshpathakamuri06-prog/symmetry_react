@@ -14,6 +14,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import SeoMeta from '../components/SeoMeta';
 import { useSiteText } from '../context/PublicContentContext';
 import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/contact';
@@ -706,7 +707,7 @@ export const Contact = () => {
                 href="#top"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.scrollTo({ top: 400, behavior: 'smooth' });
+                  scrollToTarget('#inquiry-form');
                 }}
                 className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-stone-900 hover:bg-accent hover:text-on-accent transition text-[14px] tracking-[-0.01em] font-medium shadow-luxury cursor-pointer"
               >

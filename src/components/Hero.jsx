@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { ease, enter } from '../lib/motion';
 import { useBanners, useSiteText } from '../context/PublicContentContext';
 import { heroImage } from '../lib/staticImages';
@@ -30,13 +31,7 @@ export const Hero = () => {
   const currentImageIndex = slideIndex % slides.length;
   const slide = slides[currentImageIndex];
 
-  // Smooth scroll handler
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const scrollToSection = (id) => scrollToTarget(document.getElementById(id));
 
   // Auto-advance hero background images every 5 seconds
   useEffect(() => {

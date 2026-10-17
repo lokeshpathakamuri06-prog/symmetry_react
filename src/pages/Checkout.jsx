@@ -21,6 +21,7 @@ import { useCart } from '../context/CartContext';
 import Honeypot from '../components/Honeypot';
 import { submitOrder, formErrorMessage } from '../services/publicApi';
 import SmartImage from '../components/SmartImage';
+import { scrollToTarget } from '../lib/scroll';
 
 export const Checkout = () => {
   const { cartItems, subtotal, tax, shipping, totalAmount, recordOrder } = useCart();
@@ -120,7 +121,7 @@ export const Checkout = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      window.scrollTo({ top: 200, behavior: 'smooth' });
+      scrollToTarget(200);
       return;
     }
 
@@ -171,7 +172,7 @@ export const Checkout = () => {
     } catch (err) {
       if (err.status === 422 && err.field && err.field in formData) {
         setErrors({ [err.field]: err.message });
-        window.scrollTo({ top: 200, behavior: 'smooth' });
+        scrollToTarget(200);
       } else {
         setFormError(formErrorMessage(err));
       }

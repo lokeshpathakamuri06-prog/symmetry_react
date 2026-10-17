@@ -1,6 +1,6 @@
 # Apple-style Motion & Polish Plan (public website)
 
-_Written: 2026-10-17. Status: **Phases 0–1 done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
+_Written: 2026-10-17. Status: **Phases 0–2 done (2026-10-17)**; decisions below approved with the recommendations. Frontend only; backend, API, database and admin are not touched._
 
 ## Goal
 Make every public page feel like apple.com: calm, spacious, and smooth to scroll, with motion that is **consistent, quick and purposeful**. Animation should help the eye follow the story and stay out of the way. It must never slow down the page or make people feel sick.
@@ -58,9 +58,9 @@ Lighthouse mobile (simulated 4× slower CPU), production build served locally:
 
 **Done when:** `grep whileInView src/pages` returns nothing; there is one source of timing; reduced motion turns off movement on every page.
 
-### Phase 2: Scrolling that feels native (≈1 day)
+### Phase 2: Scrolling that feels native (≈1 day): ✅ done 2026-10-17
 - **Lenis is the only scroll owner.** Remove the scroll logic from `ScrollToTop.jsx` (keep its button) and route everything through one `useScrollTo()` hook.
-- **Tuning:** smooth the mouse wheel only (`lerp: 0.1`); phones and trackpads keep native scrolling, as on apple.com. Turn Lenis off for reduced motion.
+- **Tuning:** smooth the mouse wheel only (`lerp: 0.1`); phones keep native scrolling, as on apple.com. Turn Lenis off for reduced motion. _Built:_ a browser cannot tell a trackpad from a mouse wheel, so trackpads are smoothed too; `lerp: 0.1` keeps them responsive.
 - **Back and forward** restore the previous scroll position; new pages start at the top.
 - **Modals:** `lenis.stop()` and `start()` in Mobile menu, Search, Filter drawer, Quick view and Gallery, with `data-lenis-prevent` on their scrolling panels.
 - Anchor offset comes from the real header height instead of the fixed `-90`.

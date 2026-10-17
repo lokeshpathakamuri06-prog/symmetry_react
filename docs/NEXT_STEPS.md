@@ -73,7 +73,7 @@ Inventory of what is still fixed in code: [ASSETS.md § Still in code](ASSETS.md
 Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
 - [x] Phase 0: commit the 2026-10-14 redesign; record the Lighthouse and screenshot baseline (2026-10-17)
 - [x] Phase 1: motion tokens, `reveal()`/`<Reveal>`/`<CountUp>`, lazy motion engine; 60 reveals converted (2026-10-17)
-- [ ] Phase 2: Lenis as the only scroll owner; native touch scrolling; modal scroll lock; Back keeps the scroll position
+- [x] Phase 2: Lenis as the only scroll owner; native touch scrolling; modal scroll lock; Back keeps the scroll position (2026-10-17)
 - [ ] Phase 3: page-change crossfade
 - [ ] Phase 4: signature scroll moments on each page
 - [ ] Phase 5: micro-interactions (header, menu, buttons, cards, modals, forms)

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { 
   SlidersHorizontal, 
   Search, 
@@ -121,9 +122,7 @@ const ShopView = ({ products, shopCategories }) => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      if (gridTopRef.current) {
-        gridTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      scrollToTarget(gridTopRef.current);
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { X, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import logoImg from '../assets/logo.png';
 import logoDarkImg from '../assets/logo-dark.png';
 import ThemeToggle from './ThemeToggle';
@@ -28,13 +29,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
   const location = useLocation();
   const [servicesOpen, setServicesOpen] = useState(false);
 
-  // Lock body scroll while open
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   // Close on Escape
   useEffect(() => {
@@ -55,6 +50,7 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3, ease }}
+          data-lenis-prevent
           className="fixed inset-0 z-[1100] bg-canvas/95 dark:bg-canvas/95 backdrop-blur-2xl text-fg flex flex-col overflow-y-auto"
           role="dialog"
           aria-modal="true"

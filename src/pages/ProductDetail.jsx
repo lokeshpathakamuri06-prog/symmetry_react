@@ -19,6 +19,7 @@ import {
   CreditCard
 } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import ProductCard from '../components/ProductCard';
@@ -55,6 +56,7 @@ const ProductDetailView = ({ products }) => {
   const [addedToast, setAddedToast] = useState(false);
   const [isRazorpayOpen, setIsRazorpayOpen] = useState(false);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+  useScrollLock(isCustomModalOpen);
   const [customSubmitted, setCustomSubmitted] = useState(false);
   const [careExpanded, setCareExpanded] = useState(true);
 
@@ -642,7 +644,7 @@ const ProductDetailView = ({ products }) => {
       {/* REQUEST CUSTOMIZATION MODAL */}
       <AnimatePresence>
         {isCustomModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm" data-lenis-prevent>
             <m.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

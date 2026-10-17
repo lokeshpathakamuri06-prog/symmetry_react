@@ -1,18 +1,16 @@
 import React from 'react';
 import { m, useScroll, useSpring } from 'framer-motion';
 
+/** Thin reading-progress line at the very top of the window (Journal articles only). */
 export const ScrollProgressBar = () => {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
 
   return (
     <m.div
+      aria-hidden="true"
       style={{ scaleX, transformOrigin: 'left' }}
-      className="fixed top-0 left-0 right-0 h-[3px] z-[9999] pointer-events-none bg-gradient-to-r from-accent via-[#8AB3B8] to-[#BCA575] shadow-[0_0_12px_rgba(54,101,107,0.6)]"
+      className="fixed top-0 left-0 right-0 h-[2px] z-[1001] pointer-events-none bg-accent"
     />
   );
 };

@@ -14,7 +14,6 @@ import ScrollToTop from './components/ScrollToTop';
 import SearchModal from './components/SearchModal';
 import FloatingActionStack from './components/FloatingActionStack';
 import SmoothScroll from './components/SmoothScroll';
-import ScrollProgressBar from './components/ScrollProgressBar';
 import SiteOpener from './components/SiteOpener';
 import ContentState from './components/ContentState';
 
@@ -118,7 +117,6 @@ const StorefrontShell = ({ children }) => {
   return (
     <SmoothScroll>
       <div className="min-h-screen flex flex-col bg-canvas text-fg transition-colors duration-300 relative">
-        <ScrollProgressBar />
         <ScrollToTop />
         <Header />
 

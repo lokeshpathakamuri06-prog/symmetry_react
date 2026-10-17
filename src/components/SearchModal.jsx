@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, ArrowRight, Layers, Sparkles, BookOpen } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import { useSearch } from '../context/SearchContext';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from './SmartImage';
@@ -19,15 +20,11 @@ export const SearchModal = () => {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
-      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
       setQuery('');
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
+  useScrollLock(isOpen);
 
   const cleanQuery = query.toLowerCase().trim();
 
@@ -69,7 +66,7 @@ export const SearchModal = () => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[1200] flex items-start justify-center pt-16 sm:pt-24 px-4">
+        <div className="fixed inset-0 z-[1200] flex items-start justify-center pt-16 sm:pt-24 px-4" data-lenis-prevent>
           <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

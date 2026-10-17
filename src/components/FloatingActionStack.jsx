@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FileText, Download, ExternalLink, X, Sparkles, CheckCircle2, MessageSquare, Send, MessageCircle } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import { useSiteText } from '../context/PublicContentContext';
 import { whatsappHref } from '../lib/contact';
 
@@ -35,6 +36,7 @@ export const FloatingActionStack = () => {
   const company = useSiteText('company');
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
   const [whatsappModalOpen, setWhatsappModalOpen] = useState(false);
+  useScrollLock(catalogModalOpen);
   const [whatsappMessage, setWhatsappMessage] = useState('');
 
   const [hoveredButton, setHoveredButton] = useState(null);
@@ -170,7 +172,7 @@ export const FloatingActionStack = () => {
       ========================================================================= */}
       <AnimatePresence>
         {catalogModalOpen && (
-          <div className="fixed inset-0 z-[1300] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[1300] flex items-center justify-center p-4 sm:p-6 overflow-y-auto" data-lenis-prevent>
             {/* Backdrop */}
             <m.div
               initial={{ opacity: 0 }}

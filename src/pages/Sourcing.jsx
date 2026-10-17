@@ -1,5 +1,6 @@
 import React from 'react';
 import { m } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { reveal } from '../lib/motion';
 import { 
   MapPin, 
@@ -18,8 +19,7 @@ import PageHero from '../components/PageHero';
 
 export const Sourcing = () => {
   const scrollToAnchor = (anchorId) => {
-    const el = document.getElementById(anchorId);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    scrollToTarget(document.getElementById(anchorId));
   };
 
   return (

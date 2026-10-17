@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { m, useScroll, useTransform } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { reveal } from '../lib/motion';
 import { 
   Check, 
@@ -736,8 +737,7 @@ export const Services = () => {
                 key={svc.id}
                 type="button"
                 onClick={() => {
-                  const el = document.getElementById(svc.id);
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  scrollToTarget(document.getElementById(svc.id));
                 }}
                 className="px-3 py-1.5 rounded-full text-[14px] tracking-[-0.01em] font-medium bg-sunken/40 dark:bg-surface text-muted border border-line/70 dark:border-line hover:border-accent hover:text-fg transition-all cursor-pointer"
               >

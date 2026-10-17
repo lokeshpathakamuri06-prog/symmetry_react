@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 import SmartImage from './SmartImage';
 
 export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  useScrollLock(lightboxIndex !== null);
 
   if (!images.length) return null;
 
@@ -55,6 +57,7 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
+            data-lenis-prevent
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8"
           >
             <button

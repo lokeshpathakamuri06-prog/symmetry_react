@@ -4,6 +4,9 @@ Newest first. Each entry records what was decided, and why. If a decision change
 
 | Date | Decision | Why | Alternatives considered |
 |---|---|---|---|
+| 2026-10-17 | All scrolling and scroll locks go through `src/lib/scroll.js` (`scrollToTarget`, `useScrollLock`); `SmoothScroll` owns page-change scrolling | Two scroll owners fought each other; 10 popups either let the page scroll behind them or set `body.overflow` on their own | Fix each component separately |
+| 2026-10-17 | Scroll positions saved per history entry (sessionStorage), restored on Back/Forward and on reload | Apple-like: Back returns you where you were; before, every Back jumped to the top | React Router `ScrollRestoration` (needs a data router: larger change) |
+| 2026-10-17 | `scroll-smooth` removed from `<html>` | It made native scrolling smooth even with reduced motion; Lenis or `scrollToTarget` handle smoothness now | Keep it |
 | 2026-10-17 | Motion tokens in `src/lib/motion.js`; scroll reveals use `{...reveal()}` / `enter()` | 60 reveals had 21 durations and 4 curves; one place now sets every speed | Keep per-component values; a `<Reveal>` wrapper everywhere (it is available for new code) |
 | 2026-10-17 | Two curves, not one: `ease.out` for things entering, `ease.apple` (Apple's own) for things already on screen | Entering needs a long soft landing; menus and accordions read better with Apple's curve | One curve for everything (the plan's first idea) |
 | 2026-10-17 | `LazyMotion` (strict) with `domMax` loaded after first paint; no forced `motion` chunk in `vite.config.js` | First-load JS 175 → 158 KB gzip; `strict` fails loudly if a heavy `motion.*` component comes back | Keep full `motion` components |

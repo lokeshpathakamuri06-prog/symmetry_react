@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { scrollToTarget } from '../lib/scroll';
 import { reveal } from '../lib/motion';
 import {
   Briefcase,
@@ -66,7 +67,7 @@ export const Careers = () => {
   const handleApply = (jobId) => {
     setFormData((prev) => ({ ...prev, jobId }));
     setSubmitted(false);
-    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToTarget(formRef.current);
   };
 
   const handleChange = (e) => {

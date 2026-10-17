@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { X, RotateCcw } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { useScrollLock } from '../lib/scroll';
 
 export const FilterDrawer = ({
   isOpen,
@@ -17,22 +18,12 @@ export const FilterDrawer = ({
   onSelectStockFilter,
   onReset,
 }) => {
-  // Lock body scroll when drawer is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[1200] flex justify-end">
+        <div className="fixed inset-0 z-[1200] flex justify-end" data-lenis-prevent>
           {/* Backdrop */}
           <m.div
             initial={{ opacity: 0 }}
