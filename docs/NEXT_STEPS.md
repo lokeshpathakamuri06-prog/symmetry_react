@@ -5,7 +5,8 @@ _Last updated: 2026-10-17 (redesign in preview)_. Work top to bottom; each step 
 ## Step 0: Save the work (do first, ~15 min)
 - [x] Commit the frontend changes in `symmetry_react` (on branch `develop`).
 - [x] `git init` in `symmetry_backend` and make the first commit (`.env` is already gitignored).
-- [ ] Decide where the repos are pushed. The frontend already has GitHub `origin`; the backend needs a new remote. Push `develop`, then open a PR to `main`.
+- [x] Push both repos (2026-10-18, over SSH with the server's key "Symmetry server"): frontend `develop` → github.com/lokeshpathakamuri06-prog/symmetry_react, backend `main` → github.com/lokeshpathakamuri06-prog/symmetry_backend (private).
+- [ ] Open a PR from `develop` to `main` in the frontend repo.
 
 **Done when:** both folders are in git, and nothing is committed that contains secrets.
 
