@@ -195,8 +195,14 @@ cd /root/dev/symmetry_backend && .venv/bin/pytest -q
 The tests run against the separate `symmetry_test` database, never `symmetry`. It was created once with `sudo -u postgres psql -f db/create_test_db.sql`.
 
 ## Health checks
+**Automatic (every 5 minutes, since 2026-10-18):** `symmetry_backend/ops/healthcheck.sh` from root's crontab checks the pages (`/`, `/shop`, `/sitemap.xml`), the API and database, both containers, the last nightly backup (< 26 h), disk (< 85 %) and the HTTPS certificate (> 14 days). It emails `ALERT_EMAIL` when a problem starts, every 6 hours while it lasts, and when it is fixed. Log: `/root/backups/monitor/health.log`; current state: `/root/backups/monitor/state`.
+- **Email setup (once):** `/root/dev/symmetry_backend/ops/setup-alert-email.sh`. It asks for a Gmail address and an app password (https://myaccount.google.com/apppasswords), stores `SMTP_*` and `ALERT_EMAIL` in `symmetry_backend/.env` and sends a test email. Until then, problems are only logged.
+- Limit: if the whole server is down, it cannot send anything. An outside service (Healthchecks.io, Better Stack) would cover that.
+
+By hand:
 ```bash
-curl -s https://169-58-13-62.sslip.io/api/health          # {"status":"ok","db":"ok","migration":"0002",...}
+/root/dev/symmetry_backend/ops/healthcheck.sh && cat /root/backups/monitor/state   # ok / problem
+curl -s https://169-58-13-62.sslip.io/api/health          # {"status":"ok","db":"ok","migration":"0007",...}
 curl -sI https://169-58-13-62.sslip.io/ | head -1          # HTTP/2 200
 sudo -u postgres psql -d symmetry -Atc "select count(*) from products"   # 20
 ```

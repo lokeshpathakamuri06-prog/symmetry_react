@@ -494,6 +494,11 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - **Verified:** first backup + restore OK (24 tables, migration 0007, counts match); a truncated backup is reported as FAILED; thinning keeps the right days (tested with fake dates); both scripts run in cron's minimal environment.
 - **Off-server copy:** not set up; the client chose server-only for now.
 
+### 2026-10-18: Health checks with email alerts (server)
+- `symmetry_backend/ops/healthcheck.sh` (cron every 5 min): pages, API + DB, containers, backup age, disk, certificate expiry; one retry for page checks; emails on problem start, every 6 h while it lasts, and on recovery (`ops/send_alert.py`, SMTP settings in `.env`). State and log in `/root/backups/monitor/`.
+- `ops/setup-alert-email.sh`: the client enters a Gmail address + app password in the terminal (never in chat); sends a test email. **Pending: client to run it.**
+- **Verified:** live checks pass; simulated outage + stale backup gives one alert, no repeat on the next run, then a recovery message; works in cron's environment. The client chose server email over an outside service, so a fully down server cannot alert.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

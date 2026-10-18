@@ -61,7 +61,8 @@ _Last updated: 2026-10-17 (redesign in preview)_. Work top to bottom; each step 
 - [ ] Pre-render the main pages' HTML (first paint; mobile performance 90+).
 - [x] Nightly backups (database + applicant files) with a monthly restore test, on this server (2026-10-18; OPERATIONS § Backups).
 - [ ] Encrypted off-server copy of the backups (client chose server-only for now).
-- [ ] Uptime monitoring and error logging.
+- [x] Health check every 5 minutes with email alerts (site, API, DB, containers, backup, disk, certificate), 2026-10-18; email account to be set up by the client (`ops/setup-alert-email.sh`).
+- [ ] Outside uptime check (covers a fully down server) and error logging.
 - [ ] Security pass: CSRF, rate limits, headers.
 
 ## Step 7: Make the remaining fixed content editable
