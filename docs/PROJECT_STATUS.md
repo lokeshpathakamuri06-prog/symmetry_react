@@ -487,6 +487,13 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - **Verified:** backend 156 passed, 1 skipped (20 new SEO tests); lint 0 errors; build passes. Local copy of production (new Caddyfile → API → `symmetry_test`): 44/44 SEO and cross-browser checks (Chromium, Firefox, WebKit at 390 and 1440 px), 88/88 admin checks, page fallback with the API stopped. Lighthouse mobile (slow-4G simulation), before → after: SEO 92 → 100; accessibility 91–96 → 96–100; product page LCP 5.4–6.0 s → 4.1 s; Shop LCP 4.7–5.9 s → 4.2–4.6 s; CLS ≤ 0.1 everywhere. Performance score still ~50–65: the remaining time is JavaScript start-up (React + animation library) before the first photo can be drawn; pre-rendering is the next step for 90+.
 - Not deployed (needs API rebuild + web rebuild; no migration).
 
+### 2026-10-18: Nightly backups and monthly restore test (server)
+**Why:** no automatic backups existed (only two manual copies); the live database now holds real orders.
+- `symmetry_backend/ops/backup.sh` (cron 02:15): `pg_dump` custom format (checked with `pg_restore --list`), applicant-files volume archive, row counts; root-only files in `/root/backups/nightly/`; keeps 14 daily / 8 weekly / 12 monthly; log + `last-success`.
+- `ops/restore-test.sh` (cron 1st of month 03:45): restores into the new scratch database `symmetry_restore_test` (created once by the postgres admin, owned by symmetry_owner), compares row counts, empties it afterwards (also on failure).
+- **Verified:** first backup + restore OK (24 tables, migration 0007, counts match); a truncated backup is reported as FAILED; thinning keeps the right days (tested with fake dates); both scripts run in cron's minimal environment.
+- **Off-server copy:** not set up; the client chose server-only for now.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

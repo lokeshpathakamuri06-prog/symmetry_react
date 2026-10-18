@@ -59,7 +59,8 @@ _Last updated: 2026-10-17 (redesign in preview)_. Work top to bottom; each step 
 - [x] Self-host the Inter font; WebP banners; lazy below-the-fold images (Step 6a).
 - [x] Per-page SEO head from the API: titles, descriptions, canonical, link previews, schema, sitemap, robots, image/code preloads (2026-10-18).
 - [ ] Pre-render the main pages' HTML (first paint; mobile performance 90+).
-- [ ] Nightly `pg_dump` backups copied off the server, plus a monthly restore test.
+- [x] Nightly backups (database + applicant files) with a monthly restore test, on this server (2026-10-18; OPERATIONS § Backups).
+- [ ] Encrypted off-server copy of the backups (client chose server-only for now).
 - [ ] Uptime monitoring and error logging.
 - [ ] Security pass: CSRF, rate limits, headers.
 

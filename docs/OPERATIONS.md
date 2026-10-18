@@ -47,7 +47,7 @@ Migrations are **never** run automatically on container start.
 3. Then deploy the frontend. The old JSON endpoint `/api/public/applications` still works, so the order only matters for the new page.
 4. Fill in Admin → Page Content → Company & Contact → *Careers page* (careers email, HR phone), then Publish.
 
-**Applicant files** (resumes, portfolios) live in the `application_files` volume (`/data/uploads/applications/<id>/`). They are personal data: include the volume in backups, for example `docker run --rm -v symmetry_backend_application_files:/d -v /root/backups:/b alpine tar czf /b/application_files-$(date +%F).tgz -C /d .`. Files left behind by a failed request are removed with `docker compose exec api python -m app.cli application-files-cleanup` (add `--dry-run` to list them first). Uploads are limited to 5 MB (resume) and 15 MB (portfolio) by the API.
+**Applicant files** (resumes, portfolios) live in the `application_files` volume (`/data/uploads/applications/<id>/`). They are personal data; the nightly backup includes them (see § Backups). Files left behind by a failed request are removed with `docker compose exec api python -m app.cli application-files-cleanup` (add `--dry-run` to list them first). Uploads are limited to 5 MB (resume) and 15 MB (portfolio) by the API.
 
 ## Local development
 ```bash
@@ -164,6 +164,29 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 - From Part D, the admin **Publish** button does the same.
 - **Site shows old content?** Run `publish`. If the API was just restarted, wait a few seconds: pages show a Retry button while the API is starting.
 - After a fresh deploy, the first request creates a snapshot automatically if none exists.
+
+## Backups (nightly, on this server)
+Set up 2026-10-18. Scripts are in `symmetry_backend/ops/`; root's crontab runs them:
+
+| When | What |
+|---|---|
+| Every night 02:15 | `ops/backup.sh`: database (`pg_dump`, checked after writing), applicant files (resumes/portfolios volume), row counts |
+| 1st of each month 03:45 | `ops/restore-test.sh`: restores the newest backup into the scratch database `symmetry_restore_test`, compares row counts, then empties it again |
+
+- Files: `/root/backups/nightly/` (root-only): `symmetry-YYYY-MM-DD.dump`, `.counts`, `application-files-YYYY-MM-DD.tgz`. About 1 MB per night.
+- Kept: every night for 14 days, Sundays for 8 weeks, the 1st of each month for a year.
+- Log: `/root/backups/nightly/backup.log` (every run says `ok` or `FAILED`); `last-success` holds the time of the last good backup.
+- Check by hand: `tail /root/backups/nightly/backup.log`; run now: `/root/dev/symmetry_backend/ops/backup.sh`; test a restore: `ops/restore-test.sh` (optionally with a dump path).
+- **Not yet off the server:** the copies protect against mistakes and bad updates, not against losing the server. Adding an encrypted off-server copy (Backblaze B2, Google Drive, …) is a short follow-up.
+
+### Restoring the live database (emergency only)
+1. Stop the API so nothing writes meanwhile: `cd /root/dev/symmetry_backend && docker compose stop api`.
+2. Take a copy of the current state first: `ops/backup.sh` (it is dated today; rename it if today's backup must be kept).
+3. Restore the chosen night (this replaces everything in the live database):
+   `pg_restore --clean --if-exists --no-owner --dbname="$(grep '^MIGRATIONS_DATABASE_URL=' .env | cut -d= -f2- | sed 's#+psycopg##')" /root/backups/nightly/symmetry-YYYY-MM-DD.dump`
+4. If the backup is from before a migration, the code and database must match: check `.venv/bin/alembic current`, then `docker compose up -d --build api` and `curl -s https://169-58-13-62.sslip.io/api/health`.
+5. Applicant files: `docker run --rm -v symmetry_backend_application_files:/d -v /root/backups/nightly:/b alpine:3.20 sh -c 'cd /d && tar xzf /b/application-files-YYYY-MM-DD.tgz'`.
+6. In the admin, click **Publish** so the website shows the restored content.
 
 ## Tests
 ```bash
