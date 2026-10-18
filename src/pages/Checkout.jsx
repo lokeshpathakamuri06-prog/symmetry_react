@@ -3,6 +3,7 @@ import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { ShieldCheck, CreditCard, Lock, AlertCircle, Smartphone, Landmark, Wallet, Banknote, Info, Check } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import { useCart } from '../context/CartContext';
+import { useCustomer } from '../context/CustomerContext';
 import Honeypot from '../components/Honeypot';
 import { submitOrder, getCheckoutConfig, confirmPayment, formErrorMessage } from '../services/publicApi';
 import { payWithRazorpay } from '../lib/razorpay';
@@ -91,6 +92,18 @@ export const Checkout = () => {
   // Placing an order empties the cart; don't let the empty-cart redirect beat the success page
   const [orderPlaced, setOrderPlaced] = useState(false);
   useBuyBar();
+  const { customer: account, signedIn, status: accountStatus } = useCustomer();
+
+  // Signed in: fill empty fields from the account (anything already typed or remembered wins)
+  useEffect(() => {
+    if (!account) return;
+    const a = account.address || {};
+    const fromAccount = {
+      fullName: account.fullName, email: account.email, phone: account.phone, address: a.address,
+      city: a.city, state: a.state, pincode: a.pincode, accessNotes: a.accessNotes,
+    };
+    setForm((prev) => Object.fromEntries(Object.entries(prev).map(([k, v]) => [k, v || fromAccount[k] || v])));
+  }, [account]);
 
   useEffect(() => {
     getCheckoutConfig()
@@ -253,6 +266,18 @@ export const Checkout = () => {
 
         <form onSubmit={handleSubmit} noValidate className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           <div className="lg:col-span-8 space-y-6" id="co-details">
+            {accountStatus === 'guest' && (
+              <p className="rounded-tile bg-surface ring-1 ring-line/60 px-5 py-4 text-[14px] text-fg">
+                Have an account?{' '}
+                <Link to="/account/login?next=/checkout" className="text-accent font-medium hover:underline">Sign in</Link>{' '}
+                to fill in your details and track this order. Or continue as a guest: we'll email you updates either way.
+              </p>
+            )}
+            {signedIn && (
+              <p className="rounded-tile bg-accent/10 px-5 py-3 text-[14px] text-fg">
+                Signed in as <b>{account.email}</b>. This order will appear in <Link to="/account" className="text-accent hover:underline">My orders</Link>.
+              </p>
+            )}
             {/* 1. Contact */}
             <Section n={1} title="Contact details">
               <fieldset disabled={!!awaiting} className="grid grid-cols-1 sm:grid-cols-2 gap-4">

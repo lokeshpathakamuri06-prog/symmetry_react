@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { Search, Heart, ShoppingBag, ChevronRight } from 'lucide-react';
+import { Search, Heart, ShoppingBag, ChevronRight, User } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import logoDarkImg from '../assets/logo-dark.png';
 import { useCart } from '../context/CartContext';
 import { useSearch } from '../context/SearchContext';
+import { useCustomer } from '../context/CustomerContext';
 import ThemeToggle from './ThemeToggle';
 import MobileMenu from './MobileMenu';
 import { services } from '../data/services';
@@ -44,6 +45,8 @@ export const Header = () => {
   const closeTimer = useRef(null);
 
   const { cartCount } = useCart();
+
+  const { signedIn } = useCustomer();
   const { openSearch } = useSearch();
   const location = useLocation();
 
@@ -145,6 +148,15 @@ export const Header = () => {
               </button>
               <Link to="/shop" className={`${iconButton} hidden sm:inline-flex`} aria-label="Wishlist" title="Wishlist">
                 <Heart className="w-5 h-5" strokeWidth={1.7} />
+              </Link>
+              <Link
+                to={signedIn ? '/account' : '/account/login'}
+                className={`${iconButton} relative`}
+                aria-label={signedIn ? 'My account and orders' : 'Sign in'}
+                title={signedIn ? 'My account' : 'Sign in'}
+              >
+                <User className="w-5 h-5" strokeWidth={1.7} />
+                {signedIn && <span aria-hidden="true" className="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent ring-2 ring-canvas" />}
               </Link>
               <Link to="/cart" className={iconButton} aria-label={`Cart with ${cartCount} items`} title="Cart">
                 <ShoppingBag className="w-5 h-5" strokeWidth={1.7} />

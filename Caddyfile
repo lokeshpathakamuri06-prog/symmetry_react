@@ -79,6 +79,17 @@
 	}
 }
 
+# Preview copy for checking new work before it goes live (separate API, database symmetry_preview;
+# runs as the containers symmetry-preview-web / symmetry-preview-api, see docs/OPERATIONS.md § Preview)
+preview.169-58-13-62.sslip.io {
+	encode zstd gzip
+	header {
+		X-Robots-Tag "noindex, nofollow"
+		-Server
+	}
+	reverse_proxy 127.0.0.1:4190
+}
+
 # index.html and the build manifest for the API (localhost only)
 http://127.0.0.1:8090 {
 	bind 127.0.0.1

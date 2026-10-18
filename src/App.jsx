@@ -6,6 +6,7 @@ import { CartProvider } from './context/CartContext';
 import { SearchProvider, useSearch } from './context/SearchContext';
 import { PublicContentProvider } from './context/PublicContentContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
+import { CustomerProvider } from './context/CustomerContext';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 
 import Header from './components/Header';
@@ -57,6 +58,9 @@ const JournalDetail = lazy(() => import('./pages/JournalDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Careers = lazy(() => import('./pages/Careers'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const AccountLogin = lazy(() => import('./pages/account/AccountLogin'));
+const Account = lazy(() => import('./pages/account/Account'));
+const AccountOrder = lazy(() => import('./pages/account/Account').then((m) => ({ default: m.AccountOrder })));
 
 // Admin pages: separate chunks, downloaded only when someone opens the admin
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -174,6 +178,7 @@ export const App = () => {
       <CartProvider>
         <SearchProvider>
             <PublicContentProvider>
+            <CustomerProvider>
             <AdminAuthProvider>
               <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
                 <StorefrontOpener />
@@ -197,6 +202,9 @@ export const App = () => {
                     <Route path="/journal/:id" element={<JournalDetail />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/careers" element={<Careers />} />
+                    <Route path="/account/login" element={<AccountLogin />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/account/orders/:number" element={<AccountOrder />} />
                     
                     {/* Admin Unprotected Route */}
                     <Route path="/admin/login" element={<AdminLogin />} />
@@ -231,6 +239,7 @@ export const App = () => {
                 </StorefrontShell>
               </BrowserRouter>
             </AdminAuthProvider>
+            </CustomerProvider>
             </PublicContentProvider>
         </SearchProvider>
       </CartProvider>

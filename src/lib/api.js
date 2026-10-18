@@ -20,12 +20,14 @@ export class ApiError extends Error {
   }
 }
 
-export const api = async (path, { method = 'GET', body, signal } = {}) => {
+// csrf: the token to send instead of the admin's (customer account requests carry their own)
+export const api = async (path, { method = 'GET', body, signal, csrf } = {}) => {
   const headers = { Accept: 'application/json' };
   // FormData (file uploads) goes as multipart: the browser sets the Content-Type and boundary
   const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
   if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
-  if (method !== 'GET' && csrfToken) headers['X-CSRF-Token'] = csrfToken;
+  const token = csrf !== undefined ? csrf : csrfToken;
+  if (method !== 'GET' && token) headers['X-CSRF-Token'] = token;
 
   let response;
   try {
@@ -45,7 +47,8 @@ export const api = async (path, { method = 'GET', body, signal } = {}) => {
 
   if (!response.ok) {
     // An expired or revoked session anywhere in the admin signs the user out
-    if (response.status === 401 && path !== '/auth/login') {
+    // (customer account requests never sign an admin out)
+    if (response.status === 401 && path !== '/auth/login' && !path.startsWith('/account')) {
       window.dispatchEvent(new Event(AUTH_EXPIRED_EVENT));
     }
     const error = new ApiError(response.status, data?.error);

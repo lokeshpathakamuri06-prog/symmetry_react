@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, Clock, Printer, Banknote, ShoppingBag } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { useCustomer } from '../context/CustomerContext';
 import SmartImage from '../components/SmartImage';
 import CheckoutSteps from '../components/shop/CheckoutSteps';
 import { useCart } from '../context/CartContext';
@@ -24,6 +25,7 @@ const Money = ({ label, value, strong }) => (
 );
 
 export const OrderSuccess = () => {
+  const { signedIn } = useCustomer();
   const { lastOrder: order } = useCart();
 
   if (!order) {
@@ -61,11 +63,17 @@ export const OrderSuccess = () => {
             Order number <strong className="font-mono text-fg">{order.orderId}</strong>
             {order.date && <> · {order.date}</>}
           </p>
-          <p className="mt-1 text-[14px] text-muted">Keep this number for any questions about your order.</p>
+          <p className="mt-1 text-[14px] text-muted">
+            {order.customer?.email ? <>We've emailed a confirmation to <b className="text-fg">{order.customer.email}</b> and will email you at each step. </> : null}
+            Keep this number for any questions about your order.
+          </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3 print:hidden">
             <button type="button" onClick={() => window.print()} className="px-5 py-2.5 rounded-full border border-line text-[14px] text-fg hover:border-accent inline-flex items-center gap-2">
               <Printer className="w-4 h-4 text-accent" /> Print
             </button>
+            <Link to={signedIn ? `/account/orders/${order.orderId}` : '/account/login?next=/account'} className="px-5 py-2.5 rounded-full border border-line text-[14px] text-fg hover:border-accent">
+              {signedIn ? 'Track this order' : 'Sign in to track your orders'}
+            </Link>
             <Link to="/shop" className="px-5 py-2.5 rounded-full bg-accent text-on-accent text-[14px] font-semibold">
               Continue shopping
             </Link>

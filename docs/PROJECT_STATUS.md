@@ -499,6 +499,16 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - `ops/setup-alert-email.sh`: the client enters a Gmail address + app password in the terminal (never in chat); sends a test email. **Pending: client to run it.**
 - **Verified:** live checks pass; simulated outage + stale backup gives one alert, no repeat on the next run, then a recovery message; works in cron's environment. The client chose server email over an outside service, so a fully down server cannot alert.
 
+### 2026-10-18: Customer accounts and order emails (in preview, not live)
+**Why:** requested: website sign-in for customers (email code and password, both), and emails to customers when an order is completed or cancelled.
+- **Backend (migration 0008):** tables `customers`, `customer_sessions`, `customer_codes`, `customer_login_attempts`, `email_outbox`; `orders.customer_id`. `app/customers/auth.py` (sessions in `__Host-symmetry_customer` cookie, CSRF, hashed 6-digit codes: 10 min, 5 tries, 5/address and 20/IP per hour; passwords argon2, ≥ 8 chars, 5 failures/15 min). `app/api/account.py`: `/api/account/code`, `/code/verify`, `/register`, `/login`, `/logout`, `/me` (GET/PATCH), `/password` (current password not needed for 30 min after a code sign-in = forgotten-password flow), `/orders`, `/orders/{number}` (own orders + guest orders with the verified email).
+- **Emails** (`app/mail/`): queued in the same transaction, sent by a background worker in each API process (SKIP LOCKED, retries 1/5/15/60/240 min, then failed). Order placed (COD / payment link), payment received, confirmed, shipped (courier + tracking), out for delivery, delivered, cancelled; each at most once per order. HTML + text, Indian rupee format, link to the order. Uses `SMTP_*` from `.env` (same Gmail as alerts); without them emails wait in the queue.
+- **Website:** `/account/login` (Email code / Password / Create account tabs), `/account` (My orders + details + password), `/account/orders/:number` (progress, tracking, items, address); account icon in the header; checkout fills in from the account and offers sign-in; success page links to tracking. Account pages are noindex.
+- **Admin:** order panel shows "Customer emails" (sent / waiting / not delivered).
+- **Verified:** backend 177 passed, 1 skipped (21 new); lint 0 errors; build passes; browser test 27/27 on desktop and phone (code sign-in, wrong code, checkout pre-fill, order, My orders, address saved, password set + password sign-in, admin status changes queue the right emails, no packing email).
+- **Live admin password** of admin@symmetryinteriors.com changed on request (weak; change later).
+- **Preview** set up at https://preview.169-58-13-62.sslip.io (see OPERATIONS § Preview). Not deployed live: needs migration 0008 + both rebuilds, and SMTP set up for emails to actually send.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, FileText, Mail, MapPin, Phone, Trash2, Truck, X, ExternalLink } from 'lucide-react';
 import { orders as ordersApi, inbox } from '../../../services/adminApi';
@@ -8,6 +8,50 @@ import { StatusPill, PaymentPill } from './OrderPills';
 const Label = ({ children }) => <p className="text-[11px] font-semibold uppercase tracking-wider text-adm-muted mb-2">{children}</p>;
 
 const Box = ({ children, className = '' }) => <div className={`rounded-xl border border-adm-border p-4 ${className}`}>{children}</div>;
+
+const EMAIL_LABEL = {
+  placed: 'Order received', paid: 'Payment received', confirmed: 'Order confirmed', shipped: 'On its way',
+  out_for_delivery: 'Out for delivery', delivered: 'Delivered', cancelled: 'Cancelled',
+};
+
+/** Emails the customer got about this order (sent automatically when the status changes) */
+const CustomerEmails = ({ order }) => {
+  const [detail, setDetail] = useState(null);
+  useEffect(() => {
+    let live = true;
+    const load = () => ordersApi.get(order.id).then((d) => live && setDetail(d)).catch(() => {});
+    load();
+    // Sending takes a few seconds; look again shortly after a change
+    const t = setTimeout(load, 6000);
+    return () => { live = false; clearTimeout(t); };
+  }, [order.id, order.status, order.paymentStatus]);
+  const emails = detail?.emails || [];
+  return (
+    <Box>
+      <Label>Customer emails</Label>
+      <p className="text-[12px] text-adm-muted mb-2">
+        Sent automatically to {order.customerEmail} when the order is placed, paid, confirmed, shipped, out for delivery, delivered or cancelled.
+        {detail?.hasAccount ? ' The customer has an account and can follow it in My orders.' : ''}
+      </p>
+      {detail === null ? (
+        <p className="text-[12px] text-adm-muted">Loading…</p>
+      ) : emails.length === 0 ? (
+        <p className="text-[12px] text-adm-muted">None yet.</p>
+      ) : (
+        <ul className="space-y-1.5 text-[12.5px]">
+          {emails.map((m) => (
+            <li key={m.kind + m.createdAt} className="flex items-center justify-between gap-3">
+              <span className="text-adm-fg inline-flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-adm-muted" /> {EMAIL_LABEL[m.kind] || m.kind}</span>
+              <span className={m.status === 'sent' ? 'text-emerald-600 dark:text-emerald-400' : m.status === 'failed' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'} title={m.error || ''}>
+                {m.status === 'sent' ? `Sent ${dateTime(m.sentAt)}` : m.status === 'failed' ? 'Not delivered' : 'Waiting to send'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Box>
+  );
+};
 
 /** Progress through New → Delivered, as a row of steps */
 const Progress = ({ status }) => {
@@ -258,6 +302,8 @@ export const OrderPanel = ({ order, onChanged, onDeleted, onClose }) => {
           </button>
         )}
       </Box>
+
+      <CustomerEmails order={order} />
 
       {/* Notes */}
       <div>
