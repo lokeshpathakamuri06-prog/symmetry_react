@@ -76,10 +76,11 @@ All content screens work the same way.
 - **Published:** shown on the website, after Publish.
 - **Draft:** kept in the admin only. Use it for items you're still preparing.
 
-### Archive (instead of deleting)
+### Archive, restore and delete
 - Click the 🗄 **Archive** icon. The item disappears from the website after you Publish.
 - Archived items are kept under the **Archived** tab. Click **Restore** to bring one back. It returns as a **Draft**, so set it to Published and Publish again.
-- A **category** can't be archived while it still has products. Move or archive those products first.
+- To remove an item for good, archive it first, then click the 🗑 **Delete permanently** icon on the **Archived** tab. This cannot be undone. Its photos stay in the Media Library, where unused photos can be deleted.
+- A **category** can't be archived while it still has products, and can't be deleted while any product (even an archived one) uses it. Move or delete those products first.
 
 ### Change the order
 On the **All** tab (with an empty search), use the ↑ ↓ arrows to move items. The website uses the same order.

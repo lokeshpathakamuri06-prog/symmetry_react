@@ -57,11 +57,11 @@ export const MobileMenu = ({ isOpen, onClose }) => {
           aria-label="Site menu"
         >
           {/* Top bar */}
-          <div className="site-container h-12 flex items-center justify-between shrink-0">
-            <Link to="/" onClick={onClose} className="flex items-center gap-2.5">
-              <img src={logoImg} alt="Symmetry Interiors" className="h-6 w-auto object-contain dark:hidden" />
-              <img src={logoDarkImg} alt="Symmetry Interiors" className="h-6 w-auto object-contain hidden dark:block" />
-              <span className="wordmark text-[12px]">SYMMETRY</span>
+          <div className="site-container h-[var(--gnav-h)] flex items-center justify-between shrink-0">
+            <Link to="/" onClick={onClose} className="flex items-center gap-3">
+              <img src={logoImg} alt="Symmetry Interiors" className="h-11 w-auto object-contain dark:hidden" />
+              <img src={logoDarkImg} alt="Symmetry Interiors" className="h-11 w-auto object-contain hidden dark:block" />
+              <span className="wordmark text-[16px]">SYMMETRY</span>
             </Link>
             <div className="flex items-center gap-1">
               <ThemeToggle />

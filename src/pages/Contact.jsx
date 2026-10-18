@@ -424,7 +424,7 @@ export const Contact = () => {
                     <span>{loading ? 'Sending...' : 'Send Request'}</span>
                   </button>
 
-                  <div className="flex items-center justify-center space-x-2 text-[11px] text-stone-500 dark:text-stone-400">
+                  <div className="flex items-center justify-center space-x-2 text-[11px] text-stone-500 dark:text-muted">
                     <ShieldCheck className="w-3.5 h-3.5 text-accent" />
                     <span>Your details are kept private and never shared.</span>
                   </div>
@@ -603,7 +603,7 @@ export const Contact = () => {
       <section id="studio-location" className="site-container scroll-mt-24">
         <div className="rounded-tile overflow-hidden bg-surface">
           {/* Map Top Header Bar */}
-          <div className="p-4 sm:p-6 bg-stone-50 dark:bg-stone-900 border-b border-line/60 dark:border-line flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="p-4 sm:p-6 bg-stone-50 dark:bg-surface border-b border-line/60 dark:border-line flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -618,14 +618,14 @@ export const Contact = () => {
 
             {/* Map Mode Controls */}
             <div className="flex items-center gap-2 text-xs">
-              <div className="flex items-center rounded-xl border border-stone-300 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 p-0.5">
+              <div className="flex items-center rounded-xl border border-stone-300 dark:border-line overflow-hidden bg-white dark:bg-sunken p-0.5">
                 <button
                   type="button"
                   onClick={() => setMapType('roadmap')}
                   className={`px-3 py-1 rounded-lg transition cursor-pointer ${
                     mapType === 'roadmap'
-                      ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900 font-medium'
-                      : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
+                      ? 'bg-stone-900 text-white dark:bg-white dark:text-canvas font-medium'
+                      : 'text-stone-600 dark:text-muted hover:text-stone-900 dark:hover:text-white'
                   }`}
                 >
                   Roadmap
@@ -635,8 +635,8 @@ export const Contact = () => {
                   onClick={() => setMapType('satellite')}
                   className={`px-3 py-1 rounded-lg transition cursor-pointer ${
                     mapType === 'satellite'
-                      ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900 font-medium'
-                      : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
+                      ? 'bg-stone-900 text-white dark:bg-white dark:text-canvas font-medium'
+                      : 'text-stone-600 dark:text-muted hover:text-stone-900 dark:hover:text-white'
                   }`}
                 >
                   Satellite View
@@ -656,7 +656,7 @@ export const Contact = () => {
           </div>
 
           {/* Interactive Google Map Canvas */}
-          <div className="relative w-full h-[380px] sm:h-[480px] bg-stone-100 dark:bg-stone-900 overflow-hidden">
+          <div className="relative w-full h-[380px] sm:h-[480px] bg-stone-100 dark:bg-surface overflow-hidden">
             <iframe
               key={mapType}
               title="Symmetry Office Google Map"
@@ -668,12 +668,12 @@ export const Contact = () => {
             />
 
             {/* On-Map Floating Overlay Card */}
-            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-surface/95 dark:bg-canvas/95 backdrop-blur-md border-stone-200/80 dark:border-stone-800/80 text-xs space-y-1.5 hidden sm:block pointer-events-none">
+            <div className="absolute bottom-4 left-4 z-10 max-w-xs p-3.5 rounded-2xl bg-surface/95 dark:bg-canvas/95 backdrop-blur-md border-stone-200/80 dark:border-line/80 text-xs space-y-1.5 hidden sm:block pointer-events-none">
               <div className="flex items-center gap-1.5 text-accent font-semibold text-[12px]">
                 <Navigation className="w-3.5 h-3.5" />
                 <span>Getting Here</span>
               </div>
-              <p className="text-stone-600 dark:text-stone-300 leading-snug text-[11px]">
+              <p className="text-stone-600 dark:text-fg/80 leading-snug text-[11px]">
                 &bull; 15 mins from Financial District &amp; HITEC City<br />
                 &bull; 35 mins from Rajiv Gandhi International Airport (RGIA)<br />
                 &bull; Parking available at the building

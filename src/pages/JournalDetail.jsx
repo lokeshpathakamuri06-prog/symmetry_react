@@ -227,11 +227,11 @@ const JournalDetailView = ({ blogs }) => {
               <span>Photos & Materials</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6">
               {blog.relatedImages.map((img, idx) => (
                 <figure key={idx} className="group space-y-2.5">
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken">
-                    <SmartImage sizes="(min-width: 768px) 50vw, 100vw"
+                    <SmartImage sizes="50vw"
                       src={img.url}
                       alt={img.caption || `Plate ${idx + 1}`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -324,7 +324,7 @@ const JournalDetailView = ({ blogs }) => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {relatedBlogs.map((b) => (
               <BlogCard key={b.id} blog={b} />
             ))}

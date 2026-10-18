@@ -5,6 +5,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../lib/scroll';
 import { useCart } from '../context/CartContext';
 import SmartImage from './SmartImage';
+import { isSoldOut } from '../lib/shop';
 
 export const QuickViewModal = ({ product, onClose }) => {
   const { addToCart } = useCart();
@@ -171,9 +172,12 @@ export const QuickViewModal = ({ product, onClose }) => {
 
                   <button
                     onClick={handleAdd}
-                    className="flex-1 py-3 px-5 rounded-full bg-fg text-canvas hover:bg-accent transition-colors text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
+                    disabled={isSoldOut(product)}
+                    className="flex-1 py-3 px-5 rounded-full bg-fg text-canvas hover:bg-accent transition-colors text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {added ? (
+                    {isSoldOut(product) ? (
+                      <span>Out of stock</span>
+                    ) : added ? (
                       <>
                         <Check className="w-4 h-4 text-emerald-500" />
                         <span>Added to Bag</span>

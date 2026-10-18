@@ -13,6 +13,8 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import SearchModal from './components/SearchModal';
 import FloatingActionStack from './components/FloatingActionStack';
+import ChatBot from './components/ChatBot';
+import CartToast from './components/shop/CartToast';
 import SmoothScroll from './components/SmoothScroll';
 import PageTransition, { RouteFallback } from './components/motion/PageTransition';
 import SiteOpener from './components/SiteOpener';
@@ -50,6 +52,9 @@ const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminTeam = lazy(() => import('./pages/admin/AdminTeam'));
 const AdminInquiries = lazy(() => import('./pages/admin/AdminInquiries'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminDeliveries = lazy(() => import('./pages/admin/AdminDeliveries'));
+const AdminInvoice = lazy(() => import('./pages/admin/AdminInvoice'));
+const AdminInventory = lazy(() => import('./pages/admin/AdminInventory'));
 const AdminMedia = lazy(() => import('./pages/admin/AdminMedia'));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
 const AdminCareers = lazy(() => import('./pages/admin/AdminCareers'));
@@ -126,6 +131,8 @@ const StorefrontShell = ({ children }) => {
 
         <Footer />
         <FloatingActionStack />
+        <ChatBot />
+        <CartToast />
         <SearchModal />
       </div>
     </SmoothScroll>
@@ -185,6 +192,9 @@ export const App = () => {
                     <Route path="/admin/team" element={<AdminProtectedRoute><AdminTeam /></AdminProtectedRoute>} />
                     <Route path="/admin/inquiries" element={<AdminProtectedRoute><AdminInquiries /></AdminProtectedRoute>} />
                     <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
+                    <Route path="/admin/orders/:id/invoice" element={<AdminProtectedRoute><AdminInvoice /></AdminProtectedRoute>} />
+                    <Route path="/admin/deliveries" element={<AdminProtectedRoute><AdminDeliveries /></AdminProtectedRoute>} />
+                    <Route path="/admin/inventory" element={<AdminProtectedRoute><AdminInventory /></AdminProtectedRoute>} />
                     <Route path="/admin/media" element={<AdminProtectedRoute><AdminMedia /></AdminProtectedRoute>} />
                     <Route path="/admin/settings" element={<AdminProtectedRoute><AdminSettings /></AdminProtectedRoute>} />
                     <Route path="/admin/careers" element={<AdminProtectedRoute><AdminCareers /></AdminProtectedRoute>} />

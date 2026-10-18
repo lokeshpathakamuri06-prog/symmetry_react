@@ -28,7 +28,7 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
       <AppleCardWrapper className="flex flex-col h-full">
         {/* Portrait Image Container */}
         <div className="relative aspect-[4/5] overflow-hidden bg-sunken">
-          <SmartImage sizes="(min-width: 1024px) 33vw, 100vw"
+          <SmartImage sizes="(min-width: 1024px) 33vw, 50vw"
             src={member.image}
             alt={member.name}
             className="tile-media w-full h-full object-cover object-center"
@@ -37,8 +37,8 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
 
 
           {/* Experience Pill Overlay on Top */}
-          <div className="absolute top-4 left-4 z-10">
-            <span className="glass inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium text-fg">
+          <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-10">
+            <span className="glass inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10.5px] sm:text-[12px] font-medium text-fg">
               <Award className="w-3 h-3 text-accent" />
               {member.experience || member.department}
             </span>
@@ -68,39 +68,40 @@ export const TeamCard = ({ member, index = 0, className = '' }) => {
         </div>
 
         {/* Card Content */}
-        <div className="p-6 sm:p-7 flex flex-col flex-1 justify-between">
+        {/* Phones show two cards per row: name, role and department only */}
+        <div className="p-3.5 sm:p-7 flex flex-col flex-1 justify-between">
           <div>
             {/* Department & Credentials */}
             <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[13px] font-semibold text-accent">
+              <span className="text-[11px] sm:text-[13px] font-semibold text-accent leading-snug">
                 {member.department}
               </span>
               {member.credentials && (
-                <span className="text-[12px] text-subtle truncate max-w-[140px]">
+                <span className="hidden sm:inline text-[12px] text-subtle truncate max-w-[140px]">
                   {member.credentials}
                 </span>
               )}
             </div>
 
             {/* Member Name */}
-            <h3 className="text-[21px] sm:text-[24px] font-semibold tracking-tight text-fg leading-tight">
+            <h3 className="text-[16px] sm:text-[24px] font-semibold tracking-tight text-fg leading-tight">
               {member.name}
             </h3>
 
             {/* Role */}
-            <p className="text-[14px] text-fg/80 mt-1 mb-3">
+            <p className="text-[12px] sm:text-[14px] text-fg/80 mt-1 sm:mb-3 leading-snug">
               {member.role}
             </p>
 
             {/* Bio Snippet */}
-            <p className="text-[14px] text-muted leading-relaxed mb-5">
+            <p className="hidden sm:block text-[14px] text-muted leading-relaxed mb-5">
               {member.bio}
             </p>
           </div>
 
           {/* Specialty Tags */}
           {member.specialties && member.specialties.length > 0 && (
-            <div className="pt-4 flex flex-wrap gap-1.5">
+            <div className="hidden sm:flex pt-4 flex-wrap gap-1.5">
               {member.specialties.map((tag, idx) => (
                 <span
                   key={idx}

@@ -310,7 +310,8 @@ export const About = () => {
           </div>
 
           {/* Sourcing Hubs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {/* Two per row on phones: square photos, short text, no material pills */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {sourcingHubs.map((hub, idx) => (
               <m.div
                 {...reveal({ order: idx })}
@@ -318,7 +319,7 @@ export const About = () => {
                 className="group rounded-2xl sm:rounded-tile bg-surface overflow-hidden transition-all duration-500 flex flex-col justify-between"
               >
                 {/* Hub Header Image */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
+                <div className="relative aspect-square sm:aspect-[16/10] overflow-hidden bg-sunken">
                   <img loading="lazy" decoding="async"
                     src={hub.image}
                     alt={`${hub.country} sourcing origin`}
@@ -327,31 +328,31 @@ export const About = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   
                   {/* Country Flag & Pill */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 rounded-full bg-surface/90 dark:bg-canvas/90 backdrop-blur-md text-xs font-sans font-medium text-fg">
+                  <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-surface/90 dark:bg-canvas/90 backdrop-blur-md text-[11px] sm:text-xs font-sans font-medium text-fg">
                     <span>{hub.flag}</span>
                     <span>{hub.country}</span>
                   </div>
 
-                  <div className="absolute bottom-3 left-4 text-[#F5F1E8]">
-                    <span className="text-[12px] font-mono text-[#BCA575]">
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-4 text-[#F5F1E8] truncate">
+                    <span className="text-[11px] sm:text-[12px] font-mono text-[#BCA575]">
                       {hub.city}
                     </span>
                   </div>
                 </div>
 
                 {/* Hub Description */}
-                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
+                <div className="p-3.5 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <span className="text-xs text-accent font-semibold block mb-1">
+                    <span className="text-[12px] sm:text-xs text-accent font-semibold block mb-1 leading-snug">
                       {hub.tag}
                     </span>
-                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
+                    <p className="text-[12px] sm:text-sm text-muted leading-relaxed line-clamp-4 sm:line-clamp-none">
                       {hub.desc}
                     </p>
                   </div>
 
                   {/* Curated Materials Pills */}
-                  <div className="pt-4 border-t border-sunken dark:border-line">
+                  <div className="hidden sm:block pt-4 border-t border-sunken dark:border-line">
                     <span className="text-[10px] uppercase font-mono text-subtle block mb-2">
                       Key Provenance Curations:
                     </span>
@@ -536,7 +537,7 @@ export const About = () => {
           </div>
 
           {/* Grid of Reusable TeamCard Components */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             <AnimatePresence mode="wait">
               {filteredTeam.map((member, idx) => (
                 <TeamCard key={member.id} member={member} index={idx} />
@@ -595,38 +596,38 @@ export const About = () => {
           </div>
 
           {/* 6 Value Pillars */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {whyChoosePillars.map((item, idx) => {
               const IconComponent = item.icon;
               return (
                 <m.div
                   {...reveal({ order: idx })}
                   key={item.number}
-                  className="p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-300 flex flex-col justify-between"
+                  className="p-4 sm:p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center">
-                        <IconComponent className="w-6 h-6" />
+                    <div className="flex items-center justify-between mb-4 sm:mb-6">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center">
+                        <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-md bg-canvas text-accent">
+                      <span className="hidden sm:inline text-xs font-mono font-semibold px-2.5 py-1 rounded-md bg-canvas text-accent">
                         {item.stat}
                       </span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl text-fg font-semibold mb-2">
+                    <h3 className="text-[16px] sm:text-2xl text-fg font-semibold mb-1.5 sm:mb-2 leading-tight">
                       {item.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
+                    <p className="text-[12px] sm:text-sm text-muted leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
 
-                  <div className="pt-6 mt-6 border-t border-sunken dark:border-line flex items-center justify-between">
-                    <span className="text-[12px] text-accent font-medium">
+                  <div className="pt-3 mt-3 sm:pt-6 sm:mt-6 border-t border-sunken dark:border-line flex items-center justify-between">
+                    <span className="text-[11px] sm:text-[12px] text-accent font-medium">
                       Guaranteed In Contract
                     </span>
-                    <span className="text-xs font-mono text-subtle">
+                    <span className="hidden sm:inline text-xs font-mono text-subtle">
                       {item.number}/06
                     </span>
                   </div>

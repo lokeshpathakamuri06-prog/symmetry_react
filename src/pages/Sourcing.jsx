@@ -317,7 +317,7 @@ export const Sourcing = () => {
           </div>
 
           {/* 5-Step Process Pipeline Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6">
             {sourcingProcess.map((step, idx) => {
               const StepIcon = step.icon;
 
@@ -326,28 +326,28 @@ export const Sourcing = () => {
                   {...reveal({ order: idx })}
                   key={idx}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="relative p-6 sm:p-7 rounded-[32px] bg-gradient-to-b from-surface via-surface to-canvas dark:via-canvas border border-line shadow-lg hover:shadow-[0_25px_50px_rgba(54,101,107,0.16)] dark:hover:shadow-[0_25px_50px_rgba(0,0,0,0.7)] hover:border-accent/70 transition-all duration-500 flex flex-col justify-between overflow-hidden group"
+                  className="relative p-4 sm:p-7 rounded-[24px] sm:rounded-[32px] bg-gradient-to-b from-surface via-surface to-canvas dark:via-canvas border border-line shadow-lg hover:shadow-[0_25px_50px_rgba(54,101,107,0.16)] dark:hover:shadow-[0_25px_50px_rgba(0,0,0,0.7)] hover:border-accent/70 transition-all duration-500 flex flex-col justify-between overflow-hidden group"
                 >
 
                   {/* Faint Giant Watermark Numeral */}
-                  <span className="absolute -top-3 -right-2 font-bold text-7xl text-accent/10 group-hover:text-accent/20 group-hover:scale-[1.05] transition-all duration-500 select-none pointer-events-none">
+                  <span className="absolute -top-2 -right-1 sm:-top-3 sm:-right-2 font-bold text-5xl sm:text-7xl text-accent/10 group-hover:text-accent/20 group-hover:scale-[1.05] transition-all duration-500 select-none pointer-events-none">
                     {step.step}
                   </span>
 
-                  <div className="relative z-10 space-y-4">
+                  <div className="relative z-10 space-y-3 sm:space-y-4">
                     {/* Top Row: Phase Tag & Glowing Icon Pod */}
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-mono bg-sunken/60 dark:bg-sunken border border-line/60 dark:border-line text-accent font-semibold group-hover:bg-accent group-hover:text-on-accent transition-colors duration-300">
+                      <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10.5px] sm:text-[12px] font-mono bg-sunken/60 dark:bg-sunken border border-line/60 dark:border-line text-accent font-semibold group-hover:bg-accent group-hover:text-on-accent transition-colors duration-300">
                         PHASE {step.step}
                       </span>
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-canvas to-sunken dark:from-sunken dark:to-canvas border border-line flex items-center justify-center text-accent shadow-sm group-hover:scale-115 group-hover:rotate-6 group-hover:border-accent transition-all duration-500">
+                      <div className="hidden sm:flex w-12 h-12 rounded-2xl bg-gradient-to-br from-canvas to-sunken dark:from-sunken dark:to-canvas border border-line items-center justify-center text-accent shadow-sm group-hover:scale-115 group-hover:rotate-6 group-hover:border-accent transition-all duration-500">
                         <StepIcon className="w-5 h-5 stroke-[1.5]" />
                       </div>
                     </div>
 
                     {/* Step Title & Tagline */}
                     <div>
-                      <h3 className="font-semibold tracking-tight text-2xl text-fg leading-snug group-hover:text-accent transition-colors duration-300">
+                      <h3 className="font-semibold tracking-tight text-[18px] sm:text-2xl text-fg leading-snug group-hover:text-accent transition-colors duration-300">
                         {step.name}
                       </h3>
                       <p className="text-[12px] font-sans text-accent font-semibold mt-1">
@@ -356,13 +356,13 @@ export const Sourcing = () => {
                     </div>
 
                     {/* Narrative Description */}
-                    <p className="text-xs text-muted leading-relaxed">
+                    <p className="text-[12px] sm:text-xs text-muted leading-relaxed line-clamp-5 sm:line-clamp-none">
                       {step.desc}
                     </p>
                   </div>
 
                   {/* Deliverables / Milestones Dossier Vault */}
-                  <div className="relative z-10 mt-6 pt-5 border-t border-line/60 dark:border-line/80">
+                  <div className="hidden sm:block relative z-10 mt-6 pt-5 border-t border-line/60 dark:border-line/80">
                     <span className="text-[12px] font-mono text-subtle flex items-center gap-1.5 mb-2.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-accent" />
                       Stage Milestones

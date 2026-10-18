@@ -57,7 +57,7 @@ export const FloatingActionStack = () => {
   return (
     <>
       {/* Floating quick actions: one quiet glass pill, bottom right */}
-      <div className="fixed bottom-5 right-4 md:bottom-8 md:right-6 z-40">
+      <div className="float-btn fixed bottom-5 right-4 md:bottom-8 md:right-6 z-40">
         <div className="glass flex flex-col items-center gap-1 p-1.5 rounded-full border border-line/70 dark:border-line shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
           <div className={`${mobileOpen ? 'flex' : 'hidden'} sm:flex flex-col items-center gap-1`}>
           {[

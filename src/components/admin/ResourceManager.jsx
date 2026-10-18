@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Archive, ArchiveRestore, ArrowDown, ArrowUp, Edit2, Loader2, Plus, Search, X } from 'lucide-react';
+import { Archive, ArchiveRestore, ArrowDown, ArrowUp, Edit2, Loader2, Plus, Search, Trash2, X } from 'lucide-react';
 import AdminLayout from './AdminLayout';
 import { FormField } from './form/fields';
 import { content } from '../../services/adminApi';
@@ -81,6 +81,7 @@ const Editor = ({ config, record, isNew, options, onClose, onSaved }) => {
           {config.sections.map((section) => (
             <section key={section.title} className="space-y-3">
               <h4 className="text-[11px] font-semibold uppercase tracking-wider text-adm-muted">{section.title}</h4>
+              {section.help && <p className="text-[12px] text-adm-muted -mt-1">{section.help}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
                 {section.fields.map((field) => (
                   <FormField
@@ -242,9 +243,18 @@ export const ResourceManager = ({ config }) => {
                       </>
                     )}
                     {item.status === 'archived' ? (
-                      <button title="Restore" onClick={() => act(() => api.restore(item.id), `${config.singular} restored as a draft`)} className="p-2 rounded-lg text-adm-muted hover:text-adm-accent hover:bg-adm-fg/5">
-                        <ArchiveRestore className="w-4 h-4" />
-                      </button>
+                      <>
+                        <button title="Restore" onClick={() => act(() => api.restore(item.id), `${config.singular} restored as a draft`)} className="p-2 rounded-lg text-adm-muted hover:text-adm-accent hover:bg-adm-fg/5">
+                          <ArchiveRestore className="w-4 h-4" />
+                        </button>
+                        <button
+                          title="Delete permanently"
+                          onClick={() => window.confirm(`Delete this ${config.singular.toLowerCase()} permanently? This cannot be undone. Its photos stay in the Media Library.`) && act(() => api.remove(item.id), `${config.singular} deleted`)}
+                          className="p-2 rounded-lg text-adm-muted hover:text-red-600 hover:bg-red-500/10"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
                     ) : (
                       <>
                         <button title="Edit" onClick={() => openEdit(item)} className="p-2 rounded-lg text-adm-muted hover:text-adm-fg hover:bg-adm-fg/5"><Edit2 className="w-4 h-4" /></button>

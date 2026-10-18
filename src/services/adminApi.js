@@ -21,6 +21,8 @@ export const content = (resource) => ({
   update: (id, record) => api(`/admin/${resource}/${enc(id)}`, { method: 'PUT', body: record }).then(changed),
   archive: (id) => api(`/admin/${resource}/${enc(id)}/archive`, { method: 'POST' }).then(changed),
   restore: (id) => api(`/admin/${resource}/${enc(id)}/restore`, { method: 'POST' }).then(changed),
+  // Only archived records can be deleted (the server refuses others)
+  remove: (id) => api(`/admin/${resource}/${enc(id)}`, { method: 'DELETE' }).then(changed),
   reorder: (ids) => api(`/admin/${resource}-order`, { method: 'PUT', body: { ids } }).then(changed),
 });
 
@@ -69,4 +71,27 @@ export const newsletter = {
   list: () => api('/admin/newsletter'),
   unsubscribe: (id) => api(`/admin/newsletter/${enc(id)}/unsubscribe`, { method: 'POST' }),
   csvUrl: '/api/admin/newsletter?format=csv',
+};
+
+// Orders: status, payment, delivery details, tax invoice, CSV export
+export const orders = {
+  get: (id) => api(`/admin/orders/${enc(id)}`),
+  update: (id, changes) => api(`/admin/orders/${enc(id)}`, { method: 'PATCH', body: changes }).then(inboxChanged),
+  invoice: (id) => api(`/admin/orders/${enc(id)}/invoice`, { method: 'POST' }),
+  // A plain link: the browser downloads the CSV with the admin's session cookie
+  exportUrl: ({ status, q, from, to } = {}) => {
+    const params = new URLSearchParams();
+    if (status && status !== 'all') params.set('status', status);
+    if (q) params.set('q', q);
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    return `/api/admin/orders-export?${params}`;
+  },
+};
+
+// Inventory: stock and prices, live on the shop at once (no publish)
+export const inventory = {
+  list: () => api('/admin/inventory'),
+  update: (id, changes) => api(`/admin/inventory/${enc(id)}`, { method: 'PATCH', body: changes }),
+  bulk: (ids, availability) => api('/admin/inventory', { method: 'PATCH', body: { ids, availability } }),
 };

@@ -61,7 +61,7 @@ export const SiteOpener = () => {
     <div
       role="presentation"
       onClick={handleClose}
-      className={`fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden cursor-pointer select-none transition-opacity ease-out ${
+      className={`fixed inset-0 z-[9999] bg-black dark:bg-[#0a1426] flex flex-col items-center justify-center overflow-hidden cursor-pointer select-none transition-opacity ease-out ${
         isLeaving ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       style={{ transitionDuration: `${FADE_MS}ms` }}

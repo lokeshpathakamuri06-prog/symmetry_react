@@ -24,19 +24,21 @@ const navLinks = [
 ];
 
 const iconButton =
-  'relative w-9 h-9 inline-flex items-center justify-center rounded-full text-fg/80 hover:text-fg transition-colors shrink-0';
+  'relative w-10 h-10 inline-flex items-center justify-center rounded-full text-fg/80 hover:text-fg transition-colors shrink-0';
 
 /** Past this many pixels, scrolling down tucks the bar away and scrolling up brings it back */
 const HIDE_AFTER = 160;
 
 /**
- * Global navigation, as on apple.com: a thin frosted bar with small centred links.
+ * Global navigation: a frosted bar (76 px, 88 px on desktop: --gnav-h) with centred links.
+ * On Home it starts clear, with white type over the hero photo.
  * It slides away while you read down the page and returns as soon as you scroll up.
  * While hidden, <html data-gnav-hidden> sets --gnav-offset to 0, so page bars
  * (LocalNav) move up into its place.
  */
 export const Header = () => {
   const [hidden, setHidden] = useState(false);
+  const [atTop, setAtTop] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const closeTimer = useRef(null);
@@ -58,6 +60,7 @@ export const Header = () => {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
+      setAtTop(y < 40);
       if (Math.abs(y - lastY) < 6) return;
       setHidden(y > HIDE_AFTER && y > lastY);
       lastY = y;
@@ -77,6 +80,9 @@ export const Header = () => {
     document.documentElement.toggleAttribute('data-gnav-hidden', tucked);
   }, [tucked]);
 
+  // On Home, before scrolling, the bar is clear with white type over the hero photo
+  const onPhoto = location.pathname === '/' && atTop && !servicesOpen && !mobileMenuOpen;
+
   const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to));
 
   return (
@@ -85,20 +91,28 @@ export const Header = () => {
         data-site-header
         className={`fixed top-0 inset-x-0 z-[1000] transition-transform duration-500 ease-apple ${tucked ? '-translate-y-full' : 'translate-y-0'}`}
       >
-        <div className={`glass border-b border-line/60 dark:border-line/70 ${servicesOpen ? '!bg-canvas' : ''}`}>
-          <div className="w-full max-w-[1100px] mx-auto px-4 sm:px-6 h-12 flex items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="Symmetry Interiors Home">
-              <img src={logoImg} alt="Symmetry Logo" className="h-6 w-auto object-contain dark:hidden" />
-              <img src={logoDarkImg} alt="Symmetry Logo" className="h-6 w-auto object-contain hidden dark:block" />
-              <span className="wordmark text-[12px] leading-none text-fg">SYMMETRY</span>
+        <div
+          className={`border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-apple ${
+            onPhoto ? 'bg-transparent border-transparent' : 'glass border-line/60 dark:border-line/70'
+          } ${servicesOpen ? '!bg-canvas' : ''}`}
+        >
+          <div className="site-container h-[var(--gnav-h)] flex items-center justify-between gap-4">
+            <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Symmetry Interiors Home">
+              <img src={logoImg} alt="Symmetry Logo" className={`h-11 lg:h-12 xl:h-14 w-auto object-contain dark:hidden ${onPhoto ? 'hidden' : ''}`} />
+              <img src={logoDarkImg} alt="Symmetry Logo" className={`h-11 lg:h-12 xl:h-14 w-auto object-contain ${onPhoto ? 'block' : 'hidden dark:block'}`} />
+              <span className={`wordmark text-[16px] xl:text-[18px] leading-none transition-colors ${onPhoto ? 'text-white' : 'text-fg'}`}>SYMMETRY</span>
             </Link>
 
             {/* Desktop links */}
-            <nav className="hidden lg:flex flex-1 items-center justify-center gap-0.5 xl:gap-2" aria-label="Main Navigation">
+            <nav className="hidden lg:flex flex-1 items-center justify-center gap-0.5 xl:gap-1.5" aria-label="Main Navigation">
               {navLinks.map((link) => {
                 const active = isActive(link.to);
-                const linkClass = `px-2.5 xl:px-3 py-1 text-[12.5px] whitespace-nowrap transition-colors duration-200 ${
-                  active ? 'text-fg' : 'text-fg/70 hover:text-fg'
+                const linkClass = `relative px-2.5 xl:px-3.5 py-2 text-[14px] xl:text-[15px] whitespace-nowrap transition-colors duration-200 ${
+                  active
+                    ? `font-medium after:absolute after:left-1/2 after:-translate-x-1/2 after:bottom-0 after:h-[2px] after:w-4 after:rounded-full ${onPhoto ? 'text-white after:bg-white' : 'text-fg after:bg-accent'}`
+                    : onPhoto
+                      ? 'text-white/90 hover:text-white [text-shadow:0_1px_12px_rgb(0_0_0/0.35)]'
+                      : 'text-fg/70 hover:text-fg'
                 }`;
                 if (!link.menu) {
                   return (
@@ -125,15 +139,15 @@ export const Header = () => {
               })}
             </nav>
 
-            <div className="flex items-center gap-0.5 shrink-0">
+            <div className={`flex items-center gap-1 shrink-0 transition-colors ${onPhoto ? 'text-white [&>a]:!text-white/90 [&>button]:!text-white/90' : ''}`}>
               <button onClick={openSearch} className={iconButton} aria-label="Search" title="Search (Ctrl + K)">
-                <Search className="w-[17px] h-[17px]" strokeWidth={1.7} />
+                <Search className="w-5 h-5" strokeWidth={1.7} />
               </button>
               <Link to="/shop" className={`${iconButton} hidden sm:inline-flex`} aria-label="Wishlist" title="Wishlist">
-                <Heart className="w-[17px] h-[17px]" strokeWidth={1.7} />
+                <Heart className="w-5 h-5" strokeWidth={1.7} />
               </Link>
               <Link to="/cart" className={iconButton} aria-label={`Cart with ${cartCount} items`} title="Cart">
-                <ShoppingBag className="w-[17px] h-[17px]" strokeWidth={1.7} />
+                <ShoppingBag className="w-5 h-5" strokeWidth={1.7} />
                 <AnimatePresence>
                   {cartCount > 0 && (
                     <m.span
@@ -141,21 +155,21 @@ export const Header = () => {
                       initial={{ scale: 0.5, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-                      className="absolute top-0.5 right-0 min-w-[15px] h-[15px] px-1 bg-accent text-on-accent text-[9.5px] font-semibold rounded-full flex items-center justify-center"
+                      className="absolute top-0.5 right-0 min-w-[17px] h-[17px] px-1 bg-accent text-on-accent text-[10.5px] font-semibold rounded-full flex items-center justify-center"
                     >
                       {cartCount}
                     </m.span>
                   )}
                 </AnimatePresence>
               </Link>
-              <ThemeToggle />
+              <ThemeToggle className="!w-10 !h-10" onPhoto={onPhoto} />
               {/* Apple-style two-line "hamburger" */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 className={`${iconButton} lg:hidden`}
                 aria-label="Open mobile menu"
               >
-                <span className="relative block w-[17px] h-[9px]" aria-hidden="true">
+                <span className="relative block w-5 h-[10px]" aria-hidden="true">
                   <span className="absolute inset-x-0 top-0 h-[1.5px] rounded-full bg-current" />
                   <span className="absolute inset-x-0 bottom-0 h-[1.5px] rounded-full bg-current" />
                 </span>
@@ -179,7 +193,7 @@ export const Header = () => {
                   initial="hidden"
                   animate="show"
                   variants={{ show: { transition: { staggerChildren: 0.025, delayChildren: 0.08 } } }}
-                  className="w-full max-w-[1100px] mx-auto px-10 pt-8 pb-12 grid grid-cols-12 gap-10"
+                  className="w-full max-w-[1280px] mx-auto px-10 pt-8 pb-12 grid grid-cols-12 gap-10"
                 >
                   <m.div variants={flyItem} className="col-span-4">
                     <p className="text-[12px] text-subtle mb-3">Explore Services</p>

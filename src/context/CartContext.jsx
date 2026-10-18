@@ -1,6 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const CartContext = createContext();
+
+/** Most of one item per order (the API accepts 1–20) */
+export const MAX_QTY = 20;
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
@@ -30,6 +33,10 @@ export const CartProvider = ({ children }) => {
     }
   });
 
+  // Last item added, for the "Added to cart" notice (CartToast)
+  const [lastAdded, setLastAdded] = useState(null);
+  const dismissAdded = useCallback(() => setLastAdded(null), []);
+
   useEffect(() => {
     localStorage.setItem('symmetry_cart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -46,9 +53,9 @@ export const CartProvider = ({ children }) => {
 
       const existingIndex = prev.findIndex((item) => item.cartKey === itemKey);
       if (existingIndex > -1) {
-        const updated = [...prev];
-        updated[existingIndex].quantity += quantity;
-        return updated;
+        return prev.map((item, i) =>
+          i === existingIndex ? { ...item, quantity: Math.min(MAX_QTY, item.quantity + quantity) } : item
+        );
       }
 
       return [
@@ -56,12 +63,13 @@ export const CartProvider = ({ children }) => {
         {
           ...product,
           cartKey: itemKey,
-          quantity,
+          quantity: Math.min(MAX_QTY, quantity),
           selectedFinish,
           selectedFabric,
         },
       ];
     });
+    if (!options.silent) setLastAdded({ product, quantity, at: Date.now() });
   };
 
   const removeFromCart = (cartKey) => {
@@ -73,7 +81,7 @@ export const CartProvider = ({ children }) => {
       prev
         .map((item) => {
           if (item.cartKey === cartKey) {
-            const newQty = item.quantity + delta;
+            const newQty = Math.min(MAX_QTY, item.quantity + delta);
             return newQty > 0 ? { ...item, quantity: newQty } : null;
           }
           return item;
@@ -89,7 +97,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     setCartItems((prev) =>
-      prev.map((item) => (item.cartKey === cartKey ? { ...item, quantity: qty } : item))
+      prev.map((item) => (item.cartKey === cartKey ? { ...item, quantity: Math.min(MAX_QTY, qty) } : item))
     );
   };
 
@@ -97,6 +105,12 @@ export const CartProvider = ({ children }) => {
     setWishlist((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
+  };
+
+  /** "Save for later": take the item out of the cart and keep it in the wishlist */
+  const saveForLater = (item) => {
+    setWishlist((prev) => (prev.includes(item.id) ? prev : [...prev, item.id]));
+    removeFromCart(item.cartKey);
   };
 
   const clearCart = () => {
@@ -111,8 +125,13 @@ export const CartProvider = ({ children }) => {
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  // Total at M.R.P. (original price where there is one), for "You save" in the price details
+  const mrpTotal = cartItems.reduce(
+    (acc, item) => acc + Math.max(item.originalPrice || 0, item.price) * item.quantity,
+    0
+  );
   const tax = Math.round(subtotal * 0.18); // 18% GST standard
-  const shipping = subtotal > 150000 || subtotal === 0 ? 0 : 3500; // Complimentary white glove delivery above INR 1.5L
+  const shipping = subtotal > 150000 || subtotal === 0 ? 0 : 3500; // Same rule as the API: free above ₹1,50,000
   const totalAmount = subtotal + tax + shipping;
 
   return (
@@ -126,6 +145,8 @@ export const CartProvider = ({ children }) => {
         clearCart,
         cartCount,
         subtotal,
+        mrpTotal,
+        savings: mrpTotal - subtotal,
         tax,
         shipping,
         totalAmount,
@@ -133,6 +154,9 @@ export const CartProvider = ({ children }) => {
         recordOrder,
         wishlist,
         toggleWishlist,
+        saveForLater,
+        lastAdded,
+        dismissAdded,
       }}
     >
       {children}

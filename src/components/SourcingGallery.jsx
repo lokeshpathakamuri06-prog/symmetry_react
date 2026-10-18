@@ -89,7 +89,7 @@ export const SourcingGallery = ({ className = '' }) => (
 
     <CardGallery label="Sourcing countries">
       {SOURCING_HUBS.map((hub, i) => (
-        <m.div {...reveal({ order: i })} key={hub.id} className="w-[80vw] sm:w-[400px]">
+        <m.div {...reveal({ order: i })} key={hub.id} className="w-[44vw] sm:w-[400px]">
           <Link to={hub.link} className="group block">
             <div className="relative aspect-[4/5] rounded-tile overflow-hidden bg-sunken">
               <img
@@ -100,10 +100,10 @@ export const SourcingGallery = ({ className = '' }) => (
                 className="tile-media absolute inset-0 w-full h-full object-cover"
               />
             </div>
-            <div className="pt-5 px-1">
-              <p className="text-[13px] font-semibold text-accent">{hub.region}</p>
-              <h3 className="mt-1 text-[28px] sm:text-[32px] font-semibold tracking-tight text-fg leading-tight">{hub.country}</h3>
-              <p className="mt-1 text-[15px] sm:text-[17px] text-muted leading-snug">{hub.title}</p>
+            <div className="pt-3 sm:pt-5 px-1">
+              <p className="text-[12px] sm:text-[13px] font-semibold text-accent truncate">{hub.region}</p>
+              <h3 className="mt-0.5 sm:mt-1 text-[20px] sm:text-[32px] font-semibold tracking-tight text-fg leading-tight">{hub.country}</h3>
+              <p className="mt-1 text-[13px] sm:text-[17px] text-muted leading-snug line-clamp-2 sm:line-clamp-none">{hub.title}</p>
             </div>
           </Link>
         </m.div>

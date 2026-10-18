@@ -14,6 +14,7 @@ const PAGES = [
       { title: 'Company', fields: [
         ['companyName', 'Legal name'], ['shortName', 'Short name (copyright line)'], ['cin', 'CIN', 'half'],
         ['hours', 'Opening hours', 'half'],
+        ['gstin', 'GSTIN', 'half', 'printed on invoices'], ['gstState', 'GST state', 'half', 'e.g. Telangana; same-state orders get CGST + SGST'],
       ] },
       { title: 'Phone & email', fields: [
         ['phonePrimary', 'Main phone', 'half'], ['phoneSecondary', 'Second phone', 'half'],

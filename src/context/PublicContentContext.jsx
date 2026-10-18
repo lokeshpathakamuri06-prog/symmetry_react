@@ -9,6 +9,11 @@ const PublicContentContext = createContext();
 const EMPTY = Object.freeze([]);
 const REFRESH_AFTER_MS = 5 * 60 * 1000; // re-check on tab focus after 5 minutes
 
+const withLiveCatalog = (data, live) => {
+  if (!live?.products || !Array.isArray(data?.products)) return data;
+  return { ...data, products: data.products.map((p) => (live.products[p.id] ? { ...p, ...live.products[p.id] } : p)) };
+};
+
 export const PublicContentProvider = ({ children }) => {
   const [content, setContent] = useState(null);
   const [status, setStatus] = useState('loading'); // 'loading' | 'ready' | 'error'
@@ -18,9 +23,11 @@ export const PublicContentProvider = ({ children }) => {
   const load = useCallback(async ({ background = false } = {}) => {
     if (inFlight.current) return inFlight.current;
     if (!background) setStatus((s) => (s === 'ready' ? s : 'loading'));
-    inFlight.current = api('/public/content')
-      .then((data) => {
-        setContent(data);
+    // Prices and stock come live from the database (no publish needed); if that call fails the
+    // published values are used as they are
+    inFlight.current = Promise.all([api('/public/content'), api('/public/live-catalog').catch(() => null)])
+      .then(([data, live]) => {
+        setContent(withLiveCatalog(data, live));
         setStatus('ready');
         lastLoadedAt.current = Date.now();
       })

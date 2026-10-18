@@ -18,6 +18,7 @@ export default {
           accent: 'rgb(var(--adm-accent) / <alpha-value>)',
           'accent-hover': 'rgb(var(--adm-accent-hover) / <alpha-value>)',
           'on-accent': 'rgb(var(--adm-on-accent) / <alpha-value>)',
+          gold: 'rgb(var(--adm-gold) / <alpha-value>)',
         },
         // Website theme tokens: values live in src/index.css (:root and .dark)
         canvas: 'rgb(var(--c-canvas) / <alpha-value>)',

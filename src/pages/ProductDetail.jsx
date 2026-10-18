@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
 import {
   Check,
   Star,
@@ -24,11 +24,11 @@ import SeoMeta from '../components/SeoMeta';
 import Breadcrumb from '../components/Breadcrumb';
 import ProductCard from '../components/ProductCard';
 import FullscreenGalleryModal from '../components/FullscreenGalleryModal';
-import RazorpayModalPlaceholder from '../components/RazorpayModalPlaceholder';
 import { useCart } from '../context/CartContext';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
+import { isSoldOut, fewLeft } from '../lib/shop';
 
 // Loads published content, then renders the page exactly as before
 export const ProductDetail = () => {
@@ -41,6 +41,7 @@ const ProductDetailView = ({ products }) => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
   const { addToCart, wishlist, toggleWishlist } = useCart();
+  const navigate = useNavigate();
 
   // All state hooks declared unconditionally at the top level
   const [selectedImage, setSelectedImage] = useState(0);
@@ -54,7 +55,6 @@ const ProductDetailView = ({ products }) => {
   const [quantity, setQuantity] = useState(1);
 
   const [addedToast, setAddedToast] = useState(false);
-  const [isRazorpayOpen, setIsRazorpayOpen] = useState(false);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   useScrollLock(isCustomModalOpen);
   const [customSubmitted, setCustomSubmitted] = useState(false);
@@ -74,6 +74,8 @@ const ProductDetailView = ({ products }) => {
   }
 
   const isWishlisted = wishlist?.includes(product.id);
+  const soldOut = isSoldOut(product);
+  const left = fewLeft(product);
 
   // Related products
   const relatedProducts = products
@@ -85,14 +87,17 @@ const ProductDetailView = ({ products }) => {
     addToCart(product, quantity, {
       finish: selectedFinish,
       color: selectedColor,
-      fabric: selectedColor
+      fabric: selectedColor,
+      silent: true, // this page shows its own "Added" message
     });
     setAddedToast(true);
     setTimeout(() => setAddedToast(false), 3000);
   };
 
+  // Buy Now: put this piece in the cart and go straight to checkout (as on Flipkart / Amazon)
   const handleBuyNow = () => {
-    setIsRazorpayOpen(true);
+    addToCart(product, quantity, { finish: selectedFinish, color: selectedColor, fabric: selectedColor, silent: true });
+    navigate('/checkout');
   };
 
   const handleCustomSubmit = (e) => {
@@ -151,20 +156,20 @@ const ProductDetailView = ({ products }) => {
                 <button
                   type="button"
                   onClick={() => toggleWishlist(product.id)}
-                  className="p-3 rounded-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200/50 dark:border-stone-700/50 shadow-md hover:scale-110 transition"
+                  className="p-3 rounded-full bg-white/80 dark:bg-surface/80 backdrop-blur-md border border-stone-200/50 dark:border-line/50 shadow-md hover:scale-110 transition"
                   title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
                   aria-label="Wishlist toggle"
                 >
                   <Heart
                     className={`w-4 h-4 transition ${
-                      isWishlisted ? 'fill-red-500 text-red-500' : 'text-stone-700 dark:text-stone-200'
+                      isWishlisted ? 'fill-red-500 text-red-500' : 'text-stone-700 dark:text-fg/80'
                     }`}
                   />
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsGalleryOpen(true)}
-                  className="p-3 rounded-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200/50 dark:border-stone-700/50 shadow-md hover:scale-110 transition text-stone-700 dark:text-stone-200 flex items-center gap-1.5 text-xs font-medium"
+                  className="p-3 rounded-full bg-white/80 dark:bg-surface/80 backdrop-blur-md border border-stone-200/50 dark:border-line/50 shadow-md hover:scale-110 transition text-stone-700 dark:text-fg/80 flex items-center gap-1.5 text-xs font-medium"
                   title="View Fullscreen Lightbox & Zoom"
                   aria-label="Zoom Fullscreen"
                 >
@@ -264,7 +269,7 @@ const ProductDetailView = ({ products }) => {
                   ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 {product.originalPrice && (
-                  <span className="text-base text-[#4F6467] dark:text-stone-400 line-through">
+                  <span className="text-base text-[#4F6467] dark:text-muted line-through">
                     ₹{product.originalPrice.toLocaleString('en-IN')}
                   </span>
                 )}
@@ -390,18 +395,21 @@ const ProductDetailView = ({ products }) => {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3.5 px-6 rounded-full bg-fg text-canvas hover:opacity-85 transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 cursor-pointer"
+                  disabled={soldOut}
+                  className="flex-1 py-3.5 px-6 rounded-full bg-fg text-canvas hover:opacity-85 transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Add To Cart</span>
+                  <span>{soldOut ? 'Out of stock' : 'Add To Cart'}</span>
                 </button>
               </div>
 
-              {/* Row 2: Buy Now (Razorpay Checkout Placeholder) */}
+              {/* Row 2: Buy Now: add and go to checkout */}
+              {left > 0 && <p className="text-[14px] font-semibold text-amber-700 dark:text-amber-400">Hurry, only {left} left</p>}
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="w-full py-3.5 px-6 rounded-full bg-accent hover:bg-accent-hover text-on-accent transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
+                disabled={soldOut}
+                className="disabled:opacity-40 disabled:cursor-not-allowed w-full py-3.5 px-6 rounded-full bg-accent hover:bg-accent-hover text-on-accent transition-all duration-300 text-[15px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>Buy Now</span>
@@ -554,7 +562,7 @@ const ProductDetailView = ({ products }) => {
                       product.careInstructions.map((instruction, idx) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50"
+                          className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-sunken/40 border border-stone-200/60 dark:border-line/50"
                         >
                           <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
                             {idx + 1}
@@ -564,15 +572,15 @@ const ProductDetailView = ({ products }) => {
                       ))
                     ) : (
                       <>
-                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-sunken/40 border border-stone-200/60 dark:border-line/50">
                           <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
                           <p className="leading-relaxed">Dust regularly with a dry microfibre cloth along the grain.</p>
                         </div>
-                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-sunken/40 border border-stone-200/60 dark:border-line/50">
                           <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
                           <p className="leading-relaxed">Avoid prolonged exposure to direct sunlight and extreme climatic humidity.</p>
                         </div>
-                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200/60 dark:border-stone-700/50">
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-sunken/40 border border-stone-200/60 dark:border-line/50">
                           <span className="w-5 h-5 rounded-full bg-accent/20 text-accent font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
                           <p className="leading-relaxed">Apply natural beeswax conditioning every 12 months for timber longevity.</p>
                         </div>
@@ -614,7 +622,7 @@ const ProductDetailView = ({ products }) => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {relatedProducts.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -631,16 +639,6 @@ const ProductDetailView = ({ products }) => {
         productName={product.name}
       />
 
-      {/* RAZORPAY FUTURE CHECKOUT PLACEHOLDER MODAL */}
-      <RazorpayModalPlaceholder
-        isOpen={isRazorpayOpen}
-        onClose={() => setIsRazorpayOpen(false)}
-        product={product}
-        quantity={quantity}
-        selectedFinish={selectedFinish}
-        selectedColor={selectedColor}
-      />
-
       {/* REQUEST CUSTOMIZATION MODAL */}
       <AnimatePresence>
         {isCustomModalOpen && (
@@ -649,9 +647,9 @@ const ProductDetailView = ({ products }) => {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative w-full max-w-lg bg-white dark:bg-stone-900 rounded-tile shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden p-6 sm:p-8"
+              className="relative w-full max-w-lg bg-white dark:bg-surface rounded-tile shadow-2xl border border-stone-200 dark:border-line overflow-hidden p-6 sm:p-8"
             >
-              <div className="flex items-start justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
+              <div className="flex items-start justify-between pb-4 border-b border-stone-200 dark:border-line">
                 <div>
                   <span className="text-[12px] text-accent font-bold">
                     Made to Measure
@@ -659,13 +657,13 @@ const ProductDetailView = ({ products }) => {
                   <h3 className="text-xl text-stone-900 dark:text-white mt-0.5">
                     Request Customization
                   </h3>
-                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-                    Customize <strong className="text-stone-700 dark:text-stone-200">{product.name}</strong> to your exact size and finish.
+                  <p className="text-xs text-stone-500 dark:text-muted mt-1">
+                    Customize <strong className="text-stone-700 dark:text-fg/80">{product.name}</strong> to your exact size and finish.
                   </p>
                 </div>
                 <button
                   onClick={() => setIsCustomModalOpen(false)}
-                  className="p-1 rounded-full text-stone-400 hover:text-stone-700 dark:hover:text-stone-200"
+                  className="p-1 rounded-full text-stone-400 hover:text-stone-700 dark:hover:text-fg"
                   aria-label="Close"
                 >
                   <X className="w-5 h-5" />
@@ -680,14 +678,14 @@ const ProductDetailView = ({ products }) => {
                   <h4 className="text-xl font-bold text-stone-900 dark:text-white mb-1">
                     Request Sent
                   </h4>
-                  <p className="text-xs text-stone-600 dark:text-stone-300 max-w-sm mx-auto">
+                  <p className="text-xs text-stone-600 dark:text-fg/80 max-w-sm mx-auto">
                     Our furniture team will contact you within 24 hours with a quote and a first drawing.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleCustomSubmit} className="space-y-4 pt-4 text-xs">
                   <div>
-                    <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
+                    <label className="block font-medium text-stone-700 dark:text-fg/80 mb-1">
                       Your Name or Company *
                     </label>
                     <input
@@ -696,12 +694,12 @@ const ProductDetailView = ({ products }) => {
                       value={customForm.clientName}
                       onChange={(e) => setCustomForm({ ...customForm, clientName: e.target.value })}
                       placeholder="e.g. Ar. Ananya Roy / Design Studio"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-line bg-stone-50 dark:bg-sunken text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
+                    <label className="block font-medium text-stone-700 dark:text-fg/80 mb-1">
                       Email or WhatsApp Contact *
                     </label>
                     <input
@@ -710,13 +708,13 @@ const ProductDetailView = ({ products }) => {
                       value={customForm.phoneOrEmail}
                       onChange={(e) => setCustomForm({ ...customForm, phoneOrEmail: e.target.value })}
                       placeholder="+91 98765 43210 or studio@architect.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-line bg-stone-50 dark:bg-sunken text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
+                      <label className="block font-medium text-stone-700 dark:text-fg/80 mb-1">
                         Custom Dimensions
                       </label>
                       <input
@@ -724,11 +722,11 @@ const ProductDetailView = ({ products }) => {
                         value={customForm.customDimensions}
                         onChange={(e) => setCustomForm({ ...customForm, customDimensions: e.target.value })}
                         placeholder="e.g. 240cm W x 95cm D"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-line bg-stone-50 dark:bg-sunken text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                       />
                     </div>
                     <div>
-                      <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
+                      <label className="block font-medium text-stone-700 dark:text-fg/80 mb-1">
                         Finish or Material
                       </label>
                       <input
@@ -736,13 +734,13 @@ const ProductDetailView = ({ products }) => {
                         value={customForm.preferredMaterial}
                         onChange={(e) => setCustomForm({ ...customForm, preferredMaterial: e.target.value })}
                         placeholder="e.g. Nero Marquina, Olive Velvet"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-line bg-stone-50 dark:bg-sunken text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block font-medium text-stone-700 dark:text-stone-300 mb-1">
+                    <label className="block font-medium text-stone-700 dark:text-fg/80 mb-1">
                       Anything Else We Should Know
                     </label>
                     <textarea
@@ -750,14 +748,14 @@ const ProductDetailView = ({ products }) => {
                       value={customForm.additionalNotes}
                       onChange={(e) => setCustomForm({ ...customForm, additionalNotes: e.target.value })}
                       placeholder="e.g. Which floor, lift size, or fabric preferences..."
-                      className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                      className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-line bg-stone-50 dark:bg-sunken text-stone-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
 
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-black dark:bg-white text-on-accent dark:text-stone-900 font-semibold transition hover:bg-accent dark:hover:bg-accent dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full py-3.5 rounded-full bg-black dark:bg-white text-on-accent dark:text-canvas font-semibold transition hover:bg-accent dark:hover:bg-accent dark:hover:text-white flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Send Request</span>

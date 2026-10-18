@@ -25,13 +25,14 @@ export const ImageGallery = ({ images = [], title = 'Gallery' }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      {/* First photo wide, the rest two per row on phones */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
         {images.map((img, idx) => (
           <div
             key={idx}
             onClick={() => openLightbox(idx)}
             className={`group relative overflow-hidden rounded-2xl bg-sunken cursor-pointer ${
-              idx === 0 ? 'md:col-span-2 aspect-[16/10]' : 'aspect-square'
+              idx === 0 ? 'col-span-2 aspect-[16/10]' : 'aspect-square'
             }`}
           >
             <SmartImage sizes="(min-width: 768px) 33vw, 50vw"

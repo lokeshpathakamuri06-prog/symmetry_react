@@ -283,7 +283,7 @@ const JournalView = ({ blogs }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.35 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+                className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8 lg:gap-10"
               >
                 {paginatedBlogs.map((blog, idx) => (
                   <BlogCard key={blog.id} blog={blog} index={idx} />

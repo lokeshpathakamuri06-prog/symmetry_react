@@ -1,6 +1,7 @@
 import React from 'react';
 import ResourceManager from '../../components/admin/ResourceManager';
-import { categoryOptions, collectionOptions, inr } from './contentOptions';
+import { categoryOptions, collectionOptions, inr, AVAILABILITY_OPTIONS } from './contentOptions';
+import AvailabilityLabel from '../../components/admin/AvailabilityLabel';
 
 const config = {
   resource: 'products',
@@ -10,7 +11,7 @@ const config = {
   plural: 'Products',
   sortable: true,
   optionSources: { category: categoryOptions, collection: collectionOptions },
-  newRecord: () => ({ status: 'draft', inStock: true, featured: false, images: [], colors: [], materials: [], finishes: [], fabrics: [], details: [], careInstructions: [], reviewCount: 0 }),
+  newRecord: () => ({ status: 'draft', availability: 'in_stock', inStock: true, featured: false, images: [], colors: [], materials: [], finishes: [], fabrics: [], details: [], careInstructions: [], reviewCount: 0 }),
   row: {
     thumb: (p) => p.images?.[0],
     primary: (p) => p.name,
@@ -18,7 +19,7 @@ const config = {
     meta: (p) => (
       <div>
         <p className="font-semibold">{inr(p.price)}</p>
-        <p className={`text-[11px] ${p.inStock ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>{p.stockStatus || (p.inStock ? 'In stock' : 'Made to order')}</p>
+        <AvailabilityLabel product={p} />
       </div>
     ),
   },
@@ -33,13 +34,14 @@ const config = {
     { title: 'Images', fields: [
       { key: 'images', label: 'Product photos', type: 'images', required: true, help: 'first photo is the main one' },
     ] },
-    { title: 'Price & stock', fields: [
+    { title: 'Price & stock', help: 'Price and stock changes reach the shop at once (no publish needed); see also Inventory.', fields: [
       { key: 'price', label: 'Price (₹)', type: 'money', required: true, span: 'half' },
       { key: 'originalPrice', label: 'Original price (₹)', type: 'money', span: 'half', help: 'shown struck through' },
       { key: 'badge', label: 'Badge', type: 'text', span: 'half', placeholder: 'Bestseller' },
       { key: 'leadTime', label: 'Lead time', type: 'text', span: 'half', placeholder: '3 to 4 Weeks' },
-      { key: 'stockStatus', label: 'Stock label', type: 'text', span: 'half', placeholder: 'In Stock' },
-      { key: 'inStock', label: 'In stock', type: 'checkbox', span: 'half', checkboxLabel: 'In stock (otherwise made to order)' },
+      { key: 'availability', label: 'Availability', type: 'select', required: true, span: 'half', options: AVAILABILITY_OPTIONS },
+      { key: 'stockQuantity', label: 'Pieces in stock', type: 'number', span: 'half', step: 1, help: 'leave empty to not count; 0 = out of stock' },
+      { key: 'stockStatus', label: 'Stock label', type: 'text', span: 'half', placeholder: 'In Stock', help: 'optional custom wording' },
       { key: 'featured', label: 'Featured', type: 'checkbox', span: 'half', checkboxLabel: 'Feature on the shop' },
       { key: 'rating', label: 'Rating', type: 'number', span: 'half', min: 0, max: 5, step: 0.1 },
       { key: 'reviewCount', label: 'Review count', type: 'number', span: 'half', step: 1 },

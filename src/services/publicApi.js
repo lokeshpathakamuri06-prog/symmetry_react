@@ -14,6 +14,18 @@ export const submitCareerApplication = ({ resume, portfolio, ...fields }) => {
   return api('/public/career-applications', { method: 'POST', body: form });
 };
 export const submitOrder = (data) => api('/public/orders', { method: 'POST', body: { ...data, sourcePage: page() } });
+// What checkout may offer: { online, razorpayKeyId, cod, codMaxTotal }
+export const getCheckoutConfig = () => api('/public/checkout-config');
+// Report a finished Razorpay payment; the API checks its signature before marking the order paid
+export const confirmPayment = (orderNumber, response) =>
+  api(`/public/orders/${encodeURIComponent(orderNumber)}/payment`, {
+    method: 'POST',
+    body: {
+      razorpayOrderId: response.razorpay_order_id,
+      razorpayPaymentId: response.razorpay_payment_id,
+      razorpaySignature: response.razorpay_signature,
+    },
+  });
 export const subscribeNewsletter = (email, website = '') =>
   api('/public/newsletter', { method: 'POST', body: { email, website, sourcePage: page() } });
 

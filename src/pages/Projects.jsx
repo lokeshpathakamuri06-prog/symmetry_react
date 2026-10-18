@@ -275,7 +275,7 @@ const ProjectsView = ({ projects }) => {
       <section className="site-container">
         <m.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-10"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (

@@ -1,818 +1,421 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
-import {
-  ShieldCheck,
-  CreditCard,
-  Lock,
-  Truck,
-  CheckCircle2,
-  AlertCircle,
-  Smartphone,
-  Landmark,
-  Wallet,
-  Banknote,
-  ArrowRight,
-  Sparkles,
-  Info
-} from 'lucide-react';
+import { ShieldCheck, CreditCard, Lock, AlertCircle, Smartphone, Landmark, Wallet, Banknote, Info, Check } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
-import Breadcrumb from '../components/Breadcrumb';
 import { useCart } from '../context/CartContext';
 import Honeypot from '../components/Honeypot';
-import { submitOrder, formErrorMessage } from '../services/publicApi';
+import { submitOrder, getCheckoutConfig, confirmPayment, formErrorMessage } from '../services/publicApi';
+import { payWithRazorpay } from '../lib/razorpay';
 import SmartImage from '../components/SmartImage';
+import CheckoutSteps from '../components/shop/CheckoutSteps';
+import PriceDetails from '../components/shop/PriceDetails';
+import { formatINR } from '../lib/shop';
 import { scrollToTarget } from '../lib/scroll';
+import useBuyBar from '../lib/useBuyBar';
+
+const ADDRESS_KEY = 'symmetry_address';
+
+const STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana',
+  'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+  'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh',
+  'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry',
+];
+
+const METHODS = [
+  { id: 'upi', label: 'UPI', icon: Smartphone, desc: 'Google Pay, PhonePe, Paytm or any UPI app' },
+  { id: 'card', label: 'Credit / Debit Card', icon: CreditCard, desc: 'Visa, Mastercard, RuPay, American Express' },
+  { id: 'netbanking', label: 'Net Banking', icon: Landmark, desc: 'All major Indian banks' },
+  { id: 'wallet', label: 'Wallets', icon: Wallet, desc: 'Paytm, Amazon Pay, Mobikwik and more' },
+  { id: 'cod', label: 'Cash on Delivery', icon: Banknote, desc: 'Pay by cash, card or UPI when your order arrives' },
+];
+
+const EMPTY = { fullName: '', email: '', phone: '', address: '', city: '', state: 'Telangana', pincode: '', accessNotes: '' };
+
+const loadAddress = () => {
+  try {
+    return { ...EMPTY, ...JSON.parse(localStorage.getItem(ADDRESS_KEY) || '{}') };
+  } catch {
+    return EMPTY;
+  }
+};
+
+const inputClass = (error) =>
+  `w-full px-4 py-3 rounded-xl text-[15px] border bg-canvas/60 dark:bg-canvas text-fg placeholder:text-subtle focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent ${
+    error ? 'border-red-500' : 'border-line'
+  }`;
+
+const Field = ({ label, name, error, className = '', children, ...props }) => (
+  <div className={className}>
+    <label htmlFor={`co-${name}`} className="block text-[13px] text-muted mb-1.5 font-medium">
+      {label}
+    </label>
+    {children || <input id={`co-${name}`} name={name} className={inputClass(error)} aria-invalid={!!error} {...props} />}
+    {error && (
+      <p className="text-[12px] text-red-500 mt-1 flex items-center gap-1">
+        <AlertCircle className="w-3 h-3" />
+        {error}
+      </p>
+    )}
+  </div>
+);
+
+const Section = ({ n, title, aside, children }) => (
+  <section className="p-5 sm:p-8 rounded-tile bg-surface">
+    <div className="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-line">
+      <h2 className="text-[19px] font-semibold tracking-tight text-fg flex items-center gap-3">
+        <span className="w-7 h-7 rounded-full bg-accent text-on-accent text-[13px] font-semibold inline-flex items-center justify-center">{n}</span>
+        {title}
+      </h2>
+      {aside}
+    </div>
+    {children}
+  </section>
+);
 
 export const Checkout = () => {
-  const { cartItems, subtotal, tax, shipping, totalAmount, recordOrder } = useCart();
+  const { cartItems, totalAmount, recordOrder } = useCart();
   const navigate = useNavigate();
 
-  // Form State
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: 'Hyderabad',
-    state: 'Telangana',
-    country: 'India',
-    pincode: '',
-    accessNotes: '',
-    paymentMethod: 'upi', // 'upi' | 'card' | 'netbanking' | 'wallet' | 'cod'
-    upiId: '',
-    cardName: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cardCvv: '',
-    selectedBank: 'hdfc',
-    selectedWallet: 'paytm'
-  });
-
+  const [form, setForm] = useState(loadAddress);
+  const [saveAddress, setSaveAddress] = useState(true);
+  const [chosenMethod, setMethod] = useState('upi');
+  const [config, setConfig] = useState({ online: false, cod: true, codMaxTotal: null });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
   const [website, setWebsite] = useState('');
+  // An order saved on the server and waiting for its online payment (the shopper closed the payment window)
+  const [awaiting, setAwaiting] = useState(null);
   // Placing an order empties the cart; don't let the empty-cart redirect beat the success page
-  const orderPlaced = useRef(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  useBuyBar();
 
-  // If cart is empty, redirect safely
-  if ((!cartItems || cartItems.length === 0) && !orderPlaced.current) {
-    return <Navigate to="/shop" replace />;
+  useEffect(() => {
+    getCheckoutConfig()
+      .then((c) => setConfig(c))
+      .catch(() => {});
+  }, []);
+
+  const codBlocked = !config.cod || (config.codMaxTotal && totalAmount > config.codMaxTotal);
+  const method = chosenMethod === 'cod' && codBlocked ? 'upi' : chosenMethod;
+
+  if ((!cartItems || cartItems.length === 0) && !orderPlaced) {
+    return <Navigate to="/cart" replace />;
   }
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full Name is required.';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required.';
-    } else if (!/^[0-9+\s-]{10,15}$/.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number.';
-    }
-
-    if (!formData.address.trim()) {
-      newErrors.address = 'Street address / Villa is required.';
-    }
-
-    if (!formData.city.trim()) {
-      newErrors.city = 'City is required.';
-    }
-
-    if (!formData.state.trim()) {
-      newErrors.state = 'State / Region is required.';
-    }
-
-    if (!formData.country.trim()) {
-      newErrors.country = 'Country is required.';
-    }
-
-    if (!formData.pincode.trim()) {
-      newErrors.pincode = 'Postal PIN Code is required.';
-    } else if (!/^[0-9]{6}$/.test(formData.pincode.trim())) {
-      newErrors.pincode = 'Enter a valid 6-digit PIN code.';
-    }
-
-    if (formData.paymentMethod === 'upi' && formData.upiId && !formData.upiId.includes('@')) {
-      newErrors.upiId = 'Enter a valid UPI ID (e.g. yourname@okhdfcbank).';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validate = () => {
+    const e = {};
+    if (form.fullName.trim().length < 2) e.fullName = 'Enter your full name.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = 'Enter a valid email address.';
+    if (!/^(\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}$/.test(form.phone.trim())) e.phone = 'Enter a valid 10-digit mobile number.';
+    if (form.address.trim().length < 5) e.address = 'Enter your house number, building and street.';
+    if (form.city.trim().length < 2) e.city = 'Enter your city.';
+    if (!form.state) e.state = 'Choose your state.';
+    if (!/^[1-9][0-9]{5}$/.test(form.pincode.trim())) e.pincode = 'Enter a valid 6-digit PIN code.';
+    setErrors(e);
+    return Object.keys(e).length === 0;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
+  };
+
+  const customer = () => ({
+    fullName: form.fullName.trim(),
+    email: form.email.trim(),
+    phone: form.phone.trim(),
+    address: form.address.trim(),
+    city: form.city.trim(),
+    state: form.state,
+    country: 'India',
+    pincode: form.pincode.trim(),
+    accessNotes: form.accessNotes.trim(),
+  });
+
+  const finish = (order, paymentStatus) => {
+    setOrderPlaced(true);
+    recordOrder({
+      orderId: order.orderNumber,
+      date: new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+      items: order.items || cartItems,
+      subtotal: order.subtotal,
+      tax: order.tax,
+      shipping: order.shipping,
+      totalAmount: order.totalAmount,
+      customer: order.customer || customer(),
+      paymentMethod: order.paymentMethod || method.toUpperCase(),
+      paymentStatus,
+    });
+    navigate('/order-success');
+  };
+
+  // Opens Razorpay for a saved order; on success the API verifies the signature
+  const pay = async (order) => {
+    const response = await payWithRazorpay({
+      payment: order.payment,
+      orderNumber: order.orderNumber,
+      customer: order.customer || customer(),
+      method: order.paymentMethod?.toLowerCase(),
+    });
+    if (!response) {
+      setAwaiting(order);
+      setFormError(`Payment was not completed. Your order ${order.orderNumber} is saved: tap "Pay ${formatINR(order.totalAmount)}" to try again.`);
+      return;
+    }
+    try {
+      const result = await confirmPayment(order.orderNumber, response);
+      finish(order, result.paymentStatus);
+    } catch {
+      // Money may have been taken; Razorpay's webhook still marks the order paid
+      finish(order, 'verifying');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      scrollToTarget(200);
+    setFormError('');
+    if (awaiting) {
+      setLoading(true);
+      try {
+        await pay(awaiting);
+      } catch (err) {
+        setFormError(err.message);
+      } finally {
+        setLoading(false);
+      }
       return;
+    }
+    if (!validate()) {
+      scrollToTarget('#co-details', { offset: -120 });
+      return;
+    }
+    try {
+      if (saveAddress) {
+        localStorage.setItem(ADDRESS_KEY, JSON.stringify(form));
+      } else {
+        localStorage.removeItem(ADDRESS_KEY);
+      }
+    } catch {
+      /* storage blocked: nothing to remember */
     }
 
     setLoading(true);
-    setFormError('');
-    const customer = {
-      fullName: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
-      city: formData.city,
-      state: formData.state,
-      country: formData.country,
-      pincode: formData.pincode,
-      accessNotes: formData.accessNotes,
-    };
     try {
-      // The server prices the order from the catalogue; card/UPI details are never sent
+      // The server prices the order from the catalogue; no card or UPI details are ever sent
       const order = await submitOrder({
-        customer,
+        customer: customer(),
         items: cartItems.map((item) => ({
           id: item.id,
           quantity: item.quantity,
           selectedFinish: item.selectedFinish,
           selectedFabric: item.selectedFabric,
         })),
-        paymentMethod: formData.paymentMethod,
+        paymentMethod: method,
         website,
       });
-      orderPlaced.current = true;
-      recordOrder({
-        orderId: order.orderNumber,
-        date: new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
-        items: order.items || [...cartItems],
-        subtotal: order.subtotal,
-        tax: order.tax,
-        shipping: order.shipping,
-        totalAmount: order.totalAmount,
-        customer: order.customer || customer,
-        paymentMethod: order.paymentMethod || formData.paymentMethod.toUpperCase(),
-        status: 'Order request received',
-      });
-      navigate('/order-success');
+      if (order.payment) await pay(order);
+      else finish(order, order.paymentStatus || (method === 'cod' ? 'cod' : 'unpaid'));
     } catch (err) {
-      if (err.status === 422 && err.field && err.field in formData) {
+      if (err.status === 422 && err.field && err.field in form) {
         setErrors({ [err.field]: err.message });
-        scrollToTarget(200);
+        scrollToTarget('#co-details', { offset: -120 });
       } else {
-        setFormError(formErrorMessage(err));
+        setFormError(err.status ? formErrorMessage(err) : err.message);
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const itemCount = cartItems.reduce((n, i) => n + i.quantity, 0);
+  const payLabel = awaiting
+    ? `Pay ${formatINR(awaiting.totalAmount)}`
+    : method === 'cod'
+      ? 'Place order'
+      : config.online
+        ? `Pay ${formatINR(totalAmount)}`
+        : 'Place order';
+
   return (
-    <div className="pt-28 pb-24 space-y-12 min-h-[80vh]">
-      <SeoMeta
-        title="Secure Checkout | Symmetry Luxury Interiors"
-        description="Complete your Symmetry Interiors order: delivery details and secure payment."
-      />
+    <div className="pt-[calc(var(--gnav-h)+32px)] pb-32 lg:pb-24 min-h-[80vh]">
+      <SeoMeta title="Checkout | Symmetry Interiors" description="Delivery address and payment for your Symmetry Interiors order." />
 
-      <section className="site-container">
-        <Breadcrumb
-          items={[
-            { label: 'Shop', to: '/shop' },
-            { label: 'Shopping Bag', to: '/cart' },
-            { label: 'Secure Checkout' },
-          ]}
-        />
+      <div className="site-container">
+        <CheckoutSteps current={1} />
+        <h1 className="mt-8 text-[32px] sm:text-[44px] font-semibold tracking-tight text-fg leading-tight">Checkout</h1>
+        <p className="mt-1 text-[15px] text-muted">
+          {itemCount} {itemCount === 1 ? 'item' : 'items'} · Secure payment · Free placement in your home
+        </p>
 
-        {/* Page Title */}
-        <div className="mt-8 mb-10 border-b border-line/60 dark:border-line pb-6">
-          <span className="text-xs text-accent font-semibold flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Step 2 of 2</span>
-          </span>
-          <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-fg leading-tight mt-1">
-            Delivery Address &amp; Payment
-          </h1>
-          <p className="text-xs sm:text-sm text-muted mt-2">
-            Every order includes transit insurance, delivery tracking and free placement in your home.
-          </p>
-        </div>
+        <form onSubmit={handleSubmit} noValidate className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+          <div className="lg:col-span-8 space-y-6" id="co-details">
+            {/* 1. Contact */}
+            <Section n={1} title="Contact details">
+              <fieldset disabled={!!awaiting} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="Full name" name="fullName" value={form.fullName} onChange={handleChange} error={errors.fullName} autoComplete="name" className="sm:col-span-2" />
+                <Field label="Email (order updates and invoice)" name="email" type="email" value={form.email} onChange={handleChange} error={errors.email} autoComplete="email" inputMode="email" />
+                <Field label="Mobile number" name="phone" type="tel" value={form.phone} onChange={handleChange} error={errors.phone} autoComplete="tel" inputMode="tel" placeholder="10-digit mobile number" />
+              </fieldset>
+            </Section>
 
-        {/* Form Grid */}
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          
-          {/* LEFT 8 COLS: Customer Information, Shipping Address & Payment UI */}
-          <div className="lg:col-span-8 space-y-8">
-            
-            {/* 1. Customer Information */}
-            <div className="p-6 sm:p-8 rounded-tile bg-surface space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-line/60 dark:border-line">
-                <h2 className="text-xl font-semibold tracking-tight text-fg flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">1</span>
-                  <span>Customer Information</span>
-                </h2>
-                <span className="text-[11px] text-stone-500">* Needed to arrange delivery</span>
-              </div>
+            {/* 2. Address */}
+            <Section n={2} title="Delivery address">
+              <fieldset disabled={!!awaiting} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="House / flat no., building, street, area" name="address" value={form.address} onChange={handleChange} error={errors.address} autoComplete="street-address" className="sm:col-span-2" />
+                <Field label="PIN code" name="pincode" value={form.pincode} onChange={handleChange} error={errors.pincode} autoComplete="postal-code" inputMode="numeric" maxLength={6} />
+                <Field label="City" name="city" value={form.city} onChange={handleChange} error={errors.city} autoComplete="address-level2" />
+                <Field label="State" name="state" error={errors.state}>
+                  <select id="co-state" name="state" value={form.state} onChange={handleChange} autoComplete="address-level1" className={inputClass(errors.state)}>
+                    {STATES.map((s) => (
+                      <option key={s}>{s}</option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Country" name="country" value="India" readOnly className="opacity-80" />
+                <Field label="Delivery notes (optional)" name="accessNotes" value={form.accessNotes} onChange={handleChange} placeholder="e.g. service lift available, gate code, best time to call" className="sm:col-span-2" />
+                <label className="sm:col-span-2 inline-flex items-center gap-2.5 text-[14px] text-fg cursor-pointer select-none">
+                  <input type="checkbox" checked={saveAddress} onChange={(e) => setSaveAddress(e.target.checked)} className="w-4 h-4 accent-[rgb(var(--c-accent))]" />
+                  Save these details on this device for next time
+                </label>
+              </fieldset>
+            </Section>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Full Name */}
-                <div className="sm:col-span-2">
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    placeholder="e.g. Rajiv Menon or Ar. Shalini Rao"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.fullName
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.fullName && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.fullName}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Email Address (For Invoices &amp; Tracking) *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="client@luxuryestate.in"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.email
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.email && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.email}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Phone Number (Site Delivery WhatsApp) *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+91 98765 43210"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.phone
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.phone && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.phone}</span>
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* 2. Shipping Address */}
-            <div className="p-6 sm:p-8 rounded-tile bg-surface space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-line/60 dark:border-line">
-                <h2 className="text-xl font-semibold tracking-tight text-fg flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">2</span>
-                  <span>Shipping &amp; Site Address</span>
-                </h2>
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
-                  <Truck className="w-3.5 h-3.5" />
-                  <span>White-Glove Delivery</span>
+            {/* 3. Payment */}
+            <Section
+              n={3}
+              title="Payment method"
+              aside={
+                <span className="hidden sm:inline-flex items-center gap-1.5 text-[13px] text-muted">
+                  <Lock className="w-3.5 h-3.5 text-accent" /> Secured by Razorpay
                 </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Street Address */}
-                <div className="sm:col-span-2">
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Street Address / House or Flat Number *
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    placeholder="e.g. Villa 24, Road No. 36, Jubilee Hills"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.address
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.address && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.address}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* City */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    City *
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    placeholder="e.g. Hyderabad, Bengaluru, Mumbai"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.city
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.city && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.city}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* State */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    State / Region *
-                  </label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                    placeholder="e.g. Telangana, Karnataka, Maharashtra"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.state
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.state && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.state}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Country */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Country *
-                  </label>
-                  <input
-                    type="text"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                    placeholder="India"
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.country
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.country && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.country}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* PIN Code */}
-                <div>
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    PIN Code (Postal Code) *
-                  </label>
-                  <input
-                    type="text"
-                    name="pincode"
-                    value={formData.pincode}
-                    onChange={handleChange}
-                    placeholder="500033"
-                    maxLength={6}
-                    className={`w-full px-4 py-3 rounded-2xl text-[15px] border ${
-                      errors.pincode
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-line'
-                    } bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent`}
-                  />
-                  {errors.pincode && (
-                    <p className="text-[11px] text-red-500 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      <span>{errors.pincode}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Access Notes */}
-                <div className="sm:col-span-2">
-                  <label className="block text-xs text-muted mb-1.5 font-medium">
-                    Delivery Instructions (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    name="accessNotes"
-                    value={formData.accessNotes}
-                    onChange={handleChange}
-                    placeholder="e.g. Service lift available, floor 12, gate security code required"
-                    className="w-full px-4 py-3 rounded-2xl text-[15px] border border-line bg-canvas/50 dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* 3. Payment Method UI */}
-            <div className="p-6 sm:p-8 rounded-tile bg-surface space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-line/60 dark:border-line">
-                <h2 className="text-xl font-semibold tracking-tight text-fg flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold">3</span>
-                  <span>Payment</span>
-                </h2>
-
-                {/* Razorpay Integration Placeholder Staging Banner */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0c2340] text-white text-[11px] font-medium border border-sky-400/30">
-                  <CreditCard className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Razorpay Sandbox Active</span>
-                  <span className="bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded text-[9px] uppercase font-bold">
-                    Test Mode
-                  </span>
-                </div>
-              </div>
-
-              {/* Payment Method Selector Tabs */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                {[
-                  { id: 'upi', label: 'UPI', icon: Smartphone, desc: 'GPay, PhonePe, QR' },
-                  { id: 'card', label: 'Cards', icon: CreditCard, desc: 'Visa, Master, Amex' },
-                  { id: 'netbanking', label: 'Net Banking', icon: Landmark, desc: 'Top Indian Banks' },
-                  { id: 'wallet', label: 'Wallets', icon: Wallet, desc: 'Paytm, Amazon Pay' },
-                  { id: 'cod', label: 'Pay on Delivery', icon: Banknote, desc: 'Pay when it arrives' },
-                ].map((m) => {
+              }
+            >
+              <div role="radiogroup" aria-label="Payment method" className="divide-y divide-line rounded-xl border border-line overflow-hidden">
+                {METHODS.map((m) => {
                   const Icon = m.icon;
-                  const isSelected = formData.paymentMethod === m.id;
+                  const disabled = !!awaiting || (m.id === 'cod' && codBlocked);
+                  const selected = method === m.id;
                   return (
-                    <button
+                    <label
                       key={m.id}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, paymentMethod: m.id })}
-                      className={`p-3.5 rounded-2xl border text-left transition flex flex-col justify-between ${
-                        isSelected
-                          ? 'border-accent bg-accent/10 ring-1 ring-accent text-[#1D1D1F] dark:text-white'
-                          : 'border-line text-stone-600 dark:text-stone-400 hover:border-stone-400'
-                      }`}
+                      className={`flex items-start gap-4 p-4 sm:p-5 transition-colors ${
+                        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-sunken/40'
+                      } ${selected ? 'bg-accent/[0.07]' : ''}`}
                     >
-                      <div className="flex items-center justify-between w-full mb-2">
-                        <Icon className={`w-4 h-4 ${isSelected ? 'text-accent' : 'text-stone-400'}`} />
-                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-accent" />}
-                      </div>
-                      <div>
-                        <div className="text-xs font-semibold">{m.label}</div>
-                        <div className="text-[10px] opacity-75 mt-0.5">{m.desc}</div>
-                      </div>
-                    </button>
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value={m.id}
+                        checked={selected}
+                        disabled={disabled}
+                        onChange={() => setMethod(m.id)}
+                        className="mt-1 w-4 h-4 accent-[rgb(var(--c-accent))]"
+                      />
+                      <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${selected ? 'text-accent' : 'text-muted'}`} strokeWidth={1.8} />
+                      <span className="flex-1 min-w-0">
+                        <span className="block text-[15px] font-semibold text-fg">{m.label}</span>
+                        <span className="block text-[13px] text-muted mt-0.5">
+                          {m.id === 'cod' && config.codMaxTotal && totalAmount > config.codMaxTotal
+                            ? `Available for orders up to ${formatINR(config.codMaxTotal)}`
+                            : m.id === 'cod' && !config.cod
+                              ? 'Not available at the moment'
+                              : m.desc}
+                        </span>
+                        {selected && m.id !== 'cod' && (
+                          <span className="block text-[13px] text-fg/80 mt-2">
+                            {config.online
+                              ? 'You will enter your payment details in the secure Razorpay window. We never see or store them.'
+                              : 'We will send you a secure payment link by email and WhatsApp after confirming your order.'}
+                          </span>
+                        )}
+                        {selected && m.id === 'cod' && (
+                          <span className="block text-[13px] text-fg/80 mt-2">Our team will call to confirm the order before dispatch.</span>
+                        )}
+                      </span>
+                    </label>
                   );
                 })}
               </div>
-
-              {/* Dynamic Payment Tab Sub-views */}
-              <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/40 border border-line/60 dark:border-line">
-                {/* 1. UPI */}
-                {formData.paymentMethod === 'upi' && (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between text-xs font-medium text-stone-700 dark:text-stone-300">
-                      <span>Pay by UPI (no extra charge)</span>
-                      <span className="text-accent font-semibold">Simulated Gateway</span>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-medium text-stone-600 dark:text-stone-400 mb-1">
-                        Enter UPI ID or Virtual Payment Address (VPA)
-                      </label>
-                      <input
-                        type="text"
-                        name="upiId"
-                        value={formData.upiId}
-                        onChange={handleChange}
-                        placeholder="e.g. yourname@okhdfcbank or 9876543210@paytm"
-                        className="w-full px-4 py-2.5 rounded-xl text-[15px] border border-line bg-surface dark:bg-canvas text-fg focus:outline-none focus:ring-4 focus:ring-accent/15 focus:border-accent"
-                      />
-                      {errors.upiId && (
-                        <p className="text-[11px] text-red-500 mt-1">{errors.upiId}</p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-3 pt-1 text-[11px] text-stone-500">
-                      <span className="font-semibold text-stone-700 dark:text-stone-300">Popular Handles:</span>
-                      <span className="px-2 py-0.5 rounded bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700">@okhdfcbank</span>
-                      <span className="px-2 py-0.5 rounded bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700">@okaxis</span>
-                      <span className="px-2 py-0.5 rounded bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700">@ybl</span>
-                    </div>
-                  </div>
-                )}
-
-                {/* 2. Credit / Debit Card */}
-                {formData.paymentMethod === 'card' && (
-                  <div className="space-y-3 text-xs">
-                    <div className="flex justify-between items-center text-stone-700 dark:text-stone-300 font-medium">
-                      <span>Credit or Debit Card Details</span>
-                      <span className="text-[11px] text-stone-400">256-Bit SSL Encrypted</span>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] text-stone-500 mb-1">Name On Card</label>
-                      <input
-                        type="text"
-                        name="cardName"
-                        value={formData.cardName}
-                        onChange={handleChange}
-                        placeholder="e.g. RAJIV MENON"
-                        className="w-full px-3.5 py-2 rounded-xl text-[15px] bg-surface dark:bg-canvas uppercase"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] text-stone-500 mb-1">Card Number</label>
-                      <input
-                        type="text"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleChange}
-                        placeholder="4532 •••• •••• 8892"
-                        maxLength={19}
-                        className="w-full px-3.5 py-2 rounded-xl text-[15px] bg-surface dark:bg-canvas font-mono"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-[11px] text-stone-500 mb-1">Expiry Date</label>
-                        <input
-                          type="text"
-                          name="cardExpiry"
-                          value={formData.cardExpiry}
-                          onChange={handleChange}
-                          placeholder="MM / YY"
-                          maxLength={5}
-                          className="w-full px-3.5 py-2 rounded-xl text-[15px] bg-surface dark:bg-canvas font-mono text-center"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] text-stone-500 mb-1">CVV / CVC</label>
-                        <input
-                          type="password"
-                          name="cardCvv"
-                          value={formData.cardCvv}
-                          onChange={handleChange}
-                          placeholder="•••"
-                          maxLength={4}
-                          className="w-full px-3.5 py-2 rounded-xl text-[15px] bg-surface dark:bg-canvas font-mono text-center"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* 3. Net Banking */}
-                {formData.paymentMethod === 'netbanking' && (
-                  <div className="space-y-3">
-                    <div className="text-xs font-medium text-stone-700 dark:text-stone-300">
-                      Choose Your Bank
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {[
-                        { id: 'hdfc', name: 'HDFC Bank' },
-                        { id: 'icici', name: 'ICICI Bank' },
-                        { id: 'sbi', name: 'State Bank of India' },
-                        { id: 'axis', name: 'Axis Bank' },
-                        { id: 'kotak', name: 'Kotak Mahindra' },
-                        { id: 'other', name: 'Other Bank' },
-                      ].map((bank) => (
-                        <button
-                          key={bank.id}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, selectedBank: bank.id })}
-                          className={`p-2.5 rounded-xl border text-xs text-left transition ${
-                            formData.selectedBank === bank.id
-                              ? 'border-accent bg-accent/15 font-semibold text-[#1D1D1F] dark:text-white'
-                              : 'border-line text-stone-600 dark:text-stone-400'
-                          }`}
-                        >
-                          {bank.name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 4. Digital Wallets */}
-                {formData.paymentMethod === 'wallet' && (
-                  <div className="space-y-3">
-                    <div className="text-xs font-medium text-stone-700 dark:text-stone-300">
-                      Select Digital Wallet
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { id: 'paytm', name: 'Paytm Wallet' },
-                        { id: 'phonepe', name: 'PhonePe Wallet' },
-                        { id: 'amazonpay', name: 'Amazon Pay' },
-                      ].map((wallet) => (
-                        <button
-                          key={wallet.id}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, selectedWallet: wallet.id })}
-                          className={`p-2.5 rounded-xl border text-xs text-center transition ${
-                            formData.selectedWallet === wallet.id
-                              ? 'border-accent bg-accent/15 font-semibold text-[#1D1D1F] dark:text-white'
-                              : 'border-line text-stone-600 dark:text-stone-400'
-                          }`}
-                        >
-                          {wallet.name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 5. Cash on Delivery / Concierge Pay */}
-                {formData.paymentMethod === 'cod' && (
-                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-300">
-                    <div className="font-semibold text-stone-900 dark:text-white flex items-center gap-1.5">
-                      <Banknote className="w-4 h-4 text-accent" />
-                      <span>Pay on Delivery</span>
-                    </div>
-                    <p className="leading-relaxed">
-                      For orders above ₹1,00,000 our delivery team brings a card machine and receipt book. You can unbox and inspect your piece at home before you pay.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Sandbox Notice */}
-              <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 text-[11px] text-amber-900 dark:text-amber-200 flex items-start gap-2">
-                <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-                <span>
-                  <strong>Developer Notice:</strong> Razorpay integration is currently staged in sandbox mode. Clicking <em>Complete Purchase</em> will simulate a payment and create your order without charging your card.
-                </span>
-              </div>
-            </div>
+              {!config.online && (
+                <p className="mt-4 flex items-start gap-2 text-[13px] text-muted">
+                  <Info className="w-4 h-4 shrink-0 mt-0.5 text-accent" />
+                  Instant online payment is being set up. Until then, online orders are confirmed by our team, who send you a secure payment link.
+                </p>
+              )}
+            </Section>
           </div>
 
-          {/* RIGHT 4 COLS: Order Summary (Sticky) & Complete Purchase CTA */}
-          <div className="lg:col-span-4 p-6 sm:p-8 rounded-tile bg-surface space-y-6 sticky top-28">
-            <div>
-              <span className="text-[12px] text-accent font-semibold block">
-                Review & Pay
-              </span>
-              <h3 className="text-2xl font-semibold tracking-tight text-fg mt-0.5">
-                Order Summary
-              </h3>
-            </div>
-
-            {/* Selected Items Micro-List */}
-            <div className="space-y-3 max-h-64 overflow-y-auto pr-1 pb-3 border-b border-line/60 dark:border-line">
-              {cartItems.map((item) => (
-                <div key={item.cartKey} className="flex items-center gap-3 text-xs">
-                  <SmartImage sizes="96px"
-                    src={item.images?.[0] || item.image}
-                    alt={item.name}
-                    className="w-12 h-12 rounded-lg object-cover bg-stone-100 shrink-0 border border-stone-200 dark:border-stone-800"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="font-bold text-fg truncate">
-                      {item.name}
+          {/* Summary */}
+          <aside className="lg:col-span-4 lg:sticky lg:top-[calc(var(--gnav-offset)+24px)] space-y-4">
+            <div className="p-5 sm:p-6 rounded-tile bg-surface">
+              <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-muted pb-3 border-b border-line">
+                Your order
+              </h2>
+              <ul className="py-3 space-y-3 max-h-64 overflow-y-auto" data-lenis-prevent>
+                {cartItems.map((item) => (
+                  <li key={item.cartKey} className="flex items-center gap-3">
+                    <SmartImage sizes="56px" src={item.images?.[0] || item.image} alt="" className="w-14 h-14 rounded-lg object-cover bg-sunken shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] font-medium text-fg truncate">{item.name}</p>
+                      <p className="text-[12px] text-muted">Qty {item.quantity}</p>
                     </div>
-                    <div className="text-[10px] text-muted">
-                      Qty: {item.quantity} {item.selectedFinish ? `• ${item.selectedFinish}` : ''}
-                    </div>
-                  </div>
-                  <div className="font-mono font-medium text-fg text-right">
-                    ₹{(item.price * item.quantity).toLocaleString('en-IN')}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Financials Breakdown */}
-            <div className="space-y-3 text-xs text-muted">
-              <div className="flex justify-between items-center">
-                <span>Subtotal ({cartItems.reduce((a, b) => a + b.quantity, 0)} items)</span>
-                <span className="font-semibold text-fg font-mono">
-                  ₹{subtotal.toLocaleString('en-IN')}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span>Standard GST (18%)</span>
-                <span className="font-semibold text-fg font-mono">
-                  ₹{tax.toLocaleString('en-IN')}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span>Delivery & Installation</span>
-                <span className="font-semibold text-fg">
-                  {shipping === 0 ? (
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[12px]">
-                      Complimentary
-                    </span>
-                  ) : (
-                    `₹${shipping.toLocaleString('en-IN')}`
-                  )}
-                </span>
-              </div>
-
-              <div className="pt-4 border-t border-line/80 dark:border-line flex justify-between items-baseline">
-                <div>
-                  <span className="text-xs font-semibold text-fg block">
-                    Total Payable
-                  </span>
-                  <span className="text-[10px] text-muted">
-                    (Includes all taxes and delivery)
-                  </span>
-                </div>
-                <span className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-                  ₹{totalAmount.toLocaleString('en-IN')}
-                </span>
-              </div>
-            </div>
-
-            {/* CTA BUTTON: "Complete Purchase" */}
-            <div className="space-y-3 pt-2">
-              <Honeypot value={website} onChange={setWebsite} />
-              {formError && <p role="alert" className="text-xs text-red-500">{formError}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 px-6 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 shadow-luxury cursor-pointer disabled:opacity-70"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>{loading ? 'Placing Order...' : 'Complete Purchase'}</span>
-                {!loading && <ArrowRight className="w-4 h-4 ml-1" />}
-              </button>
-
-              <Link
-                to="/cart"
-                className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent text-fg text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 transition"
-              >
-                <span>Return to Shopping Bag</span>
+                    <span className="text-[14px] font-medium text-fg tabular-nums">{formatINR(item.price * item.quantity)}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link to="/cart" className="text-[13px] font-medium text-accent hover:underline">
+                Change items
               </Link>
             </div>
 
-            {/* Guarantees */}
-            <div className="pt-4 border-t border-line/60 dark:border-line text-[11px] text-muted space-y-2">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-accent" />
-                <span>256-bit encrypted checkout via Razorpay Gateway</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Truck className="w-3.5 h-3.5 text-accent" />
-                <span>Free delivery and placement across India</span>
-              </div>
+            <div className="p-5 sm:p-6 rounded-tile bg-surface">
+              <PriceDetails />
+              <Honeypot value={website} onChange={setWebsite} />
+              {formError && (
+                <p role="alert" className="mt-4 text-[13px] text-red-500 flex items-start gap-1.5">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  {formError}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={loading}
+                className="hidden lg:flex mt-5 w-full py-4 rounded-full bg-accent hover:bg-accent-hover text-on-accent text-[16px] font-semibold items-center justify-center gap-2 transition-colors disabled:opacity-60"
+              >
+                <Lock className="w-4 h-4" />
+                {loading ? 'Please wait…' : payLabel}
+              </button>
+              <ul className="mt-5 space-y-2 text-[13px] text-muted">
+                <li className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-accent shrink-0" /> 10-year structural warranty
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-accent shrink-0" /> Delivery includes placement in your home
+                </li>
+              </ul>
             </div>
+          </aside>
+
+          {/* Phones: total and the pay button stay at the bottom of the screen */}
+          <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 glass border-t border-line px-4 py-3 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[18px] font-semibold text-fg tabular-nums leading-tight">{formatINR(awaiting?.totalAmount ?? totalAmount)}</p>
+              <p className="text-[12px] text-muted">Incl. GST and delivery</p>
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-3 rounded-full bg-accent text-on-accent text-[15px] font-semibold disabled:opacity-60"
+            >
+              {loading ? 'Please wait…' : payLabel}
+            </button>
           </div>
         </form>
-      </section>
+      </div>
     </div>
   );
 };

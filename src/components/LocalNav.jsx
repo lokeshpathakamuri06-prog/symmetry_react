@@ -14,7 +14,7 @@ import { scrollToTarget } from '../lib/scroll';
 export const LocalNav = ({ title, cta = { label: 'Book a consultation', to: '/contact' } }) => {
   const ctaClass = 'btn-primary btn-sm !py-[5px] !px-3.5 !text-[12.5px]';
   return (
-    <div data-local-nav className="sticky z-[900] top-[var(--gnav-offset)] mt-12 transition-[top] duration-500 ease-apple">
+    <div data-local-nav className="sticky z-[900] top-[var(--gnav-offset)] mt-[var(--gnav-h)] transition-[top] duration-500 ease-apple">
       <div className="glass border-b border-line/60 dark:border-line/70">
         <div className="site-container h-[52px] flex items-center justify-between gap-4">
           <p className="text-[19px] sm:text-[21px] font-semibold tracking-tight text-fg truncate">{title}</p>

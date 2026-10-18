@@ -85,6 +85,6 @@ Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
 
 ## Later / optional
 - Buy a domain, then change the hostname in the Caddyfile.
-- Razorpay online payments (currently order requests only).
+- Razorpay online payments: code done 2026-10-17 (in preview); needs the client's Razorpay account keys + webhook, see OPERATIONS. Later: admin-managed discount codes, order-status emails/SMS, shopper order tracking.
 - Move Services, Sourcing and About content into the DB so the client can edit them.
 - ~~Resume file upload on Careers~~ (done 2026-10-17).

@@ -245,7 +245,7 @@ const ProjectDetailView = ({ projects }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-8">
           {relatedProjects.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}

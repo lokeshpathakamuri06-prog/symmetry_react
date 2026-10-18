@@ -1,441 +1,279 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Trash2,
-  ArrowRight,
-  ShieldCheck,
-  Truck,
-  ShoppingBag,
-  ArrowLeft,
-  Plus,
-  Minus,
-  Sparkles,
-  Lock,
-  RotateCcw,
-  CheckCircle2
-} from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
+import { ShoppingBag, Plus, Minus, Lock, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
-import Breadcrumb from '../components/Breadcrumb';
-import { useCart } from '../context/CartContext';
 import SmartImage from '../components/SmartImage';
+import CheckoutSteps from '../components/shop/CheckoutSteps';
+import PriceDetails from '../components/shop/PriceDetails';
+import { useCart, MAX_QTY } from '../context/CartContext';
+import { useProducts } from '../context/PublicContentContext';
+import { discountOf, formatINR, isInStock, isSoldOut, stockLabel } from '../lib/shop';
+import useBuyBar from '../lib/useBuyBar';
+
+const FALLBACK = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop';
+
+const QtyStepper = ({ item, onChange }) => (
+  <div className="inline-flex items-center rounded-full border border-line overflow-hidden" role="group" aria-label={`Quantity of ${item.name}`}>
+    <button
+      type="button"
+      onClick={() => onChange(-1)}
+      disabled={item.quantity <= 1}
+      className="w-9 h-9 inline-flex items-center justify-center text-fg hover:bg-sunken disabled:opacity-40 disabled:hover:bg-transparent"
+      aria-label="Decrease quantity"
+    >
+      <Minus className="w-3.5 h-3.5" />
+    </button>
+    <span className="w-9 text-center text-[15px] font-semibold text-fg tabular-nums" aria-live="polite">
+      {item.quantity}
+    </span>
+    <button
+      type="button"
+      onClick={() => onChange(1)}
+      disabled={item.quantity >= MAX_QTY}
+      className="w-9 h-9 inline-flex items-center justify-center text-fg hover:bg-sunken disabled:opacity-40 disabled:hover:bg-transparent"
+      aria-label="Increase quantity"
+    >
+      <Plus className="w-3.5 h-3.5" />
+    </button>
+  </div>
+);
 
 export const Cart = () => {
-  const {
-    cartItems,
-    updateQuantity,
-    removeFromCart,
-    subtotal,
-    tax,
-    shipping,
-    totalAmount,
-    clearCart
-  } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, saveForLater, addToCart, wishlist, toggleWishlist, totalAmount, cartCount } = useCart();
+  const { items: products } = useProducts();
+  const [notice, setNotice] = useState(null); // { text, undo }
+  useBuyBar(cartItems.length > 0);
 
-  const [couponCode, setCouponCode] = useState('');
-  const [couponApplied, setCouponApplied] = useState(false);
-  const [removedNotification, setRemovedNotification] = useState('');
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const say = (text, undo) => {
+    clearTimeout(timer.current);
+    setNotice({ text, undo });
+    timer.current = setTimeout(() => setNotice(null), 5000);
+  };
 
   const handleRemove = (item) => {
     removeFromCart(item.cartKey);
-    setRemovedNotification(`${item.name} removed from your bag.`);
-    setTimeout(() => setRemovedNotification(''), 3000);
+    say(`${item.name} removed from your cart.`, () =>
+      addToCart(item, item.quantity, { finish: item.selectedFinish, fabric: item.selectedFabric, silent: true })
+    );
   };
 
-  const handleApplyCoupon = (e) => {
-    e.preventDefault();
-    if (couponCode.trim().toUpperCase() === 'SYMMETRY10' || couponCode.trim().toUpperCase() === 'ARCHITECT') {
-      setCouponApplied(true);
-    }
+  const handleSaveForLater = (item) => {
+    saveForLater(item);
+    say(`${item.name} moved to Saved for later.`);
   };
 
-  const discount = couponApplied ? Math.round(subtotal * 0.1) : 0;
-  const finalTotal = Math.max(0, totalAmount - discount);
+  const inCart = new Set(cartItems.map((i) => i.id));
+  // Pieces that sold out after they were added (live stock); checkout would refuse them
+  const live = Object.fromEntries(products.map((p) => [p.id, p]));
+  const soldOut = cartItems.filter((i) => live[i.id] && isSoldOut(live[i.id]));
+  const blocked = soldOut.length > 0;
+  const saved = products.filter((p) => wishlist.includes(p.id) && !inCart.has(p.id));
 
   return (
-    <div className="pt-28 pb-24 space-y-12 sm:space-y-16 min-h-[75vh]">
-      <SeoMeta
-        title="Client Shopping Bag & Curated Order Review | Symmetry Interiors"
-        description="Review your curated bespoke furniture pieces, finishes, specifications, and white-glove delivery options at Symmetry Interiors."
-      />
+    <div className="pt-[calc(var(--gnav-h)+32px)] pb-32 lg:pb-24 min-h-[75vh]">
+      <SeoMeta title="Your Cart | Symmetry Interiors" description="Review the furniture in your cart, change quantities and continue to secure checkout." />
 
-      <section className="site-container">
-        <Breadcrumb
-          items={[
-            { label: 'Shop', to: '/shop' },
-            { label: 'Shopping Bag' }
-          ]}
-        />
-
-        {/* Page Title & Count */}
-        <div className="mt-8 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-line/60 dark:border-line pb-6">
-          <div>
-            <span className="text-xs text-accent font-semibold flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Shopping Bag</span>
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-fg leading-tight mt-1">
-              Your Curated Bag
-            </h1>
-          </div>
-
+      <div className="site-container">
+        {cartItems.length > 0 && <CheckoutSteps current={0} />}
+        <div className="mt-8 flex items-end justify-between gap-4">
+          <h1 className="text-[32px] sm:text-[44px] font-semibold tracking-tight text-fg leading-tight">
+            Your cart{cartCount > 0 && <span className="text-muted font-normal text-[0.6em] ml-3">{cartCount} {cartCount === 1 ? 'item' : 'items'}</span>}
+          </h1>
           {cartItems.length > 0 && (
-            <div className="flex items-center space-x-4 text-xs text-muted">
-              <span>
-                {cartItems.reduce((acc, item) => acc + item.quantity, 0)} {cartItems.reduce((acc, item) => acc + item.quantity, 0) === 1 ? 'Piece' : 'Pieces'} Selected
-              </span>
-              <span>•</span>
-              <button
-                type="button"
-                onClick={clearCart}
-                className="hover:text-red-500 transition underline underline-offset-4 cursor-pointer"
-              >
-                Clear Entire Bag
-              </button>
-            </div>
+            <Link to="/shop" className="hidden sm:inline text-[15px] font-medium text-accent hover:underline">
+              Continue shopping
+            </Link>
           )}
         </div>
 
-        {/* Removed Item Toast Notification */}
+        {/* Removed / saved notice with Undo */}
         <AnimatePresence>
-          {removedNotification && (
+          {notice && (
             <m.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mb-6 p-4 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-stone-300 dark:border-stone-800 text-xs text-stone-700 dark:text-stone-300 flex items-center justify-between shadow-sm"
+              exit={{ opacity: 0, y: -8 }}
+              role="status"
+              className="mt-6 px-4 py-3 rounded-xl bg-surface border border-line text-[14px] text-fg flex items-center justify-between gap-4"
             >
-              <div className="flex items-center space-x-2">
-                <RotateCcw className="w-4 h-4 text-accent" />
-                <span>{removedNotification}</span>
-              </div>
+              <span>{notice.text}</span>
+              {notice.undo && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    notice.undo();
+                    setNotice(null);
+                  }}
+                  className="inline-flex items-center gap-1.5 font-semibold text-accent shrink-0"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" /> Undo
+                </button>
+              )}
             </m.div>
           )}
         </AnimatePresence>
 
-        {/* Content: Empty State vs Active Cart */}
         {cartItems.length === 0 ? (
-          /* PREMIUM EMPTY CART STATE */
-          <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="py-16 sm:py-24 px-6 sm:px-12 rounded-tile bg-surface text-center max-w-3xl mx-auto"
-          >
-            <div className="w-20 h-20 rounded-full bg-sunken/60 dark:bg-sunken border border-line flex items-center justify-center mx-auto mb-6 text-accent">
-              <ShoppingBag className="w-9 h-9 stroke-[1.25]" />
+          <div className="mt-8 py-16 sm:py-20 px-6 rounded-tile bg-surface text-center">
+            <div className="w-20 h-20 rounded-full bg-sunken flex items-center justify-center mx-auto mb-6 text-accent">
+              <ShoppingBag className="w-9 h-9" strokeWidth={1.25} />
             </div>
-
-            <span className="text-xs text-accent font-semibold">
-              Nothing Here Yet
-            </span>
-
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-fg mt-2 mb-4">
-              Your Bag is Empty
-            </h2>
-
-            <p className="text-sm sm:text-base text-muted leading-relaxed max-w-lg mx-auto mb-8">
-              Browse our handcrafted furniture, made with natural stone, solid wood and Italian fabrics.
+            <h2 className="text-[26px] sm:text-[32px] font-semibold tracking-tight text-fg">Your cart is empty</h2>
+            <p className="mt-2 text-[16px] text-muted max-w-md mx-auto">
+              Browse handcrafted furniture made with natural stone, solid wood and Italian fabrics.
             </p>
-
-            {/* Quick Category Shortcut Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
-              {[
-                { label: 'Luxury Sofas', link: '/shop?category=Luxury%20Sofas' },
-                { label: 'Lounge Chairs', link: '/shop?category=Lounge%20Chairs' },
-                { label: 'Dining Furniture', link: '/shop?category=Dining%20Furniture' },
-                { label: 'Coffee Tables', link: '/shop?category=Coffee%20Tables' },
-                { label: 'Lighting', link: '/shop?category=Lighting' },
-              ].map((cat) => (
-                <Link
-                  key={cat.label}
-                  to={cat.link}
-                  className="px-4 py-2 rounded-full border border-line bg-canvas/50 text-xs text-fg hover:border-accent transition-colors"
-                >
-                  {cat.label}
-                </Link>
-              ))}
-            </div>
-
-            <Link
-              to="/shop"
-              className="inline-flex items-center gap-3 py-4 px-8 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium shadow-luxury"
-            >
-              <span>Explore Furniture Collections</span>
-              <ArrowRight className="w-4 h-4" />
+            <Link to="/shop" className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-accent text-on-accent text-[15px] font-semibold hover:bg-accent-hover transition-colors">
+              Shop now
             </Link>
-          </m.div>
+          </div>
         ) : (
-          /* ACTIVE CART GRID */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            
-            {/* Left Column: Line Items (8 Cols) */}
-            <div className="lg:col-span-8 space-y-4">
-              <AnimatePresence>
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+            {/* Items */}
+            <ul className="lg:col-span-8 rounded-tile bg-surface divide-y divide-line">
+              <AnimatePresence initial={false}>
                 {cartItems.map((item) => {
-                  const itemImage = item.images?.[0] || item.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop';
+                  const off = discountOf(item);
+                  const current = live[item.id] || item;
+                  const inStock = isInStock(current);
+                  const gone = isSoldOut(current);
                   return (
-                    <m.div
+                    <m.li
                       key={item.cartKey}
                       layout
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
+                      exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.25 }}
-                      className="p-5 sm:p-7 rounded-tile bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative group"
+                      className="p-4 sm:p-6 flex gap-4 sm:gap-6"
                     >
-                      {/* Product Thumbnail & Details */}
-                      <div className="flex items-center gap-5 w-full sm:w-auto">
-                        <Link
-                          to={`/shop/${item.id}`}
-                          className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sunken shrink-0 block relative group/img"
-                        >
-                          <SmartImage sizes="96px"
-                            src={itemImage}
-                            alt={item.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
-                          />
+                      <Link to={`/shop/${item.id}`} className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-sunken shrink-0">
+                        <SmartImage sizes="128px" src={item.images?.[0] || item.image || FALLBACK} alt={item.name} className="w-full h-full object-cover" />
+                      </Link>
+                      <div className="flex-1 min-w-0">
+                        <Link to={`/shop/${item.id}`} className="text-[16px] sm:text-[18px] font-semibold text-fg hover:text-accent leading-snug line-clamp-2">
+                          {item.name}
                         </Link>
-
-                        <div className="space-y-1 flex-1">
-                          <span className="text-[12px] text-accent font-semibold block">
-                            {item.category || item.collection || 'Symmetry Interiors'}
-                          </span>
-                          
-                          <Link
-                            to={`/shop/${item.id}`}
-                            className="text-base sm:text-lg font-bold text-fg hover:text-accent transition-colors leading-snug block"
-                          >
-                            {item.name}
-                          </Link>
-
-                          {/* Selected Finish / Fabric */}
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted pt-1">
-                            {item.selectedFinish && (
-                              <span className="inline-flex items-center gap-1">
-                                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                                <span>Finish: <strong>{item.selectedFinish}</strong></span>
-                              </span>
-                            )}
-                            {item.selectedFabric && (
-                              <span className="inline-flex items-center gap-1">
-                                <span className="w-1.5 h-1.5 rounded-full bg-stone-400" />
-                                <span>Tone: <strong>{item.selectedFabric}</strong></span>
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Mobile Unit Price */}
-                          <div className="sm:hidden pt-2">
-                            <span className="text-sm font-bold text-fg">
-                              ₹{(item.price * item.quantity).toLocaleString('en-IN')}
-                            </span>
-                            {item.quantity > 1 && (
-                              <span className="text-xs text-muted ml-2">
-                                (₹{item.price.toLocaleString('en-IN')} each)
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Quantity Controls & Line Total */}
-                      <div className="flex items-center justify-between sm:justify-end gap-5 sm:gap-8 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-line/60 dark:border-line">
-                        {/* Quantity Controller Pill */}
-                        <div className="flex items-center rounded-full overflow-hidden bg-canvas">
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(item.cartKey, -1)}
-                            className="p-2 sm:px-3.5 sm:py-2 text-fg hover:bg-sunken transition disabled:opacity-40"
-                            title="Decrease quantity"
-                            aria-label="Decrease quantity"
-                          >
-                            <Minus className="w-3.5 h-3.5" />
-                          </button>
-                          <span className="px-3 sm:px-4 py-1.5 text-xs font-mono font-bold text-fg min-w-[2rem] text-center">
-                            {item.quantity}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => updateQuantity(item.cartKey, 1)}
-                            className="p-2 sm:px-3.5 sm:py-2 text-fg hover:bg-sunken transition"
-                            title="Increase quantity"
-                            aria-label="Increase quantity"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                        {/* Desktop Line Total */}
-                        <div className="hidden sm:block text-right min-w-[120px]">
-                          <div className="text-base sm:text-lg font-bold text-fg">
-                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
-                          </div>
-                          {item.quantity > 1 && (
-                            <div className="text-[11px] text-muted">
-                              ₹{item.price.toLocaleString('en-IN')} / unit
-                            </div>
+                        <p className="mt-1 text-[13px] text-muted">
+                          {[item.selectedFinish, item.selectedFabric].filter(Boolean).join(' · ')}
+                        </p>
+                        <p className={`mt-1 text-[13px] ${gone ? 'text-red-600 dark:text-red-400 font-semibold' : inStock ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>
+                          {gone ? 'Out of stock: remove it to place your order' : stockLabel(current)}
+                          {!inStock && !gone && item.leadTime && <span className="text-muted"> · {item.leadTime}</span>}
+                        </p>
+                        <div className="mt-2 flex flex-wrap items-baseline gap-x-2">
+                          <span className="text-[18px] sm:text-[20px] font-semibold text-fg tabular-nums">{formatINR(item.price * item.quantity)}</span>
+                          {off > 0 && (
+                            <>
+                              <span className="text-[14px] text-muted line-through tabular-nums">{formatINR(item.originalPrice * item.quantity)}</span>
+                              <span className="text-[14px] font-semibold text-emerald-600 dark:text-emerald-400">{off}% off</span>
+                            </>
                           )}
                         </div>
+                        {item.quantity > 1 && <p className="text-[12px] text-muted">{formatINR(item.price)} each</p>}
 
-                        {/* Remove Item Button */}
-                        <button
-                          type="button"
-                          onClick={() => handleRemove(item)}
-                          className="p-2.5 rounded-full text-stone-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-                          title="Remove item"
-                          aria-label="Remove item"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+                          <QtyStepper item={item} onChange={(d) => updateQuantity(item.cartKey, d)} />
+                          <button type="button" onClick={() => handleSaveForLater(item)} className="text-[14px] font-semibold text-fg hover:text-accent uppercase tracking-[0.04em]">
+                            Save for later
+                          </button>
+                          <button type="button" onClick={() => handleRemove(item)} className="text-[14px] font-semibold text-fg hover:text-red-500 uppercase tracking-[0.04em]">
+                            Remove
+                          </button>
+                        </div>
                       </div>
-                    </m.div>
+                    </m.li>
                   );
                 })}
               </AnimatePresence>
+            </ul>
 
-              {/* Bottom Actions Row: Continue Shopping */}
-              <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <Link
-                  to="/shop"
-                  className="inline-flex items-center gap-2 text-xs font-medium text-fg hover:text-accent transition"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Continue Exploring Furniture</span>
-                </Link>
-
-                <div className="text-xs text-muted flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-accent" />
-                  <span>Items are held for 60 minutes</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Order Summary Panel (4 Cols Sticky) */}
-            <div className="lg:col-span-4 p-6 sm:p-8 rounded-tile bg-surface space-y-6 sticky top-28">
-              <div>
-                <span className="text-[12px] text-accent font-semibold block">
-                  Your Order
-                </span>
-                <h3 className="text-2xl font-semibold tracking-tight text-fg mt-0.5">
-                  Order Summary
-                </h3>
-              </div>
-
-              {/* Breakdown */}
-              <div className="space-y-3.5 text-xs text-muted">
-                <div className="flex justify-between items-center">
-                  <span>Subtotal</span>
-                  <span className="font-semibold text-fg font-mono">
-                    ₹{subtotal.toLocaleString('en-IN')}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span>Standard GST (18%)</span>
-                  <span className="font-semibold text-fg font-mono">
-                    ₹{tax.toLocaleString('en-IN')}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span>Delivery & Installation</span>
-                  <span className="font-semibold text-fg">
-                    {shipping === 0 ? (
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[12px]">
-                        Complimentary
-                      </span>
-                    ) : (
-                      `₹${shipping.toLocaleString('en-IN')}`
-                    )}
-                  </span>
-                </div>
-
-                {couponApplied && (
-                  <div className="flex justify-between items-center text-emerald-600 dark:text-emerald-400 font-medium">
-                    <span>Trade Discount (10%)</span>
-                    <span>-₹{discount.toLocaleString('en-IN')}</span>
-                  </div>
-                )}
-
-                <div className="pt-4 border-t border-line/80 dark:border-line flex justify-between items-baseline">
-                  <div>
-                    <span className="text-xs font-semibold text-fg block">
-                      Total
-                    </span>
-                    <span className="text-[10px] text-muted">
-                      (Includes installation and transit insurance)
-                    </span>
-                  </div>
-                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-fg">
-                    ₹{finalTotal.toLocaleString('en-IN')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Coupon / Privilege Code Input */}
-              <form onSubmit={handleApplyCoupon} className="pt-2 border-t border-line/60 dark:border-line">
-                <label className="block text-[11px] font-medium text-stone-600 dark:text-stone-300 mb-1.5">
-                  Architect or Designer Discount Code
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    placeholder="e.g. ARCHITECT or SYMMETRY10"
-                    disabled={couponApplied}
-                    className="flex-1 px-3.5 py-2 rounded-xl text-xs border border-line bg-canvas/50 text-fg focus:outline-none focus:ring-1 focus:ring-accent disabled:opacity-60"
-                  />
-                  <button
-                    type="submit"
-                    disabled={couponApplied || !couponCode.trim()}
-                    className="px-4 py-2 rounded-full bg-stone-900 dark:bg-white text-on-accent dark:text-stone-900 text-[14px] font-medium tracking-[-0.01em] hover:bg-accent dark:hover:bg-accent dark:hover:text-white transition disabled:opacity-40"
-                  >
-                    Apply
-                  </button>
-                </div>
-                {couponApplied && (
-                  <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Discount applied.</span>
+            {/* Price details + Place order */}
+            <aside className="lg:col-span-4 lg:sticky lg:top-[calc(var(--gnav-offset)+24px)]">
+              <div className="p-5 sm:p-6 rounded-tile bg-surface">
+                <PriceDetails />
+                {blocked && (
+                  <p role="alert" className="mt-4 text-[13px] text-red-600 dark:text-red-400">
+                    {soldOut.map((i) => i.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock. Remove {soldOut.length === 1 ? 'it' : 'them'} or save for later to continue.
                   </p>
                 )}
-              </form>
-
-              {/* Primary Buttons */}
-              <div className="space-y-3 pt-2">
                 <Link
-                  to="/checkout"
-                  className="w-full py-4 px-6 rounded-full bg-fg text-canvas hover:bg-accent transition-all duration-300 text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 shadow-luxury"
+                  to={blocked ? '#' : '/checkout'}
+                  aria-disabled={blocked}
+                  onClick={(e) => blocked && e.preventDefault()}
+                  className={`hidden lg:flex mt-5 w-full py-4 rounded-full bg-accent hover:bg-accent-hover text-on-accent text-[16px] font-semibold items-center justify-center gap-2 transition-colors ${blocked ? 'opacity-40 pointer-events-none' : ''}`}
                 >
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Proceed to Checkout</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
+                  <Lock className="w-4 h-4" /> Place order
                 </Link>
-
-                <Link
-                  to="/shop"
-                  className="w-full py-3 px-6 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent text-fg text-[14px] tracking-[-0.01em] font-medium flex items-center justify-center gap-2 transition"
-                >
-                  <span>Continue Shopping</span>
-                </Link>
+                <ul className="mt-5 space-y-2 text-[13px] text-muted">
+                  <li className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-accent shrink-0" /> Safe and secure payments
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Truck className="w-4 h-4 text-accent shrink-0" /> Delivery and placement in your home
+                  </li>
+                </ul>
               </div>
+            </aside>
 
-              {/* Atelier Guarantees */}
-              <div className="pt-4 border-t border-line/60 dark:border-line text-[11px] text-muted space-y-2.5">
-                <div className="flex items-center gap-2.5">
-                  <Truck className="w-4 h-4 text-accent shrink-0" />
-                  <span>Free delivery and placement across India</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
-                  <span>10-year frame warranty and certificate of authenticity</span>
-                </div>
+            {/* Phones: total and Place order stay at the bottom of the screen */}
+            <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 glass border-t border-line px-4 py-3 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-[18px] font-semibold text-fg tabular-nums leading-tight">{formatINR(totalAmount)}</p>
+                <p className="text-[12px] text-muted">Incl. GST and delivery</p>
               </div>
+              <Link
+                to={blocked ? '#' : '/checkout'}
+                aria-disabled={blocked}
+                onClick={(e) => blocked && e.preventDefault()}
+                className={`px-6 py-3 rounded-full bg-accent text-on-accent text-[15px] font-semibold ${blocked ? 'opacity-40' : ''}`}
+              >
+                {blocked ? 'Remove sold-out items' : 'Place order'}
+              </Link>
             </div>
           </div>
         )}
-      </section>
+
+        {/* Saved for later (the wishlist) */}
+        {saved.length > 0 && (
+          <section className="mt-10 lg:max-w-[calc(66.666%-14px)]" aria-labelledby="saved-title">
+            <h2 id="saved-title" className="text-[20px] font-semibold tracking-tight text-fg">
+              Saved for later ({saved.length})
+            </h2>
+            <ul className="mt-4 rounded-tile bg-surface divide-y divide-line">
+              {saved.map((p) => (
+                <li key={p.id} className="p-4 sm:p-5 flex items-center gap-4">
+                  <Link to={`/shop/${p.id}`} className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-sunken shrink-0">
+                    <SmartImage sizes="80px" src={p.images?.[0] || p.image || FALLBACK} alt={p.name} className="w-full h-full object-cover" />
+                  </Link>
+                  <div className="flex-1 min-w-0">
+                    <Link to={`/shop/${p.id}`} className="text-[15px] font-semibold text-fg hover:text-accent line-clamp-1">
+                      {p.name}
+                    </Link>
+                    <p className="text-[15px] text-fg tabular-nums">{formatINR(p.price)}</p>
+                    <div className="mt-2 flex gap-5">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          addToCart(p, 1, { silent: true });
+                          toggleWishlist(p.id);
+                        }}
+                        className="text-[13px] font-semibold text-accent uppercase tracking-[0.04em]"
+                      >
+                        Move to cart
+                      </button>
+                      <button type="button" onClick={() => toggleWishlist(p.id)} className="text-[13px] font-semibold text-muted hover:text-red-500 uppercase tracking-[0.04em]">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
     </div>
   );
 };

@@ -32,6 +32,15 @@ Both containers use **host networking**. They talk to each other and to Postgres
 
 Migrations are **never** run automatically on container start.
 
+**Admin orders / inventory (2026-10-17, not deployed yet):** migration **0007** (product availability + stock count; order delivery and invoice columns, statuses shipped / out_for_delivery). Deploy together with 0006 below: `.venv/bin/alembic upgrade head`, rebuild the API, check `/api/health` shows `"migration":"0007"`, then deploy the frontend. Afterwards fill **Page Content → Company → GSTIN / GST state** and Publish (printed on invoices). Downgrade of 0007 turns shipped / out-for-delivery orders back into `processing`.
+
+**Shop payments: Razorpay + Cash on Delivery (2026-10-17, not deployed yet).** Deploy in this order:
+1. Backend: `.venv/bin/alembic upgrade head` (migration **0006**: `orders.payment_status`, `razorpay_order_id`, `razorpay_payment_id`, `paid_at`; additive, existing orders become `unpaid`), then `docker compose up -d --build`. Check `/api/health` shows `"migration":"0006"`.
+2. Deploy the frontend. Until Razorpay keys are set, online methods place the order as **unpaid** and checkout tells the shopper a payment link will follow; Cash on Delivery works.
+3. Turn on online payment: in the Razorpay dashboard (KYC done) create API keys, then add to `symmetry_backend/.env`: `RAZORPAY_KEY_ID=rzp_live_…`, `RAZORPAY_KEY_SECRET=…` (use `rzp_test_…` keys first to try it), and rebuild the API. Never put the secret in the frontend or docs.
+4. Webhook (marks orders paid even if the shopper closes the page): Razorpay dashboard → Webhooks → URL `https://<host>/api/public/payments/razorpay-webhook`, events `payment.captured`, `order.paid`, `payment.failed`, a secret → `RAZORPAY_WEBHOOK_SECRET=…` in `.env`.
+5. Optional: `COD_ENABLED=false` turns Cash on Delivery off; `COD_MAX_TOTAL=200000` limits it to orders up to ₹2,00,000 (incl. GST).
+
 **Careers form with file uploads (2026-10-17, not deployed yet).** Deploy in this order:
 1. Backend: `.venv/bin/pip install -e .` (adds `python-multipart`), then `.venv/bin/alembic upgrade head` (migration **0005**: file and consent columns, additive), then `docker compose up -d --build`. This creates the `application_files` Docker volume, mounted at `/data/uploads`.
 2. Check: `curl -s https://169-58-13-62.sslip.io/api/health` shows `"migration":"0005"`.

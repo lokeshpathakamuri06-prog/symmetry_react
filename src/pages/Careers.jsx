@@ -412,7 +412,7 @@ export const Careers = () => {
 
       {/* 10. Final call to action */}
       <section className="site-container">
-        <m.div {...reveal({ variant: 'scaleIn' })} className="relative overflow-hidden rounded-panel bg-black text-white">
+        <m.div {...reveal({ variant: 'scaleIn' })} className="relative overflow-hidden rounded-panel bg-black dark:bg-[#070f1e] text-white">
           <img
             {...heroImage('/images/hero/stock-careers-cta.jpeg', '(min-width: 1280px) 1280px, 100vw')}
             alt=""

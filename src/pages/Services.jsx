@@ -65,9 +65,9 @@ const ResidentialSection = ({ service }) => {
               {service.stats?.map((stat, i) => (
                 <div
                   key={i}
-                  className="p-3 sm:p-4 rounded-xl bg-sunken/40 dark:bg-canvas border border-line/60 text-center"
+                  className="min-w-0 p-2.5 sm:p-4 rounded-xl bg-sunken/40 dark:bg-canvas border border-line/60 text-center"
                 >
-                  <span className="block font-semibold text-base sm:text-lg text-fg">
+                  <span className="block font-semibold text-[14px] sm:text-lg text-fg leading-tight break-words hyphens-auto">
                     {stat.value}
                   </span>
                   <span className="block text-[12px] sm:text-[11px] text-subtle mt-0.5">
@@ -284,14 +284,14 @@ const HospitalitySection = ({ service }) => {
         </div>
 
         {/* 3-Image Gallery Triptych */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
           <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken group">
             <img src={service.image} alt="Hospitality Suite" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sunken group">
             <img src={service.detailImage} alt="Spa Lounge" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
-          <div className="p-6 sm:p-7 rounded-2xl bg-surface dark:bg-canvas flex flex-col justify-between">
+          <div className="col-span-2 md:col-span-1 p-6 sm:p-7 rounded-2xl bg-surface dark:bg-canvas flex flex-col justify-between">
             <div className="space-y-3">
               <span className="text-xs font-mono text-accent">
                 Sensory Vocabulary
@@ -550,7 +550,7 @@ const FurnitureSourcingSection = ({ service }) => {
         </div>
 
         {/* 4 International Sourcing Conduit Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[
             { country: 'Italy', city: 'Carrara & Verona', desc: 'Direct quarry extraction of Calacatta & Travertine blocks.', flag: '🇮🇹' },
             { country: 'Italy', city: 'Brianza & Milan', desc: 'Hand-stitched leather & haute upholstery ateliers.', flag: '🇮🇹' },
@@ -559,10 +559,10 @@ const FurnitureSourcingSection = ({ service }) => {
           ].map((hub, i) => (
             <div
               key={i}
-              className="p-5 rounded-2xl bg-sunken/40 dark:bg-canvas space-y-2"
+              className="p-4 sm:p-5 rounded-2xl bg-sunken/40 dark:bg-canvas space-y-2"
             >
               <span className="text-2xl">{hub.flag}</span>
-              <h4 className="font-bold text-base text-fg">{hub.city}</h4>
+              <h4 className="font-bold text-[14px] sm:text-base text-fg leading-snug">{hub.city}</h4>
               <p className="text-xs text-muted leading-relaxed">{hub.desc}</p>
             </div>
           ))}
@@ -627,10 +627,10 @@ const LightingDecorSection = ({ service }) => {
             </p>
 
             {/* 3 Lighting Specs */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {service.stats?.map((stat, i) => (
-                <div key={i} className="p-3.5 rounded-xl bg-surface dark:bg-canvas text-center">
-                  <span className="block font-bold text-base text-accent">{stat.value}</span>
+                <div key={i} className="min-w-0 p-2.5 sm:p-3.5 rounded-xl bg-surface dark:bg-canvas text-center">
+                  <span className="block font-bold text-[13px] sm:text-base text-accent leading-tight break-words hyphens-auto">{stat.value}</span>
                   <span className="block text-[10px] uppercase text-subtle mt-0.5">{stat.label}</span>
                 </div>
               ))}
@@ -804,39 +804,39 @@ export const Services = () => {
             </m.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {processSteps.map((phase, idx) => {
               const IconComp = phase.icon;
               return (
                 <m.div
                   {...reveal({ order: idx })}
                   key={phase.step}
-                  className="p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-500 flex flex-col justify-between"
+                  className="p-4 sm:p-8 rounded-2xl sm:rounded-tile bg-surface transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="font-bold text-3xl sm:text-4xl text-accent">
+                    <div className="flex items-center justify-between mb-4 sm:mb-6">
+                      <span className="font-bold text-2xl sm:text-4xl text-accent">
                         {phase.step}
                       </span>
-                      <div className="w-12 h-12 rounded-2xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center">
-                        <IconComp className="w-6 h-6" />
+                      <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-accent/10 dark:bg-accent/15 text-accent flex items-center justify-center">
+                        <IconComp className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-semibold tracking-tight text-fg mb-1">
+                    <h3 className="text-[17px] sm:text-2xl font-semibold tracking-tight text-fg mb-1">
                       {phase.name}
                     </h3>
 
-                    <p className="text-xs text-accent font-medium mb-3">
+                    <p className="text-[11px] sm:text-xs text-accent font-medium mb-2 sm:mb-3">
                       {phase.tagline}
                     </p>
 
-                    <p className="text-xs sm:text-sm text-muted leading-relaxed">
+                    <p className="text-[12px] sm:text-sm text-muted leading-relaxed line-clamp-5 sm:line-clamp-none">
                       {phase.description}
                     </p>
                   </div>
 
-                  <div className="pt-6 mt-6 border-t border-sunken dark:border-line">
+                  <div className="pt-3 mt-3 sm:pt-6 sm:mt-6 border-t border-sunken dark:border-line">
                     <span className="text-[10px] uppercase font-mono text-subtle block mb-2">
                       What You Get:
                     </span>
@@ -844,9 +844,9 @@ export const Services = () => {
                       {phase.deliverables.map((deliv, dIdx) => (
                         <li
                           key={dIdx}
-                          className="flex items-center gap-2 text-xs text-fg font-medium"
+                          className="flex items-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-fg font-medium leading-snug"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                          <span className="w-1.5 h-1.5 mt-1 shrink-0 rounded-full bg-accent" />
                           <span>{deliv}</span>
                         </li>
                       ))}
