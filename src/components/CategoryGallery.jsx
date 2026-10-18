@@ -21,7 +21,7 @@ export const CategoryGallery = () => {
                 <SmartImage
                   sizes="150px"
                   src={cat.image}
-                  alt=""
+                  alt={`${cat.name} collection`}
                   onError={(e) => {
                     e.currentTarget.src = FALLBACK;
                   }}
