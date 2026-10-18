@@ -11,6 +11,7 @@ import {
   Award 
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import Button from '../components/Button';
 import FinalCta from '../components/FinalCta';
 import { services, processSteps } from '../data/services';
@@ -695,10 +696,7 @@ const LightingDecorSection = ({ service }) => {
 export const Services = () => {
   return (
     <div className="pb-0 space-y-16 sm:space-y-24 overflow-x-clip">
-      <SeoMeta
-        title="Services — Symmetry Interiors & Building Solutions"
-        description="Explore Symmetry Interiors' 7 dedicated practices: Residential Interiors, Commercial Interiors, Hospitality Interiors, Turnkey Projects, Customized Furniture, Furniture Sourcing, and Lighting & Decor."
-      />
+      <SeoMeta page="services" title={SEO_DEFAULTS.services.title} description={SEO_DEFAULTS.services.description} />
 
       <PageHero
         page="services"

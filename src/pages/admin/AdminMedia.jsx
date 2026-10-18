@@ -9,14 +9,18 @@ export const AdminMedia = () => {
   const [items, setItems] = useState(null);
   const [q, setQ] = useState('');
   const [unusedOnly, setUnusedOnly] = useState(false);
+  const [noAltOnly, setNoAltOnly] = useState(false);
+  const [missingAlt, setMissingAlt] = useState(null);
   const [url, setUrl] = useState('');
   const [message, setMessage] = useState(null); // {kind, text}
   const [copiedId, setCopiedId] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
 
   const load = useCallback(() => {
-    media.list({ q, unused: unusedOnly }).then((r) => setItems(r.items)).catch((err) => setMessage({ kind: 'error', text: err.message }));
-  }, [q, unusedOnly]);
+    media.list({ q, unused: unusedOnly, noalt: noAltOnly })
+      .then((r) => { setItems(r.items); setMissingAlt(r.missingAlt ?? null); })
+      .catch((err) => setMessage({ kind: 'error', text: err.message }));
+  }, [q, unusedOnly, noAltOnly]);
 
   useEffect(() => {
     const t = setTimeout(load, q ? 250 : 0);
@@ -80,6 +84,10 @@ export const AdminMedia = () => {
             <label className="inline-flex items-center gap-2 text-[12px] text-adm-fg/80 cursor-pointer">
               <input type="checkbox" checked={unusedOnly} onChange={(e) => setUnusedOnly(e.target.checked)} className="accent-[rgb(var(--adm-accent))]" />
               Unused only
+            </label>
+            <label className="inline-flex items-center gap-2 text-[12px] text-adm-fg/80 cursor-pointer" title="Alt text describes a photo for Google image search and for people using screen readers">
+              <input type="checkbox" checked={noAltOnly} onChange={(e) => setNoAltOnly(e.target.checked)} className="accent-[rgb(var(--adm-accent))]" />
+              Missing alt text{missingAlt ? <span className="px-1.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 font-semibold">{missingAlt}</span> : null}
             </label>
           </div>
           <div className="flex items-center gap-2">

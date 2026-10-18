@@ -4,15 +4,19 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo-emblem.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F7F4EE" />
+    <!-- Title, description, link previews, schema and the page's main photo are filled in per page by
+         the API (symmetry_backend app/seo.py); these defaults are used only when it is unavailable -->
+    <!--seo-->
     <title>Symmetry Interiors & Building Solutions | Bespoke Architecture & Luxury Furniture</title>
     <meta name="description" content="Symmetry Interiors & Building Solutions Pvt. Ltd. creates bespoke luxury interior architecture, turnkey execution, and curated global furniture sourcing." />
-    <meta name="keywords" content="luxury interior design, turnkey interiors, bespoke furniture, Hyderabad interior designers, architectural space planning, global furniture sourcing, penthouse design" />
-    
+    <!--/seo-->
     <!-- Start downloading published content in parallel with the JS bundle -->
     <link rel="preload" href="/api/public/content" as="fetch" crossorigin="anonymous">
 
-    <!-- Image CDN (fonts are self-hosted) -->
+    <!-- Image CDNs (fonts are self-hosted) -->
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   </head>
   <body class="bg-[#F7F4EE] dark:bg-canvas text-[#171717] dark:text-fg font-sans antialiased selection:bg-[#A88C5B]/20 selection:text-[#A88C5B] transition-colors duration-300">
     <div id="root"></div>

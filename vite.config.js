@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   build: {
+    // dist/.vite/manifest.json: the API reads it to tell the browser which files each page needs
+    manifest: true,
     rolldownOptions: {
       output: {
         // Shared libraries in a few long-cached files instead of hundreds of tiny ones

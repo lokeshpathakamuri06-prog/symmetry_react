@@ -3,8 +3,11 @@ import { lockScroll, unlockScroll } from '../lib/scroll';
 
 const SEEN_KEY = 'symmetry_intro_seen';
 
-// Show the intro once per browser session, and never to people who ask for reduced motion
+// Show the intro once per browser session, only when the visit starts on Home (someone arriving from
+// Google on a product or article sees it at once), and never to people who ask for reduced motion
 const shouldPlay = () => {
+  const home = window.location.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+  if (home !== '/') return false;
   try {
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
     if (sessionStorage.getItem(SEEN_KEY)) return false;

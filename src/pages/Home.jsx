@@ -13,6 +13,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import Hero from '../components/Hero';
 import SectionHeading from '../components/SectionHeading';
 import ProductCard from '../components/ProductCard';
@@ -122,10 +123,7 @@ const HomeView = ({ products, projects, blogs }) => {
 
   return (
     <div className="overflow-x-clip">
-      <SeoMeta
-        title="Spaces Designed Beyond the Ordinary | Symmetry Interiors"
-        description="Luxury interiors, bespoke furniture and globally sourced craftsmanship — thoughtfully curated for exceptional living by Symmetry Interiors & Building Solutions Pvt. Ltd."
-      />
+      <SeoMeta page="home" title={SEO_DEFAULTS.home.title} description={SEO_DEFAULTS.home.description} />
 
       {/* Home order (client brief): hero, site at a glance, about, collections, categories, products, projects, sourcing,
           why us, testimonials, journal, Instagram, call to action, contact information */}

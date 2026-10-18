@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import PageHero from '../components/PageHero';
 import ContentState from '../components/ContentState';
 import ApplicationForm from '../components/careers/ApplicationForm';
@@ -92,10 +93,7 @@ export const Careers = () => {
 
   return (
     <div className="pb-20 sm:pb-28 space-y-20 sm:space-y-28 overflow-x-clip">
-      <SeoMeta
-        title="Careers"
-        description="Internships and fresher roles at Symmetry Interiors & Building Solutions for architecture and interior design students and creative professionals."
-      />
+      <SeoMeta page="careers" title={SEO_DEFAULTS.careers.title} description={SEO_DEFAULTS.careers.description} />
 
       {/* 1. Hero */}
       <PageHero
@@ -416,6 +414,7 @@ export const Careers = () => {
           <img
             {...heroImage('/images/hero/stock-careers-cta.jpeg', '(min-width: 1280px) 1280px, 100vw')}
             alt=""
+            aria-hidden="true"
             loading="lazy"
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover opacity-45"

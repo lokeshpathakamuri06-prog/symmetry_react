@@ -34,10 +34,11 @@ export const publishing = {
 export const dashboard = () => api('/admin/dashboard');
 
 export const media = {
-  list: ({ q, unused } = {}) => {
+  list: ({ q, unused, noalt } = {}) => {
     const params = new URLSearchParams();
     if (q) params.set('q', q);
     if (unused) params.set('unused', 'true');
+    if (noalt) params.set('noalt', 'true');
     return api(`/admin/media?${params}`);
   },
   addByUrl: (url, altText) => api('/admin/media', { method: 'POST', body: { url, altText } }),

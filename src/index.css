@@ -25,8 +25,8 @@
     --c-surface: 255 255 255;
     --c-sunken: 232 232 237;
     --c-fg: 29 29 31;
-    --c-muted: 110 110 115;
-    --c-subtle: 134 134 139;
+    --c-muted: 99 99 104; /* 4.5:1+ on every light surface (WCAG AA) */
+    --c-subtle: 108 108 113;
     --c-line: 210 210 215;
     --c-accent: 41 102 110;
     --c-accent-hover: 30 80 87;

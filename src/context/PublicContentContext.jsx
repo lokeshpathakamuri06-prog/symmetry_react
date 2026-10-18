@@ -89,4 +89,10 @@ export const useSiteText = (page) => {
   return content?.siteSections?.[page] ?? EMPTY_SECTION;
 };
 
+// Alt text set in the Media Library, by image URL (images without one use the caller's alt)
+export const useImageAlt = (src) => {
+  const context = useContext(PublicContentContext);
+  return (src && context?.content?.imageAlt?.[src]) || '';
+};
+
 export default PublicContentContext;

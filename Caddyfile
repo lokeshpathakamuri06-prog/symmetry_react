@@ -1,6 +1,7 @@
 # Symmetry Interiors: website + API on one HTTPS origin.
 # Until a domain is bought, sslip.io maps 169-58-13-62.sslip.io to this server's IP.
-# To switch domains later, replace the hostname below and in the redirect target.
+# To switch domains later, replace the hostname below and in the redirect target,
+# and PUBLIC_ORIGIN in symmetry_backend/.env (used for canonical links and the sitemap).
 
 169-58-13-62.sslip.io {
 	encode zstd gzip
@@ -19,19 +20,70 @@
 		reverse_proxy 127.0.0.1:8000
 	}
 
-	# React build
+	# Search engines: generated from the published content
+	handle /sitemap.xml {
+		rewrite * /api/public/sitemap.xml
+		reverse_proxy 127.0.0.1:8000
+	}
+	handle /robots.txt {
+		rewrite * /api/public/robots.txt
+		reverse_proxy 127.0.0.1:8000
+	}
+
+	# The build manifest is for the API only
+	handle /.vite/* {
+		respond 404
+	}
+
 	handle {
 		root * /srv
 
-		# Vite-hashed files never change; everything else must be revalidated
-		@assets path /assets/*
-		header @assets Cache-Control "public, max-age=31536000, immutable"
-		@pages not path /assets/*
-		header @pages Cache-Control "no-cache"
+		# Real files: Vite-hashed files never change; design photos rarely do
+		@file {
+			file
+			not path /
+		}
+		handle @file {
+			@assets path /assets/*
+			header @assets Cache-Control "public, max-age=31536000, immutable"
+			@media path /images/* /drive_products/* *.webp *.jpeg *.jpg *.png *.svg *.woff2 *.pdf
+			header @media Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+			file_server
+		}
 
-		try_files {path} /index.html
-		file_server
+		# Every page: the API adds its title, description, link preview, schema and main-photo preload
+		# to index.html (symmetry_backend app/seo.py). If the API fails, the plain index.html is served.
+		handle {
+			header Cache-Control "no-cache"
+			rewrite * /api/public/page
+			reverse_proxy 127.0.0.1:8000 {
+				header_up X-Page-Path {http.request.orig_uri}
+				@failed status 5xx
+				handle_response @failed {
+					root * /srv
+					rewrite * /index.html
+					file_server
+				}
+			}
+		}
 	}
+
+	# API not reachable at all: pages still load (as plain index.html); API calls get the error
+	handle_errors 502 503 504 {
+		@page expression `!{http.request.orig_uri.path}.startsWith("/api/")`
+		handle @page {
+			root * /srv
+			rewrite * /index.html
+			file_server
+		}
+	}
+}
+
+# index.html and the build manifest for the API (localhost only)
+http://127.0.0.1:8090 {
+	bind 127.0.0.1
+	root * /srv
+	file_server
 }
 
 # Old addresses (bare IP and the previous :8080 port) redirect to HTTPS

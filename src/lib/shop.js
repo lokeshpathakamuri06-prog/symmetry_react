@@ -4,6 +4,9 @@
  * Prices are stored without GST; the cart adds 18% GST at checkout (CartContext).
  */
 
+// Readable product address (/shop/aurelia-curved-boucle-sofa); old /shop/<sku> links still work
+export const productPath = (p) => `/shop/${p.slug || p.id}`;
+
 export const formatINR = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
 
 export const discountOf = (p) =>

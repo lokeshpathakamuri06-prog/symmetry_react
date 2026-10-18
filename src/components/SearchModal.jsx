@@ -6,6 +6,7 @@ import { useScrollLock } from '../lib/scroll';
 import { useSearch } from '../context/SearchContext';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from './SmartImage';
+import { productPath } from '../lib/shop';
 
 export const SearchModal = () => {
   const { isOpen, closeSearch } = useSearch();
@@ -154,7 +155,7 @@ export const SearchModal = () => {
                         {filteredProducts.map((p) => (
                           <div
                             key={p.id}
-                            onClick={() => handleSelect(`/shop/${p.id}`)}
+                            onClick={() => handleSelect(productPath(p))}
                             className="flex items-center gap-4 p-2.5 rounded-xl hover:bg-canvas dark:hover:bg-sunken cursor-pointer transition-colors group"
                           >
                             <SmartImage sizes="64px"

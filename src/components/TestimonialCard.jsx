@@ -39,9 +39,9 @@ export const TestimonialCard = ({ testimonial }) => {
             />
           )}
           <div>
-            <h4 className="text-[15px] font-semibold text-fg">
+            <p className="text-[15px] font-semibold text-fg">
               {testimonial.author}
-            </h4>
+            </p>
             <p className="text-[13px] text-accent">
               {testimonial.role} &bull; {testimonial.project}
             </p>

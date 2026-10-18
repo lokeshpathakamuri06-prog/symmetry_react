@@ -3,8 +3,7 @@ import { Pause, Play } from 'lucide-react';
 import { m, AnimatePresence, useReducedMotion, useScroll } from 'framer-motion';
 import { ease, enter, useScrollRange } from '../lib/motion';
 import { useBanners } from '../context/PublicContentContext';
-import { heroImage } from '../lib/staticImages';
-import { cloudinaryUrl, isCloudinary, srcSet } from '../lib/images';
+import { heroImageProps } from '../lib/images';
 import TextReveal from './motion/TextReveal';
 
 // Slideshow photos come from admin "Hero Banners" (active + published, in admin order).
@@ -16,17 +15,12 @@ const FALLBACK_SLIDES = [
   { id: 'hero-3', title: 'HAJ0035 Living Pavilion', image: '/images/hero/hero-haj-slide-3.jpeg' },
 ];
 
-const HERO_WIDTHS = [800, 1280, 1600, 2048, 2560];
 const PHOTO_SECONDS = 6;
 
 // A banner whose URL is a video file (or a Cloudinary video) plays as a silent clip
 const isVideo = (src) => /\.(mp4|webm|mov)(\?.*)?$/i.test(src) || /res\.cloudinary\.com\/[^/]+\/video\/upload\//.test(src);
 
-const slideImage = (src) => {
-  if (isCloudinary(src)) return { src: cloudinaryUrl(src, { width: 1600 }), srcSet: srcSet(src, HERO_WIDTHS), sizes: '100vw' };
-  if (src.startsWith('/images/')) return heroImage(src);
-  return { src };
-};
+const slideImage = (src) => heroImageProps(src);
 
 /**
  * Home's opening: photos (or a video) about 80% of the screen tall, growing when the words need

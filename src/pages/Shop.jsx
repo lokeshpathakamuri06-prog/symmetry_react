@@ -15,6 +15,7 @@ import {
   MapPin
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import ProductCard from '../components/ProductCard';
 import FilterDrawer from '../components/FilterDrawer';
 import QuickViewModal from '../components/QuickViewModal';
@@ -134,10 +135,7 @@ const ShopView = ({ products, shopCategories }) => {
 
   return (
     <div className="pb-20 sm:pb-32 space-y-12 sm:space-y-16 overflow-x-clip">
-      <SeoMeta
-        title="Furniture Shop — Symmetry Interiors"
-        description="Browse handcrafted luxury furniture: bouclé sofas, Nero Marquina marble dining tables, travertine coffee tables, and Murano chandeliers by Symmetry Interiors."
-      />
+      <SeoMeta page="shop" title={SEO_DEFAULTS.shop.title} description={SEO_DEFAULTS.shop.description} />
 
       <PageHero
         page="shop"
@@ -229,7 +227,7 @@ const ShopView = ({ products, shopCategories }) => {
                   }`}
                 >
                   <span>{cat.name}</span>
-                  <span className="font-mono text-[10px] opacity-70">({count})</span>
+                  <span className="font-mono text-[10px]">({count})</span>
                 </button>
               );
             })}
@@ -293,7 +291,7 @@ const ShopView = ({ products, shopCategories }) => {
                       }`}
                     >
                       <span className="truncate pr-2">{cat.name}</span>
-                      <span className="font-mono text-[10px] opacity-70 shrink-0">({count})</span>
+                      <span className="font-mono text-[10px] shrink-0">({count})</span>
                     </button>
                   );
                 })}
@@ -397,6 +395,8 @@ const ShopView = ({ products, shopCategories }) => {
             </div>
 
             {/* PRODUCT GRID (3-Col Desktop, 2-Col Tablet, 1-Col Mobile) */}
+            {/* Heading for screen readers and search engines (product names below are h3) */}
+            <h2 className="sr-only">Products</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
               <AnimatePresence mode="popLayout">
                 {paginatedProducts.map((product, idx) => (

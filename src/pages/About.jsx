@@ -8,6 +8,7 @@ import {
   Check 
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import Button from '../components/Button';
 import TeamCard from '../components/TeamCard';
 import FinalCta from '../components/FinalCta';
@@ -39,10 +40,7 @@ export const About = () => {
 
   return (
     <div className="pb-0 space-y-16 sm:space-y-24 overflow-x-clip">
-      <SeoMeta
-        title="About Symmetry Interiors — Creating Spaces With Character"
-        description="Discover Symmetry Interiors: 25+ years of legacy, proprietary 25,000 sq.ft. high-precision joinery, direct quarry sourcing across Italy and Asia, and turnkey architectural execution."
-      />
+      <SeoMeta page="about" title={SEO_DEFAULTS.about.title} description={SEO_DEFAULTS.about.description} />
 
       <PageHero
         page="about"

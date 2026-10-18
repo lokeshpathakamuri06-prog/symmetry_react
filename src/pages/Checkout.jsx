@@ -242,7 +242,7 @@ export const Checkout = () => {
 
   return (
     <div className="pt-[calc(var(--gnav-h)+32px)] pb-32 lg:pb-24 min-h-[80vh]">
-      <SeoMeta title="Checkout | Symmetry Interiors" description="Delivery address and payment for your Symmetry Interiors order." />
+      <SeoMeta title="Your order" noindex />
 
       <div className="site-container">
         <CheckoutSteps current={1} />

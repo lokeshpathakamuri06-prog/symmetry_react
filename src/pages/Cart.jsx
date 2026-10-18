@@ -8,7 +8,7 @@ import CheckoutSteps from '../components/shop/CheckoutSteps';
 import PriceDetails from '../components/shop/PriceDetails';
 import { useCart, MAX_QTY } from '../context/CartContext';
 import { useProducts } from '../context/PublicContentContext';
-import { discountOf, formatINR, isInStock, isSoldOut, stockLabel } from '../lib/shop';
+import { discountOf, formatINR, isInStock, isSoldOut, productPath, stockLabel } from '../lib/shop';
 import useBuyBar from '../lib/useBuyBar';
 
 const FALLBACK = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop';
@@ -75,7 +75,7 @@ export const Cart = () => {
 
   return (
     <div className="pt-[calc(var(--gnav-h)+32px)] pb-32 lg:pb-24 min-h-[75vh]">
-      <SeoMeta title="Your Cart | Symmetry Interiors" description="Review the furniture in your cart, change quantities and continue to secure checkout." />
+      <SeoMeta title="Your order" noindex />
 
       <div className="site-container">
         {cartItems.length > 0 && <CheckoutSteps current={0} />}
@@ -148,11 +148,11 @@ export const Cart = () => {
                       transition={{ duration: 0.25 }}
                       className="p-4 sm:p-6 flex gap-4 sm:gap-6"
                     >
-                      <Link to={`/shop/${item.id}`} className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-sunken shrink-0">
+                      <Link to={productPath(item)} className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-sunken shrink-0">
                         <SmartImage sizes="128px" src={item.images?.[0] || item.image || FALLBACK} alt={item.name} className="w-full h-full object-cover" />
                       </Link>
                       <div className="flex-1 min-w-0">
-                        <Link to={`/shop/${item.id}`} className="text-[16px] sm:text-[18px] font-semibold text-fg hover:text-accent leading-snug line-clamp-2">
+                        <Link to={productPath(item)} className="text-[16px] sm:text-[18px] font-semibold text-fg hover:text-accent leading-snug line-clamp-2">
                           {item.name}
                         </Link>
                         <p className="mt-1 text-[13px] text-muted">
@@ -244,11 +244,11 @@ export const Cart = () => {
             <ul className="mt-4 rounded-tile bg-surface divide-y divide-line">
               {saved.map((p) => (
                 <li key={p.id} className="p-4 sm:p-5 flex items-center gap-4">
-                  <Link to={`/shop/${p.id}`} className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-sunken shrink-0">
+                  <Link to={productPath(p)} className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-sunken shrink-0">
                     <SmartImage sizes="80px" src={p.images?.[0] || p.image || FALLBACK} alt={p.name} className="w-full h-full object-cover" />
                   </Link>
                   <div className="flex-1 min-w-0">
-                    <Link to={`/shop/${p.id}`} className="text-[15px] font-semibold text-fg hover:text-accent line-clamp-1">
+                    <Link to={productPath(p)} className="text-[15px] font-semibold text-fg hover:text-accent line-clamp-1">
                       {p.name}
                     </Link>
                     <p className="text-[15px] text-fg tabular-nums">{formatINR(p.price)}</p>

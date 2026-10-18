@@ -4,6 +4,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import { FormField } from '../../components/admin/form/fields';
 import api from '../../lib/api';
 import { CONTENT_CHANGED_EVENT } from '../../services/adminApi';
+import { SEO_DEFAULTS } from '../../lib/seoDefaults';
 
 // Exactly the texts the website shows. Saving updates the database; Publish puts it live.
 const PAGES = [
@@ -80,9 +81,47 @@ const PAGES = [
   },
 ];
 
-const toField = ([key, label, span = 'full', help = null, type = 'text'], optional) => ({
-  key, label, help, type, rows: 3, span: span === 'half' ? 'half' : undefined, required: !optional.includes(key),
+// Page Content → SEO: search-result title and description of each fixed page (products, projects and
+// journal posts have their own SEO fields). Empty = the default shown greyed out.
+PAGES.push({
+  id: 'seo', label: 'SEO', link: '/sitemap.xml', linkLabel: 'Open sitemap',
+  help: 'How each page appears in Google and in WhatsApp / Facebook link previews. Leave a field empty to keep the text shown in grey. Products, projects and journal posts have their own SEO fields in their editors.',
+  groups: [
+    { title: 'Link preview photo', fields: [
+      ['shareImage', 'Default share photo', 'full', 'shown when a page link is shared and the page has no photo of its own; 1200 × 630 px works best. Paste a Media Library URL', 'text', 'https://…'],
+    ] },
+    ...Object.entries(SEO_DEFAULTS).map(([key, d]) => ({
+      title: `${d.label} page (${d.path})`, seoPreview: key,
+      fields: [
+        [`${key}Title`, 'Title', 'full', 'up to about 60 characters; the brand is added if missing', 'text', d.title],
+        [`${key}Description`, 'Description', 'full', 'up to about 155 characters', 'textarea', d.description],
+      ],
+    })),
+  ],
 });
+
+const toField = ([key, label, span = 'full', help = null, type = 'text', placeholder], optional) => ({
+  key, label, help, type, placeholder, rows: 3, span: span === 'half' ? 'half' : undefined, required: !optional.includes(key),
+});
+
+// What Google will show, from the current (unsaved) text or the default
+const SearchPreview = ({ pageKey, values }) => {
+  const d = SEO_DEFAULTS[pageKey];
+  const rawTitle = (values[`${pageKey}Title`] || d.title).trim();
+  const title = /symmetry/i.test(rawTitle) ? rawTitle : `${rawTitle} | Symmetry Interiors`;
+  const description = (values[`${pageKey}Description`] || d.description).trim();
+  const long = (text, max) => text.length > max;
+  return (
+    <div className="rounded-xl border border-adm-border p-3 bg-adm-surface">
+      <p className="text-[11px] text-adm-muted">Google preview · {window.location.host}{d.path === '/' ? '' : d.path}</p>
+      <p className="text-[16px] leading-snug text-[#1a0dab] dark:text-[#8ab4f8] truncate">{title}</p>
+      <p className="text-[12.5px] text-adm-fg/80 line-clamp-2">{description}</p>
+      <p className={`mt-1 text-[11px] ${long(title, 60) || long(description, 160) ? 'text-amber-600 dark:text-amber-400' : 'text-adm-muted'}`}>
+        Title {title.length} characters{long(title, 60) ? ' (Google may cut it short)' : ''} · description {description.length}{long(description, 160) ? ' (may be cut short)' : ''}
+      </p>
+    </div>
+  );
+};
 
 export const AdminPageContent = () => {
   const [active, setActive] = useState('company');
@@ -151,7 +190,7 @@ export const AdminPageContent = () => {
                 {page.help && <p className="text-[12px] text-adm-muted mt-0.5">{page.help}</p>}
               </div>
               <a href={page.link} target="_blank" rel="noreferrer" className="text-[12px] text-adm-accent inline-flex items-center gap-1 shrink-0">
-                Open page <ExternalLink className="w-3.5 h-3.5" />
+                {page.linkLabel || 'Open page'} <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
             {page.groups.map((group) => (
@@ -174,6 +213,7 @@ export const AdminPageContent = () => {
                     );
                   })}
                 </div>
+                {group.seoPreview && <SearchPreview pageKey={group.seoPreview} values={values} />}
               </section>
             ))}
             <div className="pt-4 border-t border-adm-border flex items-center justify-between gap-3">

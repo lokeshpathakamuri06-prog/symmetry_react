@@ -1,9 +1,9 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
-import { SearchProvider } from './context/SearchContext';
+import { SearchProvider, useSearch } from './context/SearchContext';
 import { PublicContentProvider } from './context/PublicContentContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
@@ -11,15 +11,36 @@ import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import SearchModal from './components/SearchModal';
 import FloatingActionStack from './components/FloatingActionStack';
-import ChatBot from './components/ChatBot';
 import CartToast from './components/shop/CartToast';
 import SmoothScroll from './components/SmoothScroll';
 import PageTransition, { RouteFallback } from './components/motion/PageTransition';
 import SiteOpener from './components/SiteOpener';
 
-// Public pages: Home ships in the main bundle (first paint); the rest load on demand
+// Not needed for the first screen: the chat loads once the page is idle, search when first opened
+const ChatBot = lazy(() => import('./components/ChatBot'));
+const SearchModal = lazy(() => import('./components/SearchModal'));
+
+const WhenIdle = ({ children }) => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+    const cancel = window.cancelIdleCallback || clearTimeout;
+    const id = idle(() => setReady(true), { timeout: 4000 });
+    return () => cancel(id);
+  }, []);
+  return ready ? <Suspense fallback={null}>{children}</Suspense> : null;
+};
+
+const SearchWhenOpened = () => {
+  const { isOpen } = useSearch();
+  const [used, setUsed] = useState(false);
+  if (isOpen && !used) setUsed(true);
+  return used ? <Suspense fallback={null}><SearchModal /></Suspense> : null;
+};
+
+// Home ships in the main bundle (most visits start there; measured faster than loading it separately).
+// Other pages load on demand; the server's page head preloads the current page's file (app/seo.py).
 import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
@@ -125,15 +146,17 @@ const StorefrontShell = ({ children }) => {
         <ScrollToTop />
         <Header />
 
-        <main className="flex-1">
+        {/* flow-root: the page bar's top margin stays inside (no jump when a page finishes loading);
+            min height: the footer never flashes into view while a page loads */}
+        <main className="flex-1 flow-root min-h-[100svh]">
           <PageTransition>{children}</PageTransition>
         </main>
 
         <Footer />
         <FloatingActionStack />
-        <ChatBot />
+        <WhenIdle><ChatBot /></WhenIdle>
         <CartToast />
-        <SearchModal />
+        <SearchWhenOpened />
       </div>
     </SmoothScroll>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import {
   Check,
   Star,
@@ -28,7 +28,7 @@ import { useCart } from '../context/CartContext';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
-import { isSoldOut, fewLeft } from '../lib/shop';
+import { isSoldOut, fewLeft, productPath } from '../lib/shop';
 
 // Loads published content, then renders the page exactly as before
 export const ProductDetail = () => {
@@ -39,7 +39,9 @@ export const ProductDetail = () => {
 
 const ProductDetailView = ({ products }) => {
   const { id } = useParams();
-  const product = products.find((p) => p.id === id);
+  const { search } = useLocation();
+  // Readable address first; an old /shop/<sku> link moves to it below
+  const product = products.find((p) => p.slug === id) || products.find((p) => p.id === id);
   const { addToCart, wishlist, toggleWishlist } = useCart();
   const navigate = useNavigate();
 
@@ -71,6 +73,9 @@ const ProductDetailView = ({ products }) => {
   // Safe early return if product is not found
   if (!product) {
     return <Navigate to="/shop" replace />;
+  }
+  if (product.slug && id !== product.slug) {
+    return <Navigate to={`${productPath(product)}${search}`} replace />;
   }
 
   const isWishlisted = wishlist?.includes(product.id);
@@ -122,10 +127,7 @@ const ProductDetailView = ({ products }) => {
 
   return (
     <div className="pt-28 pb-24 space-y-16 sm:space-y-24">
-      <SeoMeta
-        title={`${product.name} | Symmetry Luxury Interiors`}
-        description={product.description}
-      />
+      <SeoMeta title={product.seoTitle || product.name} description={product.seoDescription || product.description} />
 
       {/* Breadcrumb Navigation */}
       <div className="site-container">
@@ -497,7 +499,7 @@ const ProductDetailView = ({ products }) => {
 
               <div className="flex justify-between pb-3 border-b border-line/50 dark:border-line">
                 <span className="font-medium">Stock Status</span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400 text-right">
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400 text-right">
                   {product.stockStatus || 'In Stock'}
                 </span>
               </div>
@@ -513,9 +515,9 @@ const ProductDetailView = ({ products }) => {
             {/* Construction Highlights list */}
             {product.details && product.details.length > 0 && (
               <div className="mt-6 pt-4 border-t border-line/50 dark:border-line">
-                <h4 className="text-xs text-fg font-semibold mb-3">
+                <h3 className="text-xs text-fg font-semibold mb-3">
                   Craftsmanship Highlights
-                </h4>
+                </h3>
                 <ul className="space-y-2 text-xs text-muted">
                   {product.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2">

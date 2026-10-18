@@ -82,10 +82,7 @@ const JournalDetailView = ({ blogs }) => {
   return (
     <div className="pt-28 pb-28 space-y-16 sm:space-y-24">
       <ScrollProgressBar />
-      <SeoMeta
-        title={`${blog.title} | The Symmetry Journal`}
-        description={blog.excerpt}
-      />
+      <SeoMeta title={blog.seoTitle || `${blog.title} | The Symmetry Journal`} description={blog.seoDescription || blog.excerpt} />
 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}

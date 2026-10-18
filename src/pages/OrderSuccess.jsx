@@ -45,7 +45,7 @@ export const OrderSuccess = () => {
 
   return (
     <div className="pt-[calc(var(--gnav-h)+32px)] pb-24">
-      <SeoMeta title="Order Placed" description="Your order with Symmetry Interiors has been placed." />
+      <SeoMeta title="Your order" noindex />
 
       <section className="max-w-4xl mx-auto px-5 sm:px-8 space-y-6">
         <div className="print:hidden">

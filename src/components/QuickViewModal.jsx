@@ -5,7 +5,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useScrollLock } from '../lib/scroll';
 import { useCart } from '../context/CartContext';
 import SmartImage from './SmartImage';
-import { isSoldOut } from '../lib/shop';
+import { isSoldOut, productPath } from '../lib/shop';
 
 export const QuickViewModal = ({ product, onClose }) => {
   const { addToCart } = useCart();
@@ -192,7 +192,7 @@ export const QuickViewModal = ({ product, onClose }) => {
                 </div>
 
                 <Link
-                  to={`/shop/${product.id}`}
+                  to={productPath(product)}
                   onClick={onClose}
                   className="w-full py-2.5 rounded-full border border-fg/15 text-[14px] font-medium text-center block text-fg hover:border-fg/40 transition-colors"
                 >

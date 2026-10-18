@@ -11,6 +11,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import Button from '../components/Button';
 import { sourcingCountries, sourcingProcess, sourcingStats } from '../data/sourcing';
 import { heroImage } from '../lib/staticImages';
@@ -24,10 +25,7 @@ export const Sourcing = () => {
 
   return (
     <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-28 overflow-x-clip">
-      <SeoMeta
-        title="Global Sourcing &amp; Provenance — Italy, China, Malaysia, Vietnam, Bali | Symmetry Interiors"
-        description="Explore Symmetry Interiors' 5 global sourcing alliances: quarry-direct Italian marble &amp; leather, precision CNC joinery in China, plantation teak in Malaysia, handwoven cane in Vietnam, and volcanic stone in Bali."
-      />
+      <SeoMeta page="sourcing" title={SEO_DEFAULTS.sourcing.title} description={SEO_DEFAULTS.sourcing.description} />
 
       <PageHero
         page="sourcing"

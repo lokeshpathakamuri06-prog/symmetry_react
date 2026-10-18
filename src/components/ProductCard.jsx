@@ -4,7 +4,7 @@ import { Heart, Eye, ShoppingBag, Check } from 'lucide-react';
 import { m } from 'framer-motion';
 import { reveal } from '../lib/motion';
 import { useCart } from '../context/CartContext';
-import { discountOf, isInStock, isSoldOut, fewLeft, stockLabel, formatINR } from '../lib/shop';
+import { discountOf, isInStock, isSoldOut, fewLeft, stockLabel, formatINR, productPath } from '../lib/shop';
 import AppleCardWrapper from './AppleCardWrapper';
 import SmartImage from './SmartImage';
 import Stars from './shop/Stars';
@@ -48,7 +48,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
     <m.div {...reveal({ order: index % 3 })} className="h-full">
       <AppleCardWrapper className="flex flex-col h-full">
         <div className="relative aspect-square overflow-hidden bg-sunken">
-          <Link to={`/shop/${product.id}`} className="block w-full h-full" tabIndex={-1} aria-hidden="true">
+          <Link to={productPath(product)} className="block w-full h-full" tabIndex={-1} aria-hidden="true">
             <SmartImage
               sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
               src={imgSrc}
@@ -92,7 +92,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
 
         <div className="p-3.5 sm:p-5 flex flex-col flex-1">
           <span className={`text-[11.5px] sm:text-[12.5px] font-semibold ${badge.tone}`}>{badge.label}</span>
-          <Link to={`/shop/${product.id}`} className="block mt-0.5">
+          <Link to={productPath(product)} className="block mt-0.5">
             <h3 className="text-[14.5px] sm:text-[17px] font-semibold tracking-tight text-fg leading-snug line-clamp-2 hover:text-accent transition-colors">
               {product.name}
             </h3>

@@ -6,10 +6,7 @@ import Button from '../components/Button';
 export const NotFound = () => {
   return (
     <div className="min-h-[80vh] flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 text-center">
-      <SeoMeta
-        title="404 — Page Not Found"
-        description="The page you are looking for does not exist."
-      />
+      <SeoMeta title="Page not found" description="The page you are looking for does not exist." noindex />
 
       <div className="max-w-xl space-y-6">
         <span className="font-bold text-7xl sm:text-9xl text-accent block">

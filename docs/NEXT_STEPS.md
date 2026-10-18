@@ -57,7 +57,8 @@ _Last updated: 2026-10-17 (redesign in preview)_. Work top to bottom; each step 
 ## Step 6: Performance and hardening
 - [x] Code splitting per route, so the admin bundle is separate (Step 6a).
 - [x] Self-host the Inter font; WebP banners; lazy below-the-fold images (Step 6a).
-- [ ] Pre-render the main pages (SEO and first paint).
+- [x] Per-page SEO head from the API: titles, descriptions, canonical, link previews, schema, sitemap, robots, image/code preloads (2026-10-18).
+- [ ] Pre-render the main pages' HTML (first paint; mobile performance 90+).
 - [ ] Nightly `pg_dump` backups copied off the server, plus a monthly restore test.
 - [ ] Uptime monitoring and error logging.
 - [ ] Security pass: CSRF, rate limits, headers.

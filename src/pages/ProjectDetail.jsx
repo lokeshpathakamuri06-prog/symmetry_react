@@ -34,10 +34,7 @@ const ProjectDetailView = ({ projects }) => {
 
   return (
     <div className="pt-28 pb-24 space-y-20 sm:space-y-28">
-      <SeoMeta
-        title={`${project.title} | Project`}
-        description={project.summary}
-      />
+      <SeoMeta title={project.seoTitle || `${project.title} | Interior Project`} description={project.seoDescription || project.summary || project.concept} />
 
       {/* Header & Meta */}
       <section className="site-container">

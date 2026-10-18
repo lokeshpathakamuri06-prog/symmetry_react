@@ -194,7 +194,27 @@ On **Contact Enquiries**, click **View newsletter subscribers**. **Export CSV** 
 
 ---
 
-## 10. Quick answers
+## 10. Google and link previews (SEO)
+The website tells Google (and WhatsApp, Facebook, LinkedIn link previews) each page's title, description and main photo. Everything has a sensible default; you only change what you want to improve.
+
+| What | Where to change it |
+|---|---|
+| Title and description of Home, About, Services, Projects, Global Sourcing, Shop, Journal, Contact, Careers | **Page Content → SEO**. Leave a field empty to keep the default shown in grey. The box under each page shows how Google will display it. |
+| Title and description of one product, project or journal article | That item's editor → **Search engines** (*SEO title*, *SEO description*). Empty = its name and description. |
+| Photo used when a page link is shared | The page's own photo; for pages without one, **Page Content → SEO → Default share photo** (1200 × 630 px is best). |
+| Photo descriptions (alt text) | **Media Library**: type a short description under each photo. Tick **Missing alt text** to see the photos that still need one. |
+
+**Tips**
+- Titles: about 50–60 characters, most important words first, e.g. *Luxury Interior Designers in Hyderabad*. The brand name is added automatically.
+- Descriptions: one or two sentences (up to about 155 characters) that make people want to click.
+- Alt text: describe what is in the photo, e.g. *Curved cream bouclé sofa in a living room with marble floor*. Not "image1".
+- As always, **Publish** after saving.
+
+**Automatic (nothing to do):** product addresses use the product name (e.g. `/shop/aurelia-curved-boucle-sofa`; old addresses still work); the sitemap at `/sitemap.xml` lists every published page and updates when you Publish; cart, checkout and admin pages are hidden from Google; products show their price and stock to Google, and the business details (name, phone, address from Page Content → Company) are included on Home and Contact.
+
+---
+
+## 11. Quick answers
 | Question | Answer |
 |---|---|
 | I saved, but the website hasn't changed | Click **Publish** (top right), then reload the website |

@@ -5,6 +5,7 @@ import { scrollToTarget } from '../lib/scroll';
 import { reveal } from '../lib/motion';
 import { ArrowUpRight, Search, X, ChevronLeft, ChevronRight, Sparkles, BookOpen, Clock, MapPin } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import BlogCard from '../components/BlogCard';
 import ContentState from '../components/ContentState';
 import { usePublicContent } from '../context/PublicContentContext';
@@ -96,10 +97,7 @@ const JournalView = ({ blogs }) => {
 
   return (
     <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-x-clip">
-      <SeoMeta
-        title="The Symmetry Journal | Interiors, Furniture & Materials"
-        description="Essays, material guides, buying guides, and project spotlights exploring quiet luxury, Italian craftsmanship, and bespoke living."
-      />
+      <SeoMeta page="journal" title={SEO_DEFAULTS.journal.title} description={SEO_DEFAULTS.journal.description} />
 
       <PageHero
         page="journal"

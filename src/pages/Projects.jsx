@@ -6,6 +6,7 @@ import {
   MapPin 
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import ProjectCard from '../components/ProjectCard';
 import Button from '../components/Button';
 import ContentState from '../components/ContentState';
@@ -88,10 +89,7 @@ const ProjectsView = ({ projects }) => {
 
   return (
     <div className="pb-20 sm:pb-32 space-y-16 sm:space-y-24 overflow-x-clip">
-      <SeoMeta
-        title="Projects — Symmetry Interiors"
-        description="Homes, offices, hotels and hospitals designed and delivered by Symmetry Interiors."
-      />
+      <SeoMeta page="projects" title={SEO_DEFAULTS.projects.title} description={SEO_DEFAULTS.projects.description} />
 
       <PageHero
         page="projects"

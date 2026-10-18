@@ -16,6 +16,7 @@ import {
 import { m, AnimatePresence } from 'framer-motion';
 import { scrollToTarget } from '../lib/scroll';
 import SeoMeta from '../components/SeoMeta';
+import { SEO_DEFAULTS } from '../lib/seoDefaults';
 import { useSiteText } from '../context/PublicContentContext';
 import { mailHref, mapsEmbedSrc, mapsHref, telHref, whatsappHref } from '../lib/contact';
 import Honeypot from '../components/Honeypot';
@@ -178,10 +179,7 @@ export const Contact = () => {
 
   return (
     <div className="pb-20 sm:pb-28 space-y-16 sm:space-y-24 overflow-x-clip">
-      <SeoMeta
-        title="Let's Create Something Exceptional | Contact Symmetry Interiors"
-        description="Talk to our interior designers and furniture team. Book a consultation at our studio in Hyderabad."
-      />
+      <SeoMeta page="contact" title={SEO_DEFAULTS.contact.title} description={SEO_DEFAULTS.contact.description} />
 
       <PageHero
         page="contact"
@@ -533,7 +531,7 @@ export const Contact = () => {
                       <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                       <span className="font-medium text-xs">Chat on WhatsApp</span>
                     </div>
-                    <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">
+                    <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform">
                       {company.whatsappNumber} &rarr;
                     </span>
                   </a>
