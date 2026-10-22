@@ -509,6 +509,38 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - **Live admin password** of admin@symmetryinteriors.com changed on request (weak; change later).
 - **Preview** set up at https://preview.169-58-13-62.sslip.io (see OPERATIONS § Preview). Not deployed live: needs migration 0008 + both rebuilds, and SMTP set up for emails to actually send.
 
+### 2026-10-21: Sign-in required to add to cart and buy; cart saved to the account; Admin → Customers (in preview, not live)
+**Why:** requested: customers sign up / sign in; everyone can see all products, but adding to cart or buying needs sign-in; tables created if they don't exist; an admin list of customers.
+- **Backend (migration 0009):** table `customer_cart_items` (one line per customer + product + finish + fabric, 1–20 pieces; prices never stored). `app/api/account_cart.py`: `GET/POST/DELETE /api/account/cart`, `PATCH/DELETE /api/account/cart/{id}`, `POST /api/account/cart/merge` (customer CSRF; only published, sellable products; max 50 lines). `POST /api/public/orders` now answers **401 `sign_in_required`** without a customer session; the order belongs to the account and empties its cart. `POST /api/account/register` requires a **phone**. `app/api/admin_customers.py`: `GET /api/admin/customers` (search, active / switched off, order count, amount spent), `GET/PATCH /api/admin/customers/{id}` (orders, cart size; switching off signs the customer out everywhere). Admin order detail returns `customerId`.
+- **Website:** Add to cart / Buy now / Quick view while signed out → `/account/login?next=…&reason=cart` ("Please sign in or create an account to add items to your cart…"); the item is remembered and added after sign-in (Buy now lands on checkout). `/cart` and `/checkout` need sign-in (`RequireCustomer`). The cart lives in the account (`CartContext` talks to the API, same cart on every device); a browser cart from before is merged in on sign-in. Create account asks for the mobile number (required). Guest-checkout texts removed. The wishlist stays in the browser. The "Added" notice shows an error if an item can't be added.
+- **Admin:** new **Customers** screen (Sales group): list with search and Active / Switched off tabs, details panel (contact, saved address, items in cart, orders linking to Orders, Switch off / on). Order panel links to the customer.
+- **Verified:** backend **187 passed, 1 skipped** (10 new in `tests/test_customer_cart.py`; order tests now sign in first); lint 0 errors; build passes. Browser test on the preview, **31/31 at 1440 px and 31/31 at 390 px**: browse signed out; Add to cart → sign-in; sign-up refuses an empty phone; email code; back on the shop with the item added; add while signed in; quantity +; same cart on a second device; COD order links to the account and empties the cart (browser and server); Buy now signed out → sign-in → checkout with the item; `/cart` and `/checkout` redirect when signed out; an old browser cart merges; Admin → Customers lists the sign-up with the order; switch off blocks sign-in; no sideways scroll; no JS errors. Test accounts, orders and the temporary admin were deleted from `symmetry_preview` afterwards.
+- **Preview:** `symmetry_preview` migrated to 0009; preview API container recreated from the new image (a plain `docker restart` keeps the old image: OPERATIONS corrected); site rebuilt into `/root/preview/dist` (copy into the folder, don't replace it: the web container mounts it).
+- **Not live yet:** live DB is on 0007. Going live needs SMTP (sign-up codes and order emails), a backup, migrations 0008 + 0009, and both rebuilds.
+
+### 2026-10-22: Home page restored to before the 2026-10-19 preview change
+**Why:** requested: the client wants the Home page back as it was before the 2026-10-19 change (Netlify-reference request).
+- `src/pages/Home.jsx`, `motion/ZoomOutPhoto.jsx` and `motion/ScrollHighlight.jsx` restored from the last commit: "Why Symmetry" zoom-out photo, word-by-word story paragraph and the per-card project-filter animation are back.
+- The unused half-finished `src/components/classic/` folder was moved out of the project (kept in that session's scratchpad, not in the repo).
+- **Preview updated** (build copied into `/root/preview/dist`; previous preview kept at `/root/preview/dist.bak-2026-10-22`). Live site unaffected (it never had the 10-19 change).
+
+### 2026-10-22: Home page body in the Netlify (pre-redesign) design (in preview, not live)
+**Why:** requested: the Home page should look like https://symmetrysolutions.netlify.app/ (the design before the 2026-10-14 Apple-style redesign).
+- `src/pages/Home.jsx` now uses the Home from commit `9c1aa63` (already reads admin content): about with badge, collections coverflow, category circles, featured products, project case-study cards with filter, "Curated Living, Expanded." scroll showcase, sourcing coverflow, six Why cards, testimonial carousel, journal, Instagram mosaic, closing call to action. Its section components live in `src/components/classic/` (Home-only copies, `m.*` motion syntax, approved plain-English wording, sold-out handling, sign-in-to-add-to-cart).
+- Kept from the current site: header, footer, Hero (admin banners), SEO tags, approved texts (Why cards, "Own Workshop", "From the Journal", "Sourced Directly from the Makers").
+- Removed from Home (not on the Netlify page): "Everything at Symmetry, in one place." overview and the "Visit, call or write." contact block. Their components still exist.
+- **Verified:** build passes; lint 0 errors; preview at 1440 and 390 px: same sections and order as Netlify, no JS errors, no sideways scroll.
+- **Preview updated.** Not live, not committed.
+- **Follow-up (same day):** the hero now fills the whole first screen (`min-h-[max(580px,100svh)]`, was 80% capped at 820 px) so the About section no longer peeks in. Phone header fixed: since the account icon (2026-10-21) the menu button sat off the right edge on every page; icons are 36 px below 640 px, the theme switch is hidden below 400 px (it is in the menu) and the SYMMETRY text below 360 px. Home wrapper clips the About slide-in so phones can't scroll sideways. Checked at 1920, 1366, 768, 390, 360, 320 px: hero fills the screen, header fits, no sideways scroll, no JS errors.
+
+### 2026-10-22: Requirement PDF check, implementation plan, sign-in race fix (in preview, not live)
+**Why:** requested: check every point of the client's requirement PDF on phone, tablet and desktop (website, shop, admin), and give a plan for what is left; payment integration stays with the client.
+- **Result and plan:** [REQUIREMENTS_STATUS.md](REQUIREMENTS_STATUS.md) (194 points: 169 done, 8 partly / needs input, 3 not built: Google Analytics, Search Console, Meta Pixel; 7 payment points left for the client; fonts and colours kept by decision).
+- **Bug fixed (backend):** FastAPI ran `get_db`'s commit after the response was sent, so a request right after sign-in could miss the new session (seen as `POST /api/account/cart/merge` 401 right after a 200 login; browser cart not merged). All 60 uses are now `Depends(get_db, scope="function")`; `tests/test_db_scope.py` fails if one is missed.
+- **Shop:** sort "Newest First" and "Most Popular" (rating) added, desktop select and phone drawer.
+- **Verified:** backend 188 passed, 1 skipped; site audit 391 checks at 390/820/1440 px; shopping flow 31/31 at 390/820/1440 px after the fix. Preview API recreated with the fix; site rebuilt into `/root/preview/dist`. Test data deleted from `symmetry_preview`.
+- Not live, not committed.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

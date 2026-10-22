@@ -108,6 +108,7 @@ const ShopView = ({ products, shopCategories }) => {
         if (sortBy === 'price-asc') return a.price - b.price;
         if (sortBy === 'price-desc') return b.price - a.price;
         if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+        if (sortBy === 'newest') return (Date.parse(b.addedAt) || 0) - (Date.parse(a.addedAt) || 0);
         if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
         return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
       });
@@ -386,7 +387,8 @@ const ShopView = ({ products, shopCategories }) => {
                     <option value="featured">Recommended</option>
                     <option value="price-asc">Price: Low to High</option>
                     <option value="price-desc">Price: High to Low</option>
-                    <option value="rating">Rating: High to Low</option>
+                    <option value="newest">Newest First</option>
+                    <option value="rating">Most Popular</option>
                     <option value="name-asc">Alphabetical (A-Z)</option>
                   </select>
                   <ChevronDown className="w-3.5 h-3.5 text-accent absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />

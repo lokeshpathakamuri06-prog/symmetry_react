@@ -66,7 +66,7 @@ export const Hero = ({ eyebrow, title, accent, subtitle, actions }) => {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex flex-col justify-end min-h-[clamp(580px,80svh,820px)] w-full bg-[#1d1d1f] overflow-hidden select-none"
+      className="relative isolate flex flex-col justify-end min-h-[max(580px,100svh)] w-full bg-[#1d1d1f] overflow-hidden select-none"
       aria-roledescription="carousel"
       aria-label="Our spaces"
     >

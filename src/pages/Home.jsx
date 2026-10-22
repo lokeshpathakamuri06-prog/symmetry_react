@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { reveal, dur, ease } from '../lib/motion';
-import { scrollToTarget } from '../lib/scroll';
 import {
-  ChevronRight,
+  ArrowUpRight,
   Globe,
   Compass,
   Sparkles,
@@ -14,25 +12,23 @@ import {
 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import { SEO_DEFAULTS } from '../lib/seoDefaults';
+import { scrollToTarget } from '../lib/scroll';
 import Hero from '../components/Hero';
-import SectionHeading from '../components/SectionHeading';
-import ProductCard from '../components/ProductCard';
-import BlogCard from '../components/BlogCard';
+import SectionHeading from '../components/classic/SectionHeading';
+import Button from '../components/classic/Button';
+import ProductCard from '../components/classic/ProductCard';
+import BlogCard from '../components/classic/BlogCard';
 import QuickViewModal from '../components/QuickViewModal';
-import TestimonialCard from '../components/TestimonialCard';
-import InstagramMosaic from '../components/InstagramMosaic';
-import CollectionsGallery from '../components/CollectionsGallery';
-import SourcingGallery from '../components/SourcingGallery';
-import CategoryGallery from '../components/CategoryGallery';
-import CardGallery from '../components/CardGallery';
-import FinalCta from '../components/FinalCta';
-import HomeContact from '../components/HomeContact';
-import SiteOverview from '../components/SiteOverview';
-import ZoomOutPhoto from '../components/motion/ZoomOutPhoto';
-import CountUp from '../components/motion/CountUp';
-import ScrollHighlight from '../components/motion/ScrollHighlight';
+import TestimonialCarousel from '../components/classic/TestimonialCarousel';
+import InstagramMosaic from '../components/classic/InstagramMosaic';
+import CoverflowCollections from '../components/classic/CoverflowCollections';
+import CoverflowSourcing from '../components/classic/CoverflowSourcing';
+import CategoryCircleMarquee from '../components/classic/CategoryCircleMarquee';
+import FinalCta from '../components/classic/FinalCta';
+import DynamicScrollShowcase from '../components/classic/DynamicScrollShowcase';
+import AppleCardWrapper from '../components/classic/AppleCardWrapper';
 import ContentState from '../components/ContentState';
-import { usePublicContent, useSiteText, useTestimonials } from '../context/PublicContentContext';
+import { usePublicContent, useSiteText } from '../context/PublicContentContext';
 import SmartImage from '../components/SmartImage';
 import { heroImage } from '../lib/staticImages';
 
@@ -88,14 +84,6 @@ const WHY_ITEMS = [
   },
 ];
 
-// Facts from the "Why Symmetry" points, shown as figures under the About story
-const ABOUT_FIGURES = [
-  { value: '25+', label: 'Years of expertise', sub: 'Sourcing across Europe & Asia' },
-  { value: '25,000', label: 'Sq.ft. own workshop', sub: 'CNC joinery in Hyderabad' },
-  { value: '100%', label: 'Bespoke', sub: 'Designed for your space' },
-  { value: '10', label: 'Year warranty', sub: 'Structural coverage' },
-];
-
 const PROJECT_FILTERS = ['All', 'Residential', 'Commercial', 'Hospitality'];
 
 // Loads published content, then renders the page
@@ -107,11 +95,13 @@ export const Home = () => {
 
 const HomeView = ({ products, projects, blogs }) => {
   const text = useSiteText('home');
-  const { items: testimonials } = useTestimonials();
+  // Quick View State
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+
+  // Projects Typology Filter State
   const [projectFilter, setProjectFilter] = useState('All');
 
-  // Featured projects: exactly 4 per filter (featured ones first for "All")
+  // Filtered Projects for Section 6 (Guarantees exactly 4 curated projects per category)
   const filteredProjects = useMemo(() => {
     if (projectFilter === 'All') {
       const feat = projects.filter((p) => p.featured);
@@ -121,14 +111,15 @@ const HomeView = ({ products, projects, blogs }) => {
     return projects.filter((p) => p.typology === projectFilter).slice(0, 4);
   }, [projectFilter, projects]);
 
+
   return (
-    <div className="overflow-x-clip">
+    <div className="space-y-8 sm:space-y-12 overflow-x-clip">
       <SeoMeta page="home" title={SEO_DEFAULTS.home.title} description={SEO_DEFAULTS.home.description} />
 
-      {/* Home order (client brief): hero, site at a glance, about, collections, categories, products, projects, sourcing,
-          why us, testimonials, journal, Instagram, call to action, contact information */}
-
-      {/* 1. Hero banner: full-screen photos or video with the headline, description and actions on them */}
+      {/* =========================================================================
+          SECTION 1: HERO
+          Full viewport, parallax, image scale, text fade-up, scroll indicator
+      ========================================================================= */}
       <Hero
         eyebrow="Symmetry Interiors"
         title={text.heroTitle}
@@ -146,262 +137,415 @@ const HomeView = ({ products, projects, blogs }) => {
         }
       />
 
-      {/* 1b. Site at a glance: one small card per page, so visitors see everything without opening each page */}
-      <SiteOverview products={products} projects={projects} blogs={blogs} />
+      {/* =========================================================================
+          SECTION 2: ABOUT
+          Editorial two-column section: Image + text
+          Heading: "Where Architecture Meets Artistry"
+          CTA: "Discover Our Story"
+      ========================================================================= */}
+      <section id="about-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Image with Subtle Reveal */}
+          <m.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-6 relative"
+          >
+            <div className="aspect-[16/10] rounded-3xl overflow-hidden bg-[#E5ECEC] dark:bg-[#132838] shadow-luxury">
+              <img
+                {...heroImage('/images/home/home-about.jpeg', '(min-width: 1024px) 50vw, 100vw')}
+                alt="Architectural space planning and interior design"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Floating Architectural Badge */}
+            <div className="absolute -bottom-6 -right-6 p-6 rounded-2xl bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark hidden sm:block max-w-[240px]">
+              <span className="text-xs uppercase tracking-[0.15em] text-[#36656B] dark:text-[#BCA575] font-semibold block mb-1.5">
+                Heritage &bull; Excellence
+              </span>
+              <p className="text-xl text-[#131E20] dark:text-[#F5F1E8] font-medium leading-tight">
+                25,000 sq.ft. Own Workshop
+              </p>
+            </div>
+          </m.div>
 
-      {/* 2. About: the story as an Apple-style statement that brightens as you scroll */}
-      <section id="about-section" className="section">
-        <div className="site-container">
-          <div className="max-w-4xl mx-auto text-center">
-            <m.p {...reveal()} className="eyebrow mb-3">{text.storyKicker}</m.p>
-            <m.h2 {...reveal({ order: 1 })} className="text-display-lg text-fg">{text.storyTitle}</m.h2>
-            <ScrollHighlight
-              className="mt-8 sm:mt-14 text-[21px] sm:text-[36px] lg:text-[40px] font-semibold tracking-[-0.025em] leading-[1.2] text-fg"
-              text={text.storyParagraph1}
+          {/* Right Column: Text & Editorial Narrative */}
+          <m.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-6 space-y-6"
+          >
+            <span className="text-xs sm:text-sm uppercase tracking-[0.15em] text-[#36656B] dark:text-[#BCA575] font-semibold">
+              {text.storyKicker}
+            </span>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-[1.12] tracking-tight">
+              {text.storyTitle}
+            </h2>
+
+            <p className="text-lg sm:text-xl text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
+              {text.storyParagraph1}
+            </p>
+
+            <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed">
+              {text.storyParagraph2}
+            </p>
+
+            <div className="pt-4 flex items-center gap-6">
+              <Button to="/about" variant="primary" size="lg" showArrow>
+                Discover Our Story
+              </Button>
+              <div className="hidden sm:block pl-6 text-sm text-[#4F6467] dark:text-[#AEB7BE]">
+                <strong className="text-[#131E20] dark:text-[#F5F1E8] block text-base font-medium">
+                  {text.storyBadgeTitle}
+                </strong>
+                <span>{text.storyBadgeText}</span>
+              </div>
+            </div>
+          </m.div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 3: FEATURED COLLECTIONS (3D COVERFLOW PERSPECTIVE CAROUSEL)
+          Designs That Inspire Living — Luna Sofa, Aurelia Table, Elysian Chair, etc.
+      ========================================================================= */}
+      <CoverflowCollections />
+
+
+      {/* =========================================================================
+          SECTION 4: SHOP BY CATEGORY (CIRCULAR IMAGES & SLOW SCROLLING MARQUEE)
+          Luxury Sofas, Lounge Chairs, Dining Furniture, Bedroom Furniture,
+          Coffee Tables, Lighting, Rugs, Decorative Accessories
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <SectionHeading
+            eyebrow="Furniture &amp; Objects"
+            title={text.categoriesTitle}
+            subtitle={text.categoriesSubtitle}
+            align="center"
+          />
+        </div>
+
+        <CategoryCircleMarquee />
+      </section>
+
+
+      {/* =========================================================================
+          SECTION 5: FEATURED PRODUCTS
+          Reusable ProductCard with image, name, category, price, wishlist, quick view
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
+          <SectionHeading
+            eyebrow="Collector Pieces"
+            title={text.productsTitle}
+            subtitle={text.productsSubtitle}
+          />
+          <Button to="/shop" variant="secondary" size="md" showArrow className="self-start sm:self-auto">
+            Explore All 24+ Pieces
+          </Button>
+        </div>
+
+        {/* Responsive 3-column desktop / 2-column mobile Flipkart-inspired luxury grid */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6 lg:gap-8">
+          {products.slice(0, 6).map((product, idx) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={idx}
+              onQuickView={(p) => setQuickViewProduct(p)}
             />
-          </div>
-
-          <div className="mt-16 sm:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            <m.div {...reveal({ variant: 'scaleIn' })} className="lg:col-span-7 relative">
-              <div className="aspect-[16/11] rounded-tile overflow-hidden bg-sunken">
-                <img
-                  {...heroImage('/images/home/home-about.jpeg', '(min-width: 1024px) 58vw, 100vw')}
-                  alt="Architectural space planning and interior design"
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="glass absolute bottom-4 left-4 sm:bottom-6 sm:left-6 rounded-2xl px-5 py-4 max-w-[240px]">
-                <span className="text-[12px] font-semibold text-accent block mb-0.5">Made In-House</span>
-                <p className="text-[17px] text-fg font-semibold tracking-tight leading-tight">25,000 sq.ft. Own Workshop</p>
-              </div>
-            </m.div>
-
-            <m.div {...reveal({ order: 1 })} className="lg:col-span-5 space-y-6">
-              <p className="text-[17px] sm:text-[19px] text-muted leading-relaxed">{text.storyParagraph2}</p>
-              <div className="flex items-center gap-4">
-                <span className="w-1 self-stretch rounded-full bg-accent" />
-                <div>
-                  <strong className="text-fg block text-[19px] font-semibold tracking-tight">{text.storyBadgeTitle}</strong>
-                  <span className="text-[15px] text-muted">{text.storyBadgeText}</span>
-                </div>
-              </div>
-              <Link to="/about" className="link-apple">
-                Discover Our Story <ChevronRight className="w-4 h-4" />
-              </Link>
-            </m.div>
-          </div>
-
-          {/* The studio in four figures */}
-          <dl className="mt-16 sm:mt-24 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-tile overflow-hidden bg-line/60">
-            {ABOUT_FIGURES.map((f, i) => (
-              <m.div {...reveal({ order: i })} key={f.label} className="bg-surface px-3 py-6 sm:px-8 sm:py-10 text-center">
-                <dt className="sr-only">{f.label}</dt>
-                <dd className="text-[32px] sm:text-[56px] font-semibold tracking-[-0.035em] text-fg leading-none">
-                  <CountUp value={f.value} />
-                </dd>
-                <dd className="mt-3 text-[15px] sm:text-[17px] font-semibold text-fg">{f.label}</dd>
-                <dd className="mt-1 text-[13px] sm:text-[14px] text-muted">{f.sub}</dd>
-              </m.div>
-            ))}
-          </dl>
+          ))}
         </div>
       </section>
 
-      {/* 3. Featured collections: swipeable gallery */}
-      <CollectionsGallery className="band-white" />
+      {/* =========================================================================
+          SECTION 6: FEATURED PROJECTS (ASYMMETRIC EDITORIAL GALLERY)
+          Categories: Residential, Commercial, Hospitality
+      ========================================================================= */}
+      <section id="projects-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 sm:mb-8 gap-4 lg:gap-6">
+          <SectionHeading
+            eyebrow="Featured Projects"
+            title={text.projectsTitle}
+            titleClassName="text-3xl sm:text-4xl lg:text-[2.1rem] xl:text-[2.65rem] 2xl:text-5xl font-bold tracking-tight leading-[1.15] text-[#131E20] dark:text-[#F5F1E8] whitespace-normal lg:whitespace-nowrap"
+            subtitle={text.projectsSubtitle}
+          />
 
-      {/* 4. Shop by category */}
-      <section className="section">
-        <div className="site-container mb-10 sm:mb-14">
-          <SectionHeading eyebrow="Furniture & Objects" title={text.categoriesTitle} subtitle={text.categoriesSubtitle} align="center" />
-        </div>
-        <CategoryGallery />
-        <m.div {...reveal({ order: 2 })} className="mt-12 sm:mt-14 flex justify-center">
-          <Link to="/shop" className="link-apple">
-            Browse the full shop <ChevronRight className="w-4 h-4" />
-          </Link>
-        </m.div>
-      </section>
-
-      {/* 5. Featured products */}
-      <section className="band-white section">
-        <div className="site-container">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
-            <SectionHeading eyebrow="Featured Pieces" title={text.productsTitle} subtitle={text.productsSubtitle} />
-            <m.div {...reveal({ order: 2 })} className="shrink-0">
-              <Link to="/shop" className="link-apple">
-                Explore All 24+ Pieces <ChevronRight className="w-4 h-4" />
-              </Link>
-            </m.div>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-            {products.slice(0, 6).map((product, idx) => (
-              <ProductCard key={product.id} product={product} index={idx} onQuickView={(p) => setQuickViewProduct(p)} />
+          {/* Typology Filter Tabs */}
+          <div className="flex items-center justify-between gap-1 sm:gap-2 p-1.5 rounded-full bg-white dark:bg-[#0D1C29] shadow-apple dark:shadow-apple-dark shrink-0 flex-nowrap w-full sm:w-auto overflow-x-auto no-scrollbar">
+            {PROJECT_FILTERS.map((type) => (
+              <button
+                key={type}
+                onClick={() => setProjectFilter(type)}
+                className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm uppercase tracking-[0.15em] font-medium transition-all whitespace-nowrap text-center flex-1 sm:flex-initial ${
+                  projectFilter === type
+                    ? 'bg-[#131E20] dark:bg-[#F5F1E8] text-[#F4F7F6] dark:text-[#07121C] font-semibold'
+                    : 'text-[#4F6467] dark:text-[#AEB7BE] hover:text-[#131E20] dark:hover:text-white'
+                }`}
+              >
+                {type}
+              </button>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* 6. Featured projects, with a segmented filter; cards glide when it changes */}
-      <section id="projects-section" className="section scroll-mt-20">
-        <div className="site-container">
-          <div className="text-center mb-10 sm:mb-14">
-            <SectionHeading eyebrow="Featured Projects" title={text.projectsTitle} subtitle={text.projectsSubtitle} align="center" />
-            <m.div {...reveal({ order: 3 })} className="mt-8 flex justify-center">
-              <div className="segmented max-w-full overflow-x-auto no-scrollbar" role="group" aria-label="Filter projects">
-                {PROJECT_FILTERS.map((type) => (
-                  <button key={type} type="button" aria-pressed={projectFilter === type} onClick={() => setProjectFilter(type)}>
-                    {type}
-                  </button>
-                ))}
-              </div>
-            </m.div>
-          </div>
-
-          {/* Wide and narrow cards alternate (7/5, then 5/7) on large screens */}
-          <div className="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-6 items-stretch">
-            <AnimatePresence mode="popLayout" initial={false}>
-              {filteredProjects.map((proj, idx) => (
-                <m.div
-                  layout
-                  key={proj.id}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: dur.base, ease: ease.out }}
-                  className={`h-full ${idx % 4 === 0 || idx % 4 === 3 ? 'lg:col-span-7' : 'lg:col-span-5'}`}
+        {/* 4 Equal Size Architectural Showcase Grid (Balanced 2x2 Layout) */}
+        <AnimatePresence mode="wait">
+          <m.div
+            key={projectFilter}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch"
+          >
+            {filteredProjects.map((proj, idx) => (
+              <m.div
+                key={proj.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="group flex flex-col h-full"
+              >
+                <Link
+                  to={`/projects/${proj.id}`}
+                  className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-[#E5ECEC] dark:bg-[#132838] mb-4 block shadow-sm group-hover:shadow-luxury-hover transition-all duration-500"
                 >
-                  <Link to={`/projects/${proj.id}`} className="card-apple card-apple-hover group flex flex-col h-full overflow-hidden">
-                    <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-[400px] overflow-hidden bg-sunken">
-                      <SmartImage
-                        sizes="(min-width: 1024px) 50vw, 50vw"
-                        src={proj.heroImage}
-                        alt={proj.title}
-                        loading="lazy"
-                        className="tile-media w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3.5 sm:p-8 flex flex-col flex-1">
-                      <div className="flex items-center justify-between gap-2 sm:gap-3 text-[11px] sm:text-[14px]">
-                        <span className="font-semibold text-accent">
-                          {proj.typology}
-                          {proj.featured && <span className="hidden sm:inline text-subtle font-normal"> · Case Study</span>}
-                        </span>
-                        <span className="text-subtle tabular-nums">{proj.completionYear}</span>
-                      </div>
-                      <h3 className="mt-1 sm:mt-1.5 text-[15px] sm:text-[28px] font-semibold tracking-tight text-fg leading-tight group-hover:text-accent transition-colors">
-                        {proj.title}
-                      </h3>
-                      <p className="mt-1 text-[12px] sm:text-[15px] text-muted truncate">
-                        {proj.location}
-                        {proj.areaSqFt && <span className="hidden sm:inline text-subtle"> · {proj.areaSqFt}</span>}
-                      </p>
-                      <p className="hidden sm:block mt-3 text-[15px] sm:text-[17px] text-muted leading-relaxed line-clamp-2">{proj.summary}</p>
-                      {proj.materialsPalette && (
-                        <p className="hidden sm:block mt-4 text-[13px] text-subtle">
-                          <span className="text-muted">Palette: </span>
-                          {proj.materialsPalette.slice(0, 3).join(' · ')}
-                        </p>
-                      )}
-                      <span className="link-apple mt-auto pt-3 sm:pt-5 !text-[13px] sm:!text-[15px]">
-                        View project <ChevronRight className="w-4 h-4" />
+                  <SmartImage sizes="(min-width: 1024px) 50vw, 100vw"
+                    src={proj.heroImage}
+                    alt={proj.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+
+                  {/* Subtle Luxury Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+
+                  {/* Top Floating Badges */}
+                  <div className="absolute top-4 left-4 flex items-center gap-2">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 dark:bg-[#07121C]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                      {proj.typology}
+                    </span>
+                    {proj.featured && (
+                      <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-white/20 backdrop-blur-md text-white border border-white/20">
+                        Case Study
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Bottom Left Footprint Badge */}
+                  {proj.areaSqFt && (
+                    <div className="absolute bottom-4 left-4">
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-[#131E20]/80 dark:bg-[#07121C]/80 backdrop-blur-md text-[#E5ECEC] border border-white/10">
+                        {proj.areaSqFt}
                       </span>
                     </div>
-                  </Link>
-                </m.div>
-              ))}
-            </AnimatePresence>
-          </div>
+                  )}
 
-          <div className="text-center mt-10 sm:mt-12">
-            <Link to="/projects" className="btn-secondary">See All Projects</Link>
-          </div>
+                  {/* Bottom Right Circular Action Trigger */}
+                  <div className="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-white dark:bg-[#07121C] text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center shadow-lg group-hover:bg-[#36656B] group-hover:text-white transition-all duration-300 group-hover:rotate-45">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </Link>
+
+                {/* Metadata: Location & Year */}
+                <div className="flex items-center justify-between text-xs sm:text-sm text-[#36656B] dark:text-[#BCA575] uppercase tracking-[0.15em] font-semibold mb-1.5">
+                  <span>{proj.location}</span>
+                  <span className="text-[#4F6467] dark:text-[#AEB7BE] font-normal">{proj.completionYear}</span>
+                </div>
+
+                {/* Title */}
+                <Link to={`/projects/${proj.id}`} className="hover:text-[#36656B] dark:hover:text-[#BCA575] transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#131E20] dark:text-[#F5F1E8] leading-snug">
+                    {proj.title}
+                  </h3>
+                </Link>
+
+                {/* Summary */}
+                <p className="text-base sm:text-lg text-[#4F6467] dark:text-[#AEB7BE] font-light leading-relaxed mt-2.5 line-clamp-2">
+                  {proj.summary}
+                </p>
+
+                {/* Materials Tag Strip */}
+                {proj.materialsPalette && (
+                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-[#D1DCDE]/50 dark:border-[#1E3447]/60">
+                    <span className="text-xs uppercase tracking-[0.15em] text-[#4F6467] dark:text-[#AEB7BE] mr-1">
+                      Palette:
+                    </span>
+                    {proj.materialsPalette.slice(0, 3).map((mat, mIdx) => (
+                      <span
+                        key={mIdx}
+                        className="text-xs sm:text-sm px-3 py-0.5 rounded-full bg-[#E5ECEC]/60 dark:bg-[#132838] text-[#131E20] dark:text-[#F5F1E8] font-light"
+                      >
+                        {mat}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </m.div>
+            ))}
+          </m.div>
+        </AnimatePresence>
+
+        <div className="text-center mt-8">
+          <Button to="/projects" variant="outline" size="md" showArrow>
+            View Complete Architectural Portfolio
+          </Button>
         </div>
       </section>
 
-      {/* 7. Global sourcing: swipeable gallery */}
-      <SourcingGallery className="band-white" />
+      {/* =========================================================================
+          21OAKS-INSPIRED SCROLL-PINNED DYNAMIC PARALLAX GALLERY
+          Central architectural pavilion with 6 dispersing 3D floating perspectives
+      ========================================================================= */}
+      <DynamicScrollShowcase />
 
-      {/* 8. Why Symmetry: a photo that closes in to a card, then six tiles */}
-      <div className="pt-20 sm:pt-28">
-        <ZoomOutPhoto
-          image={heroImage('/images/hero/hero-haj-slide-3.jpeg')}
-          alt="A finished Symmetry living space"
-          eyebrow="Why Symmetry"
-          title={text.whyTitle}
-          subtitle={text.whySubtitle}
-        />
-      </div>
-      <section className="pb-20 sm:pb-28 lg:pb-32 pt-10 sm:pt-14">
-        <div className="site-container grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+      {/* =========================================================================
+          SECTION 7: GLOBAL SOURCING (3D COVERFLOW PERSPECTIVE CAROUSEL)
+          Show: Italy, China, Malaysia, Vietnam, Bali
+          Same 3D perspective coverflow as Featured Collections
+      ========================================================================= */}
+      <CoverflowSourcing />
+
+      {/* =========================================================================
+          SECTION 8: WHY CHOOSE SYMMETRY (6 APPLE-INSPIRED ROUNDED CARDS)
+          1. 25+ Years of Global Sourcing
+          2. Architectural Tailoring
+          3. International Craftsmanship
+          4. End-to-End Solutions
+          5. Curated Material Authenticity
+          6. Private Concierge & 10-Yr Warranty
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <SectionHeading
+            eyebrow="The Symmetry Distinction"
+            title={text.whyTitle}
+            subtitle={text.whySubtitle}
+            align="center"
+          />
+        </div>
+
+        {/* Apple-style Bento 6-Card Grid (3 cols desktop, 2 cols tablet, 1 col mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {WHY_ITEMS.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <m.div {...reveal({ order: idx })} key={item.title} className="card-apple p-4 sm:p-10 flex flex-col">
-                <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-accent" strokeWidth={1.6} />
-                <p className="mt-4 sm:mt-6 text-[11px] sm:text-[13px] font-semibold text-muted">
-                  0{idx + 1} · {item.kicker.charAt(0) + item.kicker.slice(1).toLowerCase()}
-                </p>
-                <h3 className="mt-1 text-[16px] sm:text-[28px] font-semibold tracking-tight text-fg leading-tight">{item.title}</h3>
-                <p className="mt-2 sm:mt-3 text-[13px] sm:text-[17px] text-muted leading-snug sm:leading-relaxed flex-1 line-clamp-4 sm:line-clamp-none">{item.desc}</p>
-                <p className="mt-3 sm:mt-6 text-[12px] sm:text-[14px] font-semibold text-fg">{item.highlight}</p>
-                <p className="hidden sm:block text-[12px] text-subtle">{item.benchmark}</p>
+              <m.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
+              >
+                <AppleCardWrapper className="group relative p-8 sm:p-9 rounded-[32px] bg-white dark:bg-[#0D1C29] flex flex-col justify-between h-full">
+                  <div>
+                    {/* Top Header Row: Apple-like Squircle Icon & Kicker Badge */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#F4F7F6] dark:bg-[#132838] flex items-center justify-center text-[#36656B] dark:text-[#BCA575] shadow-sm group-hover:scale-110 transition-all duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-mono font-medium bg-[#F4F7F6] dark:bg-[#07121C] text-[#36656B] dark:text-[#BCA575]">
+                        0{idx + 1} &bull; {item.kicker}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-2xl font-medium text-[#131E20] dark:text-[#F5F1E8] leading-snug group-hover:text-[#36656B] dark:group-hover:text-[#BCA575] transition-colors">
+                      {item.title}
+                    </h3>
+
+                    {/* Narrative Body */}
+                    <p className="text-base text-[#4F6467] dark:text-[#AEB7BE] leading-relaxed font-light mt-3.5">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom Apple-style Stat */}
+                  <div className="pt-6 mt-6 flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-[#131E20] dark:text-[#F5F1E8] flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
+                      {item.highlight}
+                    </span>
+
+                    <span className="text-xs uppercase tracking-[0.15em] text-[#4F6467] dark:text-[#AEB7BE] font-light">
+                      {item.benchmark}
+                    </span>
+                  </div>
+                </AppleCardWrapper>
               </m.div>
             );
           })}
         </div>
       </section>
 
-      {/* 9. Testimonials: swipeable cards */}
-      {testimonials.length > 0 && (
-        <section className="band-white section overflow-x-clip">
-          <div className="site-container mb-10 sm:mb-14">
-            <SectionHeading eyebrow="What Our Clients Say" title={text.testimonialsTitle} subtitle={text.testimonialsSubtitle} />
-          </div>
-          <CardGallery label="Client testimonials">
-            {testimonials.map((t) => (
-              <div key={t.id} className="w-[84vw] sm:w-[440px] h-full">
-                <TestimonialCard testimonial={t} />
-              </div>
-            ))}
-          </CardGallery>
-        </section>
-      )}
+      {/* =========================================================================
+          SECTION 9: TESTIMONIALS
+          Animated testimonial carousel
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <SectionHeading
+            eyebrow="Client Endorsements"
+            title={text.testimonialsTitle}
+            subtitle={text.testimonialsSubtitle}
+            align="center"
+          />
+        </div>
 
-      {/* 10. Journal */}
-      <section className="section">
-        <div className="site-container">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
-            <SectionHeading eyebrow="From the Journal" title={text.journalTitle} subtitle={text.journalSubtitle} />
-            <m.div {...reveal({ order: 2 })} className="shrink-0">
-              <Link to="/journal" className="link-apple">
-                View All Essays <ChevronRight className="w-4 h-4" />
-              </Link>
-            </m.div>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-            {blogs.slice(0, 6).map((blog, i) => (
-              <BlogCard key={blog.id} blog={blog} index={i} />
-            ))}
-          </div>
+        <TestimonialCarousel />
+      </section>
+
+      {/* =========================================================================
+          SECTION 10: JOURNAL (LATEST 6 ARTICLES)
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
+          <SectionHeading
+            eyebrow="From the Journal"
+            title={text.journalTitle}
+            subtitle={text.journalSubtitle}
+          />
+          <Button to="/journal" variant="secondary" size="md" showArrow className="self-start sm:self-auto">
+            View All Articles
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+          {blogs.slice(0, 6).map((blog) => (
+            <BlogCard key={blog.id} blog={blog} />
+          ))}
         </div>
       </section>
 
-      {/* 11. Instagram */}
-      <section className="band-white section">
-        <div className="site-container">
-          <InstagramMosaic />
-        </div>
+      {/* =========================================================================
+          SECTION 11: INSTAGRAM IMAGE MOSAIC
+      ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <InstagramMosaic />
       </section>
 
-      {/* 12. Closing call to action */}
+      {/* =========================================================================
+          SECTION 12: ARCHITECTURAL COMMISSION CTA
+      ========================================================================= */}
       <FinalCta />
 
-      {/* 13. Contact information */}
-      <HomeContact />
-
-      <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
+      {/* Quick View Modal Overlay (Activated when Eye icon clicked in ProductCard) */}
+      <QuickViewModal
+        product={quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
     </div>
   );
 };

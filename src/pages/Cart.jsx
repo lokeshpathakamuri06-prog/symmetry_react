@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Plus, Minus, Lock, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, Lock, ShieldCheck, Truck, RotateCcw, Loader2 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import SmartImage from '../components/SmartImage';
 import CheckoutSteps from '../components/shop/CheckoutSteps';
@@ -40,7 +40,7 @@ const QtyStepper = ({ item, onChange }) => (
 );
 
 export const Cart = () => {
-  const { cartItems, updateQuantity, removeFromCart, saveForLater, addToCart, wishlist, toggleWishlist, totalAmount, cartCount } = useCart();
+  const { cartItems, cartStatus, updateQuantity, removeFromCart, saveForLater, addToCart, wishlist, toggleWishlist, totalAmount, cartCount } = useCart();
   const { items: products } = useProducts();
   const [notice, setNotice] = useState(null); // { text, undo }
   useBuyBar(cartItems.length > 0);
@@ -117,7 +117,9 @@ export const Cart = () => {
           )}
         </AnimatePresence>
 
-        {cartItems.length === 0 ? (
+        {cartItems.length === 0 && (cartStatus === 'loading' || cartStatus === 'idle') ? (
+          <p className="mt-8 text-muted inline-flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Loading your cart…</p>
+        ) : cartItems.length === 0 ? (
           <div className="mt-8 py-16 sm:py-20 px-6 rounded-tile bg-surface text-center">
             <div className="w-20 h-20 rounded-full bg-sunken flex items-center justify-center mx-auto mb-6 text-accent">
               <ShoppingBag className="w-9 h-9" strokeWidth={1.25} />

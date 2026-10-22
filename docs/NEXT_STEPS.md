@@ -87,6 +87,14 @@ Full plan, phases and open decisions: [MOTION_PLAN.md](MOTION_PLAN.md).
 
 **Done when:** every public page uses the shared motion system, scrolls smoothly with mouse, trackpad and touch, respects reduced motion, and Lighthouse mobile performance is at least 90.
 
+## Customer accounts and sign-in to buy (built 2026-10-18 / 2026-10-21, in preview)
+- [x] Customer sign-up / sign-in (email code + password), My account, My orders (migration 0008).
+- [x] Sign-in required for Add to cart, Buy now, cart and checkout; cart saved to the account; phone required at sign-up; Admin → Customers (migration 0009).
+- [ ] Email: run `symmetry_backend/ops/setup-alert-email.sh` (Gmail address + app password) so sign-up codes and order emails are sent; copy the `SMTP_*` lines into `/root/preview/api.env` too.
+- [ ] Go live: backup, `alembic upgrade head` on `symmetry` (0008 + 0009), rebuild API and web; check `/api/health` shows `"migration":"0009"`, then sign up, add to cart and check the code email arrives.
+
+**Done when:** on the live site a visitor can browse, is asked to sign in on Add to cart, receives the code email, and the order shows in My orders and Admin → Customers.
+
 ## Later / optional
 - Buy a domain, then change the hostname in the Caddyfile.
 - Razorpay online payments: code done 2026-10-17 (in preview); needs the client's Razorpay account keys + webhook, see OPERATIONS. Later: admin-managed discount codes, order-status emails/SMS, shopper order tracking.

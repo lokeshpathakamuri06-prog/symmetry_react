@@ -71,6 +71,7 @@ export const CustomerProvider = ({ children }) => {
     logout: () => call('/account/logout', { method: 'POST' }).catch(() => {}).finally(forget),
     updateProfile: (changes) => call('/account/me', { method: 'PATCH', body: changes }).then((r) => accept(r)),
     changePassword: (body) => call('/account/password', { method: 'POST', body }).then((r) => accept(r)),
+    request: call, // any /account request with the customer's CSRF token (the cart uses it)
     orders: () => call('/account/orders'),
     order: (number) => call(`/account/orders/${encodeURIComponent(number)}`),
     refresh,

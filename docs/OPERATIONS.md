@@ -169,7 +169,9 @@ You can also use your DB tool's built-in SSH Tunnel option instead: SSH `root@16
 Since 2026-10-18: **https://preview.169-58-13-62.sslip.io** (admin: `/admin/login`). Not indexed by Google (`X-Robots-Tag`).
 - Containers `symmetry-preview-web` (Caddy on 127.0.0.1:4190 with a host-agnostic site `http://:4190` so the forwarded preview hostname matches; serves `/root/preview/dist`) and `symmetry-preview-api` (127.0.0.1:8002, image `symmetry-preview-api`, settings `/root/preview/api.env`). The live Caddy forwards the preview hostname to 4190.
 - Database `symmetry_preview`: copy of the live content and admin accounts, **without** orders, enquiries, applications or subscribers. Orders and accounts made there never reach the live site.
-- Refresh the preview with new code: backend `cd /root/dev/symmetry_backend && docker build -t symmetry-preview-api . && docker restart symmetry-preview-api` (run migrations on `symmetry_preview` first if any); frontend: build into `/root/preview/dist` (`npx vite build`, then copy).
+- Refresh the preview with new code (run migrations on `symmetry_preview` first if any):
+  - Backend: `docker restart` keeps the **old** image, so recreate the container: `cd /root/dev/symmetry_backend && docker build -t symmetry-preview-api . && docker rm -f symmetry-preview-api && docker run -d --name symmetry-preview-api --network host --restart unless-stopped --env-file /root/preview/api.env symmetry-preview-api uvicorn app.main:app --host 127.0.0.1 --port 8002 --workers 2 --proxy-headers --forwarded-allow-ips 127.0.0.1`.
+  - Frontend: build (Node runs in Docker: `docker run --rm -v "$PWD":/app -v symmetry_nm:/app/node_modules -w /app node:22 npx vite build --outDir <dir>`), then copy the files **into** `/root/preview/dist` (empty it first; don't rename or replace the folder, the web container mounts it). Then recreate the preview API as above so it picks up the new `index.html`.
 - Emails from the preview use the same SMTP settings as live; re-copy them into `/root/preview/api.env` after running `ops/setup-alert-email.sh`.
 
 ## Backups (nightly, on this server)

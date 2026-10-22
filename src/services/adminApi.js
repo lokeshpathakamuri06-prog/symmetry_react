@@ -96,3 +96,15 @@ export const inventory = {
   update: (id, changes) => api(`/admin/inventory/${enc(id)}`, { method: 'PATCH', body: changes }),
   bulk: (ids, availability) => api('/admin/inventory', { method: 'PATCH', body: { ids, availability } }),
 };
+
+// Customers: shop accounts (sign-ups), their orders, switching an account off
+export const customers = {
+  list: ({ q, status } = {}) => {
+    const params = new URLSearchParams();
+    if (q) params.set('q', q);
+    if (status && status !== 'all') params.set('status', status);
+    return api(`/admin/customers?${params}`);
+  },
+  get: (id) => api(`/admin/customers/${enc(id)}`),
+  update: (id, changes) => api(`/admin/customers/${enc(id)}`, { method: 'PATCH', body: changes }),
+};

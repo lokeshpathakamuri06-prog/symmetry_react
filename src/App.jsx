@@ -7,6 +7,7 @@ import { SearchProvider, useSearch } from './context/SearchContext';
 import { PublicContentProvider } from './context/PublicContentContext';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { CustomerProvider } from './context/CustomerContext';
+import RequireCustomer from './components/RequireCustomer';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 
 import Header from './components/Header';
@@ -78,6 +79,7 @@ const AdminTeam = lazy(() => import('./pages/admin/AdminTeam'));
 const AdminInquiries = lazy(() => import('./pages/admin/AdminInquiries'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminDeliveries = lazy(() => import('./pages/admin/AdminDeliveries'));
+const AdminCustomers = lazy(() => import('./pages/admin/AdminCustomers'));
 const AdminInvoice = lazy(() => import('./pages/admin/AdminInvoice'));
 const AdminInventory = lazy(() => import('./pages/admin/AdminInventory'));
 const AdminMedia = lazy(() => import('./pages/admin/AdminMedia'));
@@ -175,12 +177,12 @@ export const App = () => {
     <MotionConfig reducedMotion="user">
     <LazyMotion features={loadMotionFeatures} strict>
     <ThemeProvider>
-      <CartProvider>
         <SearchProvider>
             <PublicContentProvider>
             <CustomerProvider>
             <AdminAuthProvider>
               <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
+              <CartProvider>
                 <StorefrontOpener />
                 <PrefetchPublicPages />
                 <StorefrontShell>
@@ -195,8 +197,8 @@ export const App = () => {
                     <Route path="/sourcing" element={<Sourcing />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/shop/:id" element={<ProductDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/cart" element={<RequireCustomer><Cart /></RequireCustomer>} />
+                    <Route path="/checkout" element={<RequireCustomer><Checkout /></RequireCustomer>} />
                     <Route path="/order-success" element={<OrderSuccess />} />
                     <Route path="/journal" element={<Journal />} />
                     <Route path="/journal/:id" element={<JournalDetail />} />
@@ -225,6 +227,7 @@ export const App = () => {
                     <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
                     <Route path="/admin/orders/:id/invoice" element={<AdminProtectedRoute><AdminInvoice /></AdminProtectedRoute>} />
                     <Route path="/admin/deliveries" element={<AdminProtectedRoute><AdminDeliveries /></AdminProtectedRoute>} />
+                    <Route path="/admin/customers" element={<AdminProtectedRoute><AdminCustomers /></AdminProtectedRoute>} />
                     <Route path="/admin/inventory" element={<AdminProtectedRoute><AdminInventory /></AdminProtectedRoute>} />
                     <Route path="/admin/media" element={<AdminProtectedRoute><AdminMedia /></AdminProtectedRoute>} />
                     <Route path="/admin/settings" element={<AdminProtectedRoute><AdminSettings /></AdminProtectedRoute>} />
@@ -237,12 +240,12 @@ export const App = () => {
                   </Routes>
                   </Suspense>
                 </StorefrontShell>
+              </CartProvider>
               </BrowserRouter>
             </AdminAuthProvider>
             </CustomerProvider>
             </PublicContentProvider>
         </SearchProvider>
-      </CartProvider>
     </ThemeProvider>
     </LazyMotion>
     </MotionConfig>

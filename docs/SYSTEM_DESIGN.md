@@ -232,6 +232,10 @@ The official Cloudinary React SDK is **not** used: a small custom helper avoids 
 | CRM | `inquiries` | Contact form; `status` unread/read/replied/archived; `source_page`, `ip` |
 | | `orders` | Catalogue **order requests** (no online payment): `order_number`, `customer_name`, `customer_email`, `customer_phone` (searchable columns), `customer jsonb` (address details), `items jsonb`, totals, `status` |
 | | `newsletter_subscribers` | `email citext unique`, `source`, `unsubscribed_at` |
+| Customers | `customers` | Shop accounts: `email citext unique`, `full_name`, `phone` (required at sign-up), `password_hash` (argon2, optional), `email_verified_at`, saved `address jsonb`, `is_active` (admin can switch off), `last_login_at`. Migration 0008 |
+| | `customer_sessions`, `customer_codes`, `customer_login_attempts` | Sign-in sessions (token hash + CSRF), hashed 6-digit email codes, password rate limiting. Migration 0008 |
+| | `customer_cart_items` | The signed-in customer's cart (same on every device): `customer_id`, `product_id`, `finish`, `fabric` ('' = none), `quantity` 1–20; unique per customer + product + finish + fabric. Prices are never stored, always read live. Migration 0009 |
+| | `email_outbox` | Queued customer emails (sign-in codes, order updates), sent by the API's worker with retries. Migration 0008 |
 
 ### Indexes
 - Every foreign key.
@@ -287,6 +291,22 @@ Base path `/api`. JSON throughout. Admin routes need a valid session cookie.
 | POST | `/auth/logout` | Clears the session |
 | GET | `/auth/me` | Current admin |
 
+### Customer account (customer session cookie `__Host-symmetry_customer` + its own CSRF token)
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/account/register` | Name, email, **phone (required)**, password → emails a code to confirm the address |
+| POST | `/account/code`, `/account/code/verify` | Email a 6-digit code / sign in with it (creates the account on first use) |
+| POST | `/account/login`, `/account/logout` | Password sign-in / sign out |
+| GET/PATCH | `/account/me` | Profile and saved address |
+| POST | `/account/password` | Set or change the password |
+| GET | `/account/orders`, `/account/orders/{number}` | My orders |
+| GET/POST/DELETE | `/account/cart` | The account cart (with live price and stock) / add a line (published, sellable products only; adds up to 20) / empty it |
+| PATCH/DELETE | `/account/cart/{id}` | Change a line's quantity / remove it (own lines only) |
+| POST | `/account/cart/merge` | On sign-in: move the cart kept in the browser (and the item they tried to add) into the account |
+
+**Buying needs sign-in:** `POST /public/orders` answers 401 `sign_in_required` without a customer session; a placed order belongs to the account and empties its cart. Browsing (`/public/content`, `/public/live-catalog`) stays open.
+
 ### Admin (auth required)
 
 | Method | Path | Purpose |
@@ -298,6 +318,8 @@ Base path `/api`. JSON throughout. Admin routes need a valid session cookie.
 | DELETE | `/admin/media/{id}` | Delete (blocked if the asset is in use) |
 | CRUD | `/admin/products`, `/admin/categories`, `/admin/projects`, `/admin/banners`, `/admin/blogs`, `/admin/testimonials`, `/admin/team`, `/admin/jobs`, `/admin/sections` | Content management |
 | GET/PATCH | `/admin/inquiries`, `/admin/applications`, `/admin/orders` | View and update status/notes |
+| GET | `/admin/customers` | Sign-ups with order count and amount spent; search (`q`), `status=active|disabled`, counts |
+| GET/PATCH | `/admin/customers/{id}` | One customer with orders and cart size / switch the account off or on (`isActive`; off signs them out everywhere) |
 | POST | `/admin/publish` | Rebuilds the public content cache and records a `publish_event` |
 | GET | `/admin/dashboard` | Counts and recent activity |
 

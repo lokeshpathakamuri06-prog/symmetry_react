@@ -29,7 +29,10 @@ export const AccountLogin = () => {
   const { signedIn, status, requestCode, verifyCode, login, register } = useCustomer();
   const navigate = useNavigate();
   const { search } = useLocation();
-  const next = new URLSearchParams(search).get('next');
+  const params = new URLSearchParams(search);
+  const next = params.get('next');
+  // Sent here by Add to cart / Buy now / the cart (the item is added once they are signed in)
+  const forCart = params.get('reason') === 'cart';
   const target = next && next.startsWith('/') && !next.startsWith('//') ? next : '/account';
 
   const [tab, setTab] = useState('code');
@@ -95,7 +98,7 @@ export const AccountLogin = () => {
   const create = (e) => {
     e.preventDefault();
     run(async () => {
-      const r = await register({ email: email.trim(), fullName: fullName.trim(), phone: phone.trim() || undefined, password });
+      const r = await register({ email: email.trim(), fullName: fullName.trim(), phone: phone.trim(), password });
       setCodeSentTo(email.trim());
       setNote(`Almost done: enter the 6-digit code we sent to ${email.trim()} (valid ${r.minutes} minutes).`);
     });
@@ -116,7 +119,11 @@ export const AccountLogin = () => {
         <h1 className="mt-2 text-[32px] sm:text-[40px] font-semibold tracking-tight text-fg leading-tight">
           {tab === 'register' ? 'Create your account' : 'Sign in'}
         </h1>
-        <p className="mt-2 text-[15px] text-muted">See your orders, track deliveries and check out faster.</p>
+        <p className="mt-2 text-[15px] text-muted">
+          {forCart
+            ? 'Please sign in or create an account to add items to your cart and buy. Your item will be waiting in your cart.'
+            : 'See your orders, track deliveries and check out faster.'}
+        </p>
 
         {status === 'checking' ? (
           <p className="mt-10 text-muted inline-flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Checking…</p>
@@ -215,8 +222,8 @@ export const AccountLogin = () => {
                   <input id="acc-email-r" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={field} />
                 </div>
                 <div>
-                  <label htmlFor="acc-phone" className={label}>Mobile <span className="text-subtle font-normal">(optional)</span></label>
-                  <input id="acc-phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={field} placeholder="+91 98765 43210" />
+                  <label htmlFor="acc-phone" className={label}>Mobile number</label>
+                  <input id="acc-phone" type="tel" autoComplete="tel" required minLength={10} value={phone} onChange={(e) => setPhone(e.target.value)} className={field} placeholder="+91 98765 43210" />
                 </div>
                 <div>
                   <label htmlFor="acc-pass-r" className={label}>Password</label>
@@ -231,7 +238,7 @@ export const AccountLogin = () => {
           </div>
         )}
         <p className="mt-6 text-[13px] text-muted">
-          Prefer not to? You can still <Link to="/shop" className="text-accent hover:underline">shop</Link> and check out as a guest.
+          Just looking? You can <Link to="/shop" className="text-accent hover:underline">browse the shop</Link> without signing in. Signing in is needed to add to cart and buy.
         </p>
       </div>
     </div>

@@ -88,21 +88,25 @@ const ProductDetailView = ({ products }) => {
     .slice(0, 3);
 
   // Handlers
-  const handleAddToCart = () => {
-    addToCart(product, quantity, {
+  // Signed out, both buttons go to sign-in first; the piece is added once they are signed in
+  const handleAddToCart = async () => {
+    const ok = await addToCart(product, quantity, {
       finish: selectedFinish,
       color: selectedColor,
       fabric: selectedColor,
       silent: true, // this page shows its own "Added" message
     });
+    if (!ok) return;
     setAddedToast(true);
     setTimeout(() => setAddedToast(false), 3000);
   };
 
   // Buy Now: put this piece in the cart and go straight to checkout (as on Flipkart / Amazon)
-  const handleBuyNow = () => {
-    addToCart(product, quantity, { finish: selectedFinish, color: selectedColor, fabric: selectedColor, silent: true });
-    navigate('/checkout');
+  const handleBuyNow = async () => {
+    const ok = await addToCart(product, quantity, {
+      finish: selectedFinish, color: selectedColor, fabric: selectedColor, silent: true, buyNow: true,
+    });
+    if (ok) navigate('/checkout');
   };
 
   const handleCustomSubmit = (e) => {

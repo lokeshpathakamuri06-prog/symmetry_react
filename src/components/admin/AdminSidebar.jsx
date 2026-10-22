@@ -22,7 +22,8 @@ import {
   UserCheck,
   PanelTop,
   Truck,
-  Boxes
+  Boxes,
+  Contact
 } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { INBOX_CHANGED_EVENT, inboxCounts } from '../../services/adminApi';
@@ -56,6 +57,7 @@ export const AdminSidebar = ({ isOpen, toggleSidebar }) => {
       items: [
         { label: 'Orders', path: '/admin/orders', icon: ShoppingBag, count: counts.pendingOrders },
         { label: 'Deliveries', path: '/admin/deliveries', icon: Truck },
+        { label: 'Customers', path: '/admin/customers', icon: Contact },
         { label: 'Enquiries', path: '/admin/inquiries', icon: MessageSquare, count: counts.unreadInquiries },
       ],
     },

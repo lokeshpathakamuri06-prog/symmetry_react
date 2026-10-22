@@ -32,6 +32,9 @@ const CustomerEmails = ({ order }) => {
       <p className="text-[12px] text-adm-muted mb-2">
         Sent automatically to {order.customerEmail} when the order is placed, paid, confirmed, shipped, out for delivery, delivered or cancelled.
         {detail?.hasAccount ? ' The customer has an account and can follow it in My orders.' : ''}
+        {detail?.customerId && (
+          <> <Link to={`/admin/customers?open=${detail.customerId}`} className="text-adm-accent hover:underline">View customer</Link></>
+        )}
       </p>
       {detail === null ? (
         <p className="text-[12px] text-adm-muted">Loading…</p>

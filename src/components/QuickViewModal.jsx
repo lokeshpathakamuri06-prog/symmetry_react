@@ -19,8 +19,9 @@ export const QuickViewModal = ({ product, onClose }) => {
 
   if (!product) return null;
 
-  const handleAdd = () => {
-    addToCart(product, quantity, { finish: selectedFinish });
+  const handleAdd = async () => {
+    // Signed out: goes to sign-in (the modal closes with the page change)
+    if (!(await addToCart(product, quantity, { finish: selectedFinish }))) return;
     setAdded(true);
     setTimeout(() => {
       setAdded(false);

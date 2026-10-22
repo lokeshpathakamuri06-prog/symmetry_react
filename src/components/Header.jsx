@@ -25,7 +25,7 @@ const navLinks = [
 ];
 
 const iconButton =
-  'relative w-10 h-10 inline-flex items-center justify-center rounded-full text-fg/80 hover:text-fg transition-colors shrink-0';
+  'relative w-9 h-9 sm:w-10 sm:h-10 inline-flex items-center justify-center rounded-full text-fg/80 hover:text-fg transition-colors shrink-0';
 
 /** Past this many pixels, scrolling down tucks the bar away and scrolling up brings it back */
 const HIDE_AFTER = 160;
@@ -99,11 +99,11 @@ export const Header = () => {
             onPhoto ? 'bg-transparent border-transparent' : 'glass border-line/60 dark:border-line/70'
           } ${servicesOpen ? '!bg-canvas' : ''}`}
         >
-          <div className="site-container h-[var(--gnav-h)] flex items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Symmetry Interiors Home">
+          <div className="site-container h-[var(--gnav-h)] flex items-center justify-between gap-2 sm:gap-4">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0" aria-label="Symmetry Interiors Home">
               <img src={logoImg} alt="Symmetry Logo" className={`h-11 lg:h-12 xl:h-14 w-auto object-contain dark:hidden ${onPhoto ? 'hidden' : ''}`} />
               <img src={logoDarkImg} alt="Symmetry Logo" className={`h-11 lg:h-12 xl:h-14 w-auto object-contain ${onPhoto ? 'block' : 'hidden dark:block'}`} />
-              <span className={`wordmark text-[16px] xl:text-[18px] leading-none transition-colors ${onPhoto ? 'text-white' : 'text-fg'}`}>SYMMETRY</span>
+              <span className={`wordmark max-[359px]:hidden text-[16px] xl:text-[18px] leading-none transition-colors ${onPhoto ? 'text-white' : 'text-fg'}`}>SYMMETRY</span>
             </Link>
 
             {/* Desktop links */}
@@ -142,7 +142,7 @@ export const Header = () => {
               })}
             </nav>
 
-            <div className={`flex items-center gap-1 shrink-0 transition-colors ${onPhoto ? 'text-white [&>a]:!text-white/90 [&>button]:!text-white/90' : ''}`}>
+            <div className={`flex items-center gap-0 sm:gap-1 shrink-0 transition-colors ${onPhoto ? 'text-white [&>a]:!text-white/90 [&>button]:!text-white/90' : ''}`}>
               <button onClick={openSearch} className={iconButton} aria-label="Search" title="Search (Ctrl + K)">
                 <Search className="w-5 h-5" strokeWidth={1.7} />
               </button>
@@ -174,7 +174,8 @@ export const Header = () => {
                   )}
                 </AnimatePresence>
               </Link>
-              <ThemeToggle className="!w-10 !h-10" onPhoto={onPhoto} />
+              {/* Small phones: the theme switch is in the menu instead */}
+              <ThemeToggle className="!w-9 !h-9 sm:!w-10 sm:!h-10 max-[399px]:!hidden" onPhoto={onPhoto} />
               {/* Apple-style two-line "hamburger" */}
               <button
                 onClick={() => setMobileMenuOpen(true)}

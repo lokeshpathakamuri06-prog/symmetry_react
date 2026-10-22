@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, X } from 'lucide-react';
+import { AlertCircle, CheckCircle2, X } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import SmartImage from '../SmartImage';
 import { formatINR } from '../../lib/shop';
@@ -39,26 +39,32 @@ export const CartToast = () => {
           <div className="flex items-start gap-3">
             <SmartImage sizes="56px" src={p.images?.[0] || p.image} alt="" className="w-14 h-14 rounded-lg object-cover bg-sunken shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="flex items-center gap-1.5 text-[14px] font-semibold text-emerald-600 dark:text-emerald-400">
-                <CheckCircle2 className="w-4 h-4" /> Added to cart
-              </p>
+              {lastAdded.error ? (
+                <p className="flex items-center gap-1.5 text-[14px] font-semibold text-red-600 dark:text-red-400">
+                  <AlertCircle className="w-4 h-4" /> Not added
+                </p>
+              ) : (
+                <p className="flex items-center gap-1.5 text-[14px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <CheckCircle2 className="w-4 h-4" /> Added to cart
+                </p>
+              )}
               <p className="text-[14px] text-fg truncate">{p.name}</p>
               <p className="text-[12px] text-muted">
-                Cart: {cartCount} {cartCount === 1 ? 'item' : 'items'} · {formatINR(subtotal)}
+                {lastAdded.error || `Cart: ${cartCount} ${cartCount === 1 ? 'item' : 'items'} · ${formatINR(subtotal)}`}
               </p>
             </div>
             <button type="button" onClick={dismissAdded} className="p-1 -m-1 text-muted hover:text-fg" aria-label="Close">
               <X className="w-4 h-4" />
             </button>
           </div>
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          {!lastAdded.error && <div className="mt-3 grid grid-cols-2 gap-2">
             <Link to="/cart" className="py-2.5 rounded-full border border-line text-center text-[14px] font-semibold text-fg hover:border-accent">
               Go to cart
             </Link>
             <Link to="/checkout" className="py-2.5 rounded-full bg-accent text-on-accent text-center text-[14px] font-semibold hover:bg-accent-hover">
               Checkout
             </Link>
-          </div>
+          </div>}
         </m.div>
       )}
     </AnimatePresence>

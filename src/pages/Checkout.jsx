@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
-import { ShieldCheck, CreditCard, Lock, AlertCircle, Smartphone, Landmark, Wallet, Banknote, Info, Check } from 'lucide-react';
+import { ShieldCheck, CreditCard, Lock, AlertCircle, Smartphone, Landmark, Wallet, Banknote, Info, Check, Loader2 } from 'lucide-react';
 import SeoMeta from '../components/SeoMeta';
 import { useCart } from '../context/CartContext';
 import { useCustomer } from '../context/CustomerContext';
@@ -76,7 +76,7 @@ const Section = ({ n, title, aside, children }) => (
 );
 
 export const Checkout = () => {
-  const { cartItems, totalAmount, recordOrder } = useCart();
+  const { cartItems, cartStatus, totalAmount, recordOrder } = useCart();
   const navigate = useNavigate();
 
   const [form, setForm] = useState(loadAddress);
@@ -92,7 +92,7 @@ export const Checkout = () => {
   // Placing an order empties the cart; don't let the empty-cart redirect beat the success page
   const [orderPlaced, setOrderPlaced] = useState(false);
   useBuyBar();
-  const { customer: account, signedIn, status: accountStatus } = useCustomer();
+  const { customer: account, signedIn } = useCustomer();
 
   // Signed in: fill empty fields from the account (anything already typed or remembered wins)
   useEffect(() => {
@@ -114,6 +114,14 @@ export const Checkout = () => {
   const codBlocked = !config.cod || (config.codMaxTotal && totalAmount > config.codMaxTotal);
   const method = chosenMethod === 'cod' && codBlocked ? 'upi' : chosenMethod;
 
+  // Wait for the account cart (it may still be taking in the item from Buy now)
+  if (cartStatus === 'loading' || cartStatus === 'idle') {
+    return (
+      <div className="pt-36 pb-24 site-container text-muted inline-flex items-center gap-2">
+        <Loader2 className="w-4 h-4 animate-spin" /> Loading your cart…
+      </div>
+    );
+  }
   if ((!cartItems || cartItems.length === 0) && !orderPlaced) {
     return <Navigate to="/cart" replace />;
   }
@@ -266,13 +274,6 @@ export const Checkout = () => {
 
         <form onSubmit={handleSubmit} noValidate className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           <div className="lg:col-span-8 space-y-6" id="co-details">
-            {accountStatus === 'guest' && (
-              <p className="rounded-tile bg-surface ring-1 ring-line/60 px-5 py-4 text-[14px] text-fg">
-                Have an account?{' '}
-                <Link to="/account/login?next=/checkout" className="text-accent font-medium hover:underline">Sign in</Link>{' '}
-                to fill in your details and track this order. Or continue as a guest: we'll email you updates either way.
-              </p>
-            )}
             {signedIn && (
               <p className="rounded-tile bg-accent/10 px-5 py-3 text-[14px] text-fg">
                 Signed in as <b>{account.email}</b>. This order will appear in <Link to="/account" className="text-accent hover:underline">My orders</Link>.

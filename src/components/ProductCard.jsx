@@ -39,9 +39,12 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    addToCart(product, 1);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    // Signed out: addToCart sends the visitor to sign in and adds the item afterwards
+    addToCart(product, 1).then((ok) => {
+      if (!ok) return;
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    });
   };
 
   return (

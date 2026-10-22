@@ -11,6 +11,7 @@ A website for **Symmetry Interiors & Building Solutions Pvt. Ltd.** (Ameerpet, H
 | [ADMIN_GUIDE.md](ADMIN_GUIDE.md) | How to run the website day to day: Save and Publish, editing, images, page text, inbox (for the client's team) |
 | [API.md](API.md) | Every backend endpoint, its rules and responses (for developers) |
 | [PROJECT_STATUS.md](PROJECT_STATUS.md) | What has been built so far, and the current state of each part |
+| [REQUIREMENTS_STATUS.md](REQUIREMENTS_STATUS.md) | Every point of the client's requirement PDF: done / needs input / to build, and the implementation plan |
 | [NEXT_STEPS.md](NEXT_STEPS.md) | What we do next, in order, with what "done" means for each step |
 | [SYSTEM_DESIGN.md](SYSTEM_DESIGN.md) | The target architecture: backend, database, image pipeline, API, security |
 | [MOTION_PLAN.md](MOTION_PLAN.md) | The plan for Apple-style scrolling, animations and polish on every public page |

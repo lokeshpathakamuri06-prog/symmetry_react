@@ -160,7 +160,8 @@ export const FilterDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { label: 'Recommended', val: 'featured' },
-                    { label: 'Rating: High to Low', val: 'rating' },
+                    { label: 'Newest First', val: 'newest' },
+                    { label: 'Most Popular', val: 'rating' },
                     { label: 'Price: Low to High', val: 'price-asc' },
                     { label: 'Price: High to Low', val: 'price-desc' },
                   ].map((option) => (
