@@ -11,15 +11,15 @@ Every point was checked in the code and tested in a real browser on the **previe
 | | Points |
 |---|---|
 | Requirement points (bullets) in the PDF | 194 |
-| ✅ Done and tested | 169 |
-| 🟡 Partly done / needs your input | 8 (Instagram feed ×2, loading speed ×3, backup copy, source code, deployment) |
+| ✅ Done and tested | 171 |
+| 🟡 Partly done / needs your input | 6 (Instagram feed ×2, loading speed ×3, backup copy) |
 | ❌ Not built yet | 3 (Google Analytics, Google Search Console, Meta Pixel) |
 | ⏳ Payment gateway, left for you | 7 (UPI, cards, net banking, wallets, Razorpay ×3) |
 | Kept by your decision | 7 (5 colours, 2 fonts) |
 
 **Tests run:** 391 browser checks of the website, shop and admin (3 screen sizes); shopping flow (sign-up → cart → checkout → admin) at 3 screen sizes; backend test suite (see "Test results" at the end).
 
-**Important:** the **live site** (https://169-58-13-62.sslip.io) is still the 2026-10-18 version. Everything marked ✅ is on the **preview**; it goes live in Phase 3 below.
+**Update 2026-10-22 evening:** everything above is now **live** on https://169-58-13-62.sslip.io (Phase 3 done, except email). Until email (SMTP, Plan 2.1) is set up, new customers cannot finish creating an account, so they cannot buy yet.
 
 ---
 
@@ -150,8 +150,8 @@ Company information, quick links, product categories, services, contact details,
 |---|---|---|
 | Responsive website, CMS, e-commerce | ✅ | |
 | Payment gateway integration | ⏳ | Phase 4 |
-| Source code | 🟡 | On GitHub up to 2026-10-18; newer work committed in Phase 3 |
-| Website deployment | 🟡 | Live = 2026-10-18 version; newer work goes live in Phase 3 |
+| Source code | ✅ | On GitHub (pushed 2026-10-22) |
+| Website deployment | ✅ | Live since 2026-10-22 |
 | Basic SEO, performance, cross-browser testing | ✅ | |
 | Documentation | ✅ | `docs/ADMIN_GUIDE.md` (admin how-to), `docs/OPERATIONS.md` (server) |
 
@@ -181,7 +181,7 @@ Do the phases in order. Payment stays last, for you.
 | 2.5 | Decide on an off-server backup copy (e.g. cloud storage) | Optional |
 | 2.6 | Change the admin password to a strong one | Admin → Settings |
 
-### Phase 3: Go live (developer + you run the commands)
+### Phase 3: Go live ✅ done 2026-10-22 (email still to set up)
 1. Backup of the live database.
 2. Migrations 0008 and 0009 (customer accounts, account cart).
 3. Rebuild the API and the website; check every page on phone, tablet and desktop.

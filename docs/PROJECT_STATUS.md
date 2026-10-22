@@ -541,6 +541,12 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - **Verified:** backend 188 passed, 1 skipped; site audit 391 checks at 390/820/1440 px; shopping flow 31/31 at 390/820/1440 px after the fix. Preview API recreated with the fix; site rebuilt into `/root/preview/dist`. Test data deleted from `symmetry_preview`.
 - Not live, not committed.
 
+### 2026-10-22: Deployed live (migration 0009)
+- The client ran the go-live command (agent's own deploy is blocked): backup `/root/backups/symmetry-before-deploy-2026-10-22-1650.dump` (+ nightly copy), migrations 0008 + 0009, API and web rebuilt, API restarted; `/api/health` shows `"migration":"0009"`. Committed and pushed first (`34c9b98` backend, `358d67e` frontend).
+- This put live: customer accounts, sign-in to buy + account cart, admin Customers, Netlify-style Home, full-screen hero, phone header fix, shop sort, SEO/performance work of 2026-10-18 (server-written page heads, sitemap, readable product URLs), and the commit-before-response fix.
+- **Live check (read-only, no test data on the live database):** 271 checks at 390/820/1440 px, 265 pass; the 6 failures are 3 test-label mismatches (customization button is there) and the 3 missing integrations (Analytics, Search Console, Meta Pixel). Admin pages require sign-in; Add to cart signed out goes to sign-in (one unrepeatable miss in 13 tries); page title and Product schema in the server's HTML.
+- **Open:** SMTP not set up, so new customers cannot finish sign-up (email code) and cannot buy yet; the client postponed it.
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|
