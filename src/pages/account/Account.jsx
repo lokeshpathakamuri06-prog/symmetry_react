@@ -214,6 +214,58 @@ export const Account = () => {
 
 // --- /account/orders/:number --------------------------------------------------------------------------
 
+// Shown while the policy allows it (o.canCancel): free before production starts or within 24 hours
+const CancelOrder = ({ o, onCancelled }) => {
+  const { cancelOrder } = useCustomer();
+  const [asking, setAsking] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+
+  const confirm = async () => {
+    setBusy(true);
+    setError('');
+    try {
+      onCancelled(await cancelOrder(o.orderNumber));
+    } catch (err) {
+      setError(err.message || 'Could not cancel the order. Please try again.');
+      setBusy(false);
+    }
+  };
+
+  if (!asking) {
+    return (
+      <button type="button" onClick={() => setAsking(true)} className="text-[14px] text-red-700 dark:text-red-400 hover:underline">
+        Cancel order
+      </button>
+    );
+  }
+  return (
+    <div role="alertdialog" aria-labelledby="cancel-q" className="rounded-tile bg-surface ring-1 ring-line/60 p-5 space-y-3">
+      <p id="cancel-q" className="text-[15px] font-medium text-fg">Cancel order {o.orderNumber}?</p>
+      <p className="text-[14px] text-muted">
+        {o.paymentStatus === 'paid'
+          ? `The full ${formatINR(o.total)} is refunded to the card, UPI or bank account you paid from, usually within 5–7 working days.`
+          : 'Nothing has been charged, so there is nothing to refund.'}
+      </p>
+      {error && <p role="alert" className="text-[13px] text-red-700 dark:text-red-400">{error}</p>}
+      <div className="flex flex-wrap gap-3">
+        <button type="button" onClick={confirm} disabled={busy} className="rounded-full bg-red-600 text-white hover:bg-red-700 px-5 py-2.5 text-[14px] font-medium disabled:opacity-60 inline-flex items-center gap-2">
+          {busy && <Loader2 className="w-4 h-4 animate-spin" />} Yes, cancel order
+        </button>
+        <button type="button" onClick={() => setAsking(false)} disabled={busy} className="rounded-full border border-line text-fg hover:bg-fg/[0.04] px-5 py-2.5 text-[14px] font-medium">
+          Keep order
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const cancelledText = (o) => {
+  if (o.paymentStatus === 'paid') return ` Your refund of ${formatINR(o.total)} is on its way to the original payment method; banks usually take 5–7 working days.`;
+  if (o.paymentStatus === 'refunded') return ` We have refunded ${formatINR(o.total)} to the original payment method.`;
+  return '';
+};
+
 export const AccountOrder = () => {
   const { number } = useParams();
   const { customer, redirect, waiting, order } = useSignedIn();
@@ -245,7 +297,7 @@ export const AccountOrder = () => {
 
       {o.status === 'cancelled' ? (
         <p className="mt-8 rounded-tile bg-surface ring-1 ring-line/60 p-5 text-[15px] text-fg">
-          This order was cancelled.{o.paymentStatus === 'paid' || o.paymentStatus === 'refunded' ? ' Any amount paid is refunded to the original payment method.' : ''}
+          This order was cancelled.{cancelledText(o)}
         </p>
       ) : (
         <ol aria-label="Order progress" className="mt-8 grid grid-cols-6 gap-1.5">
@@ -301,6 +353,13 @@ export const AccountOrder = () => {
             <p>{[c.city, c.state, c.pincode].filter(Boolean).join(', ')}</p>
             <p className="text-muted">{c.phone}</p>
           </div>
+          {o.canCancel && <CancelOrder o={o} onCancelled={setO} />}
+          {!o.canCancel && !['cancelled', 'delivered'].includes(o.status) && (
+            <p className="text-[13px] text-muted">
+              This order can no longer be cancelled online. To ask about cancelling, contact us; see the{' '}
+              <Link to="/refund-policy" className="text-accent hover:underline">Cancellation &amp; Refund Policy</Link>.
+            </p>
+          )}
           <p className="text-[13px] text-muted">Questions about this order? <Link to="/contact" className="text-accent hover:underline">Contact us</Link> and mention {o.orderNumber}.</p>
         </div>
       </div>

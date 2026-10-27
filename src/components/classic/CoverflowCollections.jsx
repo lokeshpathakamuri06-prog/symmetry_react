@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import { m } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import { useCollections } from '../../context/PublicContentContext';
 import SmartImage from '../SmartImage';
+import { placeholderUrl } from '../../lib/images';
 
 // Cards are the admin "Collections" marked Featured that have a cover image, in admin order
 const toCard = (c, i) => ({
@@ -21,19 +22,22 @@ export const CoverflowCollections = () => {
 
   const [selected, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef(null);
+  // Off screen the carousel stops, so it never animates five 3D cards while you scroll another section
+  const inView = useInView(sectionRef, { margin: '100px 0px' });
   const total = items.length;
   const activeIndex = total ? selected % total : 0;
 
   // Auto-scroll / Auto-advance interval
   useEffect(() => {
-    if (isPaused || total < 2) return;
+    if (isPaused || !inView || total < 2) return;
 
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % total);
     }, 3600);
 
     return () => clearInterval(timer);
-  }, [isPaused, total]);
+  }, [isPaused, inView, total]);
 
   if (!total) return null;
 
@@ -47,6 +51,7 @@ export const CoverflowCollections = () => {
 
   return (
     <section
+      ref={sectionRef}
       className="relative py-4 sm:py-6 px-4 sm:px-6 lg:px-8 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -125,7 +130,7 @@ export const CoverflowCollections = () => {
                     zIndex: zIndex,
                     transformStyle: 'preserve-3d',
                   }}
-                  className={`absolute w-[290px] sm:w-[350px] md:w-[400px] h-[440px] sm:h-[500px] md:h-[560px] rounded-[32px] overflow-hidden cursor-pointer select-none transition-all duration-500 ${
+                  className={`absolute w-[290px] sm:w-[350px] md:w-[400px] h-[440px] sm:h-[500px] md:h-[560px] rounded-[32px] overflow-hidden cursor-pointer select-none ${
                     isCenter
                       ? 'shadow-[0_25px_60px_-15px_rgba(19,30,32,0.35)] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] ring-1 ring-black/5 border border-white/20'
                       : 'shadow-[0_25px_50px_rgba(0,0,0,0.45),0_10px_25px_rgba(0,0,0,0.3)] border border-white/25'
@@ -139,14 +144,17 @@ export const CoverflowCollections = () => {
                     className="w-full h-full object-cover pointer-events-none"
                   />
 
-                  {/* Frosted Glass Side Card Overlay (Active when !isCenter) */}
+                  {/* Frosted Glass Side Card Overlay (Active when !isCenter).
+                      A pre-blurred tiny copy of the photo instead of backdrop-filter: a live blur behind a moving
+                      3D card is recomputed every frame and made the whole page stutter. */}
                   {!isCenter ? (
                     <div
-                      className="absolute inset-0 z-10 pointer-events-none transition-all duration-500 rounded-[32px] border border-white/20 shadow-inner supports-[not(backdrop-filter:blur(1px))]:bg-[rgba(20,20,22,0.88)]"
+                      className="absolute inset-0 z-10 pointer-events-none rounded-[32px] border border-white/20 shadow-inner bg-cover bg-center"
                       style={{
-                        backdropFilter: 'blur(14px)',
-                        WebkitBackdropFilter: 'blur(14px)',
-                        backgroundColor: 'rgba(20, 20, 22, 0.55)',
+                        backgroundImage: placeholderUrl(item.image)
+                          ? `linear-gradient(rgba(20, 20, 22, 0.55), rgba(20, 20, 22, 0.55)), url("${placeholderUrl(item.image)}")`
+                          : undefined,
+                        backgroundColor: 'rgba(20, 20, 22, 0.88)',
                       }}
                     />
                   ) : (
@@ -177,7 +185,7 @@ export const CoverflowCollections = () => {
                           setActiveIndex(index);
                         }
                       }}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] shadow-lg hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white/95 dark:bg-[#07121C]/95 text-[#131E20] dark:text-[#F5F1E8] text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] shadow-lg hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] transition-colors"
                     >
                       <span>View Product</span>
                       <ArrowRight className="w-3.5 h-3.5" />

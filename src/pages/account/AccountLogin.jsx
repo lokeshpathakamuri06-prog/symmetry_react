@@ -35,7 +35,8 @@ export const AccountLogin = () => {
   const forCart = params.get('reason') === 'cart';
   const target = next && next.startsWith('/') && !next.startsWith('//') ? next : '/account';
 
-  const [tab, setTab] = useState('code');
+  // Password first while email sending (SMTP) is not set up; switch back to 'code' once it is
+  const [tab, setTab] = useState('password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');

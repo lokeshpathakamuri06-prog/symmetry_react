@@ -30,7 +30,7 @@ export const CategoryCircleMarquee = () => {
       <button
         onClick={handleScrollLeft}
         aria-label="Scroll left"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -38,7 +38,7 @@ export const CategoryCircleMarquee = () => {
       <button
         onClick={handleScrollRight}
         aria-label="Scroll right"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 backdrop-blur-md border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 dark:bg-[#0D1C29]/95 border border-[#D1DCDE] dark:border-[#1E3447] text-[#131E20] dark:text-[#F5F1E8] shadow-md flex items-center justify-center opacity-90 sm:opacity-0 group-hover/marquee:opacity-100 transition-opacity cursor-pointer hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C]"
       >
         <ChevronRight className="w-5 h-5" />
       </button>

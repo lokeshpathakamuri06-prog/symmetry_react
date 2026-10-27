@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useInView } from 'framer-motion';
 import { useTestimonials } from '../../context/PublicContentContext';
 import SmartImage from '../SmartImage';
 
@@ -13,14 +13,16 @@ export const TestimonialCarousel = () => {
 const TestimonialCarouselView = ({ testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const rootRef = useRef(null);
+  const inView = useInView(rootRef, { margin: '100px 0px' });
 
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || !inView) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [isHovered]);
+  }, [isHovered, inView]);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -34,6 +36,7 @@ const TestimonialCarouselView = ({ testimonials }) => {
 
   return (
     <div
+      ref={rootRef}
       className="relative max-w-5xl mx-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

@@ -39,7 +39,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
 
         {/* Category Pill Tag */}
         <div className="absolute top-4 left-4 z-20">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F7F6] backdrop-blur-md shadow-sm transition-colors">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 dark:bg-[#07121C]/90 text-[#F4F7F6] shadow-sm transition-colors">
             <BookOpen className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {blog.category}
           </span>
@@ -47,7 +47,7 @@ export const BlogCard = ({ blog, index = 0 }) => {
 
         {/* Read Time Tag */}
         <div className="absolute top-4 right-4 z-20">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] backdrop-blur-md shadow-sm">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono bg-white/85 dark:bg-[#0D1C29]/85 text-[#131E20] dark:text-[#F5F1E8] shadow-sm">
             <Clock className="w-3 h-3 text-[#36656B] dark:text-[#BCA575]" />
             {blog.readTime}
           </span>

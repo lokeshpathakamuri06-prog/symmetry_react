@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, FileText, Mail, MapPin, Phone, Trash2, Truck, X, ExternalLink } from 'lucide-react';
 import { orders as ordersApi, inbox } from '../../../services/adminApi';
-import { ORDER_FLOW, STATUS, NEXT_ACTION, nextStatus, PAYMENT, PAYMENT_STATUSES, inr, dateTime, shortDate } from './orderMeta';
+import { ORDER_FLOW, STATUS, NEXT_ACTION, nextStatus, PAYMENT, PAYMENT_STATUSES, refundDue, inr, dateTime, shortDate } from './orderMeta';
 import { StatusPill, PaymentPill } from './OrderPills';
 
 const Label = ({ children }) => <p className="text-[11px] font-semibold uppercase tracking-wider text-adm-muted mb-2">{children}</p>;
@@ -143,7 +143,7 @@ export const OrderPanel = ({ order, onChanged, onDeleted, onClose }) => {
           <h2 className="text-[20px] font-semibold tracking-tight text-adm-fg font-mono">{order.orderNumber}</h2>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
             <StatusPill status={order.status} />
-            <PaymentPill status={order.paymentStatus} />
+            <PaymentPill status={order.paymentStatus} orderStatus={order.status} />
             <span className="inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-adm-fg/5 text-adm-muted">{order.paymentMethod}</span>
           </div>
         </div>
@@ -215,6 +215,11 @@ export const OrderPanel = ({ order, onChanged, onDeleted, onClose }) => {
           </span>
         </div>
         {order.razorpayPaymentId && <p className="mt-2 text-[12px] text-adm-muted font-mono">Razorpay payment {order.razorpayPaymentId}</p>}
+        {refundDue(order) && (
+          <p className="mt-2 text-[13px] text-red-700 dark:text-red-300">
+            Cancelled after payment: refund {inr(order.total)} in the Razorpay dashboard (Payments → this payment → Refund), then set the payment to Refunded.
+          </p>
+        )}
       </Box>
 
       {/* Delivery */}

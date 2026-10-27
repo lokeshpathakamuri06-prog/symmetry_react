@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { m } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import Button from './Button';
 
 export const CoverflowSourcing = () => {
@@ -70,18 +70,21 @@ export const CoverflowSourcing = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef(null);
+  // Off screen the carousel stops, so it never animates five 3D cards while you scroll another section
+  const inView = useInView(sectionRef, { margin: '100px 0px' });
   const total = items.length;
 
   // Auto-scroll / Auto-advance interval
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !inView) return;
 
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % total);
     }, 3600);
 
     return () => clearInterval(timer);
-  }, [isPaused, total]);
+  }, [isPaused, inView, total]);
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
@@ -93,6 +96,7 @@ export const CoverflowSourcing = () => {
 
   return (
     <section
+      ref={sectionRef}
       className="relative py-6 sm:py-8 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#E5ECEC]/40 dark:bg-[#0D1C29]/60 border-y border-[#D1DCDE]/70 dark:border-[#1E3447]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}

@@ -49,6 +49,7 @@ export const SmoothScroll = ({ children }) => {
       lerp: 0.1, // each frame covers 10% of the remaining distance: soft, never sluggish
       smoothWheel: true,
       syncTouch: false, // touch scrolling stays native
+      allowNestedScroll: true, // a swipe over a sideways strip or a scrolling list scrolls that, not the page
       autoRaf: true,
     });
     setLenis(lenis);

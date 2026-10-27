@@ -31,3 +31,6 @@ parse_drive.py
 drive_files.json
 drive_page.html
 
+
+# Local production-build preview
+dist_preview/

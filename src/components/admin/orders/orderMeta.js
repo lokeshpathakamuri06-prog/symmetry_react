@@ -32,6 +32,10 @@ export const PAYMENT = {
 };
 export const PAYMENT_STATUSES = Object.keys(PAYMENT);
 
+// A cancelled order that was paid online still needs its money back (refund in Razorpay, then set "Refunded")
+export const REFUND_DUE = { label: 'Refund due', style: 'bg-red-500/12 text-red-700 dark:text-red-300' };
+export const refundDue = (o) => o.status === 'cancelled' && o.paymentStatus === 'paid';
+
 export const inr = (n) => (n == null ? '—' : `₹${Number(n).toLocaleString('en-IN')}`);
 
 export const shortDate = (iso) =>

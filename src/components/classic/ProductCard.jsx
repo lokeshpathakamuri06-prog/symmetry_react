@@ -144,7 +144,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
         <button
           onClick={handleWishlist}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#07121C]/85 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-sm z-10 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 dark:bg-[#07121C]/85 text-[#131E20] dark:text-[#F5F1E8] flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-sm z-10 cursor-pointer"
         >
           <Heart
             className={`w-4 h-4 transition-all duration-300 ${
@@ -159,7 +159,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
             onClick={handleQuickAdd}
             disabled={soldOut}
             aria-label={soldOut ? 'Out of stock' : 'Quick add to bag'}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] disabled:opacity-60 disabled:pointer-events-none text-xs sm:text-sm font-medium tracking-wider uppercase transition-colors shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-white/95 dark:bg-[#07121C]/95 text-[#131E20] dark:text-[#F5F1E8] hover:bg-[#36656B] hover:text-white dark:hover:bg-[#BCA575] dark:hover:text-[#07121C] disabled:opacity-60 disabled:pointer-events-none text-xs sm:text-sm font-medium tracking-wider uppercase transition-colors shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
           >
             {soldOut ? (
               <span>Out of Stock</span>
@@ -180,7 +180,7 @@ export const ProductCard = ({ product, onQuickView, index = 0 }) => {
             onClick={handleQuickViewClick}
             aria-label="Quick View specification"
             title="Quick View"
-            className="p-2.5 rounded-xl bg-white/95 dark:bg-[#07121C]/95 backdrop-blur-md text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] shadow-md transition-colors cursor-pointer"
+            className="p-2.5 rounded-xl bg-white/95 dark:bg-[#07121C]/95 text-[#131E20] dark:text-[#F5F1E8] hover:text-[#36656B] dark:hover:text-[#BCA575] shadow-md transition-colors cursor-pointer"
           >
             <Eye className="w-4 h-4" />
           </button>

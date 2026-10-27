@@ -74,6 +74,7 @@ export const CustomerProvider = ({ children }) => {
     request: call, // any /account request with the customer's CSRF token (the cart uses it)
     orders: () => call('/account/orders'),
     order: (number) => call(`/account/orders/${encodeURIComponent(number)}`),
+    cancelOrder: (number) => call(`/account/orders/${encodeURIComponent(number)}/cancel`, { method: 'POST' }),
     refresh,
   }), [customer, status, accept, call, forget, refresh]);
 

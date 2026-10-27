@@ -331,7 +331,7 @@ const HomeView = ({ products, projects, blogs }) => {
 
                   {/* Top Floating Badges */}
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 dark:bg-[#07121C]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1.5">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 dark:bg-[#07121C]/85 text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#36656B]" />
                       {proj.typology}
                     </span>
@@ -345,7 +345,7 @@ const HomeView = ({ products, projects, blogs }) => {
                   {/* Bottom Left Footprint Badge */}
                   {proj.areaSqFt && (
                     <div className="absolute bottom-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-[#131E20]/80 dark:bg-[#07121C]/80 backdrop-blur-md text-[#E5ECEC] border border-white/10">
+                      <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-[#131E20]/80 dark:bg-[#07121C]/80 text-[#E5ECEC] border border-white/10">
                         {proj.areaSqFt}
                       </span>
                     </div>

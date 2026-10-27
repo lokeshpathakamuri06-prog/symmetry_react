@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { m, useScroll, useSpring, useReducedMotion } from 'framer-motion';
+import { m, useScroll, useReducedMotion } from 'framer-motion';
 import { useScrollRange } from '../../lib/motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
@@ -14,12 +14,8 @@ export const DynamicScrollShowcase = () => {
     offset: ['start start', 'end end'],
   });
 
-  // Smooth out scroll progress with spring physics
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
-  });
+  // No spring here: Lenis already smooths the wheel, and a spring on top makes the cards trail the scroll
+  const smoothProgress = scrollYProgress;
 
   // Central Card Animations (Desktop)
   const centerScale = useScrollRange(smoothProgress, [0, 0.45, 0.9], [0.82, 1, 1.08]);
@@ -106,7 +102,8 @@ export const DynamicScrollShowcase = () => {
         {/* Pinned Sticky Viewport Frame */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-4 sm:px-6 lg:px-8 bg-[#0C1622] text-[#F5F1E8] border-y border-[#1E3447]/60">
           {/* Ambient Dark Luxury Glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#36656B]/10 rounded-full blur-[140px] pointer-events-none" />
+          {/* A soft radial gradient, not blur(140px): a huge blur inside the pinned frame repainted on every scroll frame */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[800px] bg-[radial-gradient(closest-side,rgba(54,101,107,0.1),transparent)] pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(rgba(54,101,107,0.08)_1px,transparent_1px)] [background-size:28px_28px] opacity-30 pointer-events-none" />
 
           {/* Section Header */}
@@ -213,7 +210,7 @@ export const DynamicScrollShowcase = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#07121C]/90 via-transparent to-[#07121C]/30" />
 
               <div className="absolute top-5 left-5 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-md flex items-center gap-1.5">
+                <span className="px-3 py-1 rounded-full text-xs uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 text-[#F4F7F6] border border-white/15 shadow-md flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#36656B] animate-pulse" />
                   Featured Project
                 </span>
@@ -356,7 +353,7 @@ export const DynamicScrollShowcase = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#07121C]/90 via-transparent to-[#07121C]/30" />
 
             <div className="absolute top-3 left-3">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 backdrop-blur-md text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-[0.15em] font-medium bg-[#131E20]/85 text-[#F4F7F6] border border-white/15 shadow-sm flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#36656B] animate-pulse" />
                 Featured Project
               </span>

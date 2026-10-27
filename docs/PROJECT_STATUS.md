@@ -547,6 +547,49 @@ _Last updated: 2026-10-18 (admin end-to-end check, permanent delete); 2026-10-17
 - **Live check (read-only, no test data on the live database):** 271 checks at 390/820/1440 px, 265 pass; the 6 failures are 3 test-label mismatches (customization button is there) and the 3 missing integrations (Analytics, Search Console, Meta Pixel). Admin pages require sign-in; Add to cart signed out goes to sign-in (one unrepeatable miss in 13 tries); page title and Product schema in the server's HTML.
 - **Open:** SMTP not set up, so new customers cannot finish sign-up (email code) and cannot buy yet; the client postponed it.
 
+### 2026-10-22: Policy pages for Razorpay, linked in the footer (in preview, not live)
+**Why:** requested: Razorpay's website check needs the shop's policies before it switches on payments.
+- **Pages:** `/privacy-policy`, `/terms-and-conditions`, `/refund-policy` (Cancellation & Refunds), `/shipping-policy` (Shipping & Delivery). One component `src/pages/Policy.jsx`; texts in `src/data/policies.js` (amounts match the shop: 18% GST, ₹3,500 delivery up to ₹1,50,000, free above). Each page ends with the company name, registered address, email, phone, GSTIN/CIN from Page Content → Company & Contact. Contact Us and About Us were already there.
+- **Footer:** new **Policies** column (the four + Contact Us); the bottom row's dead labels ("Discretion & Privacy", "Terms of Engagement", "Certifications") are now the four policy links. The studio address block moved to its own row on desktop.
+- **Backend:** `POLICY_PAGES` in `app/seo.py`: the server answers 200 with title, description and breadcrumb (was the 404 page), and lists them in the sitemap. Tests in `tests/test_seo.py`.
+- **Client must confirm** (business decisions written as sensible defaults): free cancellation within 24 h / before production, up to 30% kept after production starts, no change-of-mind returns on made-to-order pieces (7 days for accessories/lighting), damage reported within 48 h, refunds started in 2 working days, delivery across India, dispatch/transit times. Also the phone number (known issue 13) and GSTIN, which the policy pages show.
+- **Verified:** backend 192 passed, 1 skipped; lint 0 errors; build passes; preview at 390 / 1024 / 1440 px: all four pages 200, footer links open them, no sideways scroll, no JS errors.
+- Not live, not committed. Previous preview build kept at `/root/preview/dist.bak-policies`.
+
+### 2026-10-23: Home scrolling fixes (not in preview yet, not live)
+**Why:** reported: "in home page in some sections scrolling not working properly".
+- **Cause found:** Lenis (smooth wheel) turned every wheel/trackpad gesture with any up/down part into page scroll. A sideways trackpad swipe almost always has a little up/down in it, so swiping the category circles strip (and the project-filter pills) moved the page instead of the strip. Measured on the preview: 10 sideways swipes moved the strip 0 px and the page 60 px.
+- **Fix:** `allowNestedScroll: true` in `SmoothScroll.jsx` (site-wide): a gesture over anything that can scroll itself in that direction goes to it. After: strip 400 px, page 0 px.
+- **Also:** the "Curated Living, Expanded." pinned showcase (`classic/DynamicScrollShowcase.jsx`) no longer puts a spring on its scroll progress; the cards trailed the scroll on top of Lenis (see DECISIONS 2026-10-17).
+- **Verified:** build passes; oxlint 0 errors on the changed files; full Home scroll top to bottom by wheel at 1440 px and by touch at 390 px, no stalls, no JS errors. Touch scrolling was already fine before the fix.
+- **Preview not updated** (deploy step blocked for the agent): build is in this session's scratchpad; the client runs the copy command.
+
+### 2026-10-23: Home page scroll stutter (in preview, not live)
+**Why:** reported: scrolling the Home page feels jerky/laggy on phone, trackpad and mouse in the collections/sourcing carousels, category circles, projects/products/journal cards and the "Curated Living" showcase.
+- **Cause (measured):** the page never got stuck (wheel and touch reach the bottom), but most main-thread time while scrolling went to repainting. Switching off shadows or filters each roughly halved it.
+- **Fixes (`src/components/classic/`):**
+  - `CoverflowCollections`: the side cards' live `backdrop-filter: blur(14px)` (recomputed every frame behind moving 3D cards) is now the pre-blurred tiny placeholder of the same photo with the same dark tint. Removed `transition-all` on the cards (CSS transitions fought Framer's transforms).
+  - Both coverflows and `TestimonialCarousel` auto-advance only while on screen (`useInView`).
+  - `AppleCardWrapper` (product, journal, Why cards): tilt and spotlight are motion values (no React re-render per mouse move); hover starts only on real mouse movement, so cards scrolling under a still cursor no longer tilt and repaint; no permanent `will-change`.
+  - `DynamicScrollShowcase`: the 700×500 px `blur(140px)` glow inside the pinned frame is a radial gradient.
+  - Removed `backdrop-blur` from badges/buttons with 80–95% opaque fills (blur invisible there).
+- **Verified (headless Chrome, wheel scroll top to bottom, 1440 px, two runs each):** raster time 24 s → 11–12 s; frames over 50 ms 147 → 69–80; p95 frame 100 ms → 50–67 ms. At 390 px the difference is small (native touch scrolling, little repaint there). `oxlint src`: 0 errors; build passes.
+- **Preview updated** together with the hero fix below (previous build kept at `/root/preview/dist.bak-scroll`). Not live, not committed.
+- **Lesson:** a test Caddy started from a copy of `/root/preview/Caddyfile` also binds `127.0.0.1:8091`, where the preview API reads `index.html`; the preview then served the test build's HTML. Strip the 8091 block from any copy.
+
+### 2026-10-23: Home hero shows the whole banner on phones (in preview, not live)
+**Why:** reported: the Home hero banner is not fully visible on mobile.
+- **Cause:** the hero fills the whole screen, so on a 390 × 844 phone the landscape (≈3:2) banner was cropped to about a third of its width (portrait tablet: about half).
+- **Fix (`src/components/Hero.jsx`, `portrait:` screens only):** the photo sits full width at 3:2 under the header, with the headline, text, buttons and slide bars below it on the dark background; no photo drift on scroll there (it slid over the words). Landscape phones, tablets lying flat and desktops keep the full-screen hero.
+- **Verified:** 390, 360, 768 (portrait) and 1440 px: photo shown 98% / 98% / 98% / 95% (was 30–49% on portrait screens), no sideways scroll, no JS errors; `oxlint src` 0 errors; build passes.
+
+### 2026-10-25: Razorpay test mode on the preview; Password is the default sign-in tab (in preview, not live)
+- **Razorpay:** test keys (`rzp_test_…`) added to `/root/preview/api.env` only; preview checkout offers online payment. Verified: a ₹1 test order was created on Razorpay, signature check accepts a valid and rejects a tampered signature. Live `.env` still has no Razorpay keys (live checkout is COD only).
+- **Test shopper (preview DB only):** `razorpay.test@example.com`, already email-verified, so the Password tab works without an email code. Password given to the user in chat, not stored here.
+- **Sign-in page:** opens on the **Password** tab instead of Email code, because SMTP is not set in the preview (codes can't be sent). `src/pages/account/AccountLogin.jsx`; switch back to `'code'` once email is set up. Creating a new account still needs an email code. Preview rebuilt; old files in `/root/preview/dist.bak-2026-10-25`.
+- **Razorpay test payment worked on the preview** (order SYM-261025-355A paid, Netbanking/domestic card; `4111…` is refused as an international card).
+- **Shoppers can cancel their own orders** (My Account → order → Cancel order), following the Cancellation & Refund Policy: free while `pending`/`confirmed`, or `processing` within 24 h of ordering; later the button is replaced by "contact us". `POST /api/account/orders/{number}/cancel` (customer CSRF): puts stock back, sets `cancelled`, adds "Cancelled by the customer …" to admin notes, sends the cancelled email. A paid order stays `paid` → admin shows a red **Refund due** pill and a hint; the admin refunds in the Razorpay dashboard and sets payment to Refunded (no automatic refunds). A payment that completes after cancelling keeps the order cancelled and skips the "paid" email. No migration. Tests: 3 new in `test_accounts_emails.py`; full suite 195 passed, 1 skipped. Preview API + site rebuilt (previous site in `/root/preview/dist.bak-2026-10-25b`).
+
 ## Known issues (open)
 | # | Issue | Fixed by |
 |---|---|---|

@@ -100,7 +100,7 @@ const CustomerPanel = ({ id, onChanged, onClose }) => {
                   </span>
                   <span className="flex items-center gap-2 shrink-0">
                     <span className="text-[13px] font-semibold text-adm-fg tabular-nums">{inr(o.total)}</span>
-                    <PaymentPill status={o.paymentStatus} className="hidden sm:inline-flex" />
+                    <PaymentPill status={o.paymentStatus} orderStatus={o.status} className="hidden sm:inline-flex" />
                     <StatusPill status={o.status} />
                   </span>
                 </Link>

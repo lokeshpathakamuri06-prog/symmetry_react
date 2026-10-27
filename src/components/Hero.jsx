@@ -66,11 +66,16 @@ export const Hero = ({ eyebrow, title, accent, subtitle, actions }) => {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex flex-col justify-end min-h-[max(580px,100svh)] w-full bg-[#1d1d1f] overflow-hidden select-none"
+      className="relative isolate flex flex-col justify-end portrait:justify-start min-h-[max(580px,100svh)] portrait:min-h-0 w-full bg-[#1d1d1f] overflow-hidden select-none"
       aria-roledescription="carousel"
       aria-label="Our spaces"
     >
-      <m.div style={{ y: mediaY }} className="absolute inset-0 -z-10 will-change-transform">
+      {/* Phones: a full-screen portrait crop showed only a narrow middle strip of the landscape banner,
+          so on portrait screens (phones, upright tablets) the whole photo sits under the header with the words below it */}
+      <m.div
+        style={{ y: mediaY }}
+        className="absolute inset-0 -z-10 will-change-transform portrait:relative portrait:inset-auto portrait:w-full portrait:aspect-[3/2] portrait:mt-[var(--gnav-h)] portrait:overflow-hidden portrait:!transform-none"
+      >
         {/* initial={false}: the first photo is on screen at once (it is the page's main image);
             later photos cross-fade in and settle slowly from a slight zoom */}
         <AnimatePresence mode="popLayout" initial={false}>
@@ -110,16 +115,16 @@ export const Hero = ({ eyebrow, title, accent, subtitle, actions }) => {
       </m.div>
 
       {/* Fade: dark at the bottom (behind the words), a hint at the top for the header */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/15 via-40% to-transparent" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 portrait:hidden bg-gradient-to-t from-black/70 via-black/15 via-40% to-transparent" />
       {/* Darker at the very top so the clear header's white links read on bright photos */}
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-36 -z-10 bg-gradient-to-b from-black/45 to-transparent" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-36 -z-10 portrait:hidden bg-gradient-to-b from-black/45 to-transparent" />
       {/* On phones the words cover most of the photo, so dim it a little all over */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/10 lg:hidden" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/10 portrait:hidden lg:hidden" />
 
       {/* Headline, description and actions */}
       <m.div
         style={{ y: textY, opacity: textOpacity }}
-        className="relative pt-[calc(var(--gnav-h)+48px)] pb-24 sm:pb-24 lg:pb-28 [text-shadow:0_1px_18px_rgb(0_0_0/0.35)]"
+        className="relative pt-[calc(var(--gnav-h)+48px)] portrait:pt-7 pb-24 sm:pb-24 lg:pb-28 [text-shadow:0_1px_18px_rgb(0_0_0/0.35)]"
       >
         {/* pr-16 below lg: clear of the floating contact button */}
         <div className="site-container pr-16 lg:pr-0">

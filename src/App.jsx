@@ -58,6 +58,7 @@ const Journal = lazy(() => import('./pages/Journal'));
 const JournalDetail = lazy(() => import('./pages/JournalDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Careers = lazy(() => import('./pages/Careers'));
+const Policy = lazy(() => import('./pages/Policy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AccountLogin = lazy(() => import('./pages/account/AccountLogin'));
 const Account = lazy(() => import('./pages/account/Account'));
@@ -104,6 +105,7 @@ const PUBLIC_PAGE_LOADERS = [
   () => import('./pages/JournalDetail'),
   () => import('./pages/Contact'),
   () => import('./pages/Careers'),
+  () => import('./pages/Policy'),
   () => import('./pages/NotFound'),
 ];
 
@@ -204,6 +206,10 @@ export const App = () => {
                     <Route path="/journal/:id" element={<JournalDetail />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/careers" element={<Careers />} />
+                    <Route path="/privacy-policy" element={<Policy kind="privacy" />} />
+                    <Route path="/terms-and-conditions" element={<Policy kind="terms" />} />
+                    <Route path="/refund-policy" element={<Policy kind="refunds" />} />
+                    <Route path="/shipping-policy" element={<Policy kind="shipping" />} />
                     <Route path="/account/login" element={<AccountLogin />} />
                     <Route path="/account" element={<Account />} />
                     <Route path="/account/orders/:number" element={<AccountOrder />} />

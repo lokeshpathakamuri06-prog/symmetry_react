@@ -99,7 +99,7 @@ export const AdminDashboard = () => {
                         <p className="text-[13px] font-semibold text-adm-fg font-mono whitespace-nowrap">{o.orderNumber}</p>
                         <p className="text-[12px] text-adm-muted truncate">{o.customerName} · {ago(o.createdAt)}</p>
                       </div>
-                      <PaymentPill status={o.paymentStatus} className="hidden sm:inline-flex" />
+                      <PaymentPill status={o.paymentStatus} orderStatus={o.status} className="hidden sm:inline-flex" />
                       <StatusPill status={o.status} />
                       <span className="w-24 text-right text-[13px] font-semibold text-adm-fg tabular-nums">{inr(o.total)}</span>
                     </Link>

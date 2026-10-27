@@ -189,6 +189,7 @@ Do the phases in order. Payment stays last, for you.
 
 ### Phase 4: Payment gateway (you) ⏳
 1. Create a Razorpay account and complete KYC.
+   - The website pages Razorpay asks for are ready (2026-10-22): Privacy Policy `/privacy-policy`, Terms & Conditions `/terms-and-conditions`, Cancellation & Refunds `/refund-policy`, Shipping & Delivery `/shipping-policy`, Contact `/contact`, About `/about`, all linked in the footer. Check their wording and the phone number first.
 2. Enter the Key ID and Key Secret (and webhook secret) in the server settings (`docs/OPERATIONS.md`, Payments).
 3. Turn on UPI / cards / net banking / wallets in Admin → Settings.
 4. Test with Razorpay test keys, then one small real payment and refund.

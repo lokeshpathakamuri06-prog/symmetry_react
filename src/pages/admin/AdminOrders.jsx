@@ -148,7 +148,7 @@ export const AdminOrders = () => {
                           </p>
                         </td>
                         <td className="px-4 py-3 text-right font-semibold text-adm-fg tabular-nums">{inr(o.total)}</td>
-                        <td className="px-4 py-3"><PaymentPill status={o.paymentStatus} /></td>
+                        <td className="px-4 py-3"><PaymentPill status={o.paymentStatus} orderStatus={o.status} /></td>
                         <td className="px-4 py-3"><StatusPill status={o.status} /></td>
                       </tr>
                     ))}

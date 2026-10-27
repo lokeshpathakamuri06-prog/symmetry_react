@@ -5,6 +5,7 @@ import logoDarkImg from '../assets/logo-dark.png';
 import Newsletter from './Newsletter';
 import { useSiteText } from '../context/PublicContentContext';
 import { mailHref, telHref, whatsappHref } from '../lib/contact';
+import { POLICY_LIST } from '../data/policies';
 
 // "@symmetryinteriors.ltd" from an Instagram profile URL
 const instagramHandle = (url) => {
@@ -61,6 +62,13 @@ const LINK_GROUPS = [
       { label: 'Client Bag', to: '/cart' },
     ],
   },
+  {
+    title: 'Policies',
+    links: [
+      ...POLICY_LIST.map((p) => ({ label: p.label, to: p.path })),
+      { label: 'Contact Us', to: '/contact' },
+    ],
+  },
 ];
 
 const linkClass = 'text-[14px] sm:text-[15px] text-muted hover:text-fg transition-colors';
@@ -80,8 +88,8 @@ const PinterestIcon = ({ className = 'w-5 h-5' }) => (
 /**
  * Site footer on a black band, under the white newsletter band:
  *   1. brand, tagline and description, social links, and the two main actions;
- *   2. link columns (Services, Collections, Company) and the studio's contact details;
- *   3. copyright and legal line.
+ *   2. link columns (Services, Collections, Company, Policies) and the studio's contact details;
+ *   3. copyright and policy links.
  * Company details come from Page Content → Company & Contact; texts from Page Content → Footer.
  */
 export const Footer = () => {
@@ -152,7 +160,7 @@ export const Footer = () => {
           {/* 2. Links and contact details */}
           <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 sm:gap-x-8 gap-y-10 py-12 sm:py-14 border-b border-line">
             {LINK_GROUPS.map((group) => (
-              <div key={group.title} className="lg:col-span-2">
+              <div key={group.title} className="lg:col-span-3">
                 <h4 className="text-[13px] font-semibold text-accent mb-4">{group.title}</h4>
                 <ul className="space-y-2.5">
                   {group.links.map((l) => (
@@ -175,9 +183,9 @@ export const Footer = () => {
               </div>
             ))}
 
-            <div className="col-span-2 lg:col-span-6 lg:pl-8">
+            <div className="col-span-2 lg:col-span-12">
               <h4 className="text-[13px] font-semibold text-accent mb-4">Visit the studio</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[14px] sm:text-[15px] text-muted leading-relaxed">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-[14px] sm:text-[15px] text-muted leading-relaxed">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-accent shrink-0 mt-1" />
                   <div>
@@ -233,9 +241,9 @@ export const Footer = () => {
               Copyright &copy; {new Date().getFullYear()} {company.shortName} All rights reserved.
               {company.cin && <span className="block sm:inline sm:ml-2 tabular-nums">CIN: {company.cin}</span>}
             </p>
-            <div className="flex flex-wrap items-center gap-x-5 sm:gap-x-0 gap-y-1">
-              {['Discretion & Privacy', 'Terms of Engagement', 'Certifications'].map((label, i) => (
-                <span key={label} className={`text-muted ${i > 0 ? 'sm:border-l sm:border-line sm:pl-3 sm:ml-3' : ''}`}>{label}</span>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 lg:shrink-0">
+              {POLICY_LIST.map((p) => (
+                <Link key={p.path} to={p.path} className="text-muted hover:text-fg transition-colors">{p.label}</Link>
               ))}
             </div>
           </div>
